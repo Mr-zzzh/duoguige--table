@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use think\Request;
 
 /**
- * @title JobWanted
+ * @title 求职管理
  * @group ADMIN
  */
 class JobWanted extends Common {
@@ -17,6 +17,10 @@ class JobWanted extends Common {
      * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
      * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
      * @param name:status type:int require:0 default:- other:- desc:状态_0待审_1通过_2不通过_3已找到工作
+     * @param name:salary type:string require:0 default:- other:- desc:薪资范围id
+     * @param name:province type:string require:0 default:- other:- desc:省编号
+     * @param name:city type:string require:0 default:- other:- desc:市编号
+     * @param name:area type:string require:0 default:- other:- desc:区编号
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -25,23 +29,12 @@ class JobWanted extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id post:求职岗位 salary:期望薪资 arrival:到岗时间 province:省编号 city:市编号 intro:自我描述 status:状态_0待审_1通过_2不通过_3已找到工作 createtime:创建时间
+     * @data id:id uid:用户id uname:发布人姓名 post:求职岗位 salary:期望薪资 sname:薪资范围文本 arrival:到岗时间 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 intro:自我描述 status:状态_0待审_1通过_2不通过_3已找到工作  status_text:状态文本 createtime:创建时间 checktime:审核时间
      * @author 开发者
      */
     public function index() {
         $m = new \app\admin\model\JobWanted();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /admin/jobwanted/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
     }
 
     /**
@@ -58,10 +51,10 @@ class JobWanted extends Common {
      * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3已找到工作
      * @author 开发者
      */
-    public function save() {
-        $m = new \app\admin\model\JobWanted();
-        $m->AddOne(request()->post());
-    }
+    /* public function save() {
+         $m = new \app\admin\model\JobWanted();
+         $m->AddOne(request()->post());
+     }*/
 
     /**
      * @title 删除
@@ -69,13 +62,13 @@ class JobWanted extends Common {
      * @method delete
      * @author 开发者
      */
-    public function delete($id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\admin\model\JobWanted();
-        $m->DelOne($id);
-    }
+    /* public function delete($id) {
+         if ($id < 1) {
+             show_json(0, '参数ID错误');
+         }
+         $m = new \app\admin\model\JobWanted();
+         $m->DelOne($id);
+     }*/
 
     /**
      * @title 编辑
@@ -91,13 +84,13 @@ class JobWanted extends Common {
      * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3已找到工作
      * @author 开发者
      */
-    public function update(Request $request, $id) {
+    /*public function update(Request $request, $id) {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
         $m = new \app\admin\model\JobWanted();
         $m->EditOne($request->put(), $id);
-    }
+    }*/
 
     /**
      * @title 读取

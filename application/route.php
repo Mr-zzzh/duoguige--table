@@ -38,8 +38,6 @@ Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');
 
 Route::resource('admin/jobwanted', 'admin/JobWanted');
-Route::resource('admin/leavemessage', 'admin/LeaveMessage');
-Route::resource('admin/like', 'admin/Like');
 Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::resource('admin/news', 'admin/News');
 Route::resource('admin/question', 'admin/Question');

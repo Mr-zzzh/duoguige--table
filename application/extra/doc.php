@@ -26,8 +26,6 @@ return [
         'app\admin\controller\GoodsOrder',
         'app\admin\controller\Invite',
         'app\admin\controller\JobWanted',
-        'app\admin\controller\LeaveMessage',
-        'app\admin\controller\Like',
         'app\admin\controller\Maintenance',
         'app\admin\controller\News',
         'app\admin\controller\Question',
