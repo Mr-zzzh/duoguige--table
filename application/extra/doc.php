@@ -11,13 +11,11 @@ return [
         //需要生成文档的类
         //admin
         'app\admin\controller\Admin',
-        'app\admin\controller\Answer',
         'app\admin\controller\Brand',
         'app\admin\controller\BrandDatum',
         'app\admin\controller\Company',
         'app\admin\controller\Salary',
         'app\admin\controller\Experience',
-        'app\admin\controller\Download',
         'app\admin\controller\Fault',
         'app\admin\controller\Feedback',
         'app\admin\controller\Goods',
@@ -29,9 +27,7 @@ return [
         'app\admin\controller\Maintenance',
         'app\admin\controller\News',
         'app\admin\controller\Question',
-        'app\admin\controller\Receive',
         //'app\admin\controller\Role',
-        'app\admin\controller\SearchHistory',
         'app\admin\controller\Set',
         'app\admin\controller\Technician',
         'app\admin\controller\User',

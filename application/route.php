@@ -20,13 +20,11 @@ Route::resource('admin/admin', 'admin/Admin');
 Route::rule('admin/register', 'admin/Admin/register', 'GET');
 Route::rule('admin/login', 'admin/Admin/login', 'POST|GET');
 
-Route::resource('admin/answer', 'admin/Answer');
 Route::resource('admin/brand', 'admin/Brand');
 Route::resource('admin/branddatum', 'admin/BrandDatum');
 Route::resource('admin/salary', 'admin/Salary');
 Route::resource('admin/experience', 'admin/Experience');
 Route::resource('admin/company', 'admin/Company');
-Route::resource('admin/download', 'admin/Download');
 Route::resource('admin/fault', 'admin/Fault');
 Route::resource('admin/feedback', 'admin/Feedback');
 Route::resource('admin/goods', 'admin/Goods');
@@ -41,9 +39,7 @@ Route::rule('admin/jobwanted/editstatus', 'admin/JobWanted/editstatus', 'POST|GE
 Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::resource('admin/news', 'admin/News');
 Route::resource('admin/question', 'admin/Question');
-Route::resource('admin/receive', 'admin/Receive');
 Route::resource('admin/role', 'admin/Role');
-Route::resource('admin/searchhistory', 'admin/SearchHistory');
 Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/technician', 'admin/Technician');
 Route::resource('admin/user', 'admin/User');
