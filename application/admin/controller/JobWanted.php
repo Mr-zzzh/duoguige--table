@@ -124,4 +124,17 @@ class JobWanted extends Common {
         $m->GetOne($id);
     }
 
+    /**
+     * @title 审核
+     * @url /admin/jobwanted/editstatus
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:招聘信息id
+     * @param name:status type:int require:1 default:- other:- desc:状态_1通过_2不通过
+     * @author 开发者
+     */
+    public function editstatus() {
+        $m = new \app\admin\model\JobWanted();
+        $m->EditStatus(request()->param());
+    }
+
 }

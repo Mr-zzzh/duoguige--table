@@ -36,8 +36,8 @@ Route::resource('admin/goodsorder', 'admin/GoodsOrder');
 
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');
-
 Route::resource('admin/jobwanted', 'admin/JobWanted');
+Route::rule('admin/jobwanted/editstatus', 'admin/JobWanted/editstatus', 'POST|GET');
 Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::resource('admin/news', 'admin/News');
 Route::resource('admin/question', 'admin/Question');
