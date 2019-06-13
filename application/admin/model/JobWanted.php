@@ -33,7 +33,7 @@ class JobWanted extends Common {
             ->field('a.*,u.name uname,s.name sname')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
-            $status = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '招聘结束');
+            $status = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '已找到工作');
             foreach ($list['data'] as $k => &$item) {
                 $item['status_text']   = $status[$item['status']];
                 $item['province_text'] = city_name($item['province']);
@@ -98,12 +98,24 @@ class JobWanted extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('salary s', 'a.salary=s.id', 'left')
+            ->field('a.*,u.name uname,s.name sname')
+            ->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $status                = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '已找到工作');
+            $item                  = $item->toArray();
+            $item['status_text']   = $status[$item['status']];
+            $item['province_text'] = city_name($item['province']);
+            $item['city_text']     = city_name($item['city']);
+            $item['area_text']     = city_name($item['area']);
+            $item['createtime']    = date('Y-m-d H:i:s', $item['createtime']);
+            if (!empty($item['checktime'])) {
+                $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+            }
         }
         show_json(1, $item);
     }

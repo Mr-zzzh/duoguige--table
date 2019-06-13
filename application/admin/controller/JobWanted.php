@@ -98,14 +98,22 @@ class JobWanted extends Common {
      * @method get
      * @return id:id
      * @return uid:用户id
+     * @return uname:发布人姓名
      * @return post:求职岗位
      * @return salary:期望薪资
+     * @return sname:期望薪资文本
      * @return arrival:到岗时间
      * @return province:省编号
+     * @return province_text:省
      * @return city:市编号
+     * @return province_text:市
+     * @return area:区编号
+     * @return area_text:区
      * @return intro:自我描述
      * @return status:状态_0待审_1通过_2不通过_3已找到工作
+     * @return status_text:状态文本
      * @return createtime:创建时间
+     * @return createtime:审核时间
      * @author 开发者
      */
     public function read($id) {
