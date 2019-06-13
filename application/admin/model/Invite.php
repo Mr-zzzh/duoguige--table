@@ -32,13 +32,21 @@ class Invite extends Common {
         }
         $list = $this->alias('a')
             ->join('user u', 'a.uid=u.id', 'left')
-            ->field('a.*,u.name uname')
+            ->join('salary s', 'a.salary=s.id', 'left')
+            ->join('experience e', 'a.experience=e.id', 'left')
+            ->field('a.*,u.name uname,s.name sname,e.name ename')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '招聘结束');
             foreach ($list['data'] as $k => &$item) {
-                $item['status_text'] = $status[$item['status']];
-                $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+                $item['status_text']   = $status[$item['status']];
+                $item['province_text'] = city_name($item['province']);
+                $item['city_text']     = city_name($item['city']);
+                $item['area_text']     = city_name($item['area']);
+                $item['createtime']    = date('Y-m-d H:i:s', $item['createtime']);
+                if (!empty($item['checktime'])) {
+                    $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+                }
             }
             unset($item);
         }
@@ -60,17 +68,12 @@ class Invite extends Common {
             'status'      => intval($params['status']),
             'createtime'  => time(),
         );
-        $this->checkData($data, 0);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
     }
 
     public function DelOne($id) {
@@ -96,7 +99,6 @@ class Invite extends Common {
             'phone'       => trim($params['phone']),
             'status'      => intval($params['status']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
@@ -106,12 +108,25 @@ class Invite extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('salary s', 'a.salary=s.id', 'left')
+            ->join('experience e', 'a.experience=e.id', 'left')
+            ->field('a.*,u.name uname,s.name sname,e.name ename')
+            ->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $status                = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '招聘结束');
+            $item                  = $item->toArray();
+            $item['status_text']   = $status[$item['status']];
+            $item['province_text'] = city_name($item['province']);
+            $item['city_text']     = city_name($item['city']);
+            $item['area_text']     = city_name($item['area']);
+            $item['createtime']    = date('Y-m-d H:i:s', $item['createtime']);
+            if (!empty($item['checktime'])) {
+                $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+            }
         }
         show_json(1, $item);
     }

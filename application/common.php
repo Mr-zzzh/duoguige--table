@@ -313,7 +313,7 @@ if (!function_exists('check_project')) {
 //获取对应下级省市区
 if (!function_exists('lower_address')) {
     function lower_address($code = '') {
-        $address = new \app\admin\model\Address();
+        $address = new \app\admin\model\Area();
         $list    = $address->getlist($code);
         if ($list === false) {
             return array('status' => 0, 'message' => '获取失败');
@@ -324,7 +324,7 @@ if (!function_exists('lower_address')) {
 //按字母排序获取城市
 if (!function_exists('get_city')) {
     function get_city() {
-        $address = new \app\admin\model\Address();
+        $address = new \app\admin\model\Area();
         $list    = $address->getcity();
         if ($list === false) {
             return array('status' => 0, 'message' => '获取失败');
@@ -335,7 +335,7 @@ if (!function_exists('get_city')) {
 //根据编码获取城市名
 if (!function_exists('city_name')) {
     function city_name($code = '') {
-        $address = new \app\admin\model\Address();
+        $address = new \app\admin\model\Area();
         $name    = $address->cityname($code);
         return $name;
     }
@@ -343,7 +343,7 @@ if (!function_exists('city_name')) {
 //根据城市名获取城市编码
 if (!function_exists('city_code')) {
     function city_code($level = 1, $name = '') {
-        $address = new \app\admin\model\Address();
+        $address = new \app\admin\model\Area();
         $name    = $address->citycode($level, $name);
         return $name;
     }

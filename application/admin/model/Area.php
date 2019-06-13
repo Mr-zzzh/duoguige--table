@@ -2,77 +2,69 @@
 
 namespace app\admin\model;
 
+use think\Cache;
+
 class Area extends Common {
 
-    public function GetAll($params) {
-        $map = array();
-        if (!empty($params['keyword'])) {
-            $map['name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
-        if (!empty($list['data'])) {
-            foreach ($list['data'] as $k => &$item) {
-                //TODO 进行数据处理
+    public function getCodeList() {
+        $newlist = Cache::get('address_code_list');
+        if (empty($newlist)) {
+            $list    = $this->select()->toArray();
+            $newlist = array();
+            if (!empty($list)) {
+                foreach ($list as $v) {
+                    $newlist[$v['code']] = $v['name'];
+                }
             }
-            unset($item);
+            unset($list);
+            Cache::set('address_code_list', $newlist);
         }
-        show_json(1, $list);
+        return $newlist;
     }
 
-    public function AddOne($params) {
-        $data = array(
-            'name' => trim($params['name']),
-            'level' => intval($params['level']),
-            'pid' => intval($params['pid']),
-            'code' => intval($params['code']),
-        );
-        $this->checkData($data, 0);
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
+    public function getNameList() {
+        $newlist = Cache::get('address_name_list');
+        if (empty($newlist)) {
+            $list    = $this->select()->toArray();
+            $newlist = array();
+            if (!empty($list)) {
+                foreach ($list as $v) {
+                    $newlist[$v['level']][$v['name']] = $v['code'];
+                }
+            }
+            unset($list);
+            Cache::set('address_name_list', $newlist);
         }
+        return $newlist;
     }
 
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
+    public function citycode($level = 1, $name = '') {
+        $list = $this->getNameList();
+        return $list[$level][$name];
     }
 
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
-        }
+    public function cityname($code = '') {
+        $list = $this->getCodeList();
+        return $list[$code];
     }
 
-    public function EditOne($params, $id) {
-        $data = array(
-            'name' => trim($params['name']),
-            'level' => intval($params['level']),
-            'pid' => intval($params['pid']),
-            'code' => intval($params['code']),
-        );
-        $this->checkData($data, $id);
-        if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
+    public function getlist($code = '') {
+        $map          = array();
+        $map['pcode'] = intval($code);
+        $map['code']  = ['>=', 110000];
+        $list         = $this->cache(600)->where($map)->select()->toArray();
+        return $list;
     }
 
-    public function GetOne($id) {
-        $item = $this->get($id);
-        if (empty($item)) {
-            show_json(1);
-        } else {
-            $item = $item->toArray();
-            //TODO 进行数据处理
+    //按字母排序获取澄海市
+    public function getcity() {
+        $list    = $this->cache(600)->order('firstchar ASC')->where(array('level' => 2, 'code' => ['>=', 110000]))->select()->toArray();
+        $newlist = array();
+        foreach ($list as $v) {
+            $newlist[$v['firstchar']][] = $v;
         }
-        show_json(1, $item);
+        unset($list);
+        return $newlist;
     }
 
 }
