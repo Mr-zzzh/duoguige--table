@@ -1,0 +1,13 @@
+/runtime/
+/.idea/
+/nbproject/
+/.project
+/diff.txt
+/public_html/*/node_modules/
+/public_html/uploads/
+/public_html/barcode/
+/public_html/qrcode/
+/.settings/
+/.buildpath
+/public_html/static/
+/public_html/index.html
