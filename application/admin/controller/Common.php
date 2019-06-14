@@ -24,7 +24,7 @@ class Common extends Controller {
             //用户登录验证
             $member = admin_login();
             if ($member === false) {
-                show_json(-100, '用户未登录!');
+                show_json(-3, '用户未登录!');
             }
             //TODO 权限校验等逻辑处理
             /*if (!check_rule()) {

@@ -463,7 +463,7 @@ CREATE TABLE `yunti_area` (
 -- 轮播图表
 DROP TABLE IF EXISTS `yunti_banner`;
 CREATE TABLE `yunti_banner` (
-  `id` int(11) NOT NULL COMMENT 'id',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `url` varchar(255) DEFAULT NULL COMMENT '图片url',
   `jumpurl` varchar(255) DEFAULT NULL COMMENT '跳转地址',
   `sort` int(10) DEFAULT NULL COMMENT '排序(越小越靠前)',

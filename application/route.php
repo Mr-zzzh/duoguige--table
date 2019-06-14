@@ -22,6 +22,7 @@ Route::rule('admin/register', 'admin/Admin/register', 'GET');
 Route::rule('admin/login', 'admin/Admin/login', 'POST|GET');
 
 Route::resource('admin/brand', 'admin/Brand');
+Route::resource('admin/banner', 'admin/Banner');
 Route::resource('admin/branddatum', 'admin/BrandDatum');
 Route::resource('admin/salary', 'admin/Salary');
 Route::resource('admin/experience', 'admin/Experience');

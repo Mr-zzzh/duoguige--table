@@ -12,6 +12,7 @@ return [
         //admin
         'app\admin\controller\Admin',
         'app\admin\controller\Brand',
+        'app\admin\controller\Banner',
         'app\admin\controller\BrandDatum',
         'app\admin\controller\Company',
         'app\admin\controller\Salary',
