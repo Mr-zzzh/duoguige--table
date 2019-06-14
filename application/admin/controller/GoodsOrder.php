@@ -16,7 +16,7 @@ class GoodsOrder extends Common {
      * @method get
      * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
      * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:status type:int require:0 default:- other:- desc:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款
+     * @param name:status type:int require:0 default:- other:- desc:-1取消订单_0待支付_1已支付_2已发货_3已收货_4退款
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -31,6 +31,35 @@ class GoodsOrder extends Common {
     public function index() {
         $m = new \app\admin\model\GoodsOrder();
         $m->GetAll(request()->get());
+    }
+
+    /**
+     * @title 发货
+     * @url /admin/goodsorder/deliver
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:订单id
+     * @param name:expresscom type:string require:1 default:- other:- desc:快递公司
+     * @param name:expresssn type:string require:1 default:- other:- desc:快递单号
+     * @author 开发者
+     */
+    public function deliver() {
+        $m = new \app\admin\model\GoodsOrder();
+        $m->Deliver(request()->param());
+    }
+
+    /**
+     * @title 订单走势图
+     * @url /admin/goodsorder/trend_chart
+     * @method get
+     * @param name:starttime type:string require:1 default:- other:- desc:开始时间(年-月-日)_当天传一样的
+     * @param name:endtime type:string require:1 default:- other:- desc:结束时间(年-月-日)
+     * @return data:列表@
+     * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id freight:运费 expresscom:快递公司 expresssn:快递单号 paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 address:收货地址
+     * @author 开发者
+     */
+    public function trend_chart() {
+        $m = new \app\admin\model\GoodsOrder();
+        $m->TrendChart(request()->get());
     }
 
     /**

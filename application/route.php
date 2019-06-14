@@ -33,6 +33,7 @@ Route::resource('admin/goods', 'admin/Goods');
 Route::resource('admin/goodscate', 'admin/GoodsCate');
 Route::resource('admin/goodslabel', 'admin/GoodsLabel');
 Route::resource('admin/goodsorder', 'admin/GoodsOrder');
+Route::rule('admin/goodsorder/deliver', 'admin/GoodsOrder/deliver', 'POST|GET');
 
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');

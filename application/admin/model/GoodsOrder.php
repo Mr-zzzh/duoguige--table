@@ -45,6 +45,45 @@ class GoodsOrder extends Common {
         show_json(1, $list);
     }
 
+    public function Deliver($params) {
+        if (empty($params['id']) || $params['id'] < 1) {
+            show_json('id传输错误');
+        }
+        if (empty($params['expresscom'])) {
+            show_json('快递公司');
+        }
+        if (empty($params['expresssn'])) {
+            show_json('快递单号');
+        }
+        $data['expresscom']  = trim($params['expresscom']);
+        $data['expresssn']   = trim($params['expresssn']);
+        $data['delivertime'] = time();
+        if ($this->save($data, array('id' => intval($params['id']))) !== false) {
+            //logs('编辑??,ID:' . $id, 3);
+            show_json(1, '发货成功');
+        } else {
+            show_json(0, '发货失败');
+        }
+    }
+
+    public function TrendChart($params) {
+        $map = array();
+        if (empty($params['starttime'])) {
+            show_json(0, '请传开始时间');
+        }
+        if (empty($params['endtime'])) {
+            show_json(0, '请传结束时间');
+        }
+        $map['createtime'] = array('between', strtotime($params['starttime'] . ' 00:00:00') . ',' . strtotime($params['endtime'] . ' 23:59:59'));
+        $time              = array();
+        $time[]            = $params['starttime'];
+        while (($time1 = strtotime('+1 day', $params['starttime'])) <= strtotime($params['endtime'])) {
+            $time[] = date('Y-m-d', $time1); // 取得递增月;
+        }
+
+        show_json(1, $time);
+    }
+
     public function DelOne($id) {
         if ($this->where(array('id' => $id))->delete()) {
             //logs('删除??,ID:' . $id, 2);
