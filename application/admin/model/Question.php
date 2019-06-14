@@ -57,4 +57,13 @@ class Question extends Common {
         show_json(1, $list);
     }
 
+    public function DelAnswer($id) {
+        if (db('answer')->where(array('id' => $id))->delete()) {
+            //logs('删除??,ID:' . $id, 2);
+            show_json(1, '删除成功');
+        } else {
+            show_json(0, '删除失败');
+        }
+    }
+
 }

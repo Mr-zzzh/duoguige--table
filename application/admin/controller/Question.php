@@ -67,4 +67,19 @@ class Question extends Common {
         $m->GetOne(request()->get());
     }
 
+    /**
+     * @title 删除答案
+     * @url /admin/question/delete_answer
+     * @method post
+     * @param name:id type:int require:1 default:- desc:答案id
+     * @author 开发者
+     */
+    public function delete_answer() {
+        $id = \request()->post('id');
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $m = new \app\admin\model\Question();
+        $m->DelAnswer($id);
+    }
 }
