@@ -91,4 +91,21 @@ class Maintenance extends Common {
         show_json(1, $item);
     }
 
+    public function EditStatus($params) {
+        if (empty($params['id']) || $params['id'] < 1) {
+            show_json('id传输错误');
+        }
+        if (empty($params['status'])) {
+            show_json('请传审核状态');
+        }
+        $data['status']    = intval($params['status']);
+        $data['checktime'] = time();
+        if ($this->save($data, array('id' => intval($params['id']))) !== false) {
+            //logs('编辑??,ID:' . $id, 3);
+            show_json(1, '审核成功');
+        } else {
+            show_json(0, '审核失败');
+        }
+    }
+
 }
