@@ -82,4 +82,17 @@ class Question extends Common {
         $m = new \app\admin\model\Question();
         $m->DelAnswer($id);
     }
+
+    /**
+     * @title 修改答案状态
+     * @url /admin/question/edit_status
+     * @method get|post
+     * @param name:id type:int require:1 default:- desc:答案id
+     * @param name:status type:int require:1 default:- desc:状态_1显示_2隐藏
+     * @author 开发者
+     */
+    public function edit_status() {
+        $m = new \app\admin\model\Question();
+        $m->EditStatus(request()->param());
+    }
 }

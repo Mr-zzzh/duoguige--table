@@ -66,4 +66,20 @@ class Question extends Common {
         }
     }
 
+    public function EditStatus($params) {
+        if (empty($params['id']) || $params['id'] < 1) {
+            show_json('id传输错误');
+        }
+        if (empty($params['status'])) {
+            show_json('请传审核状态');
+        }
+        $data['status'] = intval($params['status']);
+        if (db('answer')->where('id', intval($params['id']))->update($data) !== false) {
+            //logs('编辑??,ID:' . $id, 3);
+            show_json(1, '修改成功');
+        } else {
+            show_json(0, '修改失败');
+        }
+    }
+
 }

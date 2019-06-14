@@ -41,6 +41,7 @@ Route::resource('admin/news', 'admin/News');
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
 Route::rule('admin/question/delete_answer', 'admin/Question/delete_answer', 'POST');
+Route::rule('admin/question/edit_status', 'admin/Question/edit_status', 'GET|POST');
 Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/technician', 'admin/Technician');
