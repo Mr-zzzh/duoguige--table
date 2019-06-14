@@ -54,24 +54,24 @@ class Maintenance extends Common {
      * @method get
      * @return id:id
      * @return uid:用户id
+     * @return uname:发布人姓名
      * @return brand:电梯品牌
      * @return model:型号
      * @return floor_number:楼层数
-     * @return type:维修类型
+     * @return type:维修类型(急修, 维修, 保养)
      * @return company:单位名称
      * @return address:地址
+     * @return genre:类型_1维修单_2保养单
+     * @return genre_text:类型文本
      * @return status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
-     * @return star:打星
-     * @return evaluate:评价
-     * @return complain:投诉
-     * @return complain_image:投诉照片
+     * @return status_text:状态文本
      * @return checktime:审核时间
      * @return canceltime:取消时间
      * @return createtime:创建时间
      * @return finishtime:完成时间
-     * @return evaluate_time:评价时间
-     * @return complain_time:投诉时间
-     * @return complain_finish_time:投诉完成时间
+     * @return receive_id:接取保单师傅id
+     * @return rname:接取师傅姓名
+     * @return receive_time:接取时间
      * @author 开发者
      */
     public function read($id) {
