@@ -53,13 +53,15 @@ class GoodsOrder extends Common {
      * @method get
      * @param name:starttime type:string require:1 default:- other:- desc:开始时间(年-月-日)_当天传一样的
      * @param name:endtime type:string require:1 default:- other:- desc:结束时间(年-月-日)
-     * @return data:列表@
-     * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id freight:运费 expresscom:快递公司 expresssn:快递单号 paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 address:收货地址
-     * @author 开发者
+     * @return legend:标题@
+     * @return series:数据@
+     * @return time:时间数组@
+     * @series name:名称 type:line stack:总量 data:数据
+     * @author 开发者 (echarst图 https://www.echartsjs.com/examples/editor.html?c=line-stack)
      */
     public function trend_chart() {
         $m = new \app\admin\model\GoodsOrder();
-        $m->TrendChart(request()->get());
+        $m->TrendChart(request()->param());
     }
 
     /**

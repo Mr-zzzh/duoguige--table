@@ -58,7 +58,7 @@ class GoodsOrder extends Common {
         $data['expresscom']  = trim($params['expresscom']);
         $data['expresssn']   = trim($params['expresssn']);
         $data['delivertime'] = time();
-        if ($this->save($data, array('id' => intval($params['id']))) !== false) {
+        if ($this->save($data, array('id' => intval($params['id']))) != false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '发货成功');
         } else {
@@ -67,21 +67,41 @@ class GoodsOrder extends Common {
     }
 
     public function TrendChart($params) {
-        $map = array();
         if (empty($params['starttime'])) {
             show_json(0, '请传开始时间');
         }
         if (empty($params['endtime'])) {
             show_json(0, '请传结束时间');
         }
-        $map['createtime'] = array('between', strtotime($params['starttime'] . ' 00:00:00') . ',' . strtotime($params['endtime'] . ' 23:59:59'));
-        $time              = array();
-        $time[]            = $params['starttime'];
-        while (($time1 = strtotime('+1 day', $params['starttime'])) <= strtotime($params['endtime'])) {
-            $time[] = date('Y-m-d', $time1); // 取得递增月;
+        $time      = array();
+        $starttime = strtotime($params['starttime']);
+        $endtime   = $params['endtime'];
+        $time[]    = date('Y-m-d', $starttime);
+        while (($starttime = strtotime('+1 day', $starttime)) <= strtotime($endtime)) {
+            $time[] = date('Y-m-d', $starttime); // 取得递增月;
         }
-
-        show_json(1, $time);
+        $order  = array();       //下单
+        $order1 = array();      //付款
+        foreach ($time as &$v) {
+            $time1    = strtotime($v . ' 00:00:00');
+            $time2    = strtotime($v . ' 23:59:59');
+            $order[]  = $this->where(array('createtime' => array('between', $time1, $time2)))->count('id');
+            $order1[] = $this->where(array('paytime' => array('between', $time1, $time2)))->count('id');
+        }
+        unset($v);
+        $legend = array('下单', '付款');
+        $series = array();
+        foreach ($legend as $k1 => &$v1) {
+            $series[$k1]['name']  = $v1;
+            $series[$k1]['type']  = 'line';
+            $series[$k1]['stack'] = '总量';
+            $series[$k1]['data']  = $k1 == 1 ? $order1 : $order;
+        }
+        unset($v1);
+        $list['legend'] = $legend;
+        $list['series'] = $series;
+        $list['time']   = $time;
+        show_json(1, $list);
     }
 
     public function DelOne($id) {

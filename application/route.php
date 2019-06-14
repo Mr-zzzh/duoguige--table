@@ -34,6 +34,7 @@ Route::resource('admin/goodscate', 'admin/GoodsCate');
 Route::resource('admin/goodslabel', 'admin/GoodsLabel');
 Route::resource('admin/goodsorder', 'admin/GoodsOrder');
 Route::rule('admin/goodsorder/deliver', 'admin/GoodsOrder/deliver', 'POST|GET');
+Route::rule('admin/goodsorder/trend_chart', 'admin/GoodsOrder/trend_chart', 'GET');
 
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');
