@@ -39,6 +39,7 @@ Route::rule('admin/jobwanted/editstatus', 'admin/JobWanted/editstatus', 'POST|GE
 Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::resource('admin/news', 'admin/News');
 Route::resource('admin/question', 'admin/Question');
+Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
 Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/technician', 'admin/Technician');

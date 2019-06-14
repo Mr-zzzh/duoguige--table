@@ -16,7 +16,7 @@ class Question extends Common {
         $list          = $this->alias('a')
             ->join('user u', 'a.uid=u.id')
             ->field('a.id,a.uid,a.title,a.thumb,a.createtime,u.name uname')->where($map)
-            ->paginate($params['limit'])->toArray();
+            ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 if (!empty($item['thumb'])) {
@@ -38,15 +38,23 @@ class Question extends Common {
         }
     }
 
-    public function GetOne($id) {
-        $item = $this->get($id);
-        if (empty($item)) {
-            show_json(1);
-        } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+    public function GetOne($params) {
+        if (empty($params['id'])) {
+            show_json(0, '请传问题id');
         }
-        show_json(1, $item);
+        $list = db('answer')->alias('a')
+            ->join('user u', 'a.uid=u.id')
+            ->field('a.*,u.name uname')->where('a.qid', intval($params['id']))
+            ->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            $status = array(1 => '显示', 2 => '隐藏');
+            foreach ($list['data'] as $k => &$item) {
+                $item['status_text'] = $status[$item['status']];
+                $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
     }
 
 }
