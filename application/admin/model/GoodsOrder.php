@@ -7,55 +7,42 @@ class GoodsOrder extends Common {
     public function GetAll($params) {
         $map = array();
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
+            $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
         if (isset($params['status']) && $params['status'] !== '') {
-            $map['status'] = intval($params['status']);
+            $map['a.status'] = intval($params['status']);
         }
         if (!empty($params['keyword'])) {
-            $map['ordersn|expresscom|expresssn'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a.ordersn|a.expresscom|u.phone|u.name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('goods g', 'a.gid=g.id', 'left')
+            ->join('delivery_address d', 'a.addressid=d.id', 'left')
+            ->field('a.*,u.name uname,g.name gname,g.thumbnail,d.name dname,d.phone,d.address')
+            ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
+            $status = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货', '4' => '退款');
             foreach ($list['data'] as $k => &$item) {
+                $item['status_text']  = $status[$item['status']];
+                $item['paytype_text'] = $item['paytype_text'] == 1 ? '支付宝' : '微信';
+                if (empty($item['paytime'])) {
+                    $item['paytime'] = date('Y-m-d H:i:s', $item['paytime']);
+                }
+                if (empty($item['finishtime'])) {
+                    $item['finishtime'] = date('Y-m-d H:i:s', $item['finishtime']);
+                }
+                if (empty($item['canceltime'])) {
+                    $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
+                }
+                if (empty($item['delivertime'])) {
+                    $item['delivertime'] = date('Y-m-d H:i:s', $item['delivertime']);
+                }
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
         }
         show_json(1, $list);
-    }
-
-    public function AddOne($params) {
-        $data = array(
-            'uid' => intval($params['uid']),
-            'gid' => intval($params['gid']),
-            'ordersn' => trim($params['ordersn']),
-            'number' => intval($params['number']),
-            'money' => trim($params['money']) * 1,
-            'status' => intval($params['status']),
-            'paytype' => intval($params['paytype']),
-            'tradeno' => intval($params['tradeno']),
-            'addressid' => intval($params['addressid']),
-            'freight' => trim($params['freight']) * 1,
-            'expresscom' => trim($params['expresscom']),
-            'expresssn' => trim($params['expresssn']),
-            'paytime' => intval($params['paytime']),
-            'finishtime' => intval($params['finishtime']),
-            'canceltime' => intval($params['canceltime']),
-            'delivertime' => intval($params['delivertime']),
-            'createtime' => time(),
-        );
-        $this->checkData($data, 0);
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
-        }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
     }
 
     public function DelOne($id) {
@@ -67,40 +54,32 @@ class GoodsOrder extends Common {
         }
     }
 
-    public function EditOne($params, $id) {
-        $data = array(
-            'uid' => intval($params['uid']),
-            'gid' => intval($params['gid']),
-            'ordersn' => trim($params['ordersn']),
-            'number' => intval($params['number']),
-            'money' => trim($params['money']) * 1,
-            'status' => intval($params['status']),
-            'paytype' => intval($params['paytype']),
-            'tradeno' => intval($params['tradeno']),
-            'addressid' => intval($params['addressid']),
-            'freight' => trim($params['freight']) * 1,
-            'expresscom' => trim($params['expresscom']),
-            'expresssn' => trim($params['expresssn']),
-            'paytime' => intval($params['paytime']),
-            'finishtime' => intval($params['finishtime']),
-            'canceltime' => intval($params['canceltime']),
-            'delivertime' => intval($params['delivertime']),
-        );
-        $this->checkData($data, $id);
-        if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
-    }
-
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('goods g', 'a.gid=g.id', 'left')
+            ->join('delivery_address d', 'a.addressid=d.id', 'left')
+            ->field('a.*,u.name uname,g.name gname,g.thumbnail,d.name dname,d.phone,d.address')
+            ->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $status               = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货', '4' => '退款');
+            $item                 = $item->toArray();
+            $item['status_text']  = $status[$item['status']];
+            $item['paytype_text'] = $item['paytype_text'] == 1 ? '支付宝' : '微信';
+            if (empty($item['paytime'])) {
+                $item['paytime'] = date('Y-m-d H:i:s', $item['paytime']);
+            }
+            if (empty($item['finishtime'])) {
+                $item['finishtime'] = date('Y-m-d H:i:s', $item['finishtime']);
+            }
+            if (empty($item['canceltime'])) {
+                $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
+            }
+            if (empty($item['delivertime'])) {
+                $item['delivertime'] = date('Y-m-d H:i:s', $item['delivertime']);
+            }
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);

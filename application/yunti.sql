@@ -388,9 +388,9 @@ CREATE TABLE `yunti_goods_order` (
   `delivertime` int(11) DEFAULT NULL COMMENT '发货时间',
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
-  KEY `gid` (`gid`)
+  KEY `gid` (`gid`),
+  KEY `addressid` (`addressid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 -- 意见反馈表
 DROP TABLE IF EXISTS `yunti_feedback`;
 CREATE TABLE `yunti_feedback` (
