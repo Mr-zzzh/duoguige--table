@@ -395,9 +395,11 @@ CREATE TABLE `yunti_goods_order` (
 DROP TABLE IF EXISTS `yunti_feedback`;
 CREATE TABLE `yunti_feedback` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '用户id',
   `content` text COMMENT '反馈内容',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 设置表

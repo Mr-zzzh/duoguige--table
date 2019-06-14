@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use think\Request;
 
 /**
- * @title Feedback
+ * @title 意见反馈
  * @group ADMIN
  */
 class Feedback extends Common {
@@ -24,35 +24,12 @@ class Feedback extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id content:反馈内容 createtime:创建时间
+     * @data id:id uid:用户ID uname:反馈人姓名 content:反馈内容 createtime:创建时间
      * @author 开发者
      */
     public function index() {
         $m = new \app\admin\model\Feedback();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /admin/feedback/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
-    }
-
-    /**
-     * @title 添加
-     * @url /admin/feedback
-     * @method post
-     * @param name:content type:string require:1 default:- other:- desc:反馈内容
-     * @author 开发者
-     */
-    public function save() {
-        $m = new \app\admin\model\Feedback();
-        $m->AddOne(request()->post());
     }
 
     /**
@@ -68,37 +45,4 @@ class Feedback extends Common {
         $m = new \app\admin\model\Feedback();
         $m->DelOne($id);
     }
-
-    /**
-     * @title 编辑
-     * @url /admin/feedback/:id
-     * @method put
-     * @param name:content type:string require:1 default:- other:- desc:反馈内容
-     * @author 开发者
-     */
-    public function update(Request $request, $id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\admin\model\Feedback();
-        $m->EditOne($request->put(), $id);
-    }
-
-    /**
-     * @title 读取
-     * @url /admin/feedback/:id
-     * @method get
-     * @return id:id
-     * @return content:反馈内容
-     * @return createtime:创建时间
-     * @author 开发者
-     */
-    public function read($id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\admin\model\Feedback();
-        $m->GetOne($id);
-    }
-
 }
