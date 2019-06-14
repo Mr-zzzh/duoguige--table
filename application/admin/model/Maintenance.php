@@ -7,60 +7,45 @@ class Maintenance extends Common {
     public function GetAll($params) {
         $map = array();
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
+            $map['m.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
         if (isset($params['status']) && $params['status'] !== '') {
-            $map['status'] = intval($params['status']);
+            $map['m.status'] = intval($params['status']);
         }
-        if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
+        if (isset($params['genre']) && $params['genre'] !== '') {
+            $map['m.genre'] = intval($params['genre']);
         }
         if (!empty($params['keyword'])) {
-            $map['brand|model|type|company|address|evaluate|complain|complain_image'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['m.brand|m.model|m.company|m.address'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->alias('m')
+            ->join('user u1', 'm.uid=u1.id', 'left')
+            ->join('user u2', 'm.receive_id=u2.id', 'left')
+            ->field('m.*,u1.name uname,u2.name rname')
+            ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
+            $genre  = array(1 => '维修单', 2 => '保养单');
+            $status = array('-1' => '取消单', '0' => '待审', '1' => '审核通过', '2' => '审核不通过', '3' => '已接单', '4' => '已完成', '5' => '投诉', '6' => '投诉已处理');
             foreach ($list['data'] as $k => &$item) {
+                $item['genre_text']  = $genre[$item['genre']];
+                $item['status_text'] = $status[$item['status']];
+                if (!empty($item['checktime'])) {
+                    $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+                }
+                if (!empty($item['canceltime'])) {
+                    $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
+                }
+                if (!empty($item['finishtime'])) {
+                    $item['finishtime'] = date('Y-m-d H:i:s', $item['finishtime']);
+                }
+                if (!empty($item['receive_time'])) {
+                    $item['receive_time'] = date('Y-m-d H:i:s', $item['receive_time']);
+                }
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
         }
         show_json(1, $list);
-    }
-
-    public function AddOne($params) {
-        $data = array(
-            'uid' => intval($params['uid']),
-            'brand' => trim($params['brand']),
-            'model' => trim($params['model']),
-            'floor_number' => intval($params['floor_number']),
-            'type' => trim($params['type']),
-            'company' => trim($params['company']),
-            'address' => trim($params['address']),
-            'status' => intval($params['status']),
-            'star' => intval($params['star']),
-            'evaluate' => trim($params['evaluate']),
-            'complain' => trim($params['complain']),
-            'complain_image' => trim($params['complain_image']),
-            'checktime' => intval($params['checktime']),
-            'canceltime' => intval($params['canceltime']),
-            'finishtime' => intval($params['finishtime']),
-            'evaluate_time' => intval($params['evaluate_time']),
-            'complain_time' => intval($params['complain_time']),
-            'complain_finish_time' => intval($params['complain_finish_time']),
-            'createtime' => time(),
-        );
-        $this->checkData($data, 0);
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
-        }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
     }
 
     public function DelOne($id) {
@@ -72,42 +57,12 @@ class Maintenance extends Common {
         }
     }
 
-    public function EditOne($params, $id) {
-        $data = array(
-            'uid' => intval($params['uid']),
-            'brand' => trim($params['brand']),
-            'model' => trim($params['model']),
-            'floor_number' => intval($params['floor_number']),
-            'type' => trim($params['type']),
-            'company' => trim($params['company']),
-            'address' => trim($params['address']),
-            'status' => intval($params['status']),
-            'star' => intval($params['star']),
-            'evaluate' => trim($params['evaluate']),
-            'complain' => trim($params['complain']),
-            'complain_image' => trim($params['complain_image']),
-            'checktime' => intval($params['checktime']),
-            'canceltime' => intval($params['canceltime']),
-            'finishtime' => intval($params['finishtime']),
-            'evaluate_time' => intval($params['evaluate_time']),
-            'complain_time' => intval($params['complain_time']),
-            'complain_finish_time' => intval($params['complain_finish_time']),
-        );
-        $this->checkData($data, $id);
-        if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
-    }
-
     public function GetOne($id) {
         $item = $this->get($id);
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
