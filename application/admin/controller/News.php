@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use think\Request;
 
 /**
- * @title News
+ * @title 新闻管理
  * @group ADMIN
  */
 class News extends Common {
@@ -24,23 +24,12 @@ class News extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id title:标题 thumb:图片 content:内容 view_number:浏览量 like_number:点赞量 sort:排序(序号越小越靠前) createtime:创建时间
+     * @data id:id title:标题 thumb:图片 content:内容 view_number:浏览量 like_number:点赞量 sort:排序(序号越小越靠前) status:状态_1显示_2不显示 status_text:状态文本 createtime:创建时间
      * @author 开发者
      */
     public function index() {
         $m = new \app\admin\model\News();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /admin/news/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
     }
 
     /**
@@ -53,6 +42,7 @@ class News extends Common {
      * @param name:view_number type:int require:1 default:- other:- desc:浏览量
      * @param name:like_number type:int require:1 default:- other:- desc:点赞量
      * @param name:sort type:int require:1 default:- other:- desc:排序(序号越小越靠前)
+     * @param name:status type:int require:1 default:- other:- desc:状态_1显示_2不显示
      * @author 开发者
      */
     public function save() {
@@ -84,6 +74,7 @@ class News extends Common {
      * @param name:view_number type:int require:1 default:- other:- desc:浏览量
      * @param name:like_number type:int require:1 default:- other:- desc:点赞量
      * @param name:sort type:int require:1 default:- other:- desc:排序(序号越小越靠前)
+     * @param name:status type:int require:1 default:- other:- desc:状态_1显示_2不显示
      * @author 开发者
      */
     public function update(Request $request, $id) {
@@ -105,6 +96,8 @@ class News extends Common {
      * @return view_number:浏览量
      * @return like_number:点赞量
      * @return sort:排序(序号越小越靠前)
+     * @return status:状态_1显示_2不显示
+     * @return status_text:状态文本
      * @return createtime:创建时间
      * @author 开发者
      */

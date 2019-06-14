@@ -76,6 +76,7 @@ CREATE TABLE `yunti_news` (
   `view_number` int(10) DEFAULT NULL COMMENT '浏览量',
   `like_number` int(10) DEFAULT NULL COMMENT '点赞量',
   `sort` int(10) DEFAULT NULL COMMENT '排序(序号越小越靠前)',
+  `status` int(2) DEFAULT '1' COMMENT '状态_1显示_2不显示',
   `createtime` int(11) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
