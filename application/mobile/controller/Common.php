@@ -25,10 +25,6 @@ class Common extends Controller {
             if ($member === false) {
                 show_json(-3, '用户未登录!');
             }
-            //TODO 权限校验等逻辑处理
-            /*if (!check_rule()) {
-                show_json(-101, '用户权限不足!');
-            }*/
         }
     }
 
