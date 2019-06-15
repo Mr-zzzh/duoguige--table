@@ -4,8 +4,7 @@ namespace app\admin\controller;
 
 /**
  * @title 支付设置
- * @description 支付设置
- * @group admin接口
+ * @group ADMIN
  */
 class Payset extends Common {
     /**
@@ -16,13 +15,13 @@ class Payset extends Common {
      * @method POST/GET
      *
      *
-     * @return list:支付配置列表@
-     * @list id:支付配置ID alipay_appId:阿里支付appid alipay_gatewayUrl:阿里支付网关 alipay_rsaPrivateKey:阿里支付私钥 alipay_alipayrsaPublicKey:阿里支付公钥 wxpay_APPID:微信支付appid wxpay_MCHID:微信支付商户号 wxpay_KEY:微信支付key wxpay_APPSECRET:微信支付应用密钥  wxpay_apiclient_cert:微信cert wxpay_apiclient_key:微信key证书 createtime:创建时间
+     * @return data:支付配置列表@
+     * @data id:支付配置ID alipay_appId:阿里支付appid alipay_gatewayUrl:阿里支付网关 alipay_rsaPrivateKey:阿里支付私钥 alipay_alipayrsaPublicKey:阿里支付公钥 wxpay_APPID:微信支付appid wxpay_MCHID:微信支付商户号 wxpay_KEY:微信支付key wxpay_APPSECRET:微信支付应用密钥  wxpay_apiclient_cert:微信cert wxpay_apiclient_key:微信key证书 createtime:创建时间
      */
     public function index() {
         $payset = new \ccia\pay\Payset();
         $list   = $payset->getList();
-        return myjson(1, array('list' => $list));
+        return show_json(1, $list);
     }
 
     /**
@@ -50,9 +49,9 @@ class Payset extends Common {
         $res    = $payset->add();
         $type   = ['1' => '阿里支付', '2' => '微信app支付', '3' => '微信H5支付', '4' => '微信小程序支付'];
         if ($res['status'] == 1) {
-            olog('支付配置信息添加或修改【' . $type[$res['paytype']] . '】');
+            //olog('支付配置信息添加或修改【' . $type[$res['paytype']] . '】');
         }
-        return myjson($res['status'], $res['message']);
+        return show_json(1, $res);
     }
 
     /**
@@ -72,9 +71,9 @@ class Payset extends Common {
         $payset = new \ccia\pay\Payset();
         $res    = $payset->getpayshow();
         if ($res['status'] == 0) {
-            return myjson(0, $res['message']);
+            return show_json(0, $res);
         }
-        return myjson(1, $res['message'], $res['result']);
+        return show_json(1, $res);
     }
 
     /**
@@ -93,10 +92,10 @@ class Payset extends Common {
         $payset = new \ccia\pay\Payset();
         $res    = $payset->delete();
         if ($res['status'] == 0) {
-            return myjson(0, $res['message']);
+            return show_json(0, $res['message']);
         }
         $type = ['1' => '阿里支付', '2' => '微信app支付', '3' => '微信H5支付', '4' => '微信小程序支付'];
-        olog('支付配置信息删除【' . $type[$res['result']] . '】');
-        return myjson(1, '删除成功!');
+        //olog('支付配置信息删除【' . $type[$res['result']] . '】');
+        return show_json(1, '删除成功!');
     }
 }

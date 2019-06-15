@@ -54,6 +54,10 @@ Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/user', 'admin/User');
 Route::rule('admin/user/editstatus', 'admin/User/editstatus', 'POST|GET');
 Route::rule('admin/user/forbidden', 'admin/User/forbidden', 'POST|GET');
+Route::rule('admin/payset/index', 'admin/Payset/index', 'POST|GET');
+Route::rule('admin/payset/add', 'admin/Payset/add', 'POST|GET');
+Route::rule('admin/payset/payget', 'admin/Payset/payget', 'POST|GET');
+Route::rule('admin/payset/delete', 'admin/Payset/delete', 'POST|GET');
 
 //手机端
 Route::resource('admin', 'mobile/Admin');
