@@ -1,6 +1,6 @@
 <?php
 return [
-    'title'         => "云极OA系统APi接口文档",  //文档title
+    'title'         => "云梯APPAPi接口文档",  //文档title
     'version'       => '1.0.0', //文档版本
     'copyright'     => 'Powered By CCIA', //版权信息
     'password'      => '', //访问密码，为空不需要密码
