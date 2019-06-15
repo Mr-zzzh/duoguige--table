@@ -14,7 +14,6 @@ return [
         'app\admin\controller\Brand',
         'app\admin\controller\Banner',
         'app\admin\controller\BrandDatum',
-        'app\admin\controller\Company',
         'app\admin\controller\Salary',
         'app\admin\controller\Experience',
         'app\admin\controller\Fault',
@@ -30,7 +29,6 @@ return [
         'app\admin\controller\Question',
         //'app\admin\controller\Role',
         'app\admin\controller\Set',
-        'app\admin\controller\Technician',
         'app\admin\controller\User',
 
         //mobile

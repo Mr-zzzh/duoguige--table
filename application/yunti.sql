@@ -12,6 +12,7 @@ CREATE TABLE `yunti_user` (
   `type` int(2) NOT NULL DEFAULT '1' COMMENT '用户类型 1,普通用户,2技术大师,3物业公司',
   `token` varchar(40) NOT NULL COMMENT '用户标识',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `normal` int(2) DEFAULT '1' COMMENT '是否启用_1启用_2禁用',
   PRIMARY KEY (`id`),
   KEY `phone` (`phone`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

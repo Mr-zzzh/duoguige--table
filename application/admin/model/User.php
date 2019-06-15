@@ -18,10 +18,15 @@ class User extends Common {
         if (!empty($params['keyword'])) {
             $map['name|phone|avatar|password|salt|intro|token'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->field('id,name,phone,avatar,intro,status,type,createtime')->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
+            $status = array('0' => '待审', '1' => '通过', '2' => '不通过');
+            $type   = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');
             foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['status_text'] = $status[$item['status']];
+                $item['type_text']   = $type[$item['type']];
+                $item['normal_text'] = $item['type'] == 1 ? '启用' : '禁用';
+                $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
         }
@@ -30,15 +35,15 @@ class User extends Common {
 
     public function AddOne($params) {
         $data = array(
-            'name' => trim($params['name']),
-            'phone' => trim($params['phone']),
-            'avatar' => trim($params['avatar']),
-            'password' => trim($params['password']),
-            'salt' => trim($params['salt']),
-            'intro' => trim($params['intro']),
-            'status' => intval($params['status']),
-            'type' => intval($params['type']),
-            'token' => trim($params['token']),
+            'name'       => trim($params['name']),
+            'phone'      => trim($params['phone']),
+            'avatar'     => trim($params['avatar']),
+            'password'   => trim($params['password']),
+            'salt'       => trim($params['salt']),
+            'intro'      => trim($params['intro']),
+            'status'     => intval($params['status']),
+            'type'       => intval($params['type']),
+            'token'      => trim($params['token']),
             'createtime' => time(),
         );
         $this->checkData($data, 0);
@@ -65,15 +70,15 @@ class User extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'name' => trim($params['name']),
-            'phone' => trim($params['phone']),
-            'avatar' => trim($params['avatar']),
+            'name'     => trim($params['name']),
+            'phone'    => trim($params['phone']),
+            'avatar'   => trim($params['avatar']),
             'password' => trim($params['password']),
-            'salt' => trim($params['salt']),
-            'intro' => trim($params['intro']),
-            'status' => intval($params['status']),
-            'type' => intval($params['type']),
-            'token' => trim($params['token']),
+            'salt'     => trim($params['salt']),
+            'intro'    => trim($params['intro']),
+            'status'   => intval($params['status']),
+            'type'     => intval($params['type']),
+            'token'    => trim($params['token']),
         );
         $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
@@ -89,7 +94,7 @@ class User extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);

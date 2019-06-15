@@ -26,7 +26,6 @@ Route::resource('admin/banner', 'admin/Banner');
 Route::resource('admin/branddatum', 'admin/BrandDatum');
 Route::resource('admin/salary', 'admin/Salary');
 Route::resource('admin/experience', 'admin/Experience');
-Route::resource('admin/company', 'admin/Company');
 Route::resource('admin/fault', 'admin/Fault');
 Route::resource('admin/feedback', 'admin/Feedback');
 Route::resource('admin/goods', 'admin/Goods');
@@ -52,7 +51,6 @@ Route::rule('admin/question/edit_status', 'admin/Question/edit_status', 'GET|POS
 
 Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
-Route::resource('admin/technician', 'admin/Technician');
 Route::resource('admin/user', 'admin/User');
 
 //手机端
