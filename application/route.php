@@ -52,6 +52,7 @@ Route::rule('admin/question/edit_status', 'admin/Question/edit_status', 'GET|POS
 Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/user', 'admin/User');
+Route::rule('admin/user/editstatus', 'admin/User/editstatus', 'POST|GET');
 
 //手机端
 Route::resource('admin', 'mobile/Admin');

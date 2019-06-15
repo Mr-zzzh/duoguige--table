@@ -99,12 +99,13 @@ class User extends Common {
      * @return name:姓名
      * @return phone:电话
      * @return avatar:头像
-     * @return password:密码
-     * @return salt:随机加盐
      * @return intro:简介
      * @return status:审核状态_0待审_1通过_2不通过
-     * @return type:用户类型_1,普通用户,2技术大师,3物业公司
-     * @return token:用户标识
+     * @return status_text:状态文本
+     * @return type:用户类型_1普通用户_2技术大师_3物业公司
+     * @return type_text:类型文本
+     * @return normal:是否启用_1启用_2禁用
+     * @return normal_text:是否启用
      * @return createtime:创建时间
      * @author 开发者
      */
@@ -114,6 +115,19 @@ class User extends Common {
         }
         $m = new \app\admin\model\User();
         $m->GetOne($id);
+    }
+
+    /**
+     * @title 审核
+     * @url /admin/user/editstatus
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:用户id
+     * @param name:status type:int require:1 default:- other:- desc:状态_1通过_2不通过
+     * @author 开发者
+     */
+    public function editstatus() {
+        $m = new \app\admin\model\User();
+        $m->EditStatus(request()->param());
     }
 
 }

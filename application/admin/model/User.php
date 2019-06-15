@@ -46,17 +46,12 @@ class User extends Common {
             'token'      => trim($params['token']),
             'createtime' => time(),
         );
-        $this->checkData($data, 0);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
     }
 
     public function DelOne($id) {
@@ -80,7 +75,6 @@ class User extends Common {
             'type'     => intval($params['type']),
             'token'    => trim($params['token']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
@@ -94,10 +88,41 @@ class User extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $status              = array('0' => '待审', '1' => '通过', '2' => '不通过');
+            $type                = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');
+            $item                = $item->toArray();
+            $item['status_text'] = $status[$item['status']];
+            $item['type_text']   = $type[$item['type']];
+            $item['normal_text'] = $item['type'] == 1 ? '启用' : '禁用';
+            $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            unset($item['password']);
+            unset($item['salt']);
+            unset($item['token']);
+            if ($item['type'] == 2) {
+                $check = db()->where()->find();
+            } elseif ($item['type'] == 3) {
+                $check = db()->where()->find();
+            } else {
+                $check = array();
+            }
         }
         show_json(1, $item);
+    }
+
+    public function EditStatus($params) {
+        if (empty($params['id']) || $params['id'] < 1) {
+            show_json('id传输错误');
+        }
+        if (empty($params['status'])) {
+            show_json('请传审核状态');
+        }
+        $data['status'] = intval($params['status']);
+        if ($this->save($data, array('id' => intval($params['id']))) !== false) {
+            //logs('编辑??,ID:' . $id, 3);
+            show_json(1, '审核成功');
+        } else {
+            show_json(0, '审核失败');
+        }
     }
 
 }

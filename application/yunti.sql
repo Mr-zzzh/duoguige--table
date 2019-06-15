@@ -49,6 +49,7 @@ CREATE TABLE `yunti_company` (
   `number` int(10) NOT NULL COMMENT '电梯数量',
   `brand` varchar(100) NOT NULL COMMENT '电梯品牌',
   `createtime` int(11) NOT NULL COMMENT '创建时间',
+  `image` varchar(255) DEFAULT NULL COMMENT '营业执照',
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
