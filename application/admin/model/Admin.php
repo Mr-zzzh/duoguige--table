@@ -119,7 +119,7 @@ class Admin extends Common {
         }
         if (empty($token)) {
             $rand          = random(8);
-            $info['token'] = md5($rand . $info['id'] . $info['name'] . time());
+            $info['token'] = md5($rand . $info['id'] . $info['phone'] . time());
         }
         $this->where(array('id' => $info['id']))->update(array('token' => $info['token']));
         unset($info['salt'], $info['password']);

@@ -33,7 +33,6 @@ return [
         'app\admin\controller\User',
 
         //mobile
-        'app\mobile\controller\Admin',
         'app\mobile\controller\Answer',
         'app\mobile\controller\Area',
         'app\mobile\controller\Brand',
@@ -47,6 +46,7 @@ return [
         'app\mobile\controller\GoodsCate',
         'app\mobile\controller\GoodsLabel',
         'app\mobile\controller\GoodsOrder',
+        'app\mobile\controller\Index',
         'app\mobile\controller\Invite',
         'app\mobile\controller\JobWanted',
         'app\mobile\controller\LeaveMessage',

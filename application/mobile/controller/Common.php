@@ -15,11 +15,21 @@ class Common extends Controller {
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Headers: Origin,X-Requested-With,Content-Type,Accept,token');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        $module = request()->module();
+        $module     = request()->module();
         $controller = request()->controller();
-        $action = request()->action();
-        $path = strtolower($module . '/' . $controller . '/' . $action);
-        //TODO 权限校验等逻辑处理
+        $action     = request()->action();
+        $path       = strtolower($module . '/' . $controller . '/' . $action);
+        if (!in_array($path, login_comc())) {
+            //用户登录验证
+            $member = mobile_login();
+            if ($member === false) {
+                show_json(-3, '用户未登录!');
+            }
+            //TODO 权限校验等逻辑处理
+            /*if (!check_rule()) {
+                show_json(-101, '用户权限不足!');
+            }*/
+        }
     }
 
     public function miss() {

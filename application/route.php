@@ -60,7 +60,10 @@ Route::rule('admin/payset/payget', 'admin/Payset/payget', 'POST|GET');
 Route::rule('admin/payset/delete', 'admin/Payset/delete', 'POST|GET');
 
 //手机端
-Route::resource('admin', 'mobile/Admin');
+Route::rule('login', 'mobile/Index/login', 'POST');
+Route::rule('home', 'mobile/Index/home', 'GET|POST');
+//文件上传
+Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('answer', 'mobile/Answer');
 Route::resource('area', 'mobile/Area');
 Route::resource('brand', 'mobile/Brand');

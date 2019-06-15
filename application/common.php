@@ -79,7 +79,7 @@ if (!function_exists('mobile_login')) {
         if (empty($token)) {
             return false;
         }
-        $m   = new \app\mobile\model\Member();
+        $m   = new \app\mobile\model\User();
         $res = $m->login($token);
         return $res;
     }
@@ -103,7 +103,7 @@ if (!function_exists('is_comc')) {
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/register', 'admin/index/loweraddress', 'admin/index/citycode', 'admin/index/getcity', 'mobile/index/login', 'admin/index/index');
+        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login');
         return $comc;
     }
 }
