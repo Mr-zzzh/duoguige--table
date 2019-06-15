@@ -129,4 +129,20 @@ class User extends Common {
         }
     }
 
+    public function Forbidden($params) {
+        if (empty($params['id']) || $params['id'] < 1) {
+            show_json('id传输错误');
+        }
+        if (empty($params['normal'])) {
+            show_json('请传状态');
+        }
+        $data['normal'] = intval($params['normal']);
+        if ($this->save($data, array('id' => intval($params['id']))) !== false) {
+            //logs('编辑??,ID:' . $id, 3);
+            show_json(1, '修改成功');
+        } else {
+            show_json(0, '修改失败');
+        }
+    }
+
 }

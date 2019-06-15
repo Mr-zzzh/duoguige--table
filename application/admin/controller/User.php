@@ -135,4 +135,16 @@ class User extends Common {
         $m->EditStatus(request()->param());
     }
 
+    /**
+     * @title 禁用/启用
+     * @url /admin/user/forbidden
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:用户id
+     * @param name:normal type:int require:1 default:- other:- desc:是否启用_1启用_2禁用
+     * @author 开发者
+     */
+    public function forbidden() {
+        $m = new \app\admin\model\User();
+        $m->Forbidden(request()->param());
+    }
 }
