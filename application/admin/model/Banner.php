@@ -8,6 +8,7 @@ class Banner extends Common {
         $list = $this->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
+                $item['type_text']   = $item['type'] == 1 ? '首页轮播图' : '保险页面图';
                 $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
             }
@@ -21,6 +22,7 @@ class Banner extends Common {
             'url'        => trim($params['url']),
             'jumpurl'    => trim($params['jumpurl']),
             'sort'       => intval($params['sort']),
+            'type'       => intval($params['type']),
             'status'     => intval($params['status']),
             'createtime' => time(),
         );
@@ -29,6 +31,9 @@ class Banner extends Common {
         }
         if (empty($data['sort'])) {
             show_json(0, '请传序号');
+        }
+        if (empty($data['type'])) {
+            show_json(0, '请传图片类型');
         }
         if (empty($data['status'])) {
             $data['status'] == 1;
@@ -55,6 +60,7 @@ class Banner extends Common {
             'url'     => trim($params['url']),
             'jumpurl' => trim($params['jumpurl']),
             'sort'    => intval($params['sort']),
+            'type'    => intval($params['type']),
             'status'  => intval($params['status']),
         );
         if (empty($data['url'])) {
@@ -62,6 +68,9 @@ class Banner extends Common {
         }
         if (empty($data['sort'])) {
             show_json(0, '请传序号');
+        }
+        if (empty($data['type'])) {
+            show_json(0, '请传图片类型');
         }
         if (empty($data['status'])) {
             $data['status'] == 1;
@@ -80,6 +89,7 @@ class Banner extends Common {
             show_json(1);
         } else {
             $item                = $item->toArray();
+            $item['type_text']   = $item['type'] == 1 ? '首页轮播图' : '保险页面图';
             $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
             $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
         }
