@@ -251,7 +251,7 @@ CREATE TABLE `yunti_fault` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `fault_code` varchar(50) NOT NULL COMMENT '故障代码',
   `bid` int(11) NOT NULL COMMENT '品牌id',
-  `models` varchar(255) DEFAULT NULL COMMENT '使用机型',
+  `models` varchar(255) DEFAULT NULL COMMENT '适用机型',
   `paraphrase` varchar(255) DEFAULT NULL COMMENT '代码释义',
   `dispose` varchar(255) DEFAULT NULL COMMENT '处理办法',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
@@ -393,6 +393,7 @@ CREATE TABLE `yunti_goods_order` (
   KEY `gid` (`gid`),
   KEY `addressid` (`addressid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- 意见反馈表
 DROP TABLE IF EXISTS `yunti_feedback`;
 CREATE TABLE `yunti_feedback` (

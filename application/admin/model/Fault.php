@@ -7,12 +7,18 @@ class Fault extends Common {
     public function GetAll($params) {
         $map = array();
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
+            $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
         if (!empty($params['keyword'])) {
-            $map['fault_code|models|paraphrase|dispose'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a.fault_code|a.models|a.paraphrase|a.dispose'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        if (!empty($params['bid'])) {
+            $map['a.bid'] = intval($params['bid']);
+        }
+        $list = $this->alias('a')
+            ->join('brand b', 'a.bid=b.id', 'left')
+            ->field('a.*,b.name bname')->where($map)
+            ->order('a.bid asc,a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
@@ -25,23 +31,33 @@ class Fault extends Common {
     public function AddOne($params) {
         $data = array(
             'fault_code' => trim($params['fault_code']),
-            'bid' => intval($params['bid']),
-            'models' => trim($params['models']),
+            'bid'        => intval($params['bid']),
+            'models'     => trim($params['models']),
             'paraphrase' => trim($params['paraphrase']),
-            'dispose' => trim($params['dispose']),
+            'dispose'    => trim($params['dispose']),
             'createtime' => time(),
         );
-        $this->checkData($data, 0);
+        if (empty($data['fault_code'])) {
+            show_json(0, '请传故障代码');
+        }
+        if (empty($data['bid'])) {
+            show_json(0, '请传品牌id');
+        }
+        if (empty($data['models'])) {
+            show_json(0, '请传适用机型');
+        }
+        if (empty($data['paraphrase'])) {
+            show_json(0, '请传代码释义');
+        }
+        if (empty($data['dispose'])) {
+            show_json(0, '请传处理办法');
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
     }
 
     public function DelOne($id) {
@@ -56,12 +72,26 @@ class Fault extends Common {
     public function EditOne($params, $id) {
         $data = array(
             'fault_code' => trim($params['fault_code']),
-            'bid' => intval($params['bid']),
-            'models' => trim($params['models']),
+            'bid'        => intval($params['bid']),
+            'models'     => trim($params['models']),
             'paraphrase' => trim($params['paraphrase']),
-            'dispose' => trim($params['dispose']),
+            'dispose'    => trim($params['dispose']),
         );
-        $this->checkData($data, $id);
+        if (empty($data['fault_code'])) {
+            show_json(0, '请传故障代码');
+        }
+        if (empty($data['bid'])) {
+            show_json(0, '请传品牌id');
+        }
+        if (empty($data['models'])) {
+            show_json(0, '请传适用机型');
+        }
+        if (empty($data['paraphrase'])) {
+            show_json(0, '请传代码释义');
+        }
+        if (empty($data['dispose'])) {
+            show_json(0, '请传处理办法');
+        }
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
@@ -71,11 +101,13 @@ class Fault extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('brand b', 'a.bid=b.id', 'left')
+            ->field('a.*,b.name bname')->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
