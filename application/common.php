@@ -1,5 +1,10 @@
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+use AlibabaCloud\Client\AlibabaCloud;
+use AlibabaCloud\Client\Exception\ClientException;
+use AlibabaCloud\Client\Exception\ServerException;
+
 if (!function_exists('random')) {
 
     function random($length, $numeric = FALSE) {
@@ -103,7 +108,7 @@ if (!function_exists('is_comc')) {
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login');
+        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login', 'mobile/user/code');
         return $comc;
     }
 }
@@ -736,5 +741,46 @@ if (!function_exists('run_task')) {
         $url = url('index/task/index', array('cid' => $cid), '', true);
         //分销结算
         curl($url, '', '', 1);
+    }
+}
+if (!function_exists('sendCode')) {
+    function sendCode($mobile, $code, $tempId) {
+        AlibabaCloud::accessKeyClient(config('app.aliyunsms.access_key_id'), config('app.aliyunsms.access_key_secret'))
+            ->regionId('cn-hangzhou')//replace regionId as you need（这个地方是发短信的节点，默认即可，或者换成你想要的）
+            ->asGlobalClient();
+        $data = [];
+        try {
+            $result = AlibabaCloud::rpcRequest()
+                ->product('Dysmsapi')
+                //->scheme('https') //https | http（如果域名是https，这里记得开启）
+                ->version('2017-05-25')
+                ->action('SendSms')
+                ->method('POST')
+                ->options([
+                    'query' => [
+                        'PhoneNumbers'  => $mobile,
+                        'SignName'      => config('app.aliyunsms.sign_name'),
+                        'TemplateCode'  => $tempId,
+                        'TemplateParam' => json_encode(['code' => $code]),
+                    ],
+                ])->request();
+            $res    = $result->toArray();
+            if ($res['Code'] == 'OK') {
+                $data['status'] = 1;
+                $data['info']   = $res['Message'];
+            } else {
+                $data['status'] = 0;
+                $data['info']   = $res['Message'];
+            }
+            return $data;
+        } catch (ClientException $e) {
+            $data['status'] = 0;
+            $data['info']   = $e->getErrorMessage();
+            return $data;
+        } catch (ServerException $e) {
+            $data['status'] = 0;
+            $data['info']   = $e->getErrorMessage();
+            return $data;
+        }
     }
 }

@@ -11,18 +11,23 @@ use think\Request;
 class User extends Common {
 
     /**
+     * @title 验证码发送
+     * @url /user/code
+     * @method post
+     * @param name:phone type:string require:1 default:- other:- desc:电话
+     * @author 开发者
+     */
+    public function code() {
+        $m = sendCode(13774024983, 12345, '455644');
+        print_r($m);
+    }
+
+    /**
      * @title 注册
      * @url /user/register
      * @method post
-     * @param name:name type:string require:1 default:- other:- desc:姓名
      * @param name:phone type:string require:1 default:- other:- desc:电话
-     * @param name:avatar type:string require:1 default:- other:- desc:头像
      * @param name:password type:string require:1 default:- other:- desc:密码
-     * @param name:salt type:string require:1 default:- other:- desc:随机加盐
-     * @param name:intro type:string require:1 default:- other:- desc:简介
-     * @param name:status type:int require:1 default:- other:- desc:审核状态_0待审_1通过_2不通过
-     * @param name:type type:int require:1 default:- other:- desc:用户类型_1,普通用户,2技术大师,3物业公司
-     * @param name:token type:string require:1 default:- other:- desc:用户标识
      * @author 开发者
      */
     public function save() {

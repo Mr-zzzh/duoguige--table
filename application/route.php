@@ -90,3 +90,4 @@ Route::resource('searchhistory', 'mobile/SearchHistory');
 Route::resource('set', 'mobile/Set');
 Route::resource('technician', 'mobile/Technician');
 Route::resource('user', 'mobile/User');
+Route::rule('user/code', 'mobile/User/code', 'POST');
