@@ -5,49 +5,14 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title User
+ * @title 用户管理
  * @group MOBILE
  */
 class User extends Common {
 
     /**
-     * @title 列表
-     * @url /user
-     * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:status type:int require:0 default:- other:- desc:审核状态_0待审_1通过_2不通过
-     * @param name:type type:int require:0 default:- other:- desc:用户类型_1,普通用户,2技术大师,3物业公司
-     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
-     * @param name:limit type:int require:0 default:15 desc:每页记录数
-     * @param name:page type:int require:0 default:1 desc:获取的页码
-     * @return total:总记录数
-     * @return per_page:每页记录数
-     * @return current_page:当前的页码
-     * @return last_page:最后的页码
-     * @return data:列表@
-     * @data id:id name:姓名 phone:电话 avatar:头像 password:密码 salt:随机加盐 intro:简介 status:审核状态_0待审_1通过_2不通过 type:用户类型_1,普通用户,2技术大师,3物业公司 token:用户标识 createtime:创建时间
-     * @author 开发者
-     */
-    public function index() {
-        $m = new \app\mobile\model\User();
-        $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /user/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
-    }
-
-    /**
-     * @title 添加
-     * @url /user
+     * @title 注册
+     * @url /user/register
      * @method post
      * @param name:name type:string require:1 default:- other:- desc:姓名
      * @param name:phone type:string require:1 default:- other:- desc:电话
@@ -63,20 +28,6 @@ class User extends Common {
     public function save() {
         $m = new \app\mobile\model\User();
         $m->AddOne(request()->post());
-    }
-
-    /**
-     * @title 删除
-     * @url /user/:id
-     * @method delete
-     * @author 开发者
-     */
-    public function delete($id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\mobile\model\User();
-        $m->DelOne($id);
     }
 
     /**
@@ -104,19 +55,25 @@ class User extends Common {
 
     /**
      * @title 读取
-     * @url /user/:id
+     * @url /admin/user/:id
      * @method get
      * @return id:id
      * @return name:姓名
      * @return phone:电话
      * @return avatar:头像
-     * @return password:密码
-     * @return salt:随机加盐
      * @return intro:简介
      * @return status:审核状态_0待审_1通过_2不通过
-     * @return type:用户类型_1,普通用户,2技术大师,3物业公司
-     * @return token:用户标识
+     * @return status_text:状态文本
+     * @return type:用户类型_1普通用户_2技术大师_3物业公司
+     * @return type_text:类型文本
+     * @return normal:是否启用_1启用_2禁用
+     * @return normal_text:是否启用
      * @return createtime:创建时间
+     * @return check:认证信息数组(check1或者check2)
+     * @return check1:认证信息@(技术大师)
+     * @return check2:认证信息@(物业公司)
+     * @check1 id:id uid:用户id name:真实姓名 sex:性别1男2女 idcardno:身份证号码 company_name:公司名称 license_number:公司营业执照号码 company_image:公司营业执照照片 prove_image:在职证明图片 technician_image:技师证件 dimission:离职证明图 createtime:创建时间
+     * @check2 id:id uid:用户id company_name:公司名称 phone:联系电话 name:法人姓名 area:公司地址省市区 address:公司详细地址 number:电梯数量 brand:电梯品牌 image:营业执照 createtime:创建时间
      * @author 开发者
      */
     public function read($id) {

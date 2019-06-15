@@ -4,30 +4,6 @@ namespace app\mobile\model;
 
 class User extends Common {
 
-    public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
-        if (isset($params['status']) && $params['status'] !== '') {
-            $map['status'] = intval($params['status']);
-        }
-        if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
-        }
-        if (!empty($params['keyword'])) {
-            $map['name|phone|avatar|password|salt|intro|token'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
-        if (!empty($list['data'])) {
-            foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
-            }
-            unset($item);
-        }
-        show_json(1, $list);
-    }
-
     public function AddOne($params) {
         $data = array(
             'name'       => trim($params['name']),
@@ -41,25 +17,11 @@ class User extends Common {
             'token'      => trim($params['token']),
             'createtime' => time(),
         );
-        $this->checkData($data, 0);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
-        }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
-    }
-
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
         }
     }
 
@@ -75,7 +37,6 @@ class User extends Common {
             'type'     => intval($params['type']),
             'token'    => trim($params['token']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
@@ -89,8 +50,27 @@ class User extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $status              = array('0' => '待审', '1' => '通过', '2' => '不通过');
+            $type                = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');
+            $item                = $item->toArray();
+            $item['status_text'] = $status[$item['status']];
+            $item['type_text']   = $type[$item['type']];
+            $item['normal_text'] = $item['type'] == 1 ? '启用' : '禁用';
+            $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            unset($item['password']);
+            unset($item['salt']);
+            unset($item['token']);
+            if ($item['type'] == 2) {
+                $check = db('technician')->where('uid', $item['id'])->find();
+            } elseif ($item['type'] == 3) {
+                $check = db('company')->where('uid', $item['id'])->find();
+            } else {
+                $check = array();
+            }
+            if (!empty($check)) {
+                $check['createtime'] = date('Y-m-d H:i:s', $check['createtime']);
+            }
+            $item['check'] = $check;
         }
         show_json(1, $item);
     }
