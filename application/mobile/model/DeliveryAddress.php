@@ -18,6 +18,9 @@ class DeliveryAddress extends Common {
 
     public function AddOne($params) {
         global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
         $data = array(
             'uid'        => $member['id'],
             'name'       => trim($params['name']),
@@ -31,6 +34,9 @@ class DeliveryAddress extends Common {
         }
         if (empty($data['phone'])) {
             show_json('0', '收货人手机不能为空');
+        }
+        if (!is_mobilenumber($data['phone'])) {
+            show_json('0', '请传正确手机号');
         }
         if (empty($data['address'])) {
             show_json('0', '收货地址不能为空');
@@ -68,6 +74,9 @@ class DeliveryAddress extends Common {
         }
         if (empty($data['phone'])) {
             show_json('0', '收货人手机不能为空');
+        }
+        if (!is_mobilenumber($data['phone'])) {
+            show_json('0', '请传正确手机号');
         }
         if (empty($data['address'])) {
             show_json('0', '收货地址不能为空');
