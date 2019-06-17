@@ -76,7 +76,7 @@ Route::resource('download', 'mobile/Download');
 Route::resource('fault', 'mobile/Fault');
 Route::resource('feedback', 'mobile/Feedback');
 Route::resource('goods', 'mobile/Goods');
-Route::resource('goodscate', 'mobile/GoodsCate');
+Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodslabel', 'mobile/GoodsLabel');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::resource('invite', 'mobile/Invite');

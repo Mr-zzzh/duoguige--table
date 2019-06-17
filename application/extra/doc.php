@@ -43,7 +43,6 @@ return [
         'app\mobile\controller\Fault',
         'app\mobile\controller\Feedback',
         'app\mobile\controller\Goods',
-        'app\mobile\controller\GoodsCate',
         'app\mobile\controller\GoodsLabel',
         'app\mobile\controller\GoodsOrder',
         'app\mobile\controller\Index',

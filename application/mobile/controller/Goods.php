@@ -15,12 +15,12 @@ class Goods extends Common {
      * @url /goodscate
      * @method get
      * @return data:列表@
-     * @data id:id name:商品名 thumbnail:商品缩略图 price:价格
+     * @data id:id name:商品分类名
      * @author 开发者
      */
     public function goodscate() {
-        $m = new \app\mobile\model\Goods();
-        $m->GetAll(request()->get());
+        $list = db('goods_cate')->field('id,name')->select();
+        show_json(1, $list);
     }
 
     /**
