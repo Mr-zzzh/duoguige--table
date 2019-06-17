@@ -27,7 +27,6 @@ class DeliveryAddress extends Common {
      * @title 添加
      * @url /deliveryaddress
      * @method post
-     * @param name:uid type:int require:1 default:- other:- desc:用户ID
      * @param name:name type:string require:1 default:- other:- desc:收货人姓名
      * @param name:phone type:string require:1 default:- other:- desc:收货人电话
      * @param name:address type:string require:1 default:- other:- desc:地址

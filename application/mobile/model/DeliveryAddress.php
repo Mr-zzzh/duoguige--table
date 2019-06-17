@@ -18,14 +18,27 @@ class DeliveryAddress extends Common {
     }
 
     public function AddOne($params) {
+        global $member;
         $data = array(
-            'uid'        => intval($params['uid']),
+            'uid'        => $member['id'],
             'name'       => trim($params['name']),
             'phone'      => trim($params['phone']),
             'address'    => trim($params['address']),
             'default'    => intval($params['default']),
             'createtime' => time(),
         );
+        if (empty($data['name'])) {
+            show_json('0', '收货人姓名不能为空');
+        }
+        if (empty($data['phone'])) {
+            show_json('0', '收货人手机不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json('0', '收货地址不能为空');
+        }
+        if ($data['default'] == 1) {
+            $this->where(array('uid' => $member['id']))->update(array('default' => 0));
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
