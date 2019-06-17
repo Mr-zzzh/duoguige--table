@@ -4,24 +4,25 @@ namespace app\mobile\model;
 
 class User extends Common {
 
-    public function AddOne($params) {
+    public function Register($params) {
+        $salt = random(6);
         $data = array(
-            'name'       => trim($params['name']),
             'phone'      => trim($params['phone']),
-            'avatar'     => trim($params['avatar']),
-            'password'   => trim($params['password']),
-            'salt'       => trim($params['salt']),
-            'intro'      => trim($params['intro']),
-            'status'     => intval($params['status']),
-            'type'       => intval($params['type']),
-            'token'      => trim($params['token']),
+            'password'   => md5(trim($params['password']) . $salt),
+            'salt'       => $salt,
+            'status'     => 0,
+            'type'       => 1,
             'createtime' => time(),
+            'normal'     => 1,
         );
+        if ($this->where('phone', $data['phone'])->value('id')) {
+            show_json(0, '该手机号已注册');
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
+            show_json(1, '注册成功');
         } else {
-            show_json(0, '添加失败');
+            show_json(0, '注册失败');
         }
     }
 

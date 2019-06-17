@@ -2,7 +2,9 @@
 
 namespace app\mobile\controller;
 
+use think\Cache;
 use think\Request;
+use think\Session;
 
 /**
  * @title 用户管理
@@ -15,24 +17,45 @@ class User extends Common {
      * @url /user/code
      * @method post
      * @param name:phone type:string require:1 default:- other:- desc:电话
-     * @author 开发者
+     * @author 开发者(暂定60秒有效时间)
      */
     public function code() {
-        $m = sendCode(13774024983, 12345, '455644');
-        print_r($m);
+        $phone = \request()->param('phone');
+        $key   = 'yunti_code_' . $phone;
+        if (Cache::get($key)) {
+            show_json(0, '请勿频繁发送验证码');
+        }
+        $code = intval(random(6, true));
+        //$m     = sendCode(13774024983, 12345, '455644');
+        //if ($m['status']==1) {
+        Cache::set($key, $code, 60);
+        //}else{
+
+        //}
+        show_json(1, $code);
     }
 
     /**
      * @title 注册
-     * @url /user/register
+     * @url /register
      * @method post
      * @param name:phone type:string require:1 default:- other:- desc:电话
+     * @param name:code type:string require:1 default:- other:- desc:验证码(暂未使用)
      * @param name:password type:string require:1 default:- other:- desc:密码
      * @author 开发者
      */
-    public function save() {
+    public function register() {
+        $pareams = request()->post();
+        /* $key     = 'yunti_code_' . trim($pareams['phone']);
+         $code    = Cache::get($key);
+         if (empty($code)) {
+             show_json(0, '验证码无效');
+         }
+         if ($code != intval($pareams['code'])) {
+             show_json(0, '验证码错误');
+         }*/
         $m = new \app\mobile\model\User();
-        $m->AddOne(request()->post());
+        $m->Register($pareams);
     }
 
     /**
