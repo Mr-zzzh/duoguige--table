@@ -5,7 +5,7 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title DeliveryAddress
+ * @title 收货地址管理
  * @group MOBILE
  */
 class DeliveryAddress extends Common {
@@ -14,33 +14,13 @@ class DeliveryAddress extends Common {
      * @title 列表
      * @url /deliveryaddress
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
-     * @param name:limit type:int require:0 default:15 desc:每页记录数
-     * @param name:page type:int require:0 default:1 desc:获取的页码
-     * @return total:总记录数
-     * @return per_page:每页记录数
-     * @return current_page:当前的页码
-     * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户ID name:收货人姓名 phone:收货人电话 address:地址 default:是否默认_0否_1是 createtime:创建时间
+     * @data id:id uid:用户ID name:收货人姓名 phone:收货人电话 address:地址 default:是否默认_0否_1是 default_text:文本 createtime:创建时间
      * @author 开发者
      */
     public function index() {
         $m = new \app\mobile\model\DeliveryAddress();
-        $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /deliveryaddress/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
+        $m->GetAll();
     }
 
     /**
