@@ -23,11 +23,15 @@ class Goods extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('brand b', 'a.bid=b.id', 'left')
+            ->field('a.*,b.name bname')->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
             $item               = $item->toArray();
+            $item['image']      = explode(',', $item['image']);
+            $item['label']      = explode(',', $item['label']);
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);

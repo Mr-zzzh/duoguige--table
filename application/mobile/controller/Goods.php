@@ -51,17 +51,22 @@ class Goods extends Common {
      * @return id:id
      * @return name:商品名
      * @return bid:品牌id
+     * @return bname:品牌名
      * @return cid:商品分类id
      * @return thumbnail:商品缩略图
-     * @return image:详情轮播图
+     * @return image:详情轮播图(数组)
      * @return specification:规格
      * @return model:型号
      * @return manufacturers:厂家名称
      * @return phone:销售电话
      * @return price:价格
-     * @return label:标签
+     * @return label:标签(数组)
      * @return intro:详情
+     * @return area:产地
+     * @return province:省份
      * @return address:地址
+     * @return color:颜色
+     * @return sale_number:销售数量
      * @return createtime:创建时间
      * @author 开发者
      */
