@@ -83,7 +83,7 @@ class User extends Common {
         if (!empty($token)) {
             $map['token'] = $token;
         } else {
-            $params       = Request::instance()->param();
+            $params       = request()->param();
             $mobile       = trim($params['phone']);
             $password     = trim($params['password']);
             $map['phone'] = $mobile;
