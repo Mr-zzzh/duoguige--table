@@ -66,10 +66,13 @@ Route::rule('home', 'mobile/Index/home', 'GET|POST');
 Route::rule('city', 'mobile/Index/city', 'GET|POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
+
 Route::resource('answer', 'mobile/Answer');
 Route::resource('area', 'mobile/Area');
+
 Route::resource('brand', 'mobile/Brand');
-Route::resource('branddatum', 'mobile/BrandDatum');
+Route::rule('branddatum', 'mobile/Brand/branddatum');
+
 Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
 Route::resource('download', 'mobile/Download');

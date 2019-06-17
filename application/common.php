@@ -108,7 +108,7 @@ if (!function_exists('is_comc')) {
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login', 'mobile/index/city', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/goods/read');
+        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login', 'mobile/index/city', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum');
         return $comc;
     }
 }

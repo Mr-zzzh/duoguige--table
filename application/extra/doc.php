@@ -36,7 +36,6 @@ return [
         'app\mobile\controller\Answer',
         'app\mobile\controller\Area',
         'app\mobile\controller\Brand',
-        'app\mobile\controller\BrandDatum',
         'app\mobile\controller\Company',
         'app\mobile\controller\DeliveryAddress',
         'app\mobile\controller\Download',
