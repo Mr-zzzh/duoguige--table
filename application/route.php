@@ -63,6 +63,7 @@ Route::rule('admin/payset/delete', 'admin/Payset/delete', 'POST|GET');
 Route::rule('login', 'mobile/Index/login', 'POST');
 Route::rule('register', 'mobile/User/register', 'POST');
 Route::rule('home', 'mobile/Index/home', 'GET|POST');
+Route::rule('city', 'mobile/Index/city', 'GET|POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('answer', 'mobile/Answer');

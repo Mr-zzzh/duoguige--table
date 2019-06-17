@@ -49,14 +49,14 @@ class Area extends Common {
     }
 
     public function getlist($code = '') {
-        $map          = array();
-        $map['pcode'] = intval($code);
-        $map['code']  = ['>=', 110000];
-        $list         = $this->cache(600)->where($map)->select()->toArray();
+        $map         = array();
+        $map['pid']  = $this->where('code', $code)->value('id');
+        $map['code'] = ['>=', 110000];
+        $list        = $this->cache(600)->where($map)->select()->toArray();
         return $list;
     }
 
-    //按字母排序获取澄海市
+    //按字母排序获取城市
     public function getcity() {
         $list    = $this->cache(600)->order('firstchar ASC')->where(array('level' => 2, 'code' => ['>=', 110000]))->select()->toArray();
         $newlist = array();

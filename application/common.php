@@ -108,7 +108,7 @@ if (!function_exists('is_comc')) {
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login', 'mobile/user/code', 'mobile/user/register');
+        $comc = array('admin/admin/login', 'admin/admin/register', 'mobile/index/login', 'mobile/index/city', 'mobile/user/code', 'mobile/user/register');
         return $comc;
     }
 }
@@ -296,22 +296,6 @@ if (!function_exists('to_json')) {
             return json_encode($content);
         }
 
-    }
-}
-//项目动态添加
-if (!function_exists('dynamic')) {
-    function dynamic($remark = '', $id = '') {
-        $logModel = new \app\admin\model\ProjectDynamic();
-        $logModel->saveDynamic($remark, $id);
-    }
-}
-
-//判断项目状态
-if (!function_exists('check_project')) {
-    function check_project($id = '') {
-        $projectModel = new \app\admin\model\Project();
-        $project      = $projectModel->GetOne($id);
-        return $project['status'];
     }
 }
 

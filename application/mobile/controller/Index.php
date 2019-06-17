@@ -2,6 +2,8 @@
 
 namespace app\mobile\controller;
 
+use think\Cache;
+
 /**
  * @title Index
  * @group MOBILE
@@ -46,66 +48,36 @@ class Index extends Common {
      * @title 首页
      * @url /home
      * @method GET|POST
-     * @return inflist:待办事项@
-     * @inflist id:id content:事项内容 nexttime:待办时间
-     * @return cllist:遗忘客户@
-     * @cllist id:id name:客户名称 lastfllowtime:最后跟进时间 days:天数
-     * @return rlist:待查阅日报@
-     * @rllist id:id name:姓名 type:简报类型1日报|2周报|3月报 createtime:提交时间
+     * @return banner:轮播图@
+     * @inflist id:id url:图片地址 jumpurl:图片跳转地址
+     * @return news:新闻@
+     * @cllist id:id title:新闻标题
      * @author 开发者
      */
     public function home() {
-        global $member;
-        //今日待办
-        $tstarttime = StEntime('d', 's');
-        $tendtime   = StEntime('d', 'e');
-        $infModel   = new \app\mobile\model\Inform();
-        $inflist    = $infModel->field('id,content,nexttime')->where(array('nexttime' => ['BETWEEN', $tstarttime . ',' . $tendtime]))->limit(2)->select()->toArray();
-        if (!empty($inflist)) {
-            foreach ($inflist as &$v) {
-                $v['nexttime'] = date('H:i', $v['nexttime']);
-            }
-            unset($v);
-        }
-        //被遗忘客户
-        $clientinfo    = get_set('business')['client'];
-        $writtenstatus = intval($clientinfo['written']);
-//        $forget = time()-($clientinfo['forget']?:1)*86400;
-        $forget  = time() - 43200;
-        $clModel = new \app\mobile\model\Clientele();
-        $cllist  = $clModel->where(array('mid' => $member['id'], 'lastfllowtime' => ['<', $forget], 'newop2' => ['<>', $writtenstatus]))->field('id,name,lastfllowtime')->limit(2)->select()->toArray();
-        if (!empty($cllist)) {
-            foreach ($cllist as &$v) {
-                $timess             = time() - $v['lastfllowtime'];
-                $v['days']          = floor($timess / 86400);
-                $v['lastfllowtime'] = date('Y-m-d H:i:s', $v['lastfllowtime']);
-            }
-            unset($v);
-        }
-        //待查阅
-        if ($member['group'] == 0 || $member['type'] == 2) {
-            $where          = array();
-            $where['a.cid'] = $member['cid'];
-            $where['b.mid'] = null;
-            if ($member['group'] == 1) {
-                $where['a.did'] = $member['did'];
-            }
-            $rlist = db('brief_report')->alias('a')->field('a.id,c.name,a.type,a.createtime')
-                ->join('coa_brief_report_read b', 'a.id=b.rid', 'left')
-                ->join('coa_member c', 'a.mid=c.id', 'left')
-                ->where($where)
-                ->order('a.createtime desc')
-                ->limit(2)
-                ->select();
-            if (!empty($rlist)) {
-                foreach ($rlist as &$item) {
-                    $item['createtime'] = date("Y年m月d日", $item['createtime']);
-                }
-                unset($item);
-            }
-        } else {
-            $rlist = array();
-        }
-        show_json(1, array('inflist' => $inflist, 'cllist' => $cllist, 'rlist' => $rlist));
+        $banner = db('banner')->field('id,url,jumpurl')
+            ->where(array('type' => 1, 'status' => 1))->order('sort asc,createtime desc')->select();
+        $new    = db('news')->field('id,title')
+            ->where('status', 1)->order('view_number desc')->limit(1)->find();
+        show_json(1, array('banner' => $banner, 'news' => $new));
     }
+
+    /**
+     * @title 首页城市列表
+     * @url /city
+     * @method GET|POST
+     * @return data:城市列表@
+     * @inflist id:id name:城市名 code:城市编码
+     * @author 开发者
+     */
+    public function city() {
+        $list = Cache::get('city_list');
+        if (empty($list)) {
+            $list = db('area')->field('id,name,code')
+                ->where(array('level' => 2))->select();
+            Cache::set('city_list', $list);
+        }
+        show_json(1, $list);
+    }
+
 }
