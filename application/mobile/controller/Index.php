@@ -5,7 +5,7 @@ namespace app\mobile\controller;
 use think\Cache;
 
 /**
- * @title Index
+ * @title 首页及登录
  * @group MOBILE
  */
 class Index extends Common {
