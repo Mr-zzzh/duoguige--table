@@ -38,7 +38,6 @@ return [
         'app\mobile\controller\Brand',
         'app\mobile\controller\Company',
         'app\mobile\controller\DeliveryAddress',
-        'app\mobile\controller\Download',
         'app\mobile\controller\Fault',
         'app\mobile\controller\Feedback',
         'app\mobile\controller\Goods',

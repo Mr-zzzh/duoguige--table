@@ -44,7 +44,7 @@ class Brand extends Common {
     }
 
     /**
-     * @title 读取
+     * @title 品牌资料读取
      * @url /brand/:id
      * @method get
      * @return datum:资料链接地址
@@ -56,6 +56,22 @@ class Brand extends Common {
         }
         $m = new \app\mobile\model\BrandDatum();
         $m->GetOne($id);
+    }
+
+    /**
+     * @title 品牌资料下载
+     * @url /brand/download
+     * @method get
+     * @param name:id type:string require:1 default:- other:- desc:资料id
+     * @author 开发者
+     */
+    public function download() {
+        $id = request()->get('id');
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $m = new \app\mobile\model\BrandDatum();
+        $m->Download($id);
     }
 
 }

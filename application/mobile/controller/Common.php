@@ -8,6 +8,7 @@ class Common extends Controller {
 
     public function _initialize() {
         parent::_initialize();
+        global $member;
         set_exception_handler(function ($e) {
             show_json(-1, $e->getMessage() ?: '系统出现异常');
         });

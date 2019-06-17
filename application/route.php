@@ -72,10 +72,10 @@ Route::resource('area', 'mobile/Area');
 
 Route::resource('brand', 'mobile/Brand');
 Route::rule('branddatum', 'mobile/Brand/branddatum');
+Route::rule('brand/download', 'mobile/Brand/download');
 
 Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
-Route::resource('download', 'mobile/Download');
 Route::resource('fault', 'mobile/Fault');
 Route::resource('feedback', 'mobile/Feedback');
 Route::resource('goods', 'mobile/Goods');

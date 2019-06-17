@@ -26,4 +26,21 @@ class BrandDatum extends Common {
         show_json(1, $item);
     }
 
+    public function Download($id) {
+        global $member;
+        $data['uid']  = $member['id'];
+        $data['bdid'] = $id;
+        if (db('download')->where($data)->value('id')) {
+            show_json(0, '您已下载过该文件');
+        }
+        $this->where('id', $id)->setInc('download');
+        $data['createtime'] = time();
+        $item               = db('download')->insert($data);
+        if ($item) {
+            show_json(1, '成功');
+        } else {
+            show_json(0, '失败');
+        }
+    }
+
 }
