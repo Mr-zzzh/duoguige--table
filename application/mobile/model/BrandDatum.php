@@ -16,7 +16,8 @@ class BrandDatum extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->where('id', $id)->value('datum');
+        $this->where('id', $id)->setInc('view');
+        $item = $this->where('id', $id)->field('datum')->find();
         if (empty($item)) {
             show_json(1);
         } else {
