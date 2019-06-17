@@ -9,8 +9,7 @@ class DeliveryAddress extends Common {
         $list = $this->where('uid', $member['id'])->select()->toArray();
         if (!empty($list)) {
             foreach ($list as $k => &$item) {
-                $item['default_text'] = $item['default'] == 1 ? '是' : '否';
-                $item['createtime']   = date('Y-m-d H:i:s', $item['createtime']);
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
         }
@@ -57,13 +56,25 @@ class DeliveryAddress extends Common {
     }
 
     public function EditOne($params, $id) {
+        global $member;
         $data = array(
-            'uid'     => intval($params['uid']),
             'name'    => trim($params['name']),
             'phone'   => trim($params['phone']),
             'address' => trim($params['address']),
             'default' => intval($params['default']),
         );
+        if (empty($data['name'])) {
+            show_json('0', '收货人姓名不能为空');
+        }
+        if (empty($data['phone'])) {
+            show_json('0', '收货人手机不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json('0', '收货地址不能为空');
+        }
+        if ($data['default'] == 1) {
+            $this->where(array('uid' => $member['id']))->update(array('default' => 0));
+        }
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');

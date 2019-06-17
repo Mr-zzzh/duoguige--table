@@ -15,7 +15,7 @@ class DeliveryAddress extends Common {
      * @url /deliveryaddress
      * @method get
      * @return data:列表@
-     * @data id:id uid:用户ID name:收货人姓名 phone:收货人电话 address:地址 default:是否默认_0否_1是 default_text:文本 createtime:创建时间
+     * @data id:id uid:用户ID name:收货人姓名 phone:收货人电话 address:地址 default:是否默认_0否_1是 createtime:创建时间
      * @author 开发者
      */
     public function index() {
@@ -56,7 +56,6 @@ class DeliveryAddress extends Common {
      * @title 编辑
      * @url /deliveryaddress/:id
      * @method put
-     * @param name:uid type:int require:1 default:- other:- desc:用户ID
      * @param name:name type:string require:1 default:- other:- desc:收货人姓名
      * @param name:phone type:string require:1 default:- other:- desc:收货人电话
      * @param name:address type:string require:1 default:- other:- desc:地址
