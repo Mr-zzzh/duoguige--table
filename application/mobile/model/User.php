@@ -121,4 +121,15 @@ class User extends Common {
         return $info;
     }
 
+    public function MyCollect($params) {
+        global $member;
+        $map          = array();
+        $map['a.uid'] = $member['id'];
+        $list         = db('download')->alias('a')
+            ->join('brand_datum b', 'a.bdid=b.id')
+            ->field('b.id,b.name,b.size,b.view,b.download')
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        show_json(1, $list);
+    }
+
 }

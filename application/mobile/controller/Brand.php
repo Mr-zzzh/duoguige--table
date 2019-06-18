@@ -59,13 +59,13 @@ class Brand extends Common {
     }
 
     /**
-     * @title 品牌资料下载
-     * @url /brand/download
+     * @title 品牌资料收藏
+     * @url /brand/collect
      * @method get
      * @param name:id type:string require:1 default:- other:- desc:资料id
      * @author 开发者
      */
-    public function download() {
+    public function collect() {
         $id = request()->get('id');
         if ($id < 1) {
             show_json(0, '参数ID错误');

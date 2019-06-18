@@ -72,7 +72,7 @@ Route::resource('area', 'mobile/Area');
 
 Route::resource('brand', 'mobile/Brand');
 Route::rule('branddatum', 'mobile/Brand/branddatum');
-Route::rule('brand/download', 'mobile/Brand/download');
+Route::rule('brand/collect', 'mobile/Brand/collect');
 
 Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
@@ -96,3 +96,4 @@ Route::resource('set', 'mobile/Set');
 Route::resource('technician', 'mobile/Technician');
 Route::resource('user', 'mobile/User');
 Route::rule('user/code', 'mobile/User/code', 'POST');
+Route::rule('my_collect', 'mobile/User/my_collect', 'GET');
