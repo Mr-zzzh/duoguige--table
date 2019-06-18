@@ -122,11 +122,30 @@ class User extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:商品名 thumbnail:商品缩略图 price:价格
+     * @data id:id name:资料标题 size:大小 view:浏览量 download:下载量
      * @author 开发者
      */
     public function my_collect() {
         $m = new \app\mobile\model\User();
         $m->MyCollect(request()->get());
+    }
+
+    /**
+     * @title 我的获赞
+     * @url /my_like
+     * @method get
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id nid:新闻id content:留言内容 like_number:获赞数 createtime:创建时间 day:日期(2019-5-31) time:时间(17:53)
+     * @author 开发者
+     */
+    public function my_like() {
+        $m = new \app\mobile\model\User();
+        $m->MyLike(request()->get());
     }
 }
