@@ -27,17 +27,16 @@ class User extends Common {
     }
 
     public function EditOne($params, $id) {
-        $data = array(
-            'name'     => trim($params['name']),
-            'phone'    => trim($params['phone']),
-            'avatar'   => trim($params['avatar']),
-            'password' => trim($params['password']),
-            'salt'     => trim($params['salt']),
-            'intro'    => trim($params['intro']),
-            'status'   => intval($params['status']),
-            'type'     => intval($params['type']),
-            'token'    => trim($params['token']),
-        );
+        $data = array();
+        if (!empty($params['name'])) {
+            $data['name'] = trim($params['name']);
+        }
+        if (!empty($params['avatar'])) {
+            $data['avatar'] = trim($params['avatar']);
+        }
+        if (!empty($params['intro'])) {
+            $data['intro'] = trim($params['intro']);
+        }
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
