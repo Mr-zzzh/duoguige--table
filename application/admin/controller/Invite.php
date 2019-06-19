@@ -30,7 +30,7 @@ class Invite extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:发布招聘用户id uname:发布人姓名 post:招聘岗位 salary:工资范围id sname:薪资范围文本 experience:工作经验 ename:工作经验文本 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 description:岗位描述 duty:岗位职责 name:联系人姓名 phone:联系电话 status:状态_0待审_1通过_2不通过_3招聘结束 status_text:状态文本 createtime:创建时间 checktime:审核时间
+     * @data id:id uid:发布招聘用户id uname:发布人姓名 post:招聘岗位 salary:工资范围id sname:薪资范围文本 experience:工作经验 ename:工作经验文本 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 address:详细地址 description:岗位描述 duty:岗位职责 name:联系人姓名 phone:联系电话 status:状态_0待审_1通过_2不通过_3招聘结束 status_text:状态文本 createtime:创建时间 checktime:审核时间
      * @author 开发者
      */
     public function index() {
@@ -118,6 +118,7 @@ class Invite extends Common {
      * @return city_text:市
      * @return area:区编号
      * @return area_text:区
+     * @return address:详细地址
      * @return description:岗位描述
      * @return duty:岗位职责
      * @return name:联系人姓名
