@@ -22,7 +22,7 @@ class GoodsOrder extends Common {
             ->field('a.*,u.name uname,g.name gname,g.thumbnail,d.name dname,d.phone,d.area,d.address')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
-            $status = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货', '4' => '退款');
+            $status = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
             foreach ($list['data'] as $k => &$item) {
                 $item['status_text']  = $status[$item['status']];
                 $item['paytype_text'] = $item['paytype_text'] == 1 ? '支付宝' : '微信';
@@ -49,14 +49,7 @@ class GoodsOrder extends Common {
         if (empty($params['id']) || $params['id'] < 1) {
             show_json('id传输错误');
         }
-        if (empty($params['expresscom'])) {
-            show_json('快递公司');
-        }
-        if (empty($params['expresssn'])) {
-            show_json('快递单号');
-        }
-        $data['expresscom']  = trim($params['expresscom']);
-        $data['expresssn']   = trim($params['expresssn']);
+        $data['status']      = 2;
         $data['delivertime'] = time();
         if ($this->save($data, array('id' => intval($params['id']))) != false) {
             //logs('编辑??,ID:' . $id, 3);
@@ -123,7 +116,7 @@ class GoodsOrder extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $status               = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货', '4' => '退款');
+            $status               = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
             $item                 = $item->toArray();
             $item['status_text']  = $status[$item['status']];
             $item['paytype_text'] = $item['paytype_text'] == 1 ? '支付宝' : '微信';

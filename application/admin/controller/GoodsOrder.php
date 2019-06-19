@@ -16,7 +16,7 @@ class GoodsOrder extends Common {
      * @method get
      * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
      * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:status type:int require:0 default:- other:- desc:-1取消订单_0待支付_1已支付_2已发货_3已收货_4退款
+     * @param name:status type:int require:0 default:- other:- desc:-1取消订单_0待支付_1已支付_2已发货_3已收货
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -25,7 +25,7 @@ class GoodsOrder extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id freight:运费 expresscom:快递公司 expresssn:快递单号 paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 area:地区 address:收货地址
+     * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 area:地区 address:收货地址
      * @author 开发者
      */
     public function index() {
@@ -38,8 +38,6 @@ class GoodsOrder extends Common {
      * @url /admin/goodsorder/deliver
      * @method post|get
      * @param name:id type:int require:1 default:- other:- desc:订单id
-     * @param name:expresscom type:string require:1 default:- other:- desc:快递公司
-     * @param name:expresssn type:string require:1 default:- other:- desc:快递单号
      * @author 开发者
      */
     public function deliver() {
@@ -91,15 +89,12 @@ class GoodsOrder extends Common {
      * @return ordersn:订单号
      * @return number:商品数量
      * @return money:商品金额
-     * @return status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款
+     * @return status:-1取消订单_0待支付_1支付_2已发货_3已收货
      * @return status_text:状态文本
      * @return paytype:1支付宝_2微信
      * @return paytype_text:付款方式文本
      * @return tradeno:交易单号
      * @return addressid:地址id
-     * @return freight:运费
-     * @return expresscom:快递公司
-     * @return expresssn:快递单号
      * @return paytime:支付时间
      * @return finishtime:完成时间
      * @return canceltime:取消时间
