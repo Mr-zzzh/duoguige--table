@@ -84,6 +84,7 @@ Route::resource('goodslabel', 'mobile/GoodsLabel');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::resource('invite', 'mobile/Invite');
 Route::rule('salary', 'mobile/Invite/salary', 'GET');
+Route::rule('experience', 'mobile/Invite/experience', 'GET');
 
 Route::resource('jobwanted', 'mobile/JobWanted');
 Route::resource('leavemessage', 'mobile/LeaveMessage');

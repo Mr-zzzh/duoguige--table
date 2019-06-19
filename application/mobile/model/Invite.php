@@ -9,16 +9,21 @@ class Invite extends Common {
         show_json(1, $list);
     }
 
+    public function Experience() {
+        $list = db('experience')->select();
+        show_json(1, $list);
+    }
+
     public function GetAll($params) {
         $map = array();
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
-        if (isset($params['status']) && $params['status'] !== '') {
-            $map['status'] = intval($params['status']);
+            $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
         if (!empty($params['keyword'])) {
-            $map['post|salary|experience|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a.post|salary|experience|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+        }
+        if (!empty($params['keyword'])) {
+            $map['a.post|salary|experience|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
         $list = $this->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
