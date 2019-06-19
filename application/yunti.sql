@@ -477,7 +477,7 @@ CREATE TABLE `yunti_banner` (
   `url` varchar(255) DEFAULT NULL COMMENT '图片url',
   `jumpurl` varchar(255) DEFAULT NULL COMMENT '跳转地址',
   `sort` int(10) DEFAULT NULL COMMENT '排序(越小越靠前)',
-  `type` tinyint(2) DEFAULT NULL COMMENT '类型_1首页轮播图_2保险页面图',
+  `type` tinyint(2) DEFAULT NULL COMMENT '类型_1首页轮播图_2保险页面图_3新闻页面轮播图',
   `status` int(10) DEFAULT '1' COMMENT '状态_1显示_2不显示',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)

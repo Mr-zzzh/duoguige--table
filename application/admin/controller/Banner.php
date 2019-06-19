@@ -22,7 +22,7 @@ class Banner extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id url:图片url jumpurl:跳转链接地址 sort:排序(越小越靠前) type:类型_1首页轮播图_2保险页面图 type_text:类型文本 status:状态_1显示_2不显示 status_text:状态文本 createtime:创建时间
+     * @data id:id url:图片url jumpurl:跳转链接地址 sort:排序(越小越靠前) type:类型_1首页轮播图_2保险页面图_3新闻页面轮播图 type_text:类型文本 status:状态_1显示_2不显示 status_text:状态文本 createtime:创建时间
      * @author 开发者
      */
     public function index() {
@@ -37,7 +37,7 @@ class Banner extends Common {
      * @param name:url type:int require:1 default:- other:- desc:图片url
      * @param name:jumpurl type:int require:0 default:- other:- desc:跳转链接地址
      * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
-     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图
+     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
      * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示
      * @author 开发者
      */
@@ -67,7 +67,7 @@ class Banner extends Common {
      * @param name:url type:int require:1 default:- other:- desc:图片url
      * @param name:jumpurl type:int require:0 default:- other:- desc:跳转链接地址
      * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
-     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图
+     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
      * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示
      * @author 开发者
      */
@@ -87,7 +87,7 @@ class Banner extends Common {
      * @return url:图片url
      * @return jumpurl:跳转链接地址
      * @return sort:排序(越小越靠前)
-     * @return type:类型_1首页轮播图_2保险页面图
+     * @return type:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
      * @return type_text:类型文本
      * @return status:状态_1显示_2不显示
      * @return status_text:状态文本
