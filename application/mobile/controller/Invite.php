@@ -104,17 +104,19 @@ class Invite extends Common {
      * @title 编辑
      * @url /invite/:id
      * @method put
-     * @param name:uid type:int require:1 default:- other:- desc:发布招聘用户id
      * @param name:post type:string require:1 default:- other:- desc:招聘岗位
-     * @param name:salary type:string require:1 default:- other:- desc:工资范围
-     * @param name:experience type:string require:1 default:- other:- desc:工作经验
+     * @param name:education type:string require:1 default:- other:- desc:学历(不限/初中/中专/高中大专/本科/硕士/博士)
+     * @param name:salary type:int require:1 default:- other:- desc:工资范围id
+     * @param name:experience type:int require:1 default:- other:- desc:工作经验id
      * @param name:province type:int require:1 default:- other:- desc:省编号
      * @param name:city type:int require:1 default:- other:- desc:市编号
+     * @param name:area type:int require:1 default:- other:- desc:区编号
+     * @param name:address type:string require:1 default:- other:- desc:详细地址
      * @param name:description type:string require:1 default:- other:- desc:岗位描述
      * @param name:duty type:string require:1 default:- other:- desc:岗位职责
      * @param name:name type:string require:1 default:- other:- desc:联系人姓名
      * @param name:phone type:string require:1 default:- other:- desc:联系电话
-     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3招聘结束
+     * @param name:number type:string require:1 default:- other:- desc:招聘人数(不限或者数字)
      * @author 开发者
      */
     public function update(Request $request, $id) {

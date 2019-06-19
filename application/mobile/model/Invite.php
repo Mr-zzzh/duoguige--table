@@ -34,7 +34,8 @@ class Invite extends Common {
         if (!empty($params['keyword'])) {
             $map['a.post|a.description|a.duty|a.name|a.phone|c.company_name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->alias('a')
+        $map['a.status'] = 1;
+        $list            = $this->alias('a')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->join('company c', 'a.uid=c.uid', 'left')
             ->field('a.id,a.post,a.province,a.city,a.createtime,a.name,a.phone,s.name salary_text,c.company_name')
@@ -127,20 +128,61 @@ class Invite extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid'         => intval($params['uid']),
             'post'        => trim($params['post']),
+            'education'   => trim($params['education']),
             'salary'      => trim($params['salary']),
             'experience'  => trim($params['experience']),
             'province'    => intval($params['province']),
             'city'        => intval($params['city']),
+            'area'        => intval($params['area']),
+            'address'     => trim($params['address']),
             'description' => trim($params['description']),
             'duty'        => trim($params['duty']),
             'name'        => trim($params['name']),
             'phone'       => trim($params['phone']),
-            'status'      => intval($params['status']),
+            'number'      => trim($params['number']),
+            'status'      => 0,
         );
+        if (empty($data['post'])) {
+            show_json(0, '招聘岗位不能为空');
+        }
+        if (empty($data['education'])) {
+            show_json(0, '学历要求不能为空');
+        }
+        if (empty($data['salary'])) {
+            show_json(0, '薪资范围不能为空');
+        }
+        if (empty($data['experience'])) {
+            show_json(0, '经验要求不能为空');
+        }
+        if (empty($data['province'])) {
+            show_json(0, '省不能为空');
+        }
+        if (empty($data['city'])) {
+            show_json(0, '市不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '区不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
+        if (empty($data['description'])) {
+            show_json(0, '岗位描述不能为空');
+        }
+        if (empty($data['duty'])) {
+            show_json(0, '岗位职责不能为空');
+        }
+        if (empty($data['name'])) {
+            show_json(0, '联系人姓名不能为空');
+        }
+        if (empty($data['phone'])) {
+            show_json(0, '联系电话不能为空');
+        }
+        if (empty($data['number'])) {
+            show_json(0, '招聘人数不能为空');
+        }
         if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
