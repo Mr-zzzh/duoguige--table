@@ -63,6 +63,20 @@ class Index extends Common {
     }
 
     /**
+     * @title 保险页面
+     * @url /insurance
+     * @method GET|POST
+     * @return data:保险@
+     * @inflist id:id url:图片地址 jumpurl:图片跳转地址
+     * @author 开发者
+     */
+    public function insurance() {
+        $banner = db('banner')->field('id,url,jumpurl')
+            ->where(array('type' => 2, 'status' => 1))->order('sort asc,createtime desc')->select();
+        show_json(1, $banner);
+    }
+
+    /**
      * @title 首页城市列表
      * @url /city
      * @method GET|POST
