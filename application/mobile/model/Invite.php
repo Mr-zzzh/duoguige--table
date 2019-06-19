@@ -190,12 +190,19 @@ class Invite extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('salary s', 'a.salary=s.id', 'left')
+            ->join('experience e', 'a.experience=e.id', 'left')
+            ->field('a.id,a.post,a.education,a.salary,a.experience,a.province,a.city,a.area,description,a.duty,a.name,a.phone,a.address,a.number,a.createtime,s.name sname,e.name ename')
+            ->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item                  = $item->toArray();
+            $item['province_text'] = city_name($item['province']);
+            $item['city_text']     = city_name($item['city']);
+            $item['area_text']     = city_name($item['area']);
+            $item['createtime']    = date('Y-m-d', $item['createtime']);
         }
         show_json(1, $item);
     }

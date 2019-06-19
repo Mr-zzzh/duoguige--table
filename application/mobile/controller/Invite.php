@@ -132,18 +132,25 @@ class Invite extends Common {
      * @url /invite/:id
      * @method get
      * @return id:id
-     * @return uid:发布招聘用户id
      * @return post:招聘岗位
+     * @return education:学历
      * @return salary:工资范围
+     * @return sname:薪资范围文本
      * @return experience:工作经验
+     * @return ename:工作经验文本
      * @return province:省编号
+     * @return province_text:省
      * @return city:市编号
+     * @return city_text:市
+     * @return area:区编号
+     * @return area_text:区
+     * @return address:详细地址
      * @return description:岗位描述
      * @return duty:岗位职责
      * @return name:联系人姓名
      * @return phone:联系电话
-     * @return status:状态_0待审_1通过_2不通过_3招聘结束
      * @return createtime:创建时间
+     * @return number:招聘人数
      * @author 开发者
      */
     public function read($id) {
