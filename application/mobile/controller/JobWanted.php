@@ -40,14 +40,16 @@ class JobWanted extends Common {
      * @title 添加
      * @url /jobwanted
      * @method post
-     * @param name:uid type:int require:1 default:- other:- desc:用户id
      * @param name:post type:string require:1 default:- other:- desc:求职岗位
      * @param name:salary type:string require:1 default:- other:- desc:期望薪资
      * @param name:arrival type:string require:1 default:- other:- desc:到岗时间
      * @param name:province type:int require:1 default:- other:- desc:省编号
      * @param name:city type:int require:1 default:- other:- desc:市编号
+     * @param name:area type:int require:1 default:- other:- desc:区编号
      * @param name:intro type:string require:1 default:- other:- desc:自我描述
-     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3已找到工作
+     * @param name:education type:string require:1 default:- other:- desc:最高学历
+     * @param name:name type:string require:1 default:- other:- desc:姓名
+     * @param name:address type:string require:1 default:- other:- desc:详细地址
      * @author 开发者
      */
     public function save() {
@@ -73,14 +75,16 @@ class JobWanted extends Common {
      * @title 编辑
      * @url /jobwanted/:id
      * @method put
-     * @param name:uid type:int require:1 default:- other:- desc:用户id
      * @param name:post type:string require:1 default:- other:- desc:求职岗位
      * @param name:salary type:string require:1 default:- other:- desc:期望薪资
      * @param name:arrival type:string require:1 default:- other:- desc:到岗时间
      * @param name:province type:int require:1 default:- other:- desc:省编号
      * @param name:city type:int require:1 default:- other:- desc:市编号
+     * @param name:area type:int require:1 default:- other:- desc:区编号
      * @param name:intro type:string require:1 default:- other:- desc:自我描述
-     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3已找到工作
+     * @param name:education type:string require:1 default:- other:- desc:最高学历
+     * @param name:name type:string require:1 default:- other:- desc:姓名
+     * @param name:address type:string require:1 default:- other:- desc:详细地址
      * @author 开发者
      */
     public function update(Request $request, $id) {
@@ -96,14 +100,20 @@ class JobWanted extends Common {
      * @url /jobwanted/:id
      * @method get
      * @return id:id
-     * @return uid:用户id
      * @return post:求职岗位
-     * @return salary:期望薪资
+     * @return education:最高学历
+     * @return name:求职者姓名
+     * @return salary_text:期望薪资
      * @return arrival:到岗时间
      * @return province:省编号
+     * @return province_text:省
      * @return city:市编号
+     * @return province_text:市
+     * @return area:区编号
+     * @return area_text:区
+     * @return address:详细地址
      * @return intro:自我描述
-     * @return status:状态_0待审_1通过_2不通过_3已找到工作
+     * @return avatar:头像
      * @return createtime:创建时间
      * @author 开发者
      */

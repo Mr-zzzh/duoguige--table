@@ -29,7 +29,7 @@ class JobWanted extends Common {
             ->join('user u', 'a.uid=u.id', 'left')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->field('a.id,a.post,a.name,a.createtime,a.intro,s.name salary_text,u.phone,u.avatar')
-            ->where($map)->paginate($params['limit'])->toArray();
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d', $item['createtime']);
@@ -40,17 +40,52 @@ class JobWanted extends Common {
     }
 
     public function AddOne($params) {
+        global $member;
         $data = array(
-            'uid'        => intval($params['uid']),
+            'uid'        => $member['id'],
             'post'       => trim($params['post']),
-            'salary'     => trim($params['salary']),
+            'salary'     => intval($params['salary']),
             'arrival'    => trim($params['arrival']),
             'province'   => intval($params['province']),
             'city'       => intval($params['city']),
+            'area'       => intval($params['area']),
             'intro'      => trim($params['intro']),
-            'status'     => intval($params['status']),
+            'education'  => trim($params['education']),
+            'name'       => trim($params['name']),
+            'address'    => trim($params['address']),
+            'status'     => 0,
             'createtime' => time(),
         );
+        if (empty($data['post'])) {
+            show_json(0, '求职岗位不能为空');
+        }
+        if (empty($data['arrival'])) {
+            show_json(0, '到岗时间不能为空');
+        }
+        if (empty($data['education'])) {
+            show_json(0, '学历要求不能为空');
+        }
+        if (empty($data['name'])) {
+            show_json(0, '姓名不能为空');
+        }
+        if (empty($data['intro'])) {
+            show_json(0, '自我描述不能为空');
+        }
+        if (empty($data['salary'])) {
+            show_json(0, '薪资范围不能为空');
+        }
+        if (empty($data['province'])) {
+            show_json(0, '省不能为空');
+        }
+        if (empty($data['city'])) {
+            show_json(0, '市不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '区不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
         } else {
@@ -68,16 +103,49 @@ class JobWanted extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid'      => intval($params['uid']),
-            'post'     => trim($params['post']),
-            'salary'   => trim($params['salary']),
-            'arrival'  => trim($params['arrival']),
-            'province' => intval($params['province']),
-            'city'     => intval($params['city']),
-            'intro'    => trim($params['intro']),
-            'status'   => intval($params['status']),
+            'post'       => trim($params['post']),
+            'salary'     => intval($params['salary']),
+            'arrival'    => trim($params['arrival']),
+            'province'   => intval($params['province']),
+            'city'       => intval($params['city']),
+            'area'       => intval($params['area']),
+            'intro'      => trim($params['intro']),
+            'education'  => trim($params['education']),
+            'name'       => trim($params['name']),
+            'address'    => trim($params['address']),
+            'status'     => 0,
+            'createtime' => time(),
         );
-        $this->checkData($data, $id);
+        if (empty($data['post'])) {
+            show_json(0, '求职岗位不能为空');
+        }
+        if (empty($data['arrival'])) {
+            show_json(0, '到岗时间不能为空');
+        }
+        if (empty($data['education'])) {
+            show_json(0, '学历要求不能为空');
+        }
+        if (empty($data['name'])) {
+            show_json(0, '姓名不能为空');
+        }
+        if (empty($data['intro'])) {
+            show_json(0, '自我描述不能为空');
+        }
+        if (empty($data['salary'])) {
+            show_json(0, '薪资范围不能为空');
+        }
+        if (empty($data['province'])) {
+            show_json(0, '省不能为空');
+        }
+        if (empty($data['city'])) {
+            show_json(0, '市不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '区不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
         if ($this->save($data, array('id' => $id)) !== false) {
             show_json(1, '编辑成功');
         } else {
@@ -86,12 +154,18 @@ class JobWanted extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('salary s', 'a.salary=s.id', 'left')
+            ->field('a.id,a.post,a.arrival,a.province,a.city,a.area,a.intro,a.education,a.name,a.address,a.createtime,s.name salary_text,u.avatar')->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item                  = $item->toArray();
+            $item['province_text'] = city_name($item['province']);
+            $item['city_text']     = city_name($item['city']);
+            $item['area_text']     = city_name($item['area']);
+            $item['createtime']    = date('Y-m-d', $item['createtime']);
         }
         show_json(1, $item);
     }
