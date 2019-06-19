@@ -61,6 +61,7 @@ CREATE TABLE `yunti_delivery_address` (
   `uid` int(11) NOT NULL COMMENT '用户ID',
   `name` varchar(30) NOT NULL COMMENT '收货人姓名',
   `phone` varchar(20) NOT NULL COMMENT '收货人电话',
+  `area` varchar(50) DEFAULT NULL COMMENT '地区',
   `address` varchar(50) NOT NULL COMMENT '地址',
   `default` int(1) NOT NULL COMMENT '是否默认 0否 1是',
   `createtime` int(11) NOT NULL COMMENT '创建时间',

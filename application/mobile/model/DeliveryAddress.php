@@ -25,6 +25,7 @@ class DeliveryAddress extends Common {
             'uid'        => $member['id'],
             'name'       => trim($params['name']),
             'phone'      => trim($params['phone']),
+            'area'       => trim($params['area']),
             'address'    => trim($params['address']),
             'default'    => intval($params['default']),
             'createtime' => time(),
@@ -37,6 +38,9 @@ class DeliveryAddress extends Common {
         }
         if (!is_mobilenumber($data['phone'])) {
             show_json('0', '请传正确手机号');
+        }
+        if (empty($data['area'])) {
+            show_json('0', '收货地区不能为空');
         }
         if (empty($data['address'])) {
             show_json('0', '收货地址不能为空');
@@ -66,6 +70,7 @@ class DeliveryAddress extends Common {
         $data = array(
             'name'    => trim($params['name']),
             'phone'   => trim($params['phone']),
+            'area'    => trim($params['area']),
             'address' => trim($params['address']),
             'default' => intval($params['default']),
         );
@@ -77,6 +82,9 @@ class DeliveryAddress extends Common {
         }
         if (!is_mobilenumber($data['phone'])) {
             show_json('0', '请传正确手机号');
+        }
+        if (empty($data['area'])) {
+            show_json('0', '收货地区不能为空');
         }
         if (empty($data['address'])) {
             show_json('0', '收货地址不能为空');
