@@ -30,7 +30,7 @@ class Invite extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:发布招聘用户id uname:发布人姓名 post:招聘岗位 salary:工资范围id sname:薪资范围文本 experience:工作经验 ename:工作经验文本 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 address:详细地址 description:岗位描述 duty:岗位职责 name:联系人姓名 phone:联系电话 status:状态_0待审_1通过_2不通过_3招聘结束 status_text:状态文本 createtime:创建时间 checktime:审核时间
+     * @data id:id uid:发布招聘用户id uname:发布人昵称 post:招聘岗位 education:学历 salary:工资范围id sname:薪资范围文本 experience:工作经验 ename:工作经验文本 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 address:详细地址 description:岗位描述 duty:岗位职责 name:联系人姓名 phone:联系电话 status:状态_0待审_1通过_2不通过 status_text:状态文本 createtime:创建时间 checktime:审核时间
      * @author 开发者
      */
     public function index() {
@@ -53,7 +53,7 @@ class Invite extends Common {
      * @param name:duty type:string require:1 default:- other:- desc:岗位职责
      * @param name:name type:string require:1 default:- other:- desc:联系人姓名
      * @param name:phone type:string require:1 default:- other:- desc:联系电话
-     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3招聘结束
+     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过
      * @author 开发者
      */
     /*public function save() {
@@ -89,7 +89,7 @@ class Invite extends Common {
      * @param name:duty type:string require:1 default:- other:- desc:岗位职责
      * @param name:name type:string require:1 default:- other:- desc:联系人姓名
      * @param name:phone type:string require:1 default:- other:- desc:联系电话
-     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过_3招聘结束
+     * @param name:status type:int require:1 default:- other:- desc:状态_0待审_1通过_2不通过
      * @author 开发者
      */
     /*public function update(Request $request, $id) {
@@ -106,8 +106,9 @@ class Invite extends Common {
      * @method get
      * @return id:id
      * @return uid:发布招聘用户id
-     * @return uname:发布人姓名
+     * @return uname:发布人昵称
      * @return post:招聘岗位
+     * @return education:学历
      * @return salary:工资范围
      * @return sname:薪资范围文本
      * @return experience:工作经验
@@ -123,7 +124,7 @@ class Invite extends Common {
      * @return duty:岗位职责
      * @return name:联系人姓名
      * @return phone:联系电话
-     * @return status:状态_0待审_1通过_2不通过_3招聘结束
+     * @return status:状态_0待审_1通过_2不通过
      * @return status_text:状态文本
      * @return createtime:创建时间
      * @return checktime:审核时间

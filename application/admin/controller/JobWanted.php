@@ -29,7 +29,7 @@ class JobWanted extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id uname:发布人姓名 post:求职岗位 salary:期望薪资 sname:薪资范围文本 arrival:到岗时间 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 intro:自我描述 status:状态_0待审_1通过_2不通过_3已找到工作  status_text:状态文本 createtime:创建时间 checktime:审核时间
+     * @data id:id uid:用户id uname:发布人昵称 post:求职岗位 name:求职者姓名 education:最高学历 salary:期望薪资 sname:薪资范围文本 arrival:到岗时间 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 address:详细地址 intro:自我描述 status:状态_0待审_1通过_2不通过_3已找到工作  status_text:状态文本 createtime:创建时间 checktime:审核时间
      * @author 开发者
      */
     public function index() {
@@ -98,8 +98,10 @@ class JobWanted extends Common {
      * @method get
      * @return id:id
      * @return uid:用户id
-     * @return uname:发布人姓名
+     * @return uname:发布人昵称
      * @return post:求职岗位
+     * @return education:最高学历
+     * @return name:求职者姓名
      * @return salary:期望薪资
      * @return sname:期望薪资文本
      * @return arrival:到岗时间
@@ -109,6 +111,7 @@ class JobWanted extends Common {
      * @return province_text:市
      * @return area:区编号
      * @return area_text:区
+     * @return address:详细地址
      * @return intro:自我描述
      * @return status:状态_0待审_1通过_2不通过_3已找到工作
      * @return status_text:状态文本
