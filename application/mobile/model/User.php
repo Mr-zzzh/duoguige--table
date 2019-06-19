@@ -150,7 +150,7 @@ class User extends Common {
         show_json(1, $list);
     }
 
-    public function Technician($params) {
+    public function TechnicianAdd($params) {
         global $member;
         $data = array(
             'uid'              => $member['id'],
@@ -191,7 +191,7 @@ class User extends Common {
         $user['status'] = 0;
         $user['type']   = 2;
         $this->where('id', $member['id'])->update($user);
-        if (db('technician')->data($data, true)->isUpdate(false)->save()) {
+        if (db('technician')->insert($data)) {
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
@@ -253,6 +253,19 @@ class User extends Common {
         } else {
             show_json(0, '添加失败');
         }
+    }
+
+    public function TechnicianDetail($id) {
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $item = db('technician')->where('id', $id)->find();
+        if (empty($item)) {
+            show_json(1);
+        } else {
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+        }
+        show_json(1, $item);
     }
 
 }

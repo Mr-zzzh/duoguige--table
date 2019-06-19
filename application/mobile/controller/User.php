@@ -119,9 +119,9 @@ class User extends Common {
      * @param name:technician_image type:string require:1 default:- other:- desc:技师证件
      * @author 开发者
      */
-    public function technician() {
+    public function technician_add() {
         $m = new \app\mobile\model\User();
-        $m->Technician(request()->post());
+        $m->TechnicianAdd(request()->post());
     }
 
     /**
@@ -143,6 +143,30 @@ class User extends Common {
     public function technician_edit() {
         $m = new \app\mobile\model\User();
         $m->TechnicianEdit(request()->post());
+    }
+
+    /**
+     * @title 技术大师认证信息读取
+     * @url /user/technician_detail
+     * @method get
+     * @param name:id type:string require:1 default:- other:- desc:数据id
+     * @return id:id
+     * @return uid:用户id
+     * @return name:真实姓名
+     * @return sex:性别1男2女
+     * @return idcardno:身份证号码
+     * @return company_name:公司名称
+     * @return license_number:公司营业执照号码
+     * @return company_image:公司营业执照照片
+     * @return prove_image:在职证明图片
+     * @return technician_image:技师证件
+     * @return dimission:离职证明图
+     * @return createtime:创建时间
+     * @author 开发者
+     */
+    public function technician_detail() {
+        $m = new \app\mobile\model\User();
+        $m->TechnicianDetail(request()->param('id'));
     }
 
     /**
