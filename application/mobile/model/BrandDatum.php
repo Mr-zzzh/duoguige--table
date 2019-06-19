@@ -31,6 +31,9 @@ class BrandDatum extends Common {
 
     public function Download($id) {
         global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
         $data['uid']  = $member['id'];
         $data['bdid'] = $id;
         if (db('download')->where($data)->value('id')) {

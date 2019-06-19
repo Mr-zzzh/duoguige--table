@@ -105,10 +105,13 @@ class User extends Common {
         }
         if ($info['type'] == 1) {
             $info['identity'] = '普通用户';
+            $info['company']  = '无';
         } elseif ($info['type'] == 2) {
             $info['identity'] = '技术大师';
+            $info['company']  = db('technician')->where('uid', $info['id'])->value('company_name');
         } elseif ($info['type'] == 3) {
             $info['identity'] = '物业公司';
+            $info['company']  = db('company')->where('uid', $info['id'])->value('company_name');
         }
         if (empty($token)) {
             $rand          = random(8);
@@ -152,6 +155,12 @@ class User extends Common {
 
     public function TechnicianAdd($params) {
         global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        if (db('technician')->where('uid', $member['id'])->value('id')) {
+            show_json(0, '资料已提交,请不要重复提交');
+        }
         $data = array(
             'uid'              => $member['id'],
             'name'             => trim($params['name']),
@@ -248,18 +257,22 @@ class User extends Common {
         $user['status'] = 0;
         $user['type']   = 2;
         $this->where('id', $member['id'])->update($user);
-        if (db('technician')->data($data, true)->isUpdate(false)->save()) {
+        if (db('technician')->where('id', $id)->update($data)) {
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
     }
 
-    public function TechnicianDetail($id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
+    public function ApproveDetail() {
+        global $member;
+        if ($member['type'] == 2) {
+            $item = db('technician')->where('uid', $member['id'])->find();
+        } elseif ($member['type'] == 3) {
+            $item = db('company')->where('uid', $member['id'])->find();
+        } else {
+            show_json(0, '无查看认证信息权限');
         }
-        $item = db('technician')->where('id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {

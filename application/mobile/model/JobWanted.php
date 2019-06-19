@@ -41,6 +41,9 @@ class JobWanted extends Common {
 
     public function AddOne($params) {
         global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
         $data = array(
             'uid'        => $member['id'],
             'post'       => trim($params['post']),
