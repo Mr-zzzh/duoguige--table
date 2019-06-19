@@ -114,6 +114,7 @@ class JobWanted extends Common {
      * @return address:详细地址
      * @return intro:自我描述
      * @return avatar:头像
+     * @return phone:联系方式
      * @return createtime:创建时间
      * @author 开发者
      */
