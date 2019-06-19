@@ -27,6 +27,7 @@ class Brand extends Common {
      * @title 品牌资料列表
      * @url /branddatum
      * @method get
+     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:bid type:string require:1 default:- other:- desc:品牌id
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
