@@ -25,7 +25,7 @@ class GoodsOrder extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id freight:运费 expresscom:快递公司 expresssn:快递单号 paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 address:收货地址
+     * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id freight:运费 expresscom:快递公司 expresssn:快递单号 paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 area:地区 address:收货地址
      * @author 开发者
      */
     public function index() {
@@ -107,6 +107,7 @@ class GoodsOrder extends Common {
      * @return delivertime:发货时间
      * @return dname:收货人姓名
      * @return phone:收货人联系方式
+     * @return area:地区
      * @return address:收货地址
      * @author 开发者
      */
