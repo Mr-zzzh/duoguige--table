@@ -19,16 +19,31 @@ class Invite extends Common {
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
             $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
-        if (!empty($params['keyword'])) {
-            $map['a.post|salary|experience|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+        if (!empty($params['salary'])) {
+            $map['a.salary'] = intval($params['salary']);
+        }
+        if (!empty($params['province'])) {
+            $map['a.province'] = intval($params['province']);
+        }
+        if (!empty($params['city'])) {
+            $map['a.city'] = intval($params['city']);
+        }
+        if (!empty($params['area'])) {
+            $map['a.area'] = intval($params['area']);
         }
         if (!empty($params['keyword'])) {
-            $map['a.post|salary|experience|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a.post|a.description|a.duty|a.name|a.phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->alias('a')
+            ->join('salary s', 'a.salary=s.id', 'left')
+            ->join('company c', 'a.uid=c.uid', 'left')
+            ->field('a.id,a.post,a.province,a.city,a.createtime,a.name,a.phone,s.name salary_text,c.company_name')
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['province_text'] = city_name($item['province']);
+                $item['city_text']     = city_name($item['city']);
+                $item['createtime']    = date('Y-m-d', $item['createtime']);
             }
             unset($item);
         }

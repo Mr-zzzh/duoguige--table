@@ -54,7 +54,7 @@ class Invite extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:发布招聘用户id post:招聘岗位 salary:工资范围 experience:工作经验 province:省编号 city:市编号 description:岗位描述 duty:岗位职责 name:联系人姓名 phone:联系电话 status:状态_0待审_1通过_2不通过_3招聘结束 createtime:创建时间
+     * @data id:id post:招聘岗位 salary_text:工资范围 province:省编号 province_text:省 city:市编号 city_text:市 name:联系人姓名 phone:联系电话 company_name:公司名称 createtime:创建时间
      * @author 开发者
      */
     public function index() {
