@@ -60,17 +60,6 @@ class User extends Common {
             unset($item['password']);
             unset($item['salt']);
             unset($item['token']);
-            if ($item['type'] == 2) {
-                $check = db('technician')->where('uid', $item['id'])->find();
-            } elseif ($item['type'] == 3) {
-                $check = db('company')->where('uid', $item['id'])->find();
-            } else {
-                $check = array();
-            }
-            if (!empty($check)) {
-                $check['createtime'] = date('Y-m-d H:i:s', $check['createtime']);
-            }
-            $item['check'] = $check;
         }
         show_json(1, $item);
     }
