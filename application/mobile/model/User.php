@@ -150,4 +150,49 @@ class User extends Common {
         show_json(1, $list);
     }
 
+    public function Technician($params) {
+        global $member;
+        $data = array(
+            'uid'              => $member['id'],
+            'name'             => trim($params['name']),
+            'sex'              => intval($params['sex']),
+            'idcardno'         => trim($params['idcardno']),
+            'company_name'     => trim($params['company_name']),
+            'license_number'   => trim($params['license_number']),
+            'company_image'    => trim($params['company_image']),
+            'prove_image'      => trim($params['prove_image']),
+            'technician_image' => trim($params['technician_image']),
+            'createtime'       => time(),
+        );
+        if (empty($data['name'])) {
+            show_json(0, '姓名不能为空');
+        }
+        if (empty($data['sex'])) {
+            show_json(0, '性别不能为空');
+        }
+        if (empty($data['idcardno'])) {
+            show_json(0, '身份证号码不能为空');
+        }
+        if (empty($data['company_name'])) {
+            show_json(0, '公司名称不能为空');
+        }
+        if (empty($data['license_number'])) {
+            show_json(0, '公司营业执照号码不能为空');
+        }
+        if (empty($data['company_image'])) {
+            show_json(0, '公司营业执照照片不能为空');
+        }
+        if (empty($data['prove_image'])) {
+            show_json(0, '在职证明图片不能为空');
+        }
+        if (empty($data['technician_image'])) {
+            show_json(0, '技师证件不能为空');
+        }
+        if ($this->data($data, true)->isUpdate(false)->save()) {
+            show_json(1, '添加成功');
+        } else {
+            show_json(0, '添加失败');
+        }
+    }
+
 }

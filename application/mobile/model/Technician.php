@@ -24,34 +24,27 @@ class Technician extends Common {
 
     public function AddOne($params) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'name' => trim($params['name']),
-            'sex' => intval($params['sex']),
-            'idcardno' => trim($params['idcardno']),
-            'company_name' => trim($params['company_name']),
-            'license_number' => trim($params['license_number']),
-            'company_image' => trim($params['company_image']),
-            'prove_image' => trim($params['prove_image']),
+            'uid'              => intval($params['uid']),
+            'name'             => trim($params['name']),
+            'sex'              => intval($params['sex']),
+            'idcardno'         => trim($params['idcardno']),
+            'company_name'     => trim($params['company_name']),
+            'license_number'   => trim($params['license_number']),
+            'company_image'    => trim($params['company_image']),
+            'prove_image'      => trim($params['prove_image']),
             'technician_image' => trim($params['technician_image']),
-            'dimission' => trim($params['dimission']),
-            'createtime' => time(),
+            'dimission'        => trim($params['dimission']),
+            'createtime'       => time(),
         );
-        $this->checkData($data, 0);
         if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
     }
 
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
-    }
-
     public function DelOne($id) {
         if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
             show_json(1, '删除成功');
         } else {
             show_json(0, '删除失败');
@@ -60,20 +53,18 @@ class Technician extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'name' => trim($params['name']),
-            'sex' => intval($params['sex']),
-            'idcardno' => trim($params['idcardno']),
-            'company_name' => trim($params['company_name']),
-            'license_number' => trim($params['license_number']),
-            'company_image' => trim($params['company_image']),
-            'prove_image' => trim($params['prove_image']),
+            'uid'              => intval($params['uid']),
+            'name'             => trim($params['name']),
+            'sex'              => intval($params['sex']),
+            'idcardno'         => trim($params['idcardno']),
+            'company_name'     => trim($params['company_name']),
+            'license_number'   => trim($params['license_number']),
+            'company_image'    => trim($params['company_image']),
+            'prove_image'      => trim($params['prove_image']),
             'technician_image' => trim($params['technician_image']),
-            'dimission' => trim($params['dimission']),
+            'dimission'        => trim($params['dimission']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -85,7 +76,7 @@ class Technician extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
