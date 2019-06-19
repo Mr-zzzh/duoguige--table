@@ -188,7 +188,67 @@ class User extends Common {
         if (empty($data['technician_image'])) {
             show_json(0, '技师证件不能为空');
         }
-        if ($this->data($data, true)->isUpdate(false)->save()) {
+        $user['status'] = 0;
+        $user['type']   = 2;
+        $this->where('id', $member['id'])->update($user);
+        if (db('technician')->data($data, true)->isUpdate(false)->save()) {
+            show_json(1, '添加成功');
+        } else {
+            show_json(0, '添加失败');
+        }
+    }
+
+    public function TechnicianEdit($params) {
+        global $member;
+        if ($params['id'] < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $id           = intval($params['id']);
+        $company_name = db('technician')->where('id', $id)->value('company_name');
+        $data         = array(
+            'name'             => trim($params['name']),
+            'sex'              => intval($params['sex']),
+            'idcardno'         => trim($params['idcardno']),
+            'company_name'     => trim($params['company_name']),
+            'license_number'   => trim($params['license_number']),
+            'company_image'    => trim($params['company_image']),
+            'prove_image'      => trim($params['prove_image']),
+            'technician_image' => trim($params['technician_image']),
+            'dimission'        => trim($params['dimission']),
+        );
+        if (empty($data['name'])) {
+            show_json(0, '姓名不能为空');
+        }
+        if (empty($data['sex'])) {
+            show_json(0, '性别不能为空');
+        }
+        if (empty($data['idcardno'])) {
+            show_json(0, '身份证号码不能为空');
+        }
+        if (empty($data['company_name'])) {
+            show_json(0, '公司名称不能为空');
+        }
+        if (empty($data['license_number'])) {
+            show_json(0, '公司营业执照号码不能为空');
+        }
+        if (empty($data['company_image'])) {
+            show_json(0, '公司营业执照照片不能为空');
+        }
+        if (empty($data['prove_image'])) {
+            show_json(0, '在职证明图片不能为空');
+        }
+        if (empty($data['technician_image'])) {
+            show_json(0, '技师证件不能为空');
+        }
+        if ($data['company_name'] != $company_name) {
+            if (empty($data['dimission'])) {
+                show_json(0, '离职证明不能为空');
+            }
+        }
+        $user['status'] = 0;
+        $user['type']   = 2;
+        $this->where('id', $member['id'])->update($user);
+        if (db('technician')->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');

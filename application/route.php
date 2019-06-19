@@ -99,4 +99,5 @@ Route::resource('user', 'mobile/User');
 Route::rule('user/code', 'mobile/User/code', 'POST');
 Route::rule('my_collect', 'mobile/User/my_collect', 'GET');
 Route::rule('my_like', 'mobile/User/my_like', 'GET');
-Route::rule('user/technician', 'mobile/User/technician', 'POST');
+Route::rule('user/technician_add', 'mobile/User/technician_add', 'POST');
+Route::rule('user/technician_edit', 'mobile/User/technician_edit', 'POST');

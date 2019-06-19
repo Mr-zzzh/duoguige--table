@@ -106,8 +106,8 @@ class User extends Common {
     }
 
     /**
-     * @title 添加
-     * @url /technician
+     * @title 技术大师认证
+     * @url /user/technician_add
      * @method post
      * @param name:name type:string require:1 default:- other:- desc:真实姓名
      * @param name:sex type:int require:1 default:- other:- desc:性别1男2女
@@ -122,6 +122,27 @@ class User extends Common {
     public function technician() {
         $m = new \app\mobile\model\User();
         $m->Technician(request()->post());
+    }
+
+    /**
+     * @title 技术大师认证信息修改
+     * @url /user/technician_edit
+     * @method post
+     * @param name:id type:string require:1 default:- other:- desc:数据id
+     * @param name:name type:string require:1 default:- other:- desc:真实姓名
+     * @param name:sex type:int require:1 default:- other:- desc:性别1男2女
+     * @param name:idcardno type:string require:1 default:- other:- desc:身份证号码
+     * @param name:company_name type:string require:1 default:- other:- desc:公司名称
+     * @param name:license_number type:string require:1 default:- other:- desc:公司营业执照号码
+     * @param name:company_image type:string require:1 default:- other:- desc:公司营业执照照片
+     * @param name:prove_image type:string require:1 default:- other:- desc:在职证明图片
+     * @param name:technician_image type:string require:1 default:- other:- desc:技师证件
+     * @param name:dimission type:string require:1 default:- other:- desc:离职证明图
+     * @author 开发者
+     */
+    public function technician_edit() {
+        $m = new \app\mobile\model\User();
+        $m->TechnicianEdit(request()->post());
     }
 
     /**
