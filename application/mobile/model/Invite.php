@@ -32,7 +32,7 @@ class Invite extends Common {
             $map['a.area'] = intval($params['area']);
         }
         if (!empty($params['keyword'])) {
-            $map['a.post|a.description|a.duty|a.name|a.phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a.post|a.description|a.duty|a.name|a.phone|c.company_name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
         $list = $this->alias('a')
             ->join('salary s', 'a.salary=s.id', 'left')
@@ -51,36 +51,74 @@ class Invite extends Common {
     }
 
     public function AddOne($params) {
+        global $member;
         $data = array(
-            'uid'         => intval($params['uid']),
+            'uid'         => $member['id'],
             'post'        => trim($params['post']),
+            'education'   => trim($params['education']),
             'salary'      => trim($params['salary']),
             'experience'  => trim($params['experience']),
             'province'    => intval($params['province']),
             'city'        => intval($params['city']),
+            'area'        => intval($params['area']),
+            'address'     => trim($params['address']),
             'description' => trim($params['description']),
             'duty'        => trim($params['duty']),
             'name'        => trim($params['name']),
             'phone'       => trim($params['phone']),
-            'status'      => intval($params['status']),
+            'number'      => trim($params['number']),
+            'status'      => 0,
             'createtime'  => time(),
         );
-        $this->checkData($data, 0);
+        if (empty($data['post'])) {
+            show_json(0, '招聘岗位不能为空');
+        }
+        if (empty($data['education'])) {
+            show_json(0, '学历要求不能为空');
+        }
+        if (empty($data['salary'])) {
+            show_json(0, '薪资范围不能为空');
+        }
+        if (empty($data['experience'])) {
+            show_json(0, '经验要求不能为空');
+        }
+        if (empty($data['province'])) {
+            show_json(0, '省不能为空');
+        }
+        if (empty($data['city'])) {
+            show_json(0, '市不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '区不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
+        if (empty($data['description'])) {
+            show_json(0, '岗位描述不能为空');
+        }
+        if (empty($data['duty'])) {
+            show_json(0, '岗位职责不能为空');
+        }
+        if (empty($data['name'])) {
+            show_json(0, '联系人姓名不能为空');
+        }
+        if (empty($data['phone'])) {
+            show_json(0, '联系电话不能为空');
+        }
+        if (empty($data['number'])) {
+            show_json(0, '招聘人数不能为空');
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
     }
 
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
-    }
 
     public function DelOne($id) {
         if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
             show_json(1, '删除成功');
         } else {
             show_json(0, '删除失败');
@@ -101,7 +139,6 @@ class Invite extends Common {
             'phone'       => trim($params['phone']),
             'status'      => intval($params['status']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
