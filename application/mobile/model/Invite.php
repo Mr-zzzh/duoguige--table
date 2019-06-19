@@ -4,6 +4,11 @@ namespace app\mobile\model;
 
 class Invite extends Common {
 
+    public function Salary() {
+        $list = db('salary')->select();
+        show_json(1, $list);
+    }
+
     public function GetAll($params) {
         $map = array();
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
@@ -27,18 +32,18 @@ class Invite extends Common {
 
     public function AddOne($params) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'post' => trim($params['post']),
-            'salary' => trim($params['salary']),
-            'experience' => trim($params['experience']),
-            'province' => intval($params['province']),
-            'city' => intval($params['city']),
+            'uid'         => intval($params['uid']),
+            'post'        => trim($params['post']),
+            'salary'      => trim($params['salary']),
+            'experience'  => trim($params['experience']),
+            'province'    => intval($params['province']),
+            'city'        => intval($params['city']),
             'description' => trim($params['description']),
-            'duty' => trim($params['duty']),
-            'name' => trim($params['name']),
-            'phone' => trim($params['phone']),
-            'status' => intval($params['status']),
-            'createtime' => time(),
+            'duty'        => trim($params['duty']),
+            'name'        => trim($params['name']),
+            'phone'       => trim($params['phone']),
+            'status'      => intval($params['status']),
+            'createtime'  => time(),
         );
         $this->checkData($data, 0);
         if ($this->data($data, true)->isUpdate(false)->save()) {
@@ -64,17 +69,17 @@ class Invite extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'post' => trim($params['post']),
-            'salary' => trim($params['salary']),
-            'experience' => trim($params['experience']),
-            'province' => intval($params['province']),
-            'city' => intval($params['city']),
+            'uid'         => intval($params['uid']),
+            'post'        => trim($params['post']),
+            'salary'      => trim($params['salary']),
+            'experience'  => trim($params['experience']),
+            'province'    => intval($params['province']),
+            'city'        => intval($params['city']),
             'description' => trim($params['description']),
-            'duty' => trim($params['duty']),
-            'name' => trim($params['name']),
-            'phone' => trim($params['phone']),
-            'status' => intval($params['status']),
+            'duty'        => trim($params['duty']),
+            'name'        => trim($params['name']),
+            'phone'       => trim($params['phone']),
+            'status'      => intval($params['status']),
         );
         $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
@@ -90,7 +95,7 @@ class Invite extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);

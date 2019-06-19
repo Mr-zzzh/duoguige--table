@@ -5,10 +5,23 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title Invite
+ * @title 招聘管理
  * @group MOBILE
  */
 class Invite extends Common {
+
+    /**
+     * @title 期望薪资列表
+     * @url /salary
+     * @method get
+     * @return data:列表@
+     * @data id:id name:薪资内容 createtime:创建时间
+     * @author 开发者
+     */
+    public function salary() {
+        $m = new \app\mobile\model\Invite();
+        $m->Salary();
+    }
 
     /**
      * @title 列表
