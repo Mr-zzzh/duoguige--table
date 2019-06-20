@@ -25,14 +25,20 @@ class Answer extends Common {
     }
 
     public function AddOne($params) {
+        global $member;
         $data = array(
-            'uid'        => intval($params['uid']),
+            'uid'        => $member['id'],
             'answer'     => trim($params['answer']),
             'qid'        => intval($params['qid']),
-            'status'     => intval($params['status']),
+            'status'     => 1,
             'createtime' => time(),
         );
-        $this->checkData($data, 0);
+        if (empty($data['qid'])) {
+            show_json(0, '问题id不能为空');
+        }
+        if (empty($data['answer'])) {
+            show_json(0, '回答内容不能为空');
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
         } else {

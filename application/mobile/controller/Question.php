@@ -84,4 +84,17 @@ class Question extends Common {
         $m->GetAll(request()->get());
     }
 
+    /**
+     * @title 回答
+     * @url /response
+     * @method post
+     * @param name:qid type:int require:1 default:- other:- desc:问题id
+     * @param name:answer type:string require:1 default:- other:- desc:回答
+     * @author 开发者
+     */
+    public function response() {
+        $m = new \app\mobile\model\Answer();
+        $m->AddOne(request()->post());
+    }
+
 }

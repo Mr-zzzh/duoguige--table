@@ -94,6 +94,7 @@ Route::resource('maintenance', 'mobile/Maintenance');
 Route::resource('news', 'mobile/News');
 Route::resource('question', 'mobile/Question');
 Route::rule('answer', 'mobile/Question/answer', 'GET');
+Route::rule('response', 'mobile/Question/response', 'POST');
 Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
 Route::resource('user', 'mobile/User');
