@@ -19,6 +19,9 @@ class Question extends Common {
                 if (empty($item['id'])) {
                     unset($list['data'][$k]);
                 }
+                if (!empty($item['thumb'])) {
+                    $item['thumb'] = explode(',', $item['thumb']);
+                }
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
