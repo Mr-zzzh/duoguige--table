@@ -70,13 +70,14 @@ Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 
 Route::resource('answer', 'mobile/Answer');
 Route::resource('area', 'mobile/Area');
-
+//品牌
 Route::resource('brand', 'mobile/Brand');
 Route::rule('branddatum', 'mobile/Brand/branddatum', 'POST|GET');
 Route::rule('brand/collect', 'mobile/Brand/collect', 'POST|GET');
 
 Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
+//故障库
 Route::resource('fault', 'mobile/Fault');
 Route::rule('fault/history', 'mobile/Fault/history', 'GET|POST');
 Route::rule('fault/history_del', 'mobile/Fault/history_del', 'GET|POST');
@@ -87,7 +88,6 @@ Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::resource('invite', 'mobile/Invite');
 Route::rule('salary', 'mobile/Invite/salary', 'GET|POST');
 Route::rule('experience', 'mobile/Invite/experience', 'GET|POST');
-
 Route::resource('jobwanted', 'mobile/JobWanted');
 Route::resource('leavemessage', 'mobile/LeaveMessage');
 Route::resource('like', 'mobile/Like');
@@ -95,7 +95,6 @@ Route::resource('maintenance', 'mobile/Maintenance');
 Route::resource('news', 'mobile/News');
 Route::resource('question', 'mobile/Question');
 Route::resource('receive', 'mobile/Receive');
-Route::resource('searchhistory', 'mobile/SearchHistory');
 Route::resource('technician', 'mobile/Technician');
 Route::resource('user', 'mobile/User');
 Route::rule('user/code', 'mobile/User/code', 'POST');

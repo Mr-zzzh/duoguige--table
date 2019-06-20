@@ -51,7 +51,6 @@ return [
         'app\mobile\controller\News',
         'app\mobile\controller\Question',
         'app\mobile\controller\Receive',
-        'app\mobile\controller\SearchHistory',
         'app\mobile\controller\Technician',
         'app\mobile\controller\User',
     ],
