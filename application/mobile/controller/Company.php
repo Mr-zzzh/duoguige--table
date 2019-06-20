@@ -43,6 +43,7 @@ class Company extends Common {
      * @param name:address type:string require:1 default:- other:- desc:公司详细地址
      * @param name:number type:int require:1 default:- other:- desc:电梯数量
      * @param name:brand type:string require:1 default:- other:- desc:电梯品牌
+     * @param name:image type:string require:1 default:- other:- desc:营业执照
      * @author 开发者
      */
     public function update(Request $request, $id) {
@@ -66,6 +67,7 @@ class Company extends Common {
      * @return address:公司详细地址
      * @return number:电梯数量
      * @return brand:电梯品牌
+     * @return image:营业执照
      * @return createtime:创建时间
      * @author 开发者
      */

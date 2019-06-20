@@ -42,6 +42,9 @@ class Company extends Common {
         if (empty($data['image'])) {
             show_json(0, '营业执照不能为空');
         }
+        $user['status'] = 0;
+        $user['type']   = 3;
+        db('user')->where('id', $member['id'])->update($user);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
         } else {
@@ -50,8 +53,9 @@ class Company extends Common {
     }
 
     public function EditOne($params, $id) {
+        global $member;
         $data = array(
-            'uid'          => intval($params['uid']),
+            'uid'          => $member['id'],
             'company_name' => trim($params['company_name']),
             'phone'        => trim($params['phone']),
             'name'         => trim($params['name']),
@@ -59,7 +63,36 @@ class Company extends Common {
             'address'      => trim($params['address']),
             'number'       => intval($params['number']),
             'brand'        => trim($params['brand']),
+            'image'        => trim($params['image']),
+            'createtime'   => time(),
         );
+        if (empty($data['company_name'])) {
+            show_json(0, '公司名称不能为空');
+        }
+        if (empty($data['phone'])) {
+            show_json(0, '联系电话不能为空');
+        }
+        if (empty($data['name'])) {
+            show_json(0, '公司法人姓名不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '公司地址不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
+        if (empty($data['number'])) {
+            show_json(0, '电梯数量不能为空');
+        }
+        if (empty($data['brand'])) {
+            show_json(0, '电梯品牌不能为空');
+        }
+        if (empty($data['image'])) {
+            show_json(0, '营业执照不能为空');
+        }
+        $user['status'] = 0;
+        $user['type']   = 3;
+        db('user')->where('id', $member['id'])->update($user);
         if ($this->save($data, array('id' => $id)) !== false) {
             show_json(1, '编辑成功');
         } else {
