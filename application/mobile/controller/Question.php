@@ -97,4 +97,23 @@ class Question extends Common {
         $m->AddOne(request()->post());
     }
 
+    /**
+     * @title 我的问题
+     * @url /my_question
+     * @method get
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id title:问题 thumb:图片(数组) number:回答人数 createtime:提问时间
+     * @author 开发者
+     */
+    public function my_question() {
+        $m = new \app\mobile\model\Question();
+        $m->MyQuestion(request()->get());
+    }
+
 }

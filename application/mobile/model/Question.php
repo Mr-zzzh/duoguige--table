@@ -68,4 +68,25 @@ class Question extends Common {
         show_json(1, $item);
     }
 
+    public function MyQuestion($params) {
+        global $member;
+        $map           = array();
+        $map['a.type'] = 1;
+        $map['a.uid']  = $member['id'];
+        $list          = $this->alias('a')
+            ->join('answer b', 'a.id=b.qid', 'left')
+            ->field('a.id,a.title,a.thumb,a.createtime,count(b.id) number')
+            ->where($map)->group('a.id')->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                if (!empty($item['thumb'])) {
+                    $item['thumb'] = explode(',', $item['thumb']);
+                }
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
 }

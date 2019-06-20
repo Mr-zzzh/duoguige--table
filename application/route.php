@@ -92,9 +92,12 @@ Route::resource('leavemessage', 'mobile/LeaveMessage');
 Route::resource('like', 'mobile/Like');
 Route::resource('maintenance', 'mobile/Maintenance');
 Route::resource('news', 'mobile/News');
+//问答管理
 Route::resource('question', 'mobile/Question');
 Route::rule('answer', 'mobile/Question/answer', 'GET');
 Route::rule('response', 'mobile/Question/response', 'POST');
+Route::rule('my_question', 'mobile/Question/my_question', 'GET');
+
 Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
 Route::resource('user', 'mobile/User');
