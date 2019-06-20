@@ -31,7 +31,9 @@ class Fault extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('f')
+            ->join('brand b', 'f.bid=b.id', 'left')
+            ->where('f.id', $id)->field('f.*,b.name as brand')->find();
         if (empty($item)) {
             show_json(1);
         } else {

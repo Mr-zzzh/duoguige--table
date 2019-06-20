@@ -38,6 +38,7 @@ class Fault extends Common {
      * @return id:id
      * @return fault_code:故障代码
      * @return bid:品牌id
+     * @return brand:品牌名
      * @return models:使用机型
      * @return paraphrase:代码释义
      * @return dispose:处理办法
