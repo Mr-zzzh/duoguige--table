@@ -45,4 +45,22 @@ class Answer extends Common {
             show_json(0, '添加失败');
         }
     }
+
+    public function MyAnswer($params) {
+        global $member;
+        $map             = array();
+        $map['a.status'] = 1;
+        $map['a.uid']    = $member['id'];
+        $list            = $this->alias('a')
+            ->join('question q', 'a.qid=q.id', 'left')
+            ->field('a.id,a.answer,a.createtime,q.title')
+            ->where($map)->group('a.id')->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
 }

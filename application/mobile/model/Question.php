@@ -88,5 +88,4 @@ class Question extends Common {
         }
         show_json(1, $list);
     }
-
 }

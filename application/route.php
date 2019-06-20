@@ -97,6 +97,7 @@ Route::resource('question', 'mobile/Question');
 Route::rule('answer', 'mobile/Question/answer', 'GET');
 Route::rule('response', 'mobile/Question/response', 'POST');
 Route::rule('my_question', 'mobile/Question/my_question', 'GET');
+Route::rule('my_answer', 'mobile/Question/my_answer', 'GET');
 
 Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
