@@ -12,17 +12,13 @@ class Question extends Common {
         }
         $list = $this->alias('a')
             ->join('answer b', 'a.id=b.qid', 'left')
-            ->field('a.id,a.title,a.thumb,count(b.id) as number')
-            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+            ->field('a.id,a.title,a.thumb,count(b.id) number')
+            ->where($map)->group('a.id')->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                if (empty($item['id'])) {
-                    unset($list['data'][$k]);
-                }
                 if (!empty($item['thumb'])) {
                     $item['thumb'] = explode(',', $item['thumb']);
                 }
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
         }
@@ -30,15 +26,23 @@ class Question extends Common {
     }
 
     public function AddOne($params) {
+        global $member;
         $data = array(
-            'uid'        => intval($params['uid']),
+            'uid'        => $member['id'],
             'title'      => trim($params['title']),
-            'thumb'      => trim($params['thumb']),
-            'type'       => intval($params['type']),
-            'master_id'  => intval($params['master_id']),
+            'type'       => 1,
             'createtime' => time(),
         );
-
+        if (empty($data['title'])) {
+            show_json(0, '问题不能为空');
+        }
+        if (!empty($params['thumb'])) {
+            if (is_array($params['thumb'])) {
+                $data['thumb'] = implode(',', trim($params['thumb']));
+            } else {
+                $data['thumb'] = trim($params['thumb']);
+            }
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
         } else {

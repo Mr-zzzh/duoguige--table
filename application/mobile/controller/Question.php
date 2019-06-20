@@ -31,14 +31,11 @@ class Question extends Common {
     }
 
     /**
-     * @title 添加
+     * @title 提问
      * @url /question
      * @method post
-     * @param name:uid type:int require:1 default:- other:- desc:提问人id
      * @param name:title type:string require:1 default:- other:- desc:标题
-     * @param name:thumb type:string require:1 default:- other:- desc:图片(多张用逗号拼接)
-     * @param name:type type:int require:1 default:- other:- desc:提问类型_1问答模块2大师提问
-     * @param name:master_id type:int require:1 default:- other:- desc:大师id(type为2时必填)
+     * @param name:thumb type:string require:1 default:- other:- desc:图片(多张用逗号拼接或者数组)
      * @author 开发者
      */
     public function save() {
