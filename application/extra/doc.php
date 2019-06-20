@@ -33,7 +33,6 @@ return [
         'app\admin\controller\User',
 
         //mobile
-        'app\mobile\controller\Answer',
         'app\mobile\controller\Area',
         'app\mobile\controller\Brand',
         'app\mobile\controller\Company',

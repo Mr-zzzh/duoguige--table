@@ -67,8 +67,6 @@ Route::rule('city', 'mobile/Index/city', 'GET|POST');
 Route::rule('insurance', 'mobile/Index/insurance', 'GET|POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
-
-Route::resource('answer', 'mobile/Answer');
 Route::resource('area', 'mobile/Area');
 //品牌
 Route::resource('brand', 'mobile/Brand');
@@ -87,14 +85,15 @@ Route::resource('goods', 'mobile/Goods');
 Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::resource('invite', 'mobile/Invite');
-Route::rule('salary', 'mobile/Invite/salary', 'GET|POST');
-Route::rule('experience', 'mobile/Invite/experience', 'GET|POST');
+Route::rule('salary', 'mobile/Invite/salary', 'GET');
+Route::rule('experience', 'mobile/Invite/experience', 'GET');
 Route::resource('jobwanted', 'mobile/JobWanted');
 Route::resource('leavemessage', 'mobile/LeaveMessage');
 Route::resource('like', 'mobile/Like');
 Route::resource('maintenance', 'mobile/Maintenance');
 Route::resource('news', 'mobile/News');
 Route::resource('question', 'mobile/Question');
+Route::rule('answer', 'mobile/Question/answer', 'GET');
 Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
 Route::resource('user', 'mobile/User');

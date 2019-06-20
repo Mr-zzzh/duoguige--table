@@ -64,4 +64,24 @@ class Question extends Common {
         $m->GetOne($id);
     }
 
+    /**
+     * @title 答案列表
+     * @url /answer
+     * @method get
+     * @param name:qid type:int require:1 default:- other:- desc:问题id
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id answer:回答 qid:问题id createtime:创建时间 name:回答人姓名 avatar:回答人头像
+     * @author 开发者
+     */
+    public function answer() {
+        $m = new \app\mobile\model\Answer();
+        $m->GetAll(request()->get());
+    }
+
 }
