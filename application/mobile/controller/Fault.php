@@ -2,8 +2,6 @@
 
 namespace app\mobile\controller;
 
-use think\Request;
-
 /**
  * @title 故障库管理
  * @group MOBILE
@@ -29,6 +27,32 @@ class Fault extends Common {
     public function index() {
         $m = new \app\mobile\model\Fault();
         $m->GetAll(request()->get());
+    }
+
+    /**
+     * @title 搜索历史列表
+     * @url /fault/history
+     * @method get
+     * @return data:列表@
+     * @data id:id content:内容
+     * @author 开发者
+     */
+    public function history() {
+        $m = new \app\mobile\model\Fault();
+        $m->History();
+    }
+
+    /**
+     * @title 搜索历史清除
+     * @url /fault/history_del
+     * @method get
+     * @return data:列表@
+     * @data id:id content:内容
+     * @author 开发者
+     */
+    public function history_del() {
+        $m = new \app\mobile\model\Fault();
+        $m->Del();
     }
 
     /**

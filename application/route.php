@@ -72,19 +72,20 @@ Route::resource('answer', 'mobile/Answer');
 Route::resource('area', 'mobile/Area');
 
 Route::resource('brand', 'mobile/Brand');
-Route::rule('branddatum', 'mobile/Brand/branddatum');
-Route::rule('brand/collect', 'mobile/Brand/collect');
+Route::rule('branddatum', 'mobile/Brand/branddatum', 'POST|GET');
+Route::rule('brand/collect', 'mobile/Brand/collect', 'POST|GET');
 
 Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
 Route::resource('fault', 'mobile/Fault');
+Route::rule('fault/history', 'mobile/Fault/history', 'GET|POST');
 Route::resource('feedback', 'mobile/Feedback');
 Route::resource('goods', 'mobile/Goods');
 Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::resource('invite', 'mobile/Invite');
-Route::rule('salary', 'mobile/Invite/salary', 'GET');
-Route::rule('experience', 'mobile/Invite/experience', 'GET');
+Route::rule('salary', 'mobile/Invite/salary', 'GET|POST');
+Route::rule('experience', 'mobile/Invite/experience', 'GET|POST');
 
 Route::resource('jobwanted', 'mobile/JobWanted');
 Route::resource('leavemessage', 'mobile/LeaveMessage');
