@@ -45,9 +45,7 @@ class Fault extends Common {
     /**
      * @title 搜索历史清除
      * @url /fault/history_del
-     * @method get
-     * @return data:列表@
-     * @data id:id content:内容
+     * @method get|post
      * @author 开发者
      */
     public function history_del() {

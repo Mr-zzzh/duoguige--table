@@ -79,6 +79,7 @@ Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
 Route::resource('fault', 'mobile/Fault');
 Route::rule('fault/history', 'mobile/Fault/history', 'GET|POST');
+Route::rule('fault/history_del', 'mobile/Fault/history_del', 'GET|POST');
 Route::resource('feedback', 'mobile/Feedback');
 Route::resource('goods', 'mobile/Goods');
 Route::rule('goodscate', 'mobile/Goods/goodscate');
