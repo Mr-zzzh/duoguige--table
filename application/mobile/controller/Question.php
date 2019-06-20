@@ -5,18 +5,15 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title Question
+ * @title 问答管理
  * @group MOBILE
  */
 class Question extends Common {
 
     /**
-     * @title 列表
+     * @title 问题列表
      * @url /question
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:type type:int require:0 default:- other:- desc:提问类型_1问答模块2大师提问
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -31,17 +28,6 @@ class Question extends Common {
     public function index() {
         $m = new \app\mobile\model\Question();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /question/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
     }
 
     /**

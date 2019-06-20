@@ -5,19 +5,20 @@ namespace app\mobile\model;
 class Question extends Common {
 
     public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
-        if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
-        }
+        $map           = array();
+        $map['a.type'] = 1;
         if (!empty($params['keyword'])) {
-            $map['title|thumb'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a.title'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->alias('a')
+            ->join('answer b', 'a.id=b.qid', 'left')
+            ->field('a.id,a.title,a.thumb,count(b.id) as number')
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
+                if (empty($item['id'])) {
+                    unset($list['data'][$k]);
+                }
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
@@ -27,29 +28,23 @@ class Question extends Common {
 
     public function AddOne($params) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'title' => trim($params['title']),
-            'thumb' => trim($params['thumb']),
-            'type' => intval($params['type']),
-            'master_id' => intval($params['master_id']),
+            'uid'        => intval($params['uid']),
+            'title'      => trim($params['title']),
+            'thumb'      => trim($params['thumb']),
+            'type'       => intval($params['type']),
+            'master_id'  => intval($params['master_id']),
             'createtime' => time(),
         );
-        $this->checkData($data, 0);
+
         if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
     }
 
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
-    }
-
     public function DelOne($id) {
         if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
             show_json(1, '删除成功');
         } else {
             show_json(0, '删除失败');
@@ -58,15 +53,13 @@ class Question extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'title' => trim($params['title']),
-            'thumb' => trim($params['thumb']),
-            'type' => intval($params['type']),
+            'uid'       => intval($params['uid']),
+            'title'     => trim($params['title']),
+            'thumb'     => trim($params['thumb']),
+            'type'      => intval($params['type']),
             'master_id' => intval($params['master_id']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -78,7 +71,7 @@ class Question extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
