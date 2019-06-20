@@ -6,6 +6,12 @@ class Company extends Common {
 
     public function AddOne($params) {
         global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        if ($this->where('uid', $member['id'])->value('id')) {
+            show_json(0, '资料已提交,请不要重复提交');
+        }
         $data = array(
             'uid'          => $member['id'],
             'company_name' => trim($params['company_name']),
