@@ -59,4 +59,29 @@ class Fault extends Common {
         show_json(1, $item);
     }
 
+    public function Transition() {
+        $params = request()->param();
+        if (empty($params['type'])) {
+            show_json(0, '请传数据类型type');
+        }
+        if (empty($params['number'])) {
+            show_json(0, '请传需转换数据');
+        }
+        $type   = intval($params['type']);
+        $number = trim($params['number']);
+        $list   = array();
+        if ($type == 1) {
+            $list['number1'] = base_convert($number, 10, 2);
+            $list['number2'] = base_convert($number, 10, 16);
+        } elseif ($type == 2) {
+            $list['number1'] = base_convert($number, 2, 10);
+            $list['number2'] = base_convert($number, 2, 16);
+        } elseif ($type == 3) {
+            $list['number1'] = base_convert($number, 16, 10);
+            $list['number2'] = base_convert($number, 16, 2);
+        } else {
+            show_json(0, '请传正确数据类型');
+        }
+        show_json(1, $list);
+    }
 }

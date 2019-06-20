@@ -75,4 +75,19 @@ class Fault extends Common {
         $m->GetOne($id);
     }
 
+    /**
+     * @title 进制转换
+     * @url /transition
+     * @method get
+     * @param name:type type:int require:0 default:- other:- desc:类型_1十进制_22进制_316进制
+     * @param name:number type:string require:0 default:- other:- desc:需转换的数字
+     * @return data:列表@
+     * @data number1:type=1_2进制/type=2_10进制/type=3_10进制 number2:type=1_16进制/type=2_16进制/type=3_2进制
+     * @author 开发者
+     */
+    public function transition() {
+        $m = new \app\mobile\model\Fault();
+        $m->Transition();
+    }
+
 }
