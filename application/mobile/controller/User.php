@@ -19,8 +19,11 @@ class User extends Common {
      * @author 开发者(暂定60秒有效时间)
      */
     public function code() {
-        $phone = \request()->param('phone');
-        $key   = 'yunti_code_' . $phone;
+        $phone = trim(request()->param('phone'));
+        if (empty($phone)) {
+            show_json(0, '手机号不能为空');
+        }
+        $key = 'yunti_code_' . $phone;
         if (Cache::get($key)) {
             show_json(0, '请勿频繁发送验证码');
         }
@@ -45,6 +48,12 @@ class User extends Common {
      */
     public function register() {
         $pareams = request()->post();
+        if (empty($pareams['phone'])) {
+            show_json(0, '手机号不能为空');
+        }
+        /*if (empty($pareams['code'])) {
+            show_json(0, '验证码不能为空');
+        }*/
         /* $key     = 'yunti_code_' . trim($pareams['phone']);
          $code    = Cache::get($key);
          if (empty($code)) {
@@ -192,5 +201,30 @@ class User extends Common {
     public function my_like() {
         $m = new \app\mobile\model\User();
         $m->MyLike(request()->get());
+    }
+
+    /**
+     * @title 验证码验证(修改密码)
+     * @url /code_verify
+     * @method post
+     * @param name:code type:int require:1 default:- other:- desc:code码
+     * @author 开发者
+     */
+    public function code_verify() {
+        global $member;
+        $phone = $member['phone'];
+        $code  = intval(request()->param('code'));
+        if (empty($code)) {
+            show_json(0, '验证码不能为空');
+        }
+        $key   = 'yunti_code_' . $phone;
+        $code1 = Cache::get($key);
+        if (empty($code1)) {
+            show_json(0, '验证码无效');
+        }
+        if ($code1 != $code) {
+            show_json(0, '验证码错误');
+        }
+        show_json(1, '验证成功');
     }
 }
