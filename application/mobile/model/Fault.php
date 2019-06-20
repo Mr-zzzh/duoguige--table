@@ -5,17 +5,28 @@ namespace app\mobile\model;
 class Fault extends Common {
 
     public function GetAll($params) {
+        global $member;
         $map = array();
         if (!empty($params['keyword'])) {
-            $map['fault_code|models|paraphrase|dispose'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
-        if (!empty($list['data'])) {
-            foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $map['f.fault_code|f.models|f.paraphrase|f.dispose|b.name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            if (!empty($member)) {
+                $history            = array();
+                $history['uid']     = $member['id'];
+                $history['type']    = 2;
+                $history['content'] = trim($params['keyword']);
+                if (!db('search_history')->where($history)->value('id')) {
+                    $history['createtime'] = time();
+                    db('search_history')->insert($history);
+                }
             }
-            unset($item);
         }
+        if (!empty($params['bid'])) {
+            $map['f.bid'] = intval($params['bid']);
+        }
+        $list = $this->alias('f')
+            ->join('brand b', 'f.bid=b.id', 'left')
+            ->field('f.*,b.name as brand')
+            ->where($map)->order('f.createtime desc')->paginate($params['limit'])->toArray();
         show_json(1, $list);
     }
 
