@@ -4,72 +4,63 @@ namespace app\mobile\model;
 
 class Company extends Common {
 
-    public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
-        if (!empty($params['keyword'])) {
-            $map['company_name|phone|name|area|address|brand'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
-        if (!empty($list['data'])) {
-            foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
-            }
-            unset($item);
-        }
-        show_json(1, $list);
-    }
-
     public function AddOne($params) {
+        global $member;
         $data = array(
-            'uid' => intval($params['uid']),
+            'uid'          => $member['id'],
             'company_name' => trim($params['company_name']),
-            'phone' => trim($params['phone']),
-            'name' => trim($params['name']),
-            'area' => trim($params['area']),
-            'address' => trim($params['address']),
-            'number' => intval($params['number']),
-            'brand' => trim($params['brand']),
-            'createtime' => time(),
+            'phone'        => trim($params['phone']),
+            'name'         => trim($params['name']),
+            'area'         => trim($params['area']),
+            'address'      => trim($params['address']),
+            'number'       => intval($params['number']),
+            'brand'        => trim($params['brand']),
+            'image'        => trim($params['image']),
+            'createtime'   => time(),
         );
-        $this->checkData($data, 0);
+        if (empty($data['company_name'])) {
+            show_json(0, '公司名称不能为空');
+        }
+        if (empty($data['phone'])) {
+            show_json(0, '联系电话不能为空');
+        }
+        if (empty($data['name'])) {
+            show_json(0, '公司法人姓名不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '公司地址不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
+        if (empty($data['number'])) {
+            show_json(0, '电梯数量不能为空');
+        }
+        if (empty($data['brand'])) {
+            show_json(0, '电梯品牌不能为空');
+        }
+        if (empty($data['image'])) {
+            show_json(0, '营业执照不能为空');
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
     }
 
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
-    }
-
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
-        }
-    }
-
     public function EditOne($params, $id) {
         $data = array(
-            'uid' => intval($params['uid']),
+            'uid'          => intval($params['uid']),
             'company_name' => trim($params['company_name']),
-            'phone' => trim($params['phone']),
-            'name' => trim($params['name']),
-            'area' => trim($params['area']),
-            'address' => trim($params['address']),
-            'number' => intval($params['number']),
-            'brand' => trim($params['brand']),
+            'phone'        => trim($params['phone']),
+            'name'         => trim($params['name']),
+            'area'         => trim($params['area']),
+            'address'      => trim($params['address']),
+            'number'       => intval($params['number']),
+            'brand'        => trim($params['brand']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -81,7 +72,7 @@ class Company extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
