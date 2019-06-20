@@ -50,35 +50,19 @@ class Question extends Common {
         }
     }
 
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
-        }
-    }
-
-    public function EditOne($params, $id) {
-        $data = array(
-            'uid'       => intval($params['uid']),
-            'title'     => trim($params['title']),
-            'thumb'     => trim($params['thumb']),
-            'type'      => intval($params['type']),
-            'master_id' => intval($params['master_id']),
-        );
-        if ($this->save($data, array('id' => $id)) !== false) {
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
-    }
-
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('answer b', 'a.id=b.qid', 'left')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->field('a.id,a.title,a.thumb,a.createtime,count(b.id) number,u.name,u.avatar')
+            ->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
+            $item = $item->toArray();
+            if (!empty($item['thumb'])) {
+                $item['thumb'] = explode(',', $item['thumb']);
+            }
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
