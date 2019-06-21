@@ -7,8 +7,9 @@ class Banner extends Common {
     public function GetAll($params) {
         $list = $this->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
+            $type = array(1 => '首页轮播图', 2 => '保险页面图', 3 => '新闻轮播图');
             foreach ($list['data'] as $k => &$item) {
-                $item['type_text']   = $item['type'] == 1 ? '首页轮播图' : '保险页面图';
+                $item['type_text']   = $type[$item['type']];
                 $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
             }
@@ -34,6 +35,12 @@ class Banner extends Common {
         }
         if (empty($data['type'])) {
             show_json(0, '请传图片类型');
+        }
+        if ($data['type'] == 3) {
+            if (empty($params['newsid'])) {
+                show_json(0, '请传新闻id');
+            }
+            $data['newsid'] = intval($params['newsid']);
         }
         if (empty($data['status'])) {
             $data['status'] == 1;
@@ -72,6 +79,12 @@ class Banner extends Common {
         if (empty($data['type'])) {
             show_json(0, '请传图片类型');
         }
+        if ($data['type'] == 3) {
+            if (empty($params['newsid'])) {
+                show_json(0, '请传新闻id');
+            }
+            $data['newsid'] = intval($params['newsid']);
+        }
         if (empty($data['status'])) {
             $data['status'] == 1;
         }
@@ -88,8 +101,9 @@ class Banner extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
+            $type                = array(1 => '首页轮播图', 2 => '保险页面图', 3 => '新闻轮播图');
             $item                = $item->toArray();
-            $item['type_text']   = $item['type'] == 1 ? '首页轮播图' : '保险页面图';
+            $item['type_text']   = $type[$item['type']];
             $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
             $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
         }
