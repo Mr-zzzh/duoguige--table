@@ -10,12 +10,12 @@ use think\Cache;
  */
 class Index extends Common {
     /**
-     * @title 员工登录
+     * @title 员工登录(密码登录)
      * @url /login
      * @method post
-     * @param name:phone type:string require:0 default:- other:- desc:手机号
-     * @param name:password type:string require:0 default:- other:- desc:密码(明文)
-     * @return info:用户信息@!
+     * @param name:phone type:string require:1 default:- other:- desc:手机号
+     * @param name:password type:string require:1 default:- other:- desc:密码(明文)
+     * @return data:用户信息@!
      * @info id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
      * @author 开发者
      */
@@ -25,10 +25,37 @@ class Index extends Common {
         if ($res === false) {
             show_json(0, $m->getError());
         }
-        if ($res['group'] == 1) {
-            send_medal(5, 0, 0, $res['id']);
+        show_json(1, $res);
+    }
+
+    /**
+     * @title 员工登录(验证码登录)
+     * @url /login_code
+     * @method post
+     * @param name:phone type:string require:1 default:- other:- desc:手机号
+     * @param name:code type:string require:1 default:- other:- desc:验证码
+     * @return data:用户信息@!
+     * @info id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
+     * @author 开发者
+     */
+    public function login_code() {
+        $pareams = request()->param();
+        if (empty($pareams['phone'])) {
+            show_json(0, '手机号不能为空');
         }
-        show_json(1, array('info' => $res));
+        /*if (empty($pareams['code'])) {
+            show_json(0, '验证码不能为空');
+        }*/
+        /* $key     = 'yunti_code_' . trim($pareams['phone']);
+         $code    = Cache::get($key);
+         if (empty($code)) {
+             show_json(0, '验证码无效');
+         }
+         if ($code != intval($pareams['code'])) {
+             show_json(0, '验证码错误');
+         }*/
+        $m = new \app\mobile\model\User();
+        $m->LoginCode(trim($pareams['phone']));
     }
 
     /**

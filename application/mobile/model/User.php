@@ -62,7 +62,7 @@ class User extends Common {
         show_json(1, $item);
     }
 
-    //用户登录
+    //用户密码登录
     public function login($token = '') {
         $map      = array();
         $password = '';
@@ -108,6 +108,45 @@ class User extends Common {
         $info['createtime'] = date('Y-m-d H:i:s', $info['createtime']);
         unset($info['salt'], $info['password']);
         return $info;
+    }
+
+    //用户验证码登录
+    public function LoginCode($phone) {
+        $info = $this->where('phone', $phone)->find();
+        if (empty($info)) {     //注册
+            $data = array(
+                'phone'      => trim($phone),
+                'status'     => 0,
+                'type'       => 1,
+                'createtime' => time(),
+                'normal'     => 1,
+            );
+            $this->insert($data);
+            $info = $this->where('phone', $phone)->find();
+        }
+        $info = $info->toArray();
+        if ($info['normal'] == 2) {
+            $this->error = '该账号已禁用!';
+            return false;
+        }
+        if ($info['type'] == 1) {
+            $info['identity'] = '普通用户';
+            $info['company']  = '无';
+        } elseif ($info['type'] == 2) {
+            $info['identity'] = '技术大师';
+            $info['company']  = db('technician')->where('uid', $info['id'])->value('company_name');
+        } elseif ($info['type'] == 3) {
+            $info['identity'] = '物业公司';
+            $info['company']  = db('company')->where('uid', $info['id'])->value('company_name');
+        }
+        if (empty($token)) {
+            $rand          = random(8);
+            $info['token'] = md5($rand . $info['id'] . $info['phone'] . time());
+            $this->where(array('id' => $info['id']))->update(array('token' => $info['token']));
+        }
+        $info['createtime'] = date('Y-m-d H:i:s', $info['createtime']);
+        unset($info['salt'], $info['password']);
+        show_json(1, $info);
     }
 
     public function MyCollect($params) {
