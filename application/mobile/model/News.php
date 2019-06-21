@@ -27,8 +27,9 @@ class News extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item                   = $item->toArray();
+            $item['comment_number'] = db('leave_message')->where(array('nid' => $id, 'type' => 1))->count('id');
+            $item['createtime']     = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
     }
