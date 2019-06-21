@@ -16,7 +16,7 @@ class Index extends Common {
      * @param name:phone type:string require:1 default:- other:- desc:手机号
      * @param name:password type:string require:1 default:- other:- desc:密码(明文)
      * @return data:用户信息@!
-     * @info id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
+     * @data id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
      * @author 开发者
      */
     public function login() {
@@ -35,7 +35,7 @@ class Index extends Common {
      * @param name:phone type:string require:1 default:- other:- desc:手机号
      * @param name:code type:string require:1 default:- other:- desc:验证码
      * @return data:用户信息@!
-     * @info id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
+     * @data id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
      * @author 开发者
      */
     public function login_code() {
