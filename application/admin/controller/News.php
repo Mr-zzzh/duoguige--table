@@ -24,7 +24,7 @@ class News extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id title:标题 thumb:图片 content:内容 view_number:浏览量 like_number:点赞量 sort:排序(序号越小越靠前) status:状态_1显示_2不显示 status_text:状态文本 createtime:创建时间
+     * @data id:id title:标题 thumb:图片 type:类型1图文2视频 type_text:类型文本 video:视频链接 content:内容 view_number:浏览量 like_number:点赞量 sort:排序(序号越小越靠前) status:状态_1显示_2不显示 status_text:状态文本 createtime:创建时间
      * @author 开发者
      */
     public function index() {
@@ -38,7 +38,9 @@ class News extends Common {
      * @method post
      * @param name:title type:string require:1 default:- other:- desc:标题
      * @param name:thumb type:string require:1 default:- other:- desc:图片
-     * @param name:content type:string require:1 default:- other:- desc:内容
+     * @param name:type type:string require:1 default:- other:- desc:类型1图文2视频
+     * @param name:video type:string require:0 default:- other:- desc:视频链接(type为2)
+     * @param name:content type:string require:0 default:- other:- desc:内容(type为1)
      * @param name:view_number type:int require:1 default:- other:- desc:浏览量
      * @param name:like_number type:int require:1 default:- other:- desc:点赞量
      * @param name:sort type:int require:1 default:- other:- desc:排序(序号越小越靠前)
@@ -92,6 +94,9 @@ class News extends Common {
      * @return id:id
      * @return title:标题
      * @return thumb:图片
+     * @return type:类型1图文2视频
+     * @return type_text:类型文本
+     * @return video:视频链接
      * @return content:内容
      * @return view_number:浏览量
      * @return like_number:点赞量

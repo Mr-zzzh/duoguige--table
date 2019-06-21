@@ -12,9 +12,10 @@ class News extends Common {
         if (!empty($params['keyword'])) {
             $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->field('id,title,thumb,view_number,like_number,sort,status,createtime')->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
+        $list = $this->where($map)->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
+                $item['type_text']   = $item['type'] == 1 ? '图文' : '视频';
                 $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
             }
@@ -27,7 +28,7 @@ class News extends Common {
         $data = array(
             'title'       => trim($params['title']),
             'thumb'       => trim($params['thumb']),
-            'content'     => trim($params['content']),
+            'type'        => trim($params['type']),
             'view_number' => intval($params['view_number']),
             'like_number' => intval($params['like_number']),
             'sort'        => intval($params['sort']),
@@ -40,8 +41,19 @@ class News extends Common {
         if (empty($data['thumb'])) {
             show_json(0, '请传图片');
         }
-        if (empty($data['content'])) {
-            show_json(0, '请传内容详情');
+        if (empty($data['type'])) {
+            show_json(0, '请传新闻类型');
+        }
+        if ($data['type'] == 1) {
+            if (empty($params['content'])) {
+                show_json(0, '请传内容详情');
+            }
+            $data['content'] = trim($params['content']);
+        } else {
+            if (empty($params['video'])) {
+                show_json(0, '请传视频链接');
+            }
+            $data['video'] = trim($params['video']);
         }
         if (empty($data['sort'])) {
             show_json(0, '请传序号');
@@ -70,7 +82,7 @@ class News extends Common {
         $data = array(
             'title'       => trim($params['title']),
             'thumb'       => trim($params['thumb']),
-            'content'     => trim($params['content']),
+            'type'        => trim($params['type']),
             'view_number' => intval($params['view_number']),
             'like_number' => intval($params['like_number']),
             'sort'        => intval($params['sort']),
@@ -82,8 +94,19 @@ class News extends Common {
         if (empty($data['thumb'])) {
             show_json(0, '请传图片');
         }
-        if (empty($data['content'])) {
-            show_json(0, '请传内容详情');
+        if (empty($data['type'])) {
+            show_json(0, '请传新闻类型');
+        }
+        if ($data['type'] == 1) {
+            if (empty($params['content'])) {
+                show_json(0, '请传内容详情');
+            }
+            $data['content'] = trim($params['content']);
+        } else {
+            if (empty($params['video'])) {
+                show_json(0, '请传视频链接');
+            }
+            $data['video'] = trim($params['video']);
         }
         if (empty($data['sort'])) {
             show_json(0, '请传序号');
@@ -105,6 +128,7 @@ class News extends Common {
             show_json(1);
         } else {
             $item                = $item->toArray();
+            $item['type_text']   = $item['type'] == 1 ? '图文' : '视频';
             $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
             $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
         }

@@ -75,6 +75,8 @@ CREATE TABLE `yunti_news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL COMMENT '标题',
   `thumb` varchar(255) NOT NULL COMMENT '图片',
+  `type` int(2) DEFAULT NULL COMMENT '1图文2视频',
+  `video` varchar(255) DEFAULT NULL COMMENT '视频链接',
   `content` text COMMENT '内容',
   `view_number` int(10) DEFAULT NULL COMMENT '浏览量',
   `like_number` int(10) DEFAULT NULL COMMENT '点赞量',
