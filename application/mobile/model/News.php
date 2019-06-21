@@ -22,12 +22,18 @@ class News extends Common {
     }
 
     public function GetOne($id) {
+        global $member;
         $this->where('id', $id)->setInc('view_number');
         $item = $this->get($id);
         if (empty($item)) {
             show_json(1);
         } else {
-            $item                   = $item->toArray();
+            $item = $item->toArray();
+            if (db('like')->where(array('uid' => $member['id'], 'nid' => $id, 'type' => 1))->value('id')) {
+                $item['is_like'] = 1;
+            } else {
+                $item['is_like'] = 2;
+            }
             $item['comment_number'] = db('leave_message')->where(array('nid' => $id, 'type' => 1))->count('id');
             $item['createtime']     = date('Y-m-d H:i:s', $item['createtime']);
         }

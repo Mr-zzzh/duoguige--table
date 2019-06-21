@@ -5,20 +5,26 @@ namespace app\mobile\model;
 class LeaveMessage extends Common {
 
     public function GetAll($params) {
+        global $member;
         $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
+        if (empty($params['nid'])) {
+            show_json(0, '请传新闻id');
         }
-        if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
-        }
-        if (!empty($params['keyword'])) {
-            $map['content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $map['a.type'] = 1;
+        $map['a.nid']  = intval($params['nid']);
+        $list          = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->field('a.id,a.content,a.like_number,a.createtime,u.name,u.avatar')
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                if (db('like')->where(array('uid' => $member['id'], 'nid' => $item['id'], 'type' => 2))->value('id')) {
+                    $item['is_like'] = 1;
+                } else {
+                    $item['is_like'] = 2;
+                }
+                $item['day']  = date('Y-m-d', $item['createtime']);
+                $item['time'] = date('H:i:s', $item['createtime']);
             }
             unset($item);
         }
@@ -27,12 +33,12 @@ class LeaveMessage extends Common {
 
     public function AddOne($params) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'nid' => intval($params['nid']),
-            'type' => intval($params['type']),
-            'content' => trim($params['content']),
+            'uid'         => intval($params['uid']),
+            'nid'         => intval($params['nid']),
+            'type'        => intval($params['type']),
+            'content'     => trim($params['content']),
             'like_number' => intval($params['like_number']),
-            'createtime' => time(),
+            'createtime'  => time(),
         );
         $this->checkData($data, 0);
         if ($this->data($data, true)->isUpdate(false)->save()) {
@@ -58,10 +64,10 @@ class LeaveMessage extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid' => intval($params['uid']),
-            'nid' => intval($params['nid']),
-            'type' => intval($params['type']),
-            'content' => trim($params['content']),
+            'uid'         => intval($params['uid']),
+            'nid'         => intval($params['nid']),
+            'type'        => intval($params['type']),
+            'content'     => trim($params['content']),
             'like_number' => intval($params['like_number']),
         );
         $this->checkData($data, $id);
@@ -78,7 +84,7 @@ class LeaveMessage extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
+            $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);

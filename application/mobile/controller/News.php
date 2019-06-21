@@ -47,6 +47,7 @@ class News extends Common {
      * @return comment_number:评论数量
      * @return sort:排序(序号越小越靠前)
      * @return status:状态_1显示_2不显示
+     * @return is_like:是否点赞_1已点赞_2未点赞
      * @return createtime:创建时间
      * @author 开发者
      */
@@ -59,13 +60,10 @@ class News extends Common {
     }
 
     /**
-     * @title 列表
+     * @title 评论列表
      * @url /leavemessage
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:type type:int require:0 default:- other:- desc:1新闻留言2视频留言
-     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
+     * @param name:nid type:int require:1 default:- other:- desc:新闻id
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
@@ -73,7 +71,7 @@ class News extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id nid:新闻或视频id type:1新闻留言2视频留言 content:留言内容 like_number:点赞数量 createtime:创建时间
+     * @data id:评论id content:评论内容 like_number:评论点赞数量 name:评论发布人姓名 avatar:评论发布人头像 createtime:创建时间 day:日期 time:时间 is_like:是否点赞_1已点赞_2未点赞
      * @author 开发者
      */
     public function leavemessage() {
