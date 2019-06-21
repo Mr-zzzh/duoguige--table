@@ -227,4 +227,18 @@ class User extends Common {
         }
         show_json(1, '验证成功');
     }
+
+    /**
+     * @title 修改密码
+     * @url /password_edit
+     * @method post
+     * @param name:password type:int require:1 default:- other:- desc:新密码
+     * @param name:confirmpwd type:string require:1 default:- other:- desc:确认新密码
+     * @author 开发者
+     */
+    public function password_edit() {
+        $m = new \app\mobile\model\User();
+        $m->PasswordEdit(request()->post());
+    }
+
 }

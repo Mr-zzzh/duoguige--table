@@ -19,7 +19,6 @@ class User extends Common {
             show_json(0, '该手机号已注册');
         }
         if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '注册成功');
         } else {
             show_json(0, '注册失败');
@@ -38,7 +37,6 @@ class User extends Common {
             $data['intro'] = trim($params['intro']);
         }
         if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -268,6 +266,29 @@ class User extends Common {
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
+    }
+
+    public function PasswordEdit($params) {
+        global $member;
+        if (empty($params['password'])) {
+            show_json('0', '新密码不能为空');
+        }
+        if (empty($params['confirmpwd'])) {
+            show_json('0', '确认密码不能为空');
+        }
+        if ($params['password'] != $params['confirmpwd']) {
+            show_json('0', '两次所传密码不相等');
+        }
+        $salt = random(6);
+        $data = array(
+            'password' => md5(trim($params['password']) . $salt),
+            'salt'     => $salt,
+        );
+        if ($this->save($data, array('id' => $member['id'])) !== false) {
+            show_json(1, '编辑成功');
+        } else {
+            show_json(0, '编辑失败');
+        }
     }
 
 }

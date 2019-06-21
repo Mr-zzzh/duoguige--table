@@ -49,7 +49,6 @@ class DeliveryAddress extends Common {
             $this->where(array('uid' => $member['id']))->update(array('default' => 0));
         }
         if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
@@ -58,7 +57,6 @@ class DeliveryAddress extends Common {
 
     public function DelOne($id) {
         if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
             show_json(1, '删除成功');
         } else {
             show_json(0, '删除失败');
@@ -93,7 +91,6 @@ class DeliveryAddress extends Common {
             $this->where(array('uid' => $member['id']))->update(array('default' => 0));
         }
         if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
