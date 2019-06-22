@@ -46,14 +46,6 @@ class Technician extends Common {
         }
     }
 
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
-        }
-    }
-
     public function EditOne($params, $id) {
         $data = array(
             'uid'              => intval($params['uid']),
@@ -75,12 +67,16 @@ class Technician extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = db('user')->alias('u')
+            ->join('technician t', 't.uid=u.id', 'left')
+            ->join('question q', 'q.master_id=u.id and q.type=2', 'left')
+            ->field('u.id,t.name,u.avatar,u.phone,u.intro,count(q.id) number')
+            ->where('u.id', $id)
+            ->find();;
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item['label'] = '已认证维修大师';
         }
         show_json(1, $item);
     }

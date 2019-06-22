@@ -52,20 +52,6 @@ class Technician extends Common {
     }
 
     /**
-     * @title 删除
-     * @url /technician/:id
-     * @method delete
-     * @author 开发者
-     */
-    public function delete($id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\mobile\model\Technician();
-        $m->DelOne($id);
-    }
-
-    /**
      * @title 编辑
      * @url /technician/:id
      * @method put
@@ -93,18 +79,13 @@ class Technician extends Common {
      * @title 读取
      * @url /technician/:id
      * @method get
-     * @return id:id
-     * @return uid:用户id
+     * @return id:用户id
      * @return name:真实姓名
-     * @return sex:性别1男2女
-     * @return idcardno:身份证号码
-     * @return company_name:公司名称
-     * @return license_number:公司营业执照号码
-     * @return company_image:公司营业执照照片
-     * @return prove_image:在职证明图片
-     * @return technician_image:技师证件
-     * @return dimission:离职证明图
-     * @return createtime:创建时间
+     * @return avatar:头像
+     * @return phone:电话
+     * @return intro:简介
+     * @return label:已认证维修大师
+     * @return number:问题数量
      * @author 开发者
      */
     public function read($id) {
