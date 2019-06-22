@@ -5,17 +5,15 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title Technician
+ * @title 大师管理
  * @group MOBILE
  */
 class Technician extends Common {
 
     /**
-     * @title 列表
+     * @title 大师列表
      * @url /technician
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -24,23 +22,12 @@ class Technician extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id name:真实姓名 sex:性别1男2女 idcardno:身份证号码 company_name:公司名称 license_number:公司营业执照号码 company_image:公司营业执照照片 prove_image:在职证明图片 technician_image:技师证件 dimission:离职证明图 createtime:创建时间
+     * @data id:用户id name:真实姓名 avatar:头像 phone:手机号 label:已认证维修大师
      * @author 开发者
      */
     public function index() {
         $m = new \app\mobile\model\Technician();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /technician/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
     }
 
     /**

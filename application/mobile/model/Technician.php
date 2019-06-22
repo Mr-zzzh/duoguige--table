@@ -6,16 +6,19 @@ class Technician extends Common {
 
     public function GetAll($params) {
         $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
         if (!empty($params['keyword'])) {
-            $map['name|idcardno|company_name|license_number|company_image|prove_image|technician_image|dimission'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['t.name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        $map['u.status'] = 1;
+        $map['u.type']   = 2;
+        $list            = db('user')->alias('u')
+            ->join('technician t', 't.uid=u.id', 'left')
+            ->field('u.id,t.name,u.avatar,u.phone')
+            ->where($map)->order('u.createtime desc')
+            ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['label'] = '已认证维修大师';
             }
             unset($item);
         }
