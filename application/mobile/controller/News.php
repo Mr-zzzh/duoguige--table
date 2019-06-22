@@ -61,7 +61,7 @@ class News extends Common {
 
     /**
      * @title 评论列表
-     * @url /leavemessage
+     * @url /comment
      * @method get
      * @param name:nid type:int require:1 default:- other:- desc:新闻id
      * @param name:limit type:int require:0 default:15 desc:每页记录数
@@ -77,6 +77,19 @@ class News extends Common {
     public function leavemessage() {
         $m = new \app\mobile\model\LeaveMessage();
         $m->GetAll(request()->get());
+    }
+
+    /**
+     * @title 发布评论
+     * @url /comment_add
+     * @method post
+     * @param name:nid type:int require:1 default:- other:- desc:新闻id
+     * @param name:content type:string require:1 default:- other:- desc:留言内容
+     * @author 开发者
+     */
+    public function comment_add() {
+        $m = new \app\mobile\model\LeaveMessage();
+        $m->AddOne(request()->post());
     }
 
 }
