@@ -89,12 +89,12 @@ Route::resource('invite', 'mobile/Invite');
 Route::rule('salary', 'mobile/Invite/salary', 'GET');
 Route::rule('experience', 'mobile/Invite/experience', 'GET');
 Route::resource('jobwanted', 'mobile/JobWanted');
-Route::resource('like', 'mobile/Like');
 Route::resource('maintenance', 'mobile/Maintenance');
 
 Route::resource('news', 'mobile/News');
 Route::rule('comment', 'mobile/News/leavemessage', 'GET');
 Route::rule('comment_add', 'mobile/News/comment_add', 'POST');
+Route::rule('like', 'mobile/News/like', 'POST');
 //问答管理
 Route::resource('question', 'mobile/Question');
 Route::rule('answer', 'mobile/Question/answer', 'GET');

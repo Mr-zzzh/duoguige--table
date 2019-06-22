@@ -44,7 +44,6 @@ return [
         'app\mobile\controller\Index',
         'app\mobile\controller\Invite',
         'app\mobile\controller\JobWanted',
-        'app\mobile\controller\Like',
         'app\mobile\controller\Maintenance',
         'app\mobile\controller\News',
         'app\mobile\controller\Question',

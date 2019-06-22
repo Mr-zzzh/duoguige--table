@@ -92,4 +92,17 @@ class News extends Common {
         $m->AddOne(request()->post());
     }
 
+    /**
+     * @title 点赞/取消
+     * @url /like
+     * @method post
+     * @param name:nid type:int require:1 default:- other:- desc:新闻id或留言id
+     * @param name:type type:int require:1 default:- other:- desc:类型1新闻2留言
+     * @author 开发者
+     */
+    public function like() {
+        $m = new \app\mobile\model\News();
+        $m->Like(request()->post());
+    }
+
 }

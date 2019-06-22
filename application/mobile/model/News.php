@@ -40,4 +40,64 @@ class News extends Common {
         show_json(1, $item);
     }
 
+    public function Like($params) {
+        global $member;
+        $type = intval($params['type']);
+        $nid  = intval($params['nid']);
+        if (empty($type)) {
+            show_json(0, '点赞类型不能为空');
+        }
+        if (empty($nid)) {
+            show_json(0, '点赞ID不能为空');
+        }
+        $like = db('like')->where(array('uid' => $member['id'], 'nid' => $nid, 'type' => $type))->value('id');
+        if ($type == 1) {   //新闻
+            if (empty($like)) {     //点赞
+                $data = array(
+                    'uid'        => $member['id'],
+                    'nid'        => $nid,
+                    'type'       => 1,
+                    'createtime' => time(),
+                );
+                if (db('like')->insert($data)) {
+                    $this->where('id', $nid)->setInc('like_number');
+                    show_json(1, '点赞成功');
+                } else {
+                    show_json(0, '点赞失败');
+                }
+            } else {    //取消
+                if (db('like')->where(array('uid' => $member['id'], 'nid' => $nid, 'type' => $type))->delete()) {
+                    $this->where('id', $nid)->setDec('like_number');
+                    show_json(1, '取消成功');
+                } else {
+                    show_json(0, '取消失败');
+                }
+            }
+        } elseif ($type == 2) {     //留言
+            if (empty($like)) {     //点赞
+                $data = array(
+                    'uid'        => $member['id'],
+                    'nid'        => $nid,
+                    'type'       => 2,
+                    'createtime' => time(),
+                );
+                if (db('like')->insert($data)) {
+                    db('leave_message')->where('id', $nid)->setInc('like_number');
+                    show_json(1, '点赞成功');
+                } else {
+                    show_json(0, '点赞失败');
+                }
+            } else {    //取消
+                if (db('like')->where(array('uid' => $member['id'], 'nid' => $nid, 'type' => $type))->delete()) {
+                    db('leave_message')->where('id', $nid)->setDec('like_number');
+                    show_json(1, '取消成功');
+                } else {
+                    show_json(0, '取消失败');
+                }
+            }
+        } else {
+            show_json(0, '请传正确点赞类型');
+        }
+    }
+
 }
