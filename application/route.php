@@ -90,6 +90,7 @@ Route::rule('salary', 'mobile/Invite/salary', 'GET');
 Route::rule('experience', 'mobile/Invite/experience', 'GET');
 Route::resource('jobwanted', 'mobile/JobWanted');
 Route::resource('maintenance', 'mobile/Maintenance');
+Route::rule('evaluate', 'mobile/Maintenance/evaluate', 'POST|GET');
 
 Route::resource('news', 'mobile/News');
 Route::rule('comment', 'mobile/News/leavemessage', 'GET');

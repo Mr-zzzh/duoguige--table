@@ -311,7 +311,7 @@ CREATE TABLE `yunti_plan` (
 -- 维保单评价表
 DROP TABLE IF EXISTS `yunti_evaluate`;
 CREATE TABLE `yunti_evaluate` (
-  `id` int(11) NOT NULL COMMENT 'id',
+   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `uid` int(11) NOT NULL COMMENT '用户id',
   `mid` int(11) DEFAULT NULL COMMENT '维保单id',
   `start` varchar(20) DEFAULT NULL COMMENT '星星数',

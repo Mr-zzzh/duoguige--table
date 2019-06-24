@@ -128,4 +128,38 @@ class Maintenance extends Common {
         show_json(1, $item);
     }
 
+    public function Evaluate($params) {
+        global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        $data = array(
+            'uid'        => $member['id'],
+            'mid'        => intval($params['id']),
+            'start'      => intval($params['start']),
+            'content'    => trim($params['content']),
+            'createtime' => time(),
+        );
+        if (empty($data['mid'])) {
+            show_json(0, '维保单id不能为空');
+        }
+        if (empty($data['start'])) {
+            show_json(0, '星星数量不能为空');
+        }
+        if (empty($data['content'])) {
+            show_json(0, '评价内容不能为空');
+        }
+        if (!$this->where(array('id' => $data['mid'], 'uid' => $member['id']))->value('id')) {
+            show_json(0, '您没有权限评价此维保单');
+        }
+        if (db('evaluate')->where(array('mid' => $data['mid'], 'uid' => $member['id']))->value('id')) {
+            show_json(0, '您已评价过此维保单');
+        }
+        if (db('evaluate')->insert($data)) {
+            show_json(1, '添加成功');
+        } else {
+            show_json(0, '添加失败');
+        }
+    }
+
 }

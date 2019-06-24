@@ -130,4 +130,18 @@ class Maintenance extends Common {
         $m->GetOne($id);
     }
 
+    /**
+     * @title 评价
+     * @url /evaluate
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @param name:start type:int require:1 default:- other:- desc:星星数量
+     * @param name:content type:string require:1 default:- other:- desc:评价内容
+     * @author 开发者
+     */
+    public function evaluate() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Evaluate(request()->param());
+    }
+
 }
