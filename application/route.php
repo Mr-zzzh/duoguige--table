@@ -105,6 +105,7 @@ Route::rule('my_answer', 'mobile/Question/my_answer', 'GET');
 Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
 Route::rule('technician/question', 'mobile/Technician/question', 'GET');
+Route::rule('technician/question_add', 'mobile/Technician/question_add', 'POST');
 
 Route::resource('user', 'mobile/User');
 Route::rule('user/code', 'mobile/User/code', 'POST');

@@ -31,51 +31,6 @@ class Technician extends Common {
     }
 
     /**
-     * @title 添加
-     * @url /technician
-     * @method post
-     * @param name:uid type:int require:1 default:- other:- desc:用户id
-     * @param name:name type:string require:1 default:- other:- desc:真实姓名
-     * @param name:sex type:int require:1 default:- other:- desc:性别1男2女
-     * @param name:idcardno type:string require:1 default:- other:- desc:身份证号码
-     * @param name:company_name type:string require:1 default:- other:- desc:公司名称
-     * @param name:license_number type:string require:1 default:- other:- desc:公司营业执照号码
-     * @param name:company_image type:string require:1 default:- other:- desc:公司营业执照照片
-     * @param name:prove_image type:string require:1 default:- other:- desc:在职证明图片
-     * @param name:technician_image type:string require:1 default:- other:- desc:技师证件
-     * @param name:dimission type:string require:1 default:- other:- desc:离职证明图
-     * @author 开发者
-     */
-    public function save() {
-        $m = new \app\mobile\model\Technician();
-        $m->AddOne(request()->post());
-    }
-
-    /**
-     * @title 编辑
-     * @url /technician/:id
-     * @method put
-     * @param name:uid type:int require:1 default:- other:- desc:用户id
-     * @param name:name type:string require:1 default:- other:- desc:真实姓名
-     * @param name:sex type:int require:1 default:- other:- desc:性别1男2女
-     * @param name:idcardno type:string require:1 default:- other:- desc:身份证号码
-     * @param name:company_name type:string require:1 default:- other:- desc:公司名称
-     * @param name:license_number type:string require:1 default:- other:- desc:公司营业执照号码
-     * @param name:company_image type:string require:1 default:- other:- desc:公司营业执照照片
-     * @param name:prove_image type:string require:1 default:- other:- desc:在职证明图片
-     * @param name:technician_image type:string require:1 default:- other:- desc:技师证件
-     * @param name:dimission type:string require:1 default:- other:- desc:离职证明图
-     * @author 开发者
-     */
-    public function update(Request $request, $id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\mobile\model\Technician();
-        $m->EditOne($request->put(), $id);
-    }
-
-    /**
      * @title 读取
      * @url /technician/:id
      * @method get
@@ -114,6 +69,20 @@ class Technician extends Common {
     public function question() {
         $m = new \app\mobile\model\Technician();
         $m->Question(request()->get());
+    }
+
+    /**
+     * @title 向大师提问
+     * @url /technician/question_add
+     * @method post
+     * @param name:master_id type:string require:1 default:- other:- desc:大师id
+     * @param name:title type:string require:1 default:- other:- desc:标题
+     * @param name:thumb type:string require:1 default:- other:- desc:图片(多张用逗号拼接或者数组)
+     * @author 开发者
+     */
+    public function question_add() {
+        $m = new \app\mobile\model\Technician();
+        $m->QuestionAdd(request()->post());
     }
 
 }

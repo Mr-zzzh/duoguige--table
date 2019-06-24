@@ -25,47 +25,6 @@ class Technician extends Common {
         show_json(1, $list);
     }
 
-    public function AddOne($params) {
-        $data = array(
-            'uid'              => intval($params['uid']),
-            'name'             => trim($params['name']),
-            'sex'              => intval($params['sex']),
-            'idcardno'         => trim($params['idcardno']),
-            'company_name'     => trim($params['company_name']),
-            'license_number'   => trim($params['license_number']),
-            'company_image'    => trim($params['company_image']),
-            'prove_image'      => trim($params['prove_image']),
-            'technician_image' => trim($params['technician_image']),
-            'dimission'        => trim($params['dimission']),
-            'createtime'       => time(),
-        );
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
-        }
-    }
-
-    public function EditOne($params, $id) {
-        $data = array(
-            'uid'              => intval($params['uid']),
-            'name'             => trim($params['name']),
-            'sex'              => intval($params['sex']),
-            'idcardno'         => trim($params['idcardno']),
-            'company_name'     => trim($params['company_name']),
-            'license_number'   => trim($params['license_number']),
-            'company_image'    => trim($params['company_image']),
-            'prove_image'      => trim($params['prove_image']),
-            'technician_image' => trim($params['technician_image']),
-            'dimission'        => trim($params['dimission']),
-        );
-        if ($this->save($data, array('id' => $id)) !== false) {
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
-    }
-
     public function GetOne($id) {
         $item = db('user')->alias('u')
             ->join('technician t', 't.uid=u.id', 'left')
@@ -102,6 +61,35 @@ class Technician extends Common {
             unset($item);
         }
         show_json(1, $list);
+    }
+
+    public function QuestionAdd($params) {
+        global $member;
+        $data = array(
+            'uid'        => $member['id'],
+            'master_id'  => intval($params['master_id']),
+            'title'      => trim($params['title']),
+            'type'       => 2,
+            'createtime' => time(),
+        );
+        if (empty($data['master_id'])) {
+            show_json(0, '大师ID不能为空');
+        }
+        if (empty($data['title'])) {
+            show_json(0, '问题不能为空');
+        }
+        if (!empty($params['thumb'])) {
+            if (is_array($params['thumb'])) {
+                $data['thumb'] = implode(',', trim($params['thumb']));
+            } else {
+                $data['thumb'] = trim($params['thumb']);
+            }
+        }
+        if (db('question')->insert($data)) {
+            show_json(1, '添加成功');
+        } else {
+            show_json(0, '添加失败');
+        }
     }
 
 }
