@@ -149,8 +149,8 @@ class Maintenance extends Common {
         if (empty($data['content'])) {
             show_json(0, '评价内容不能为空');
         }
-        if (!$this->where(array('id' => $data['mid'], 'uid' => $member['id']))->value('id')) {
-            show_json(0, '您没有权限评价此维保单');
+        if (!$this->where(array('id' => $data['mid'], 'uid' => $member['id'], 'status' => array('>', 3)))->value('id')) {
+            show_json(0, '此维保单不能评价');
         }
         if (db('evaluate')->where(array('mid' => $data['mid'], 'uid' => $member['id']))->value('id')) {
             show_json(0, '您已评价过此维保单');
