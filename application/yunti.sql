@@ -278,6 +278,9 @@ CREATE TABLE `yunti_maintenance` (
   `floor_number` int(5) DEFAULT NULL COMMENT '楼层数',
   `type` varchar(30) DEFAULT NULL COMMENT '维修类型',
   `company` varchar(50) DEFAULT NULL COMMENT '单位名称',
+  `province` int(10) DEFAULT NULL COMMENT '省编号',
+  `city` int(10) DEFAULT NULL COMMENT '市编号',
+  `area` int(10) DEFAULT NULL COMMENT '区编号',
   `address` varchar(100) DEFAULT NULL COMMENT '地址',
   `genre` int(2) DEFAULT NULL COMMENT '类型_1维修单_2保养单',
   `status` int(2) NOT NULL COMMENT '-1取消0待审 1审核通过 2不通过 3已接单 4已完成 5投诉 6投诉已处理',
@@ -289,7 +292,10 @@ CREATE TABLE `yunti_maintenance` (
   `receive_time` int(11) DEFAULT NULL COMMENT '接取时间',
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
-  KEY `receive_id` (`receive_id`)
+  KEY `receive_id` (`receive_id`),
+  KEY `province` (`province`),
+  KEY `city` (`city`),
+  KEY `area` (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 维保单进度表

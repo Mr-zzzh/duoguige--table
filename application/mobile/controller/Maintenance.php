@@ -5,7 +5,7 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title Maintenance
+ * @title 维保单管理
  * @group MOBILE
  */
 class Maintenance extends Common {
@@ -32,17 +32,6 @@ class Maintenance extends Common {
     public function index() {
         $m = new \app\mobile\model\Maintenance();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /maintenance/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
     }
 
     /**
