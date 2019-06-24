@@ -286,6 +286,7 @@ CREATE TABLE `yunti_maintenance` (
   `status` int(2) NOT NULL COMMENT '-1取消0待审 1审核通过 2不通过 3已接单 4已完成 5投诉 6投诉已处理',
   `checktime` int(11) DEFAULT NULL COMMENT '审核时间',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `canceltime` int(11) DEFAULT NULL COMMENT '取消时间',
   `finishtime` int(11) DEFAULT NULL COMMENT '完成时间',
   `receive_id` int(10) DEFAULT NULL COMMENT '接取保单师傅id',
   `receive_time` int(11) DEFAULT NULL COMMENT '接取时间',
