@@ -11,14 +11,9 @@ use think\Request;
 class Maintenance extends Common {
 
     /**
-     * @title 列表
+     * @title 维保单列表(物业)
      * @url /maintenance
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:status type:int require:0 default:- other:- desc:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
-     * @param name:type type:int require:0 default:- other:- desc:维修类型
-     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
@@ -26,7 +21,7 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 address:地址 status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 star:打星 evaluate:评价 complain:投诉 complain_image:投诉照片 checktime:审核时间 canceltime:取消时间 createtime:创建时间 finishtime:完成时间 evaluate_time:评价时间 complain_time:投诉时间 complain_finish_time:投诉完成时间
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 province:省编号 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 createtime:创建时间 receive_id:接取人id receive_name:接取人姓名 evaluate:评价(0未评1已评价)
      * @author 开发者
      */
     public function index() {
@@ -61,13 +56,13 @@ class Maintenance extends Common {
      * @method delete
      * @author 开发者
      */
-    public function delete($id) {
+    /*public function delete($id) {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
         $m = new \app\mobile\model\Maintenance();
         $m->DelOne($id);
-    }
+    }*/
 
     /**
      * @title 编辑
@@ -93,13 +88,13 @@ class Maintenance extends Common {
      * @param name:complain_finish_time type:int require:1 default:- other:- desc:投诉完成时间
      * @author 开发者
      */
-    public function update(Request $request, $id) {
+    /*public function update(Request $request, $id) {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
         $m = new \app\mobile\model\Maintenance();
         $m->EditOne($request->put(), $id);
-    }
+    }*/
 
     /**
      * @title 读取

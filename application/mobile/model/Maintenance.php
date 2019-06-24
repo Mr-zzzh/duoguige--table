@@ -5,22 +5,18 @@ namespace app\mobile\model;
 class Maintenance extends Common {
 
     public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
-        if (isset($params['status']) && $params['status'] !== '') {
-            $map['status'] = intval($params['status']);
-        }
-        if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
-        }
-        if (!empty($params['keyword'])) {
-            $map['brand|model|type|company|address|evaluate|complain|complain_image'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
+        global $member;
+        $map          = array();
+        $map['m.uid'] = $member['id'];
+        $list         = $this->alias('m')
+            ->join('evaluate e', 'e.mid=m.id', 'left')
+            ->join('user u', 'u.id=m.receive_id', 'left')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.province,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,count(e.id) as evaluate')
+            ->where($map)->group('m.id')->order('m.createtime desc')
+            ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
+                $item['address']    = city_name($item['province']) . city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
