@@ -26,7 +26,7 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id uname:发布人姓名 brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型(急修,维修,保养) company:单位名称 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 address:地址 genre:类型_1维修单_2保养单 genre_text:类型文本 status:状态0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理  status_text:状态文本 checktime:审核时间 createtime:创建时间 finishtime:完成时间 receive_id:接取保单师傅id rname:接取师傅姓名 receive_time:接取时间
+     * @data id:id uid:用户id uname:发布人姓名 brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型(急修,维修,保养) company:单位名称 province:省编号 province_text:省 city:市编号 city_text:市 area:区编号 area_text:区 address:地址 genre:类型_1维修单_2保养单 genre_text:类型文本 status:状态-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理  status_text:状态文本 checktime:审核时间 createtime:创建时间 canceltime:取消时间 finishtime:完成时间 receive_id:接取保单师傅id rname:接取师傅姓名 receive_time:接取时间
      * @author 开发者
      */
     public function index() {
@@ -69,9 +69,10 @@ class Maintenance extends Common {
      * @return address:地址
      * @return genre:类型_1维修单_2保养单
      * @return genre_text:类型文本
-     * @return status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
+     * @return status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
      * @return status_text:状态文本
      * @return checktime:审核时间
+     * @return canceltime:取消时间
      * @return createtime:创建时间
      * @return finishtime:完成时间
      * @return receive_id:接取保单师傅id

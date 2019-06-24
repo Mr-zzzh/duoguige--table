@@ -25,12 +25,15 @@ class Maintenance extends Common {
             ->where($map)->order('m.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $genre  = array(1 => '维修单', 2 => '保养单');
-            $status = array('0' => '待审', '1' => '审核通过', '2' => '审核不通过', '3' => '已接单', '4' => '已完成', '5' => '投诉', '6' => '投诉已处理');
+            $status = array('-1' => '取消', '0' => '待审', '1' => '审核通过', '2' => '审核不通过', '3' => '已接单', '4' => '已完成', '5' => '投诉', '6' => '投诉已处理');
             foreach ($list['data'] as $k => &$item) {
                 $item['genre_text']  = $genre[$item['genre']];
                 $item['status_text'] = $status[$item['status']];
                 if (!empty($item['checktime'])) {
                     $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+                }
+                if (!empty($item['canceltime'])) {
+                    $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
                 }
                 $item['province_text'] = city_name($item['province']);
                 $item['city_text']     = city_name($item['city']);
@@ -70,7 +73,7 @@ class Maintenance extends Common {
             show_json(1);
         } else {
             $genre                 = array(1 => '维修单', 2 => '保养单');
-            $status                = array('0' => '待审', '1' => '审核通过', '2' => '审核不通过', '3' => '已接单', '4' => '已完成', '5' => '投诉', '6' => '投诉已处理');
+            $status                = array('-1' => '取消', '0' => '待审', '1' => '审核通过', '2' => '审核不通过', '3' => '已接单', '4' => '已完成', '5' => '投诉', '6' => '投诉已处理');
             $item                  = $item->toArray();
             $item['genre_text']    = $genre[$item['genre']];
             $item['status_text']   = $status[$item['status']];
@@ -79,6 +82,9 @@ class Maintenance extends Common {
             $item['area_text']     = city_name($item['area']);
             if (!empty($item['checktime'])) {
                 $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+            }
+            if (!empty($item['canceltime'])) {
+                $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
             }
             if (!empty($item['finishtime'])) {
                 $item['finishtime'] = date('Y-m-d H:i:s', $item['finishtime']);
