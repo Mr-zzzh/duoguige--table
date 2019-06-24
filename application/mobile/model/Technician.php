@@ -81,4 +81,27 @@ class Technician extends Common {
         show_json(1, $item);
     }
 
+    public function Question($params) {
+        $map = array();
+        if (empty($params['id'])) {
+            show_json(0, '请传大师id');
+        }
+        $map['q.master_id'] = intval($params['id']);
+        $map['q.type']      = 2;
+        $list               = db('question')->alias('q')
+            ->join('answer a', 'q.id=a.qid', 'left')
+            ->field('q.id,q.title,q.thumb,a.answer')
+            ->where($map)->group('q.id')->order('q.createtime desc')
+            ->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                if (!empty($item['thumb'])) {
+                    $item['thumb'] = explode(',', $item['thumb']);
+                }
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
 }

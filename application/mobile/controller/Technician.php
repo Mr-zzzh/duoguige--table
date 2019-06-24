@@ -96,4 +96,24 @@ class Technician extends Common {
         $m->GetOne($id);
     }
 
+    /**
+     * @title 问答列表
+     * @url /technician/question
+     * @method get
+     * @param name:id type:string require:0 default:- other:- desc:大师id
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:问题id title:问题标题 thumb:问题图片 answer:答案
+     * @author 开发者
+     */
+    public function question() {
+        $m = new \app\mobile\model\Technician();
+        $m->Question(request()->get());
+    }
+
 }

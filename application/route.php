@@ -104,6 +104,8 @@ Route::rule('my_answer', 'mobile/Question/my_answer', 'GET');
 
 Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
+Route::rule('technician/question', 'mobile/Technician/question', 'GET');
+
 Route::resource('user', 'mobile/User');
 Route::rule('user/code', 'mobile/User/code', 'POST');
 Route::rule('my_collect', 'mobile/User/my_collect', 'GET');
