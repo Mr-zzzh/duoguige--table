@@ -303,13 +303,13 @@ class Maintenance extends Common {
             $map['status'] = array('>', 4);
         }
         $list = $this->field('id,brand,model,floor_number,type,company,city,area,address,status,createtime')
-            ->where($map)->group('m.id')->order('m.createtime desc')
+            ->where($map)->order('createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
-                if (intval($params['type']) == 2) {
+                if (intval($params['type']) != 2) {
                     $item['evaluate'] = db('evaluate')->alias('a')
                         ->join('user u', 'u.id=a.uid', 'left')
                         ->field('u.name,u.avatar,a.start,a.content,a.createtime')
