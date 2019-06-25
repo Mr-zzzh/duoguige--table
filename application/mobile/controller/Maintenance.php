@@ -131,7 +131,7 @@ class Maintenance extends Common {
     }
 
     /**
-     * @title 评价
+     * @title 评价(物业)
      * @url /evaluate
      * @method post|get
      * @param name:id type:int require:1 default:- other:- desc:维保单id
@@ -142,6 +142,20 @@ class Maintenance extends Common {
     public function evaluate() {
         $m = new \app\mobile\model\Maintenance();
         $m->Evaluate(request()->param());
+    }
+
+    /**
+     * @title 投诉(物业)
+     * @url /complaint
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @param name:content type:string require:1 default:- other:- desc:投诉内容
+     * @param name:thumb type:string require:0 default:- other:- desc:图片(多张用逗号拼接或者数组)
+     * @author 开发者
+     */
+    public function complaint() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Complaint(request()->param());
     }
 
 }

@@ -162,4 +162,39 @@ class Maintenance extends Common {
         }
     }
 
+    public function Complaint($params) {
+        global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        $data = array(
+            'uid'        => $member['id'],
+            'mid'        => intval($params['id']),
+            'content'    => trim($params['content']),
+            'createtime' => time(),
+        );
+        if (empty($data['mid'])) {
+            show_json(0, '维保单id不能为空');
+        }
+        if (empty($data['content'])) {
+            show_json(0, '投诉内容不能为空');
+        }
+        if (!empty($params['thumb'])) {
+            if (is_array($params['thumb'])) {
+                $data['thumb'] = implode(',', trim($params['thumb']));
+            } else {
+                $data['thumb'] = trim($params['thumb']);
+            }
+        }
+        if (!$this->where(array('id' => $data['mid'], 'uid' => $member['id'], 'status' => array('>', 3)))->value('id')) {
+            show_json(0, '此维保单不能投诉');
+        }
+        if (db('complaint')->insert($data)) {
+            $this->where('id', $data['mid'])->update(array('status' => 5));
+            show_json(1, '添加成功');
+        } else {
+            show_json(0, '添加失败');
+        }
+    }
+
 }
