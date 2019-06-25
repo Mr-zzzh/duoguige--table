@@ -6,7 +6,14 @@ class Maintenance extends Common {
 
     public function GetAll($params) {
         global $member;
-        $map          = array();
+        $map = array();
+        if (!empty($params['type'])) {
+            if (intval($params['type']) == 1) {
+                $map['m.status'] = 0;
+            } else {
+                $map['m.status'] = array('in', '1,2');
+            }
+        }
         $map['m.uid'] = $member['id'];
         $list         = $this->alias('m')
             ->join('evaluate e', 'e.mid=m.id', 'left')
