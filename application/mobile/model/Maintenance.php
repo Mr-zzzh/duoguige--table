@@ -345,4 +345,29 @@ class Maintenance extends Common {
         show_json(1, $item);
     }
 
+    public function Plan($params) {
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        $data = array(
+            'mid'  => trim($params['id']),
+            'plan' => trim($params['plan']),
+        );
+        if (empty($data['mid'])) {
+            show_json(0, '请传维保单id');
+        }
+        if (empty($data['plan'])) {
+            show_json(0, '请传维保单进度');
+        }
+        if (db('plan')->where($data)->value('id')) {
+            show_json(1, '操作成功');
+        }
+        $data['createtime'] = time();
+        if (db('plan')->insert($data)) {
+            show_json(1, '操作成功');
+        } else {
+            show_json(0, '操作失败');
+        }
+    }
+
 }

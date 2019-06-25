@@ -235,4 +235,17 @@ class Maintenance extends Common {
         $m->TaskDetail(request()->get());
     }
 
+    /**
+     * @title 更新进度(物业)
+     * @url /plan
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @param name:plan type:string require:1 default:- other:- desc:进度
+     * @author 开发者
+     */
+    public function plan() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Plan(request()->post());
+    }
+
 }
