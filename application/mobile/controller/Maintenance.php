@@ -97,6 +97,19 @@ class Maintenance extends Common {
     }*/
 
     /**
+     * @title 修改维保单状态(取消/完成)-物业
+     * @url /maintenance/status_edit
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @param name:status type:int require:1 default:- other:- desc:-1取消4已完成
+     * @author 开发者
+     */
+    public function status_edit() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->StatusEdit(request()->post());
+    }
+
+    /**
      * @title 读取
      * @url /maintenance/:id
      * @method get

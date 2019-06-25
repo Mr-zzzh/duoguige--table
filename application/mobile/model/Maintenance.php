@@ -117,6 +117,32 @@ class Maintenance extends Common {
         }
     }
 
+    public function StatusEdit($params) {
+        global $member;
+        $id = intval($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维保单id');
+        }
+        $data = array(
+            'status' => trim($params['status']),
+        );
+        if ($data['status'] == -1) {
+            $data['canceltime'] = time();
+        } elseif ($data['status'] == 4) {
+            $data['finishtime'] = time();
+        } else {
+            show_json(0, '请传正确状态');
+        }
+        if (!$this->where(array('id' => $id, 'uid' => $member['id']))->value('id')) {
+            show_json(0, '您不能对此维保单进行操作');
+        }
+        if ($this->save($data, array('id' => $id)) !== false) {
+            show_json(1, '操作成功');
+        } else {
+            show_json(0, '操作失败');
+        }
+    }
+
     public function GetOne($id) {
         $item = $this->get($id);
         if (empty($item)) {
