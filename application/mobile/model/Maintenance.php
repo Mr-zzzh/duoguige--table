@@ -324,4 +324,25 @@ class Maintenance extends Common {
         show_json(1, $list);
     }
 
+    public function TaskDetail($params) {
+        $id = intval($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维保单id');
+        }
+        $item = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('company c', 'a.uid=c.uid', 'left')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,u.phone,u.name,u.avatar,c.company_name')
+            ->where('a.id', $id)
+            ->find();
+        if (empty($item)) {
+            show_json(1);
+        } else {
+            $item            = $item->toArray();
+            $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['plan']    = db('plan')->where('mid', $id)->order('createtime desc')->limit(1)->value('plan');
+        }
+        show_json(1, $item);
+    }
+
 }

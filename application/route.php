@@ -96,6 +96,7 @@ Route::rule('maintenance/status_edit', 'mobile/Maintenance/status_edit', 'POST')
 Route::rule('allevaluate', 'mobile/Maintenance/allevaluate', 'GET');
 Route::rule('task_hall', 'mobile/Maintenance/task_hall', 'GET');
 Route::rule('my_task', 'mobile/Maintenance/my_task', 'GET');
+Route::rule('task_detail', 'mobile/Maintenance/task_detail', 'GET');
 
 Route::resource('news', 'mobile/News');
 Route::rule('comment', 'mobile/News/leavemessage', 'GET');
