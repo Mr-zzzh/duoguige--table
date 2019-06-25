@@ -304,17 +304,32 @@ class Maintenance extends Common {
         if (empty($id)) {
             show_json(0, '请传维保单id');
         }
-        if (!$this->where(array('id' => $id, 'status' => 1))->find()) {
-            show_json(0, '此维保单已被接取');
-        }
-        $data['receive_id']   = $member['id'];
-        $data['receive_time'] = time();
-        $data['status']       = 3;
-        if ($this->save($data, array('id' => $id)) !== false) {
-            show_json(1, '操作成功');
+        if (intval($params['type']) == 1) {
+            if (!$this->where(array('id' => $id, 'status' => 1))->find()) {
+                show_json(0, '此维保单已被接取');
+            }
+            $data['receive_id']   = $member['id'];
+            $data['receive_time'] = time();
+            $data['status']       = 3;
+            if ($this->save($data, array('id' => $id)) !== false) {
+                show_json(1, '操作成功');
+            } else {
+                show_json(0, '操作失败');
+            }
+        } elseif (intval($params['type']) == 2) {
+            if (!$this->where(array('id' => $id, 'receive_id' => $member['id']))->find()) {
+                show_json(0, '您不能操作此维保单');
+            }
+            $data['status'] = 6;
+            if ($this->save($data, array('id' => $id)) !== false) {
+                show_json(1, '操作成功');
+            } else {
+                show_json(0, '操作失败');
+            }
         } else {
-            show_json(0, '操作失败');
+            show_json(0, '类型不正确');
         }
+
     }
 
     public function MyTask($params) {
