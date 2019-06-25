@@ -295,6 +295,28 @@ class Maintenance extends Common {
         show_json(1, $list);
     }
 
+    public function ReceiveTask($params) {
+        global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        $id = trim($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维保单id');
+        }
+        if (!$this->where(array('id' => $id, 'status' => 1))->find()) {
+            show_json(0, '此维保单已被接取');
+        }
+        $data['receive_id']   = $member['id'];
+        $data['receive_time'] = time();
+        $data['status']       = 3;
+        if ($this->save($data, array('id' => $id)) !== false) {
+            show_json(1, '操作成功');
+        } else {
+            show_json(0, '操作失败');
+        }
+    }
+
     public function MyTask($params) {
         global $member;
         $map               = array();
@@ -346,6 +368,7 @@ class Maintenance extends Common {
     }
 
     public function Plan($params) {
+        global $member;
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }

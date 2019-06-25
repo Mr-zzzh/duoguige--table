@@ -199,6 +199,18 @@ class Maintenance extends Common {
     }
 
     /**
+     * @title 接取任务(技术大师)
+     * @url /receive_task
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @author 开发者
+     */
+    public function receive_task() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->ReceiveTask(request()->post());
+    }
+
+    /**
      * @title 我的任务/投诉处理(技术大师)
      * @url /my_task
      * @method get
@@ -236,7 +248,7 @@ class Maintenance extends Common {
     }
 
     /**
-     * @title 更新进度(物业)
+     * @title 更新进度(技术大师)
      * @url /plan
      * @method post
      * @param name:id type:int require:1 default:- other:- desc:维保单id
