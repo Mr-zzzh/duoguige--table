@@ -369,7 +369,7 @@ class Maintenance extends Common {
         $item = $this->alias('a')
             ->join('user u', 'a.uid=u.id', 'left')
             ->join('company c', 'a.uid=c.uid', 'left')
-            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,u.phone,u.name,u.avatar,c.company_name')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,u.phone,u.name,u.avatar,c.company_name')
             ->where('a.id', $id)
             ->find();
         if (empty($item)) {
@@ -406,6 +406,33 @@ class Maintenance extends Common {
         } else {
             show_json(0, '操作失败');
         }
+    }
+
+    public function TcomplaintDetail($params) {
+        $id = intval($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维保单id');
+        }
+        $item = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('company c', 'a.uid=c.uid', 'left')
+            ->join('complaint cm', 'a.id=cm.mid', 'left')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,u.phone,u.name,u.avatar,c.company_name')
+            ->where('a.id', $id)
+            ->find();
+        if (empty($item)) {
+            show_json(1);
+        } else {
+            $item            = $item->toArray();
+            $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $complaint       = db('complaint')->where('mid', $id)->order('createtime desc')->limit(1)->find();
+            if (!empty($complaint['thumb'])) {
+                $complaint['thumb'] = explode(',', $complaint['thumb']);
+            }
+            $item['content'] = $complaint['content'];
+            $item['thumb']   = $complaint['thumb'];
+        }
+        show_json(1, $item);
     }
 
 }

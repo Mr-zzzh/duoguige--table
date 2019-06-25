@@ -240,7 +240,7 @@ class Maintenance extends Common {
      * @method get
      * @param name:id type:int require:1 default:- other:- desc:维保单id
      * @return data:列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 phone:发布人手机 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 plan:最新进度
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址  phone:发布人手机 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 plan:最新进度
      * @author 开发者
      */
     public function task_detail() {
@@ -267,12 +267,12 @@ class Maintenance extends Common {
      * @method get
      * @param name:id type:int require:1 default:- other:- desc:维保单id
      * @return data:列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 phone:发布人手机 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 plan:最新进度
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址  phone:发布人手机 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 plan:最新进度 content:投诉内容 thumb:投诉图片
      * @author 开发者
      */
     public function tcomplaint_detail() {
         $m = new \app\mobile\model\Maintenance();
-        $m->TaskDetail(request()->get());
+        $m->TcomplaintDetail(request()->get());
     }
 
 }
