@@ -117,7 +117,7 @@ class Maintenance extends Common {
      * @return data:列表@
      * @return plan:进度列表@
      * @return complaint:投诉列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 province:省编号 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 receive_time:接单时间 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 receive_phone:接取人电话 receive_avatar:接取人头像 receive_name:接取人姓名 receive_company:接取人公司名称
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 province:省编号 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 receive_id:接单人id receive_time:接单时间 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 receive_phone:接取人电话 receive_avatar:接取人头像 receive_name:接取人姓名 receive_company:接取人公司名称
      * @plan plan:进度 createtime:时间(倒序)
      * @complaint id:id uid:用户id mid:维保单id content:投诉内容 thumb:投诉图片 createtime:投诉时间
      * @author 开发者
@@ -156,6 +156,26 @@ class Maintenance extends Common {
     public function complaint() {
         $m = new \app\mobile\model\Maintenance();
         $m->Complaint(request()->param());
+    }
+
+    /**
+     * @title 全部评价(物业)
+     * @url /allevaluate
+     * @method get
+     * @param name:id type:int require:1 default:- other:- desc:维修师傅id
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 name:评价人姓名 avatar:评价人头像 start:评价星星 content:评价内容 createtime:0评价时间
+     * @author 开发者
+     */
+    public function allevaluate() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->AllEvaluate(request()->get());
     }
 
 }

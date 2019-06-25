@@ -156,7 +156,7 @@ class Maintenance extends Common {
             ->join('company c', 'a.uid=c.uid', 'left')
             ->join('user u2', 'a.receive_id=u2.id', 'left')
             ->join('technician t', 'a.receive_id=t.uid', 'left')
-            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.province,a.city,a.area,a.address,a.status,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.province,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
             ->where('a.id', $id)
             ->find();
         if (empty($item)) {
@@ -247,6 +247,28 @@ class Maintenance extends Common {
         } else {
             show_json(0, '添加失败');
         }
+    }
+
+    public function AllEvaluate($params) {
+        $id = intval($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维修师傅id');
+        }
+        $map                 = array();
+        $map['m.receive_id'] = $id;
+        $list                = db('evaluate')->alias('e')
+            ->join('maintenance m', 'e.mid=m.id', 'left')
+            ->join('user u', 'u.id=m.uid', 'left')
+            ->field('m.brand,m.model,m.floor_number,m.type,m.company,u.name,u.avatar,e.start,e.content,e.createtime')
+            ->where($map)->order('e.createtime desc')
+            ->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
     }
 
 }
