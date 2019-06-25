@@ -18,12 +18,12 @@ class Maintenance extends Common {
         $list         = $this->alias('m')
             ->join('evaluate e', 'e.mid=m.id', 'left')
             ->join('user u', 'u.id=m.receive_id', 'left')
-            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.province,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,count(e.id) as evaluate')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,count(e.id) as evaluate')
             ->where($map)->group('m.id')->order('m.createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['address']    = city_name($item['province']) . city_name($item['city']) . city_name($item['area']) . $item['address'];
+                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
@@ -156,14 +156,14 @@ class Maintenance extends Common {
             ->join('company c', 'a.uid=c.uid', 'left')
             ->join('user u2', 'a.receive_id=u2.id', 'left')
             ->join('technician t', 'a.receive_id=t.uid', 'left')
-            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.province,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
             ->where('a.id', $id)
             ->find();
         if (empty($item)) {
             show_json(1);
         } else {
             $item            = $item->toArray();
-            $item['address'] = city_name($item['province']) . city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
             $plan            = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
             if (!empty($item['receive_time'])) {
                 array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
@@ -264,6 +264,27 @@ class Maintenance extends Common {
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
+    public function TaskHall($params) {
+        global $member;
+        if ($member['type'] != 2) {
+            show_json(0, '无查看权限');
+        }
+        $map             = array();
+        $map['m.status'] = 1;
+        $list            = $this->alias('m')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.createtime')
+            ->where($map)->group('m.id')->order('m.createtime desc')
+            ->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
