@@ -198,4 +198,25 @@ class Maintenance extends Common {
         $m->TaskHall(request()->get());
     }
 
+    /**
+     * @title 我的任务/投诉处理(技术大师)
+     * @url /my_task
+     * @method get
+     * @param name:type type:int require:1 default:- other:- desc:类型_1我的任务_2投诉处理
+     * @param name:time type:string require:0 default:- other:- desc:时间(Y-m-d)-我的任务
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 createtime:创建时间
+     * @author 开发者
+     */
+    public function my_task() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->MyTask(request()->get());
+    }
+
 }

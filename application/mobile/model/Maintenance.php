@@ -276,7 +276,10 @@ class Maintenance extends Common {
         if ($member['type'] != 2) {
             show_json(0, '无查看权限');
         }
-        $map             = array();
+        $map = array();
+        if (!empty($params['city'])) {
+            $map['m.city'] = intval($params['city']);
+        }
         $map['m.status'] = 1;
         $list            = $this->alias('m')
             ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.createtime')
@@ -286,6 +289,35 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
+    public function MyTask($params) {
+        global $member;
+        $map               = array();
+        $map['receive_id'] = $member['id'];
+        if (intval($params['type']) == 2) {
+            $map['status'] = array('>', 4);
+        }
+        $list = $this->field('id,brand,model,floor_number,type,company,city,area,address,status,createtime')
+            ->where($map)->group('m.id')->order('m.createtime desc')
+            ->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                if (intval($params['type']) == 2) {
+                    $item['evaluate'] = db('evaluate')->alias('a')
+                        ->join('user u', 'u.id=a.uid', 'left')
+                        ->field('u.name,u.avatar,a.start,a.content,a.createtime')
+                        ->where('a.mid', $item['id'])->find();
+                    if (!empty($item['evaluate'])) {
+                        $item['evaluate']['createtime'] = date('Y-m-d', $item['evaluate']['createtime']);
+                    }
+                }
             }
             unset($item);
         }
