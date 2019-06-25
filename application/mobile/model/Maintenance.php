@@ -144,14 +144,33 @@ class Maintenance extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->alias('a')
+            ->join('user u1', 'a.uid=u1.id', 'left')
+            ->join('company c', 'a.uid=c.uid', 'left')
+            ->join('user u2', 'a.receive_id=u2.id', 'left')
+            ->join('technician t', 'a.receive_id=t.uid', 'left')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.province,a.city,a.area,a.address,a.status,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
+            ->where('a.id', $id)
+            ->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item               = $item->toArray();
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item            = $item->toArray();
+            $item['address'] = city_name($item['province']) . city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $plan            = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
+            if (!empty($item['receive_time'])) {
+                array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
+                foreach ($plan as &$v) {
+                    $v['createtime'] = date('Y-n-d H:i', $v['createtime']);
+                }
+                unset($v);
+            }
+            $complaint = db('complaint')->where('mid', $id)->order('createtime desc')->limit(1)->find();
+            if (!empty($complaint['thumb'])) {
+                $complaint['thumb'] = explode(',', $complaint['thumb']);
+            }
         }
-        show_json(1, $item);
+        show_json(1, array('data' => $item, 'plan' => $plan, 'complaint' => $complaint));
     }
 
     public function Evaluate($params) {

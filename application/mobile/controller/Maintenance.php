@@ -110,29 +110,15 @@ class Maintenance extends Common {
     }
 
     /**
-     * @title 读取
+     * @title 读取(物业)
      * @url /maintenance/:id
      * @method get
-     * @return id:id
-     * @return uid:用户id
-     * @return brand:电梯品牌
-     * @return model:型号
-     * @return floor_number:楼层数
-     * @return type:维修类型
-     * @return company:单位名称
-     * @return address:地址
-     * @return status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
-     * @return star:打星
-     * @return evaluate:评价
-     * @return complain:投诉
-     * @return complain_image:投诉照片
-     * @return checktime:审核时间
-     * @return canceltime:取消时间
-     * @return createtime:创建时间
-     * @return finishtime:完成时间
-     * @return evaluate_time:评价时间
-     * @return complain_time:投诉时间
-     * @return complain_finish_time:投诉完成时间
+     * @return data:列表@
+     * @return plan:进度列表@
+     * @return complaint:投诉列表@
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 province:省编号 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 receive_time:接单时间 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 receive_phone:接取人电话 receive_avatar:接取人头像 receive_name:接取人姓名 receive_company:接取人公司名称
+     * @plan plan:进度 createtime:时间(倒序)
+     * @complaint id:id uid:用户id mid:维保单id content:投诉内容 thumb:投诉图片 createtime:投诉时间
      * @author 开发者
      */
     public function read($id) {
