@@ -191,4 +191,52 @@ class Index extends Common {
         show_json(1);
     }
 
+    /**
+     * @title 搜索历史列表
+     * @url /history
+     * @method get
+     * @param name:type type:int require:1 default:- other:- desc:类型_1首页搜索_2故障库搜索(不传默认首页)
+     * @return data:列表@
+     * @data id:id content:内容
+     * @author 开发者
+     */
+    public function history() {
+        global $member;
+        $type = intval(request()->get('type'));
+        $map  = array();
+        if (empty($type) || $type == 1) {
+            $map['type'] = 1;
+        } else {
+            $map['type'] = 2;
+        }
+        $map['uid'] = $member['id'];
+        $list       = db('search_history')->where($map)
+            ->field('id,content')->order('createtime desc')->select();
+        show_json(1, $list);
+    }
+
+    /**
+     * @title 搜索历史清除
+     * @url /history_del
+     * @method post
+     * @param name:type type:int require:1 default:- other:- desc:类型_1首页搜索_2故障库搜索(不传默认首页)
+     * @author 开发者
+     */
+    public function history_del() {
+        global $member;
+        $type = intval(request()->post('type'));
+        $map  = array();
+        if (empty($type) || $type == 1) {
+            $map['type'] = 1;
+        } else {
+            $map['type'] = 2;
+        }
+        $map['uid'] = $member['id'];
+        if (db('search_history')->where($map)->delete()) {
+            show_json(1, '删除成功');
+        } else {
+            show_json(0, '删除失败');
+        }
+    }
+
 }

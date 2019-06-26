@@ -30,22 +30,6 @@ class Fault extends Common {
         show_json(1, $list);
     }
 
-    public function History() {
-        global $member;
-        $list = db('search_history')->where(array('uid' => $member['id'], 'type' => 2))
-            ->field('id,content')->order('createtime desc')->select();
-        show_json(1, $list);
-    }
-
-    public function Del() {
-        global $member;
-        if (db('search_history')->where(array('uid' => $member['id'], 'type' => 2))->delete()) {
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
-        }
-    }
-
     public function GetOne($id) {
         $item = $this->alias('f')
             ->join('brand b', 'f.bid=b.id', 'left')

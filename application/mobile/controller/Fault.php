@@ -30,30 +30,6 @@ class Fault extends Common {
     }
 
     /**
-     * @title 搜索历史列表
-     * @url /fault/history
-     * @method get
-     * @return data:列表@
-     * @data id:id content:内容
-     * @author 开发者
-     */
-    public function history() {
-        $m = new \app\mobile\model\Fault();
-        $m->History();
-    }
-
-    /**
-     * @title 搜索历史清除
-     * @url /fault/history_del
-     * @method get|post
-     * @author 开发者
-     */
-    public function history_del() {
-        $m = new \app\mobile\model\Fault();
-        $m->Del();
-    }
-
-    /**
      * @title 读取
      * @url /fault/:id
      * @method get

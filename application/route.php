@@ -68,6 +68,8 @@ Route::rule('home', 'mobile/Index/home', 'GET|POST');
 Route::rule('city', 'mobile/Index/city', 'GET|POST');
 Route::rule('insurance', 'mobile/Index/insurance', 'GET|POST');
 Route::rule('search', 'mobile/Index/search', 'GET|POST');
+Route::rule('history', 'mobile/Index/history', 'GET');
+Route::rule('history_del', 'mobile/Index/history_del', 'POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');
@@ -80,8 +82,6 @@ Route::resource('company', 'mobile/Company');
 Route::resource('deliveryaddress', 'mobile/DeliveryAddress');
 //故障库
 Route::resource('fault', 'mobile/Fault');
-Route::rule('fault/history', 'mobile/Fault/history', 'GET|POST');
-Route::rule('fault/history_del', 'mobile/Fault/history_del', 'GET|POST');
 Route::rule('transition', 'mobile/Fault/transition', 'GET|POST');
 Route::resource('feedback', 'mobile/Feedback');
 Route::resource('goods', 'mobile/Goods');
