@@ -31,7 +31,7 @@ class GoodsOrder extends Common {
     }
 
     /**
-     * @title 添加
+     * @title 发货提醒/确认收货
      * @url /goodsorder
      * @method post
      * @param name:id type:int require:1 default:- other:- desc:订单id
