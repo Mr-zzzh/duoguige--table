@@ -28,6 +28,7 @@ return [
         'app\admin\controller\News',
         'app\admin\controller\Payset',
         'app\admin\controller\Question',
+        'app\admin\controller\Remind',
         //'app\admin\controller\Role',
         'app\admin\controller\Set',
         'app\admin\controller\User',

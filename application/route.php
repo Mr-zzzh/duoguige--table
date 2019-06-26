@@ -34,7 +34,7 @@ Route::resource('admin/goodslabel', 'admin/GoodsLabel');
 Route::resource('admin/goodsorder', 'admin/GoodsOrder');
 Route::rule('admin/goodsorder/deliver', 'admin/GoodsOrder/deliver', 'POST|GET');
 Route::rule('admin/goodsorder/trend_chart', 'admin/GoodsOrder/trend_chart', 'GET');
-
+//招聘求职
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');
 Route::resource('admin/jobwanted', 'admin/JobWanted');
@@ -43,13 +43,13 @@ Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::rule('admin/maintenance/editstatus', 'admin/Maintenance/editstatus', 'GET|POST');
 
 Route::resource('admin/news', 'admin/News');
-
+//问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
 Route::rule('admin/question/delete_answer', 'admin/Question/delete_answer', 'POST');
 Route::rule('admin/question/edit_status', 'admin/Question/edit_status', 'GET|POST');
-
-Route::resource('admin/role', 'admin/Role');
+Route::resource('admin/remind', 'admin/Remind');
+//Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/user', 'admin/User');
 Route::rule('admin/user/editstatus', 'admin/User/editstatus', 'POST|GET');
