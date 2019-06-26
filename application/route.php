@@ -49,6 +49,7 @@ Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
 Route::rule('admin/question/delete_answer', 'admin/Question/delete_answer', 'POST');
 Route::rule('admin/question/edit_status', 'admin/Question/edit_status', 'GET|POST');
 Route::resource('admin/remind', 'admin/Remind');
+Route::rule('admin/remind/unreadnum', 'admin/Remind/unreadnum', 'GET|POST');
 //Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
 Route::resource('admin/user', 'admin/User');

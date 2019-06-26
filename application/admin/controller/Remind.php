@@ -18,7 +18,7 @@ class Remind extends Common {
      * @author 开发者
      */
     public function unreadnum() {
-        $m = new \app\admin\model\Remind();
+        $m     = new \app\admin\model\Remind();
         $total = $m->unreadnum();
         if ($total === false) {
             show_json(0, $m->getError());
@@ -27,10 +27,9 @@ class Remind extends Common {
     }
 
     /**
-     * @title 列表
-     * @url /admin/brand
+     * @title 发货提醒列表
+     * @url /admin/remind
      * @method get
-     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
@@ -38,30 +37,17 @@ class Remind extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:品牌名 logo:logo createtime:创建时间
+     * @data id:id name:商品名 createtime:创建时间
      * @author 开发者
      */
     public function index() {
-        $m = new \app\admin\model\Brand();
+        $m = new \app\admin\model\Remind();
         $m->GetAll(request()->get());
     }
 
     /**
-     * @title 添加
-     * @url /admin/brand
-     * @method post
-     * @param name:name type:string require:1 default:- other:- desc:品牌名
-     * @param name:logo type:string require:1 default:- other:- desc:logo
-     * @author 开发者
-     */
-    public function save() {
-        $m = new \app\admin\model\Brand();
-        $m->AddOne(request()->post());
-    }
-
-    /**
      * @title 删除
-     * @url /admin/brand/:id
+     * @url /admin/remind/:id
      * @method delete
      * @author 开发者
      */
@@ -69,33 +55,18 @@ class Remind extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\Brand();
+        $m = new \app\admin\model\Remind();
         $m->DelOne($id);
     }
 
     /**
-     * @title 编辑
-     * @url /admin/brand/:id
-     * @method put
-     * @param name:name type:string require:1 default:- other:- desc:品牌名
-     * @param name:logo type:string require:1 default:- other:- desc:logo
-     * @author 开发者
-     */
-    public function update(Request $request, $id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\admin\model\Brand();
-        $m->EditOne($request->put(), $id);
-    }
-
-    /**
      * @title 读取
-     * @url /admin/brand/:id
+     * @url /admin/remind/:id
      * @method get
      * @return id:id
-     * @return name:品牌名
-     * @return logo:logo
+     * @return name:商品名
+     * @return uname:购买用户姓名
+     * @return ordersn:订单号
      * @return createtime:创建时间
      * @author 开发者
      */
@@ -103,7 +74,7 @@ class Remind extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\Brand();
+        $m = new \app\admin\model\Remind();
         $m->GetOne($id);
     }
 

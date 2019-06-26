@@ -10,52 +10,18 @@ class Remind extends Common {
     }
 
     public function GetAll($params) {
-        $list = $this->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
+        $list = $this->alias('a')
+            ->join('goods_order b', 'a.oid=b.id', 'left')
+            ->join('goods c', 'b.gid=c.id', 'left')
+            ->field('a.id,a.createtime,c.name')
+            ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
-            $type = array(1 => '首页轮播图', 2 => '保险页面图', 3 => '新闻轮播图');
             foreach ($list['data'] as $k => &$item) {
-                $item['type_text']   = $type[$item['type']];
-                $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
-                $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);
         }
         show_json(1, $list);
-    }
-
-    public function AddOne($params) {
-        $data = array(
-            'url'        => trim($params['url']),
-            'jumpurl'    => trim($params['jumpurl']),
-            'sort'       => intval($params['sort']),
-            'type'       => intval($params['type']),
-            'status'     => intval($params['status']),
-            'createtime' => time(),
-        );
-        if (empty($data['url'])) {
-            show_json(0, '请传图片url');
-        }
-        if (empty($data['sort'])) {
-            show_json(0, '请传序号');
-        }
-        if (empty($data['type'])) {
-            show_json(0, '请传图片类型');
-        }
-        if ($data['type'] == 3) {
-            if (empty($params['newsid'])) {
-                show_json(0, '请传新闻id');
-            }
-            $data['newsid'] = intval($params['newsid']);
-        }
-        if (empty($data['status'])) {
-            $data['status'] == 1;
-        }
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
-        }
     }
 
     public function DelOne($id) {
@@ -67,50 +33,20 @@ class Remind extends Common {
         }
     }
 
-    public function EditOne($params, $id) {
-        $data = array(
-            'url'     => trim($params['url']),
-            'jumpurl' => trim($params['jumpurl']),
-            'sort'    => intval($params['sort']),
-            'type'    => intval($params['type']),
-            'status'  => intval($params['status']),
-        );
-        if (empty($data['url'])) {
-            show_json(0, '请传图片url');
-        }
-        if (empty($data['sort'])) {
-            show_json(0, '请传序号');
-        }
-        if (empty($data['type'])) {
-            show_json(0, '请传图片类型');
-        }
-        if ($data['type'] == 3) {
-            if (empty($params['newsid'])) {
-                show_json(0, '请传新闻id');
-            }
-            $data['newsid'] = intval($params['newsid']);
-        }
-        if (empty($data['status'])) {
-            $data['status'] == 1;
-        }
-        if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
-    }
-
     public function GetOne($id) {
-        $item = $this->get($id);
+        $this->save(array('status' => 1), array('id' => $id));
+        $item = $this->alias('a')
+            ->join('goods_order b', 'a.oid=b.id', 'left')
+            ->join('goods c', 'b.gid=c.id', 'left')
+            ->join('user u', 'b.uid=u.id', 'left')
+            ->field('a.id,a.createtime,c.name,b.ordersn,u.name uname')
+            ->where('a.id', $id)
+            ->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $type                = array(1 => '首页轮播图', 2 => '保险页面图', 3 => '新闻轮播图');
-            $item                = $item->toArray();
-            $item['type_text']   = $type[$item['type']];
-            $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
-            $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            $item               = $item->toArray();
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
     }
