@@ -280,6 +280,9 @@ class Maintenance extends Common {
         if (!empty($params['city'])) {
             $map['m.city'] = intval($params['city']);
         }
+        if (!empty($params['area'])) {
+            $map['m.area'] = intval($params['area']);
+        }
         $map['m.status'] = 1;
         $list            = $this->alias('m')
             ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.createtime')

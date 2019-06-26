@@ -183,6 +183,7 @@ class Maintenance extends Common {
      * @url /task_hall
      * @method get
      * @param name:city type:int require:1 default:- other:- desc:城市编码
+     * @param name:area type:int require:1 default:- other:- desc:区编码
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
