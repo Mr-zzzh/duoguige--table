@@ -406,6 +406,16 @@ CREATE TABLE `yunti_goods_order` (
   KEY `addressid` (`addressid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 发货提醒表
+DROP TABLE IF EXISTS `yunti_remind`;
+CREATE TABLE `yunti_remind` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `oid` int(11) DEFAULT NULL COMMENT '订单id',
+  `status` int(2) DEFAULT NULL COMMENT '状态0未阅1已阅',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- 意见反馈表
 DROP TABLE IF EXISTS `yunti_feedback`;
 CREATE TABLE `yunti_feedback` (
