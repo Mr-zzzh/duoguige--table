@@ -67,6 +67,7 @@ Route::rule('register', 'mobile/User/register', 'POST');
 Route::rule('home', 'mobile/Index/home', 'GET|POST');
 Route::rule('city', 'mobile/Index/city', 'GET|POST');
 Route::rule('insurance', 'mobile/Index/insurance', 'GET|POST');
+Route::rule('search', 'mobile/Index/search', 'GET|POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');

@@ -121,4 +121,74 @@ class Index extends Common {
         show_json(1, $list);
     }
 
+    /**
+     * @title 搜索
+     * @url /search
+     * @method get
+     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
+     * @param name:type type:int require:1 default:- other:- desc:类型_1商城_2新闻_3问答_4_招聘_5求职(不传默认商城)
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id title:标题
+     * @author 开发者
+     */
+    public function search() {
+        global $member;
+        $params = request()->param();
+        $map    = array();
+        if (!empty($params['keyword'])) {
+            if (!empty($member)) {
+                $history            = array();
+                $history['uid']     = $member['id'];
+                $history['type']    = 1;
+                $history['content'] = trim($params['keyword']);
+                if (!db('search_history')->where($history)->value('id')) {
+                    $history['createtime'] = time();
+                    db('search_history')->insert($history);
+                }
+            }
+            $type = intval($params['type']);
+            //商城
+            if ($type == 1 || empty($type)) {
+                $map['name|specification|model|manufacturers|phone|label|intro|area|province|color|address'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+                $list                                                                                        = db('goods')
+                    ->field('id,name as title')
+                    ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                show_json(1, $list);
+            } elseif ($type == 2) {
+                $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+                $map['status']        = 1;
+                $list                 = db('news')->where($map)
+                    ->field('id,title')
+                    ->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
+                show_json(1, $list);
+            } elseif ($type == 3) {
+                $map['title'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+                $map['type']  = 1;
+                $list         = db('question')->field('id,title')
+                    ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                show_json(1, $list);
+            } elseif ($type == 4) {
+                $map['post|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+                $map['status']                           = 1;
+                $list                                    = db('invite')
+                    ->field('id,post as title')
+                    ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                show_json(1, $list);
+            } elseif ($type == 4) {
+                $map['post|intro|address|name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+                $list                           = db('job_wanted')
+                    ->field('id,post as title')
+                    ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                show_json(1, $list);
+            }
+        }
+        show_json(1);
+    }
+
 }
