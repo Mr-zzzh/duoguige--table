@@ -5,19 +5,16 @@ namespace app\mobile\controller;
 use think\Request;
 
 /**
- * @title GoodsOrder
+ * @title 订单管理
  * @group MOBILE
  */
 class GoodsOrder extends Common {
 
     /**
-     * @title 列表
+     * @title 我的订单
      * @url /goodsorder
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:status type:int require:0 default:- other:- desc:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款
-     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
+     * @param name:status type:int require:0 default:- other:- desc:状态_1待发货_2已发货_3已收货
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
@@ -25,23 +22,12 @@ class GoodsOrder extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:用户id gid:商品id ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 paytype:1支付宝_2微信 tradeno:交易单号 addressid:地址id freight:运费 expresscom:快递公司 expresssn:快递单号 paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间
+     * @data id:id ordersn:订单号 number:商品数量 money:订单金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款 paytime:支付时间 name:商品名 thumbnail:商品图 price:商品价格 label:商品标签
      * @author 开发者
      */
     public function index() {
         $m = new \app\mobile\model\GoodsOrder();
         $m->GetAll(request()->get());
-    }
-
-    /**
-     * @title 依赖数据
-     * @url /goodsorder/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
     }
 
     /**
