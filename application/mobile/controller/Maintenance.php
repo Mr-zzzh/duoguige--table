@@ -270,7 +270,7 @@ class Maintenance extends Common {
      * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址  phone:发布人手机 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 plan:最新进度 content:投诉内容 thumb:投诉图片
      * @author 开发者
      */
-    public function tcomplaint_detail() {
+    public function complaint_detail() {
         $m = new \app\mobile\model\Maintenance();
         $m->TcomplaintDetail(request()->get());
     }
