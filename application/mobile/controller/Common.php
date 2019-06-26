@@ -20,16 +20,17 @@ class Common extends Controller {
         $controller = request()->controller();
         $action     = request()->action();
         $path       = strtolower($module . '/' . $controller . '/' . $action);
-        if (!in_array($path, login_comc())) {
-            //用户登录验证
-            $member = mobile_login();
-            if ($member === false) {
+        //用户登录验证
+        $member = mobile_login();
+        if ($member === false) {
+            if (!in_array($path, login_comc())) {
                 show_json(-3, '用户未登录!');
             }
         }
     }
 
-    public function miss() {
+    public
+    function miss() {
         show_json(-2, '路由未定义!');
     }
 
