@@ -113,7 +113,6 @@ Route::rule('response', 'mobile/Question/response', 'POST');
 Route::rule('my_question', 'mobile/Question/my_question', 'GET');
 Route::rule('my_answer', 'mobile/Question/my_answer', 'GET');
 
-Route::resource('receive', 'mobile/Receive');
 Route::resource('technician', 'mobile/Technician');
 Route::rule('technician/question', 'mobile/Technician/question', 'GET');
 Route::rule('technician/question_add', 'mobile/Technician/question_add', 'POST');

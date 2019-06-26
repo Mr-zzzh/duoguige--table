@@ -48,7 +48,6 @@ return [
         'app\mobile\controller\Maintenance',
         'app\mobile\controller\News',
         'app\mobile\controller\Question',
-        'app\mobile\controller\Receive',
         'app\mobile\controller\Technician',
         'app\mobile\controller\User',
     ],
