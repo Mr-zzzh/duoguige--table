@@ -342,6 +342,10 @@ class Maintenance extends Common {
         if (intval($params['type']) == 2) {
             $map['status'] = array('>', 4);
         }
+        if (!empty($params['time'])) {
+            $days                = date('t', strtotime($params['time']));
+            $map['receive_time'] = array('between', strtotime($params['time'] . '-01 00:00:00') . ',' . strtotime($params['time'] . '-' . $days . ' 23:59:59'));
+        }
         $list = $this->field('id,brand,model,floor_number,type,company,city,area,address,status,createtime')
             ->where($map)->order('createtime desc')
             ->paginate($params['limit'])->toArray();

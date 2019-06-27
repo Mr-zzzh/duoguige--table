@@ -216,8 +216,8 @@ class Maintenance extends Common {
      * @title 我的任务/投诉处理(技术大师)
      * @url /my_task
      * @method get
-     * @param name:type type:int require:1 default:- other:- desc:类型_1我的任务_2投诉处理
-     * @param name:time type:string require:0 default:- other:- desc:时间(Y-m-d)-我的任务
+     * @param name:type type:int require:1 default:- other:- desc:类型_1我的任务_2投诉处理(不传为我的任务)
+     * @param name:time type:string require:0 default:- other:- desc:时间(Y-m)-我的任务(type为1)
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
