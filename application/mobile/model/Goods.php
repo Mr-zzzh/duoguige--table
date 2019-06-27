@@ -5,6 +5,7 @@ namespace app\mobile\model;
 class Goods extends Common {
 
     public function GetAll($params) {
+        global $member;
         $map = array();
         if (!empty($params['keyword'])) {
             $map['name|specification|model|manufacturers|phone|label|intro|area|province|color|address'] = array('LIKE', '%' . trim($params['keyword']) . '%');
@@ -12,7 +13,23 @@ class Goods extends Common {
         if (!empty($params['cid'])) {
             $map['cid'] = intval($params['cid']);
         }
-        $list = $this->field('id,name,thumbnail,price')->where($map)->order('sale_number desc')->paginate($params['limit'])->toArray();
+        $where = '';
+        if (empty($params['cid']) && empty($params['keyword'])) {
+            if (!empty($member)) {
+                $label = db('browse_history')->where(array('uid' => $member['id']))
+                    ->order('number desc')->limit(3)->column('lable');
+                foreach ($label as $k1 => &$v1) {
+                    if ($k1 == 2) {
+                        $where .= "FIND_IN_SET('" . $v1 . "',label)";
+                    } else {
+                        $where .= "FIND_IN_SET('" . $v1 . "',label) or ";
+                    }
+                }
+                unset($v1);
+            }
+        }
+        $list = $this->field('id,name,thumbnail,price')->where($map)->where($where)
+            ->order('sale_number desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
