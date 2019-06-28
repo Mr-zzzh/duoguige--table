@@ -74,6 +74,22 @@ class GoodsOrder extends Common {
     }
 
     /**
+     * @title 订单支付
+     * @url /goodsorder/pay
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:商品id
+     * @param name:addressid type:int require:1 default:- other:- desc:地址id
+     * @param name:paytype type:int require:1 default:- other:- desc:支付方式_1支付宝_2微信
+     * @return data:支付信息@
+     * @data
+     * @author 开发者(返回status为2时,不调用支付,金额为0)
+     */
+    public function pay() {
+        $m = new \app\mobile\model\GoodsOrder();
+        $m->Pay(request()->param());
+    }
+
+    /**
      * @title 读取
      * @url /goodsorder/:id
      * @method get

@@ -2,6 +2,8 @@
 
 namespace app\mobile\model;
 
+use ccia\pay\Pay;
+
 class GoodsOrder extends Common {
 
     public function GetAll($params) {
@@ -76,6 +78,72 @@ class GoodsOrder extends Common {
         $shop['number'] = 1;
         $address        = db('delivery_address')->where(array('uid' => $member['id'], 'default' => 1))->find();
         show_json(1, array('shop' => $shop, 'address' => $address));
+    }
+
+    public function pay($params) {
+        global $member;
+        $gid = intval($params['id']);
+        if ($gid < 1) {
+            show_json(0, '参数商品ID错误');
+        }
+        $addressid = intval($params['addressid']);
+        if ($addressid < 1) {
+            show_json(0, '参数地址ID错误');
+        }
+        $paytype = intval($params['paytype']);
+        if (empty($paytype)) {
+            show_json(0, '支付方式不能为空');
+        }
+        $money   = db('goods')->where('id', $gid)->value('price');
+        $ordersn = 'YT' . random(6, true) . time();
+        if ($money == 0) {
+            $data = [
+                'uid'        => $member['id'],
+                'gid'        => $gid,
+                'ordersn'    => $ordersn,
+                'number'     => 1,
+                'money'      => $money,
+                'status'     => 1,
+                'paytype'    => $paytype,
+                'addressid'  => $addressid,
+                'createtime' => time(),
+                'paytime'    => time(),
+            ];
+            if ($this->data($data, true)->isUpdate(false)->save()) {
+                show_json(2, '支付成功');
+            } else {
+                show_json(0, '支付失败');
+            }
+        }
+        $data = [
+            'uid'        => $member['id'],
+            'gid'        => $gid,
+            'ordersn'    => $ordersn,
+            'number'     => 1,
+            'money'      => $money,
+            'status'     => 0,
+            'paytype'    => $paytype,
+            'addressid'  => $addressid,
+            'createtime' => time(),
+        ];
+        if (!$this->data($data, true)->isUpdate(false)->save()) {
+            show_json(0, '支付失败');
+        }
+        $pay     = new Pay();
+        $payinfo = [
+            'body'    => '云梯商品',
+            'title'   => '云梯商品',
+            'ordersn' => $ordersn,
+            'money'   => $money,
+            'money'   => '10m',
+            'paytype' => $paytype,
+        ];
+        $res     = $pay->pay($payinfo);
+        if ($res['status'] == 1) {
+            show_json(1, $res['result']);
+        } else {
+            show_json(0, '支付失败');
+        }
     }
 
     public function GetOne($id) {
