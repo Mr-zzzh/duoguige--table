@@ -62,30 +62,20 @@ class GoodsOrder extends Common {
         }
     }
 
-    public function EditOne($params, $id) {
-        $data = array(
-            'uid'         => intval($params['uid']),
-            'gid'         => intval($params['gid']),
-            'ordersn'     => trim($params['ordersn']),
-            'number'      => intval($params['number']),
-            'money'       => trim($params['money']) * 1,
-            'status'      => intval($params['status']),
-            'paytype'     => intval($params['paytype']),
-            'tradeno'     => intval($params['tradeno']),
-            'addressid'   => intval($params['addressid']),
-            'freight'     => trim($params['freight']) * 1,
-            'expresscom'  => trim($params['expresscom']),
-            'expresssn'   => trim($params['expresssn']),
-            'paytime'     => intval($params['paytime']),
-            'finishtime'  => intval($params['finishtime']),
-            'canceltime'  => intval($params['canceltime']),
-            'delivertime' => intval($params['delivertime']),
-        );
-        if ($this->save($data, array('id' => $id)) !== false) {
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
+    public function Affirm($params) {
+        global $member;
+        $id = intval($params['id']);
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
         }
+        $shop = db('goods')->where('id', $id)->field('id,name,thumbnail,price,label')->find();
+        if (empty($shop)) {
+            show_json(0, '参数ID错误');
+        }
+        $shop['label']  = str_replace(',', '+', $shop['label']);
+        $shop['number'] = 1;
+        $address        = db('delivery_address')->where(array('uid' => $member['id'], 'default' => 1))->find();
+        show_json(1, array('shop' => $shop, 'address' => $address));
     }
 
     public function GetOne($id) {

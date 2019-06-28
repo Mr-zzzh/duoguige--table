@@ -87,6 +87,8 @@ Route::resource('feedback', 'mobile/Feedback');
 Route::resource('goods', 'mobile/Goods');
 Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
+Route::rule('goodsorder/affirm', 'mobile/GoodsOrder/affirm', 'GET|POST');
+
 Route::resource('invite', 'mobile/Invite');
 Route::rule('salary', 'mobile/Invite/salary', 'GET');
 Route::rule('experience', 'mobile/Invite/experience', 'GET');

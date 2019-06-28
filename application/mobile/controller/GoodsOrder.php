@@ -58,33 +58,19 @@ class GoodsOrder extends Common {
     }
 
     /**
-     * @title 编辑
-     * @url /goodsorder/:id
-     * @method put
-     * @param name:uid type:int require:1 default:- other:- desc:用户id
-     * @param name:gid type:int require:1 default:- other:- desc:商品id
-     * @param name:ordersn type:string require:1 default:- other:- desc:订单号
-     * @param name:number type:int require:1 default:- other:- desc:商品数量
-     * @param name:money type:float require:1 default:- other:- desc:商品金额
-     * @param name:status type:int require:1 default:- other:- desc:-1取消订单_0待支付_1支付_2已发货_3已收货_4退款
-     * @param name:paytype type:int require:1 default:- other:- desc:1支付宝_2微信
-     * @param name:tradeno type:int require:1 default:- other:- desc:交易单号
-     * @param name:addressid type:int require:1 default:- other:- desc:地址id
-     * @param name:freight type:float require:1 default:- other:- desc:运费
-     * @param name:expresscom type:string require:1 default:- other:- desc:快递公司
-     * @param name:expresssn type:string require:1 default:- other:- desc:快递单号
-     * @param name:paytime type:int require:1 default:- other:- desc:支付时间
-     * @param name:finishtime type:int require:1 default:- other:- desc:完成时间
-     * @param name:canceltime type:int require:1 default:- other:- desc:取消时间
-     * @param name:delivertime type:int require:1 default:- other:- desc:发货时间
+     * @title 订单确认页
+     * @url /goodsorder/affirm
+     * @method post|get
+     * @param name:id type:int require:1 default:- other:- desc:商品id
+     * @return shop:商品信息@
+     * @shop id:id name:商品名 thumbnail:商品图 price:单价 label:商品标签 number:商品数量
+     * @return address:地址信息@(为空没有默认地址)
+     * @address id:id uid:用户id name:收货人姓名 phone:收货人电话 area:-收货地区 address:收货详细地址 createtime:创建时间
      * @author 开发者
      */
-    public function update(Request $request, $id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
+    public function affirm() {
         $m = new \app\mobile\model\GoodsOrder();
-        $m->EditOne($request->put(), $id);
+        $m->Affirm(request()->param());
     }
 
     /**
@@ -111,12 +97,12 @@ class GoodsOrder extends Common {
      * @return delivertime:发货时间
      * @author 开发者
      */
-    public function read($id) {
+    /*public function read($id) {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
         $m = new \app\mobile\model\GoodsOrder();
         $m->GetOne($id);
-    }
+    }*/
 
 }
