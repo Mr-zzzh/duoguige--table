@@ -89,6 +89,11 @@ class GoodsOrder extends Common {
         $m->Pay(request()->param());
     }
 
+    public function notify($data = []) {
+        $m = new \app\mobile\model\GoodsOrder();
+        $m->Notify($data);
+    }
+
     /**
      * @title 读取
      * @url /goodsorder/:id

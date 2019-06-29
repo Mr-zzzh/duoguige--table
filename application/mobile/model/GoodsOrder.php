@@ -146,6 +146,23 @@ class GoodsOrder extends Common {
         }
     }
 
+    public function Notify($data) {
+        $ordersn = $data['ordersn'];
+        $order   = [
+            'tradeno' => $data['trade_no'],
+            'paytime' => time(),
+        ];
+        if ($data['paystatus'] == 1) {
+            $order['status'] = 1;
+        }
+        if ($this->save($data, array('ordersn' => $ordersn)) !== false) {
+            return true;
+        } else {
+            trace($data, 'payerror');
+            return false;
+        }
+    }
+
     public function GetOne($id) {
         $item = $this->get($id);
         if (empty($item)) {
