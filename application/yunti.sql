@@ -460,6 +460,7 @@ CREATE TABLE `yunti_admin` (
   `token` varchar(255) NOT NULL COMMENT '用户token',
   `createtime` int(11) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 后台角色表
