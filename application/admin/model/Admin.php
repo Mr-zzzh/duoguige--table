@@ -47,8 +47,8 @@ class Admin extends Common {
         if (empty($params['password'])) {
             show_json(0, '请传密码');
         }
-        if ($this->where('phone', $data['phone'])->value('id')) {
-            show_json(0, '请不要添加重复手机号');
+        if ($this->where('name', $data['name'])->value('id')) {
+            show_json(0, '该账号已添加');
         }
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
@@ -69,7 +69,7 @@ class Admin extends Common {
 
     //系统自动注册管理员
     public function register() {
-        $id = $this->where(array('phone' => 13312345678))->value('id');
+        $id = $this->where(array('name' => 'admin'))->value('id');
         if (!$id) {
             $salt = random(6);
             $data = array(
@@ -95,10 +95,10 @@ class Admin extends Common {
         if (!empty($token)) {
             $map['a.token'] = $token;
         } else {
-            $params         = request()->param();
-            $phone          = trim($params['phone']);
-            $password       = trim($params['password']);
-            $map['a.phone'] = $phone;
+            $params        = request()->param();
+            $phone         = trim($params['phone']);
+            $password      = trim($params['password']);
+            $map['a.name'] = $phone;
         }
         $info = $this->alias('a')->field('a.*')
             ->where($map)->find();
