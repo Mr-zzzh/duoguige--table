@@ -189,7 +189,10 @@ class User extends Common {
         if ($id < 1) {
             show_json(0, 'ID数据错误');
         }
-        if (1) {
+        if (db('download')->where(array('uid' => $member['id'], 'id' => $id))->delete()) {
+            show_json(1, '删除成功');
+        } else {
+            show_json(0, '删除失败');
         }
     }
 

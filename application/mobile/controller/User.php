@@ -195,7 +195,7 @@ class User extends Common {
      */
     public function collect_del() {
         $m = new \app\mobile\model\User();
-        $m->CollectDel(request()->post());
+        $m->CollectDel(intval(request()->post('id')));
     }
 
     /**
