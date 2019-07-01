@@ -507,7 +507,7 @@ CREATE TABLE `yunti_banner` (
 
 
 -- 操作日志
-DROP TABLE IF EXISTS `coa_operation_log`;
+DROP TABLE IF EXISTS `yunti_operation_log`;
 CREATE TABLE `coa_operation_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cid` int(10) unsigned NOT NULL COMMENT '公司ID',
