@@ -69,7 +69,7 @@ CREATE TABLE `yunti_delivery_address` (
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---新闻/行业动态表
+-- 新闻/行业动态表
 DROP TABLE IF EXISTS `yunti_news`;
 CREATE TABLE `yunti_news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -460,7 +460,6 @@ CREATE TABLE `yunti_admin` (
   `token` varchar(255) NOT NULL COMMENT '用户token',
   `createtime` int(11) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-   KEY `roleid` (`roleid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 后台角色表
