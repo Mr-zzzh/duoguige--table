@@ -134,7 +134,7 @@ class User extends Common {
      * @title 技术大师认证信息修改
      * @url /user/technician_edit
      * @method post
-     * @param name:id type:string require:1 default:- other:- desc:数据id
+     * @param name:id type:int require:1 default:- other:- desc:数据id
      * @param name:name type:string require:1 default:- other:- desc:真实姓名
      * @param name:sex type:int require:1 default:- other:- desc:性别1男2女
      * @param name:idcardno type:string require:1 default:- other:- desc:身份证号码
@@ -184,6 +184,18 @@ class User extends Common {
     public function my_collect() {
         $m = new \app\mobile\model\User();
         $m->MyCollect(request()->get());
+    }
+
+    /**
+     * @title 我的收藏删除
+     * @url /collect_del
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:数据id
+     * @author 开发者
+     */
+    public function collect_del() {
+        $m = new \app\mobile\model\User();
+        $m->CollectDel(request()->post());
     }
 
     /**

@@ -124,6 +124,7 @@ Route::rule('technician/question_add', 'mobile/Technician/question_add', 'POST')
 Route::resource('user', 'mobile/User');
 Route::rule('user/code', 'mobile/User/code', 'POST');
 Route::rule('my_collect', 'mobile/User/my_collect', 'GET');
+Route::rule('collect_del', 'mobile/User/collect_del', 'POST');
 Route::rule('my_like', 'mobile/User/my_like', 'GET');
 Route::rule('user/technician_add', 'mobile/User/technician_add', 'POST');
 Route::rule('user/technician_edit', 'mobile/User/technician_edit', 'POST');

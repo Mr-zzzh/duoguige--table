@@ -49,8 +49,7 @@ class User extends Common {
         }
     }
 
-    public
-    function EditOne($params, $id) {
+    public function EditOne($params, $id) {
         $data = array();
         if (!empty($params['name'])) {
             $data['name'] = trim($params['name']);
@@ -68,8 +67,7 @@ class User extends Common {
         }
     }
 
-    public
-    function GetOne($id) {
+    public function GetOne($id) {
         $item = $this->get($id);
         if (empty($item)) {
             show_json(1);
@@ -88,9 +86,8 @@ class User extends Common {
         show_json(1, $item);
     }
 
-//用户密码登录
-    public
-    function login($token = '') {
+    //用户密码登录
+    public function login($token = '') {
         $map      = array();
         $password = '';
         if (!empty($token)) {
@@ -137,9 +134,8 @@ class User extends Common {
         return $info;
     }
 
-//用户验证码登录
-    public
-    function LoginCode($phone) {
+    //用户验证码登录
+    public function LoginCode($phone) {
         $info = $this->where('phone', $phone)->find();
         if (empty($info)) {     //注册
             $data = array(
@@ -177,8 +173,7 @@ class User extends Common {
         show_json(1, $info);
     }
 
-    public
-    function MyCollect($params) {
+    public function MyCollect($params) {
         global $member;
         $map          = array();
         $map['a.uid'] = $member['id'];
@@ -189,8 +184,16 @@ class User extends Common {
         show_json(1, $list);
     }
 
-    public
-    function MyLike($params) {
+    public function CollectDel($id) {
+        global $member;
+        if ($id < 1) {
+            show_json(0, 'ID数据错误');
+        }
+        if (1) {
+        }
+    }
+
+    public function MyLike($params) {
         global $member;
         $map          = array();
         $map['a.uid'] = $member['id'];
@@ -209,8 +212,7 @@ class User extends Common {
         show_json(1, $list);
     }
 
-    public
-    function TechnicianAdd($params) {
+    public function TechnicianAdd($params) {
         global $member;
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
@@ -264,8 +266,7 @@ class User extends Common {
         }
     }
 
-    public
-    function TechnicianEdit($params) {
+    public function TechnicianEdit($params) {
         global $member;
         if ($params['id'] < 1) {
             show_json(0, '参数ID错误');
@@ -322,8 +323,7 @@ class User extends Common {
         }
     }
 
-    public
-    function ApproveDetail() {
+    public function ApproveDetail() {
         global $member;
         if ($member['type'] == 2) {
             $item = db('technician')->where('uid', $member['id'])->find();
@@ -340,8 +340,7 @@ class User extends Common {
         show_json(1, $item);
     }
 
-    public
-    function PasswordEdit($params) {
+    public function PasswordEdit($params) {
         global $member;
         if (empty($params['password'])) {
             show_json('0', '新密码不能为空');
