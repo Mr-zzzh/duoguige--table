@@ -35,6 +35,7 @@ class Admin extends Common {
             'phone'      => trim($params['phone']),
             'password'   => trim($params['password'] . $rand),
             'salt'       => $rand,
+            'avatar'     => request()->domain() . '/uploads/nopic.png',
             'status'     => intval($params['status']),
             'createtime' => time(),
         );
@@ -75,6 +76,7 @@ class Admin extends Common {
             $data = array(
                 'name'       => 'admin',
                 'phone'      => 13312345678,
+                'avatar'     => request()->domain() . '/uploads/nopic.png',
                 'status'     => 1,
                 'salt'       => $salt,
                 'password'   => md5('123456' . $salt),
