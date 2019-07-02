@@ -25,7 +25,7 @@ class Admin extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:名称(账号) status:状态0-禁用1-启用 phone:手机号 createtime:创建时间 status_text:状态文本
+     * @data id:id name:名称(账号) status:状态0-禁用1-启用 phone:手机号 avatar:用户头像 createtime:创建时间 status_text:状态文本
      * @author 开发者
      */
     public function index() {
@@ -40,6 +40,7 @@ class Admin extends Common {
      * @param name:name type:string require:1 default:- other:- desc:名称(账号)
      * @param name:phone type:string require:1 default:- other:- desc:手机号
      * @param name:password type:string require:1 default:- other:- desc:密码
+     * @param name:avatar type:string require:0 default:- other:- desc:账号头像(不传默认)
      * @param name:status type:int require:1 default:- other:- desc:状态：0-禁用，1-启用
      * @author 开发者
      */
@@ -69,6 +70,7 @@ class Admin extends Common {
      * @param name:name type:string require:1 default:- other:- desc:名称(账号)
      * @param name:phone type:string require:1 default:- other:- desc:手机号
      * @param name:password type:string require:1 default:- other:- desc:密码
+     * @param name:avatar type:string require:0 default:- other:- desc:账号头像(不传默认)
      * @param name:status type:int require:1 default:- other:- desc:状态：0-禁用，1-启用
      * @author 开发者
      */

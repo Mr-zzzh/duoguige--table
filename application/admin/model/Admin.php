@@ -35,7 +35,6 @@ class Admin extends Common {
             'phone'      => trim($params['phone']),
             'password'   => trim($params['password'] . $rand),
             'salt'       => $rand,
-            'avatar'     => request()->domain() . '/uploads/nopic.png',
             'status'     => intval($params['status']),
             'createtime' => time(),
         );
@@ -47,6 +46,9 @@ class Admin extends Common {
         }
         if (empty($params['password'])) {
             show_json(0, '请传密码');
+        }
+        if (empty($params['avatar'])) {
+            $data['avatar'] = request()->domain() . '/uploads/nopic.png';
         }
         if ($this->where('name', $data['name'])->value('id')) {
             show_json(0, '该账号已添加');
@@ -139,6 +141,9 @@ class Admin extends Common {
         }
         if (empty($data['name'])) {
             show_json(0, '请传用户名');
+        }
+        if (empty($params['avatar'])) {
+            $data['avatar'] = request()->domain() . '/uploads/nopic.png';
         }
         if ($this->where(array('phone' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
             show_json(0, '该手机号已存在');
