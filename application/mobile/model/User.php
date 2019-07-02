@@ -16,6 +16,15 @@ class User extends Common {
             'createtime' => time(),
             'normal'     => 1,
         );
+        if (empty($data['phone'])) {
+            show_json('手机号不能为空');
+        }
+        if (is_mobilenumber($data['phone'])) {
+            show_json('请传正确手机号');
+        }
+        if (empty($data['password'])) {
+            show_json('密码不能为空');
+        }
         if ($this->where('phone', $data['phone'])->value('id')) {
             show_json(0, '该手机号已注册');
         }
