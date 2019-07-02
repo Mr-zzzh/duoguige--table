@@ -10,6 +10,7 @@ class User extends Common {
             'phone'      => trim($params['phone']),
             'password'   => md5(trim($params['password']) . $salt),
             'salt'       => $salt,
+            'avatar'     => request()->domain() . '/uploads/nopic.png',
             'status'     => 0,
             'type'       => 1,
             'createtime' => time(),
