@@ -50,9 +50,18 @@ class Set extends Common {
     }
 
     public function EditOne($params, $id) {
-        $data = array(
-            'content' => trim($params['content']),
+        $data1 = array(
+            'slogan' => trim($params['slogan']),
+            'number' => intval($params['number']),
         );
+        if (empty($data1['slogan'])) {
+            show_json(0, '请传口号');
+        }
+        if (empty($data1['number'])) {
+            show_json(0, '请传编号');
+        }
+        $data            = array();
+        $data['content'] = serialize($data1);
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');

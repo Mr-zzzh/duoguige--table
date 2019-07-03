@@ -61,7 +61,8 @@ class Set extends Common {
      * @title 编辑
      * @url /admin/set/:id
      * @method put
-     * @param name:content type:string require:1 default:- other:- desc:内容
+     * @param name:slogan type:string require:1 default:- other:- desc:口号
+     * @param name:number type:int require:1 default:- other:- desc:编号
      * @author 开发者
      */
     public function update(Request $request, $id) {
