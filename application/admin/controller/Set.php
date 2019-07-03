@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use think\Request;
 
 /**
- * @title Set
+ * @title 设置管理
  * @group ADMIN
  */
 class Set extends Common {
@@ -31,21 +31,11 @@ class Set extends Common {
     }
 
     /**
-     * @title 依赖数据
-     * @url /admin/set/create
-     * @method get
-     * @return key:value
-     * @author 开发者
-     */
-    public function create() {
-
-    }
-
-    /**
-     * @title 添加
+     * @title 添加启屏页
      * @url /admin/set
      * @method post
-     * @param name:content type:string require:1 default:- other:- desc:内容
+     * @param name:slogan type:string require:1 default:- other:- desc:口号
+     * @param name:number type:int require:1 default:- other:- desc:编号
      * @author 开发者
      */
     public function save() {

@@ -20,20 +20,24 @@ class Set extends Common {
     }
 
     public function AddOne($params) {
-        $data = array(
-            'content' => trim($params['content']),
+        $data1 = array(
+            'slogan' => trim($params['slogan']),
+            'number' => intval($params['number']),
         );
-        $this->checkData($data, 0);
+        if (empty($data1['slogan'])) {
+            show_json(0, '请传口号');
+        }
+        if (empty($data1['number'])) {
+            show_json(0, '请传编号');
+        }
+        $data            = array();
+        $data['content'] = serialize($data1);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
         }
-    }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
     }
 
     public function DelOne($id) {
@@ -49,7 +53,6 @@ class Set extends Common {
         $data = array(
             'content' => trim($params['content']),
         );
-        $this->checkData($data, $id);
         if ($this->save($data, array('id' => $id)) !== false) {
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '编辑成功');
