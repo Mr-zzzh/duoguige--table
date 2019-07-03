@@ -75,8 +75,8 @@ class Set extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $item = $item->toArray();
-            //TODO 进行数据处理
+            $item            = $item->toArray();
+            $item['content'] = unserialize($item['content']);
         }
         show_json(1, $item);
     }
