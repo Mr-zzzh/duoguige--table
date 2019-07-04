@@ -6,7 +6,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/register',
+      path: '/',
       name: 'register',
       component: resolve => require(['../components/register.vue'], resolve),
       meta: {
