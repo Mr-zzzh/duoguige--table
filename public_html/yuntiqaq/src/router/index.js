@@ -4,8 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'register',
       component: resolve => require(['../components/register.vue'], resolve),
@@ -19,8 +18,7 @@ export default new Router({
       meta: {
         title: '自述文件'
       },
-      children: [
-        {
+      children: [{
           path: '/admin_index',
           name: 'admin_index',
           component: resolve => require(['../components/index/index.vue'], resolve),
@@ -28,6 +26,15 @@ export default new Router({
             title: '首页',
           },
         },
+        {
+          // 电梯管理页面
+          path: '/admin_index/elevator',
+          name: 'admin_index/elevator',
+          component: resolve => require(['../components/elevator/index.vue'], resolve),
+          meta: {
+            title: '电梯管理/分类管理',
+          },
+        }
       ]
     },
   ]
