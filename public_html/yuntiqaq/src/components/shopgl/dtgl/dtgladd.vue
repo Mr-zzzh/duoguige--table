@@ -210,8 +210,8 @@ import UE from '../../common/ue.vue';
                         if(res.data.status == 1){
                             that.form.image.push(res.data.result.url);
                             this.dialogImageUrl.push({
-                                    'url':res.data.result.url
-                                })
+                                'url':res.data.result.url
+                            })
                             console.log(that.imageUrl)
                         }
                     });
