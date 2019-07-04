@@ -17,6 +17,8 @@
                             <i class="Close" v-if="(item.index != openindex)||(item.index == closeindex)"><img src="../../../static/img/dfbrrbg34.png" alt=""></i>
                             <!-- <span slot="title" class="title_span" :class="(item.index == openindex)&&(item.index!= closeindex)? color_Orange :''">{{ item.title }}</span> -->
                             <span slot="title" class="title_span" :class="(item.index == openindex)&&(item.index!= closeindex)? color_green :''">
+                                <!-- {{item.index}} -->
+                                <!-- {{openindex}} -->
                                 <!-- {{item.index == openindex}} -->
                                 <!-- {{item.index!= closeindex}} -->
                                 <!-- {{closeindex}} -->
@@ -125,8 +127,8 @@ export default {
             // 会员
             if(this.productarr.includes(to.name)){
                 // console.log('to.name',to.name)
-                this.openindex='allvip'
-                this.defaultitems =['allvip']
+                this.openindex='/admin_index'
+                this.defaultitems =['admin_index']
                 let ms_tabstr = JSON.stringify(this.productlisttab)
                 localStorage.setItem('ms_tab',ms_tabstr)
             }
@@ -138,16 +140,15 @@ export default {
     },
     created(){
             // 唯一一个侧边栏
-                this.openindex='allvip'
+                this.openindex='/admin_index'
                 console.log(this.openindex)
                 // this.defaultitems =['allvip']
                 let ms_tabstr = JSON.stringify(this.productlisttab)
                 localStorage.setItem('ms_tab',ms_tabstr)
-
-
+                sessionStorage.setItem('openindex',this.openindex)
 
         this.openindex = sessionStorage.getItem('openindex')
-        // console.log(this.openindex)
+        console.log(this.openindex)
         // this.openindex=JSON.parse(sessionStorage.getItem('openindex')) 
         this.watchroute()
         // console.log('usequnxian111',this.usequnxian)
