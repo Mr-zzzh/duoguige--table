@@ -11,6 +11,22 @@
             return {
                 
             }
+        },
+        methods:{
+            getlist(){
+                this.$axios({
+                    url:`${this.api}admin/admin`,
+                    methods:'get',
+                    params:{
+
+                    }
+                }).then(res=>{
+                    console.log(res)
+                })
+            }
+        },
+        created(){
+            this.getlist()
         }
     }
 </script>

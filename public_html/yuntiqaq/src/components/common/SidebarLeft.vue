@@ -107,18 +107,6 @@ export default {
               title: "全部会员"
             }
           ]
-        },
-        {
-          img: "",
-          img1: "",
-          index: "/admin_index/elevator",
-          title: "电梯管理",
-          subs: [
-            {
-              index: "/admin_index/elevator",
-              title: "分类管理"
-            }
-          ]
         }
       ]
     };
