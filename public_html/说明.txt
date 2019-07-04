@@ -1,0 +1,13 @@
+yuntiqaq   云梯后台管理项目
+
+
+插件
+element-ui
+
+npm i element-ui -S
+
+
+axios
+
+npm install axios -S
+
