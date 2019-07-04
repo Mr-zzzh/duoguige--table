@@ -34,6 +34,8 @@ class Goods extends Common {
     public function AddOne($params) {
         $data = array(
             'name'          => trim($params['name']),
+            'subhead'       => trim($params['subhead']),
+            'sort'          => intval($params['sort']),
             'bid'           => intval($params['bid']),
             'cid'           => intval($params['cid']),
             'thumbnail'     => trim($params['thumbnail']),
@@ -52,6 +54,12 @@ class Goods extends Common {
         );
         if (empty($data['name'])) {
             show_json('0', '请传商品名');
+        }
+        if (empty($data['subhead'])) {
+            show_json('0', '请传副标题');
+        }
+        if (empty($data['sort'])) {
+            show_json('0', '请传序号');
         }
         if (empty($data['bid'])) {
             show_json('0', '请传品牌id');
@@ -128,6 +136,8 @@ class Goods extends Common {
     public function EditOne($params, $id) {
         $data = array(
             'name'          => trim($params['name']),
+            'subhead'       => trim($params['subhead']),
+            'sort'          => intval($params['sort']),
             'bid'           => intval($params['bid']),
             'cid'           => intval($params['cid']),
             'thumbnail'     => trim($params['thumbnail']),
@@ -144,6 +154,12 @@ class Goods extends Common {
         );
         if (empty($data['name'])) {
             show_json('0', '请传商品名');
+        }
+        if (empty($data['subhead'])) {
+            show_json('0', '请传副标题');
+        }
+        if (empty($data['sort'])) {
+            show_json('0', '请传序号');
         }
         if (empty($data['bid'])) {
             show_json('0', '请传品牌id');

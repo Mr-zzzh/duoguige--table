@@ -39,6 +39,8 @@ class Goods extends Common {
      * @url /admin/goods
      * @method post
      * @param name:name type:string require:1 default:- other:- desc:商品名
+     * @param name:subhead type:string require:1 default:- other:- desc:副标题
+     * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
      * @param name:bid type:int require:1 default:- other:- desc:品牌id
      * @param name:cid type:int require:1 default:- other:- desc:商品分类id
      * @param name:thumbnail type:string require:1 default:- other:- desc:商品缩略图
@@ -80,6 +82,8 @@ class Goods extends Common {
      * @url /admin/goods/:id
      * @method put
      * @param name:name type:string require:1 default:- other:- desc:商品名
+     * @param name:subhead type:string require:1 default:- other:- desc:副标题
+     * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
      * @param name:bid type:int require:1 default:- other:- desc:品牌id
      * @param name:cid type:int require:1 default:- other:- desc:商品分类id
      * @param name:thumbnail type:string require:1 default:- other:- desc:商品缩略图
@@ -111,6 +115,8 @@ class Goods extends Common {
      * @method get
      * @return id:id
      * @return name:商品名
+     * @return subhead:副标题
+     * @return sort:排序(越小越靠前)
      * @return bid:品牌id
      * @return bname:品牌名
      * @return cid:商品分类id
