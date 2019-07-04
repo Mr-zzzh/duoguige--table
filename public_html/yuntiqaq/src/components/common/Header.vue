@@ -26,7 +26,7 @@
             <!-- <span style="outline: none;    width: 40px;height: 40px;margin-top: 20px;float: left;margin-left: 31px;"> -->
                 <!--<img src="../../../static/img/2.png" alt="" style="width: 100%;height: 100%;">-->
             <!-- </span> -->
-            <span style="outline: none;    color: white;margin-top: 30px;margin-left: 31px;display: inline-block;">{{adminname_a}}，欢迎您进入乐游购淘宝客后台管理系统！</span>
+            <!-- <span style="outline: none;    color: white;margin-top: 30px;margin-left: 31px;display: inline-block;">{{adminname_a}}，欢迎您进入乐游购淘宝客后台管理系统！</span> -->
             <span style="outline: none;color: white;float: right;margin-right: 250px;margin-top: 30px;">
                 {{nn}}年{{yy+1}}月{{rr}}日 &nbsp; {{ss}}:{{ff}}:{{miao}} &nbsp; {{zz}}
             </span>

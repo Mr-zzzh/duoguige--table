@@ -28,6 +28,14 @@ export default new Router({
             title: '首页',
           },
         },
+        {
+          path: '/admin_shopgl',
+          name: 'admin_shopgl',
+          component: resolve => require(['../components/shopgl/shopgl.vue'], resolve),
+          meta: {
+            title: '分类管理',
+          },
+        },
       ]
     },
   ]

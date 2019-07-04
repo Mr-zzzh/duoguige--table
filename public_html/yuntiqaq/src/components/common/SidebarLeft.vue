@@ -71,11 +71,17 @@ export default {
                     img: "../../../static/img/sz/dfbrrbg1.png",
                     img1: "../../../static/img/sz/dfbrrbg18.png",
                     index: "/admin_index",
-                    title: "会员管理",
+                    title: "首页概述",
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg18.png",
+                    index: "/admin_shopgl",
+                    title: "商品管理",
                     subs: [
                         {
-                            index: "/admin_index",
-                            title: "全部会员"
+                            index: "/admin_shopgl",
+                            title: "分类管理"
                         },
                     ]
                 },
@@ -222,7 +228,7 @@ export default {
         }
     }
     .el-menu-item.is-active {
-        background-color: #2FC6AF !important;
+        background-color: rgb(1, 119, 213) !important;
     }
     .el-menu-item i {
         margin-right: 30px;
