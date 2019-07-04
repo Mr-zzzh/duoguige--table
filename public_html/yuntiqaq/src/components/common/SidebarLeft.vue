@@ -141,14 +141,14 @@ export default {
     created(){
             // 唯一一个侧边栏
                 this.openindex='/admin_index'
-                console.log(this.openindex)
-                // this.defaultitems =['allvip']
+                // console.log(this.openindex)
+                // this.defaultitems =['/admin_index']
                 let ms_tabstr = JSON.stringify(this.productlisttab)
                 localStorage.setItem('ms_tab',ms_tabstr)
                 sessionStorage.setItem('openindex',this.openindex)
 
         this.openindex = sessionStorage.getItem('openindex')
-        console.log(this.openindex)
+        // console.log(this.openindex)
         // this.openindex=JSON.parse(sessionStorage.getItem('openindex')) 
         this.watchroute()
         // console.log('usequnxian111',this.usequnxian)

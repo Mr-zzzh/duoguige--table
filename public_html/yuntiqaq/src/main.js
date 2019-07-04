@@ -18,6 +18,33 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 
+axios.interceptors.request.use(function (config) {
+  // console.log(localStorage.getItem('admin_info'))
+  let token = ''
+  if(localStorage.getItem('admin_info') == null){
+    return config
+  }else{
+    token = JSON.parse(localStorage.getItem('admin_info')).token
+  }
+  console.log(token)
+  if(config.data == '' || config.data == null || config.data ==undefined){
+    if (token) {
+      config.params['token'] = token
+    }
+    return config
+  }else{
+    if (token) {
+      config.data['token'] = token
+    }
+    return config
+  }
+
+}, function (error) {
+
+  return Promise.reject(error)
+})
+
+
 
 
 /* eslint-disable no-new */

@@ -33,12 +33,12 @@
            </el-menu>
         </div>
         <div class="dropdowm">
-            <el-dropdown trigger="click">
-                <span class="el-dropdown-link">
+            <el-dropdown trigger="click" >
+                <span class="el-dropdown-link" style="position: absolute;right: 30px;    top: -6px;">
                     <!-- {{aduser}} -->
                     <!-- admin -->
                     <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
-                    <img src="../../../static/img/1_06.png" alt="" style="position: absolute;right: 30px;    top: -6px;">
+                    <img src="../../../static/img/1_06.png" alt="">
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <!-- <el-dropdown-item @click.native="toqxgl">权限管理</el-dropdown-item> -->
@@ -383,6 +383,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+ /deep/ .el-popper .popper__arrow{
+  display:none
+}
+.el-popper{
+    margin-top: 24px !important;
+}
  .header {
         .el-menu-item{
             font-size: 15px;
