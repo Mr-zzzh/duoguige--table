@@ -20,6 +20,7 @@ Route::rule('ue_upload', 'admin/Admin/ue_upload', 'GET|POST|OPTIONS');
 Route::resource('admin/admin', 'admin/Admin');
 Route::rule('admin/register', 'admin/Admin/register', 'GET');
 Route::rule('admin/login', 'admin/Admin/login', 'POST|GET');
+Route::rule('admin/index', 'admin/Admin/admin', 'GET');
 
 Route::resource('admin/brand', 'admin/Brand');
 Route::resource('admin/banner', 'admin/Banner');

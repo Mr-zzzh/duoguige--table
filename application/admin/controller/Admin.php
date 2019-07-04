@@ -11,6 +11,19 @@ use think\Request;
 class Admin extends Common {
 
     /**
+     * @title 后台首页
+     * @url /admin/index
+     * @method get
+     * @return data:列表@
+     * @data money:今日付款金额 number:今日订单数 pay_number:今日已付款订单数 member:今日新增会员数 trend:近7日交易走势(https://www.echartsjs.com/examples/editor.html?c=line-stack)
+     * @author 开发者
+     */
+    public function admin() {
+        $m = new \app\admin\model\Admin();
+        $m->Home();
+    }
+
+    /**
      * @title 后台管理员列表
      * @url /admin/admin
      * @method get
