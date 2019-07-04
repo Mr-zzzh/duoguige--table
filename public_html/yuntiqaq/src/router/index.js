@@ -27,14 +27,45 @@ export default new Router({
           },
         },
         {
-          // 电梯管理页面
-          path: '/admin_index/elevator',
-          name: 'admin_index/elevator',
-          component: resolve => require(['../components/elevator/index.vue'], resolve),
+          path: '/admin_index/user/index',
+          name: '/admin_index/user/index',
+          component: resolve => require(['../components/user/index.vue'], resolve),
           meta: {
-            title: '电梯管理/分类管理',
+            title: '用户管理',
           },
-        }
+        },
+        {
+          path: '/admin_index/user/pope',
+          name: '/admin_index/user/pope',
+          component: resolve => require(['../components/user/pope.vue'], resolve),
+          meta: {
+            title: '技术大师',
+          },
+        },
+        {
+          path: '/admin_index/user/audit',
+          name: '/admin_index/user/audit',
+          component: resolve => require(['../components/user/audit.vue'], resolve),
+          meta: {
+            title: '技术大师审核',
+          },
+        },
+        {
+          path: '/admin_index/user/property',
+          name: '/admin_index/user/property',
+          component: resolve => require(['../components/user/property.vue'], resolve),
+          meta: {
+            title: '物业公司',
+          },
+        },
+        {
+          path: '/admin_index/user/p_audit',
+          name: '/admin_index/user/p_audit',
+          component: resolve => require(['../components/user/p_audit.vue'], resolve),
+          meta: {
+            title: '物业公司审核',
+          },
+        },
       ]
     },
   ]

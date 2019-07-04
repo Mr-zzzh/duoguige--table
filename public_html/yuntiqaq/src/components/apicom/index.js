@@ -3,7 +3,7 @@
 import axios from "axios"
 
 
-// 获得电梯管理/分类管理的借口
-export const getCategory = () => {
-    return axios.get("/admin/brand");
+// 获得用户分类/分类管理的借口
+export const getCategory = (parmams) => {
+    return axios.get("/admin/user",{parmams});
 }

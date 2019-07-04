@@ -107,6 +107,33 @@ export default {
               title: "全部会员"
             }
           ]
+        },
+          {
+          img: "",
+          img1: "",
+          index: "/admin_index/user",
+          title: "用户管理",
+          subs: [
+            {
+              index: "/admin_index/user/index",
+              title: "普通用户"
+            },
+            {
+              index: "/admin_index/user/pope",//大师
+              title: "技术大师"
+            },
+            {
+              index: "/admin_index/user/audit",//审核
+              title: "技术大师审核"
+            },
+            {
+              index: "/admin_index/user/property",//物业公司
+              title: "物业公司"
+            },{
+              index: "/admin_index/user/p_audit",//物业公司审核
+              title: "物业公司审核"
+            }
+          ]
         }
       ]
     };
