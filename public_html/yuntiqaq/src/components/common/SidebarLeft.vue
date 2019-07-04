@@ -68,20 +68,12 @@ export default {
                 {
                     img: "../../../static/img/sz/dfbrrbg1.png",
                     img1: "../../../static/img/sz/dfbrrbg18.png",
-                    index: "allvip",
+                    index: "/admin_index",
                     title: "会员管理",
                     subs: [
                         {
-                            index: "/allvip",
+                            index: "/admin_index",
                             title: "全部会员"
-                        },
-                        {
-                          index: "/viplv",
-                          title: "会员等级"
-                        },
-                        {
-                          index: "/vipxlv",
-                          title: "会员星级"
                         },
                     ]
                 },
