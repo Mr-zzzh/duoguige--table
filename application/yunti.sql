@@ -360,6 +360,8 @@ DROP TABLE IF EXISTS `yunti_goods`;
 CREATE TABLE `yunti_goods` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(100) NOT NULL COMMENT '商品名',
+  `subhead` varchar(255) DEFAULT NULL COMMENT '副标题',
+  `sort` int(10) DEFAULT NULL COMMENT '排序(越小越靠前)',
   `bid` int(11) NOT NULL COMMENT '品牌id',
   `cid` int(11) NOT NULL COMMENT '商品分类id',
   `thumbnail` varchar(255) NOT NULL COMMENT '商品缩略图',

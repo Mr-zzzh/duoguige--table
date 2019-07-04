@@ -26,7 +26,7 @@ class Goods extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:商品名 bid:品牌id bname:品牌名 thumbnail:商品缩略图 manufacturers:厂家名称 phone:销售电话 price:价格 label:标签 sale_number:销量
+     * @data id:id name:商品名 subhead:副标题 sort:排序(越小越靠前) bid:品牌id bname:品牌名 thumbnail:商品缩略图 manufacturers:厂家名称 phone:销售电话 price:价格 label:标签 sale_number:销量
      * @author 开发者
      */
     public function index() {
