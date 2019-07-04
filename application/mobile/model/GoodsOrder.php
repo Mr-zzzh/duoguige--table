@@ -155,6 +155,8 @@ class GoodsOrder extends Common {
         if ($data['paystatus'] == 1) {
             $order['status'] = 1;
         }
+        $id = $this->where(array('ordersn' => $ordersn))->value('gid');
+        db('goods')->where('id', $id)->setInc('sale_number');
         if ($this->save($data, array('ordersn' => $ordersn)) !== false) {
             return true;
         } else {
