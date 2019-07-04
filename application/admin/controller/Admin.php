@@ -24,6 +24,20 @@ class Admin extends Common {
     }
 
     /**
+     * @title 后台首页-订单概述
+     * @url /admin/summarize
+     * @method get
+     * @param name:type type:int require:1 default:- other:- desc:1今日_2昨日_3最近7日_4本月
+     * @return data:列表@
+     * @data id:id name:名称(账号) status:状态0-禁用1-启用 phone:手机号 avatar:用户头像 createtime:创建时间 status_text:状态文本
+     * @author 开发者
+     */
+    public function summarize() {
+        $m = new \app\admin\model\Admin();
+        $m->Summarize(request()->get());
+    }
+
+    /**
      * @title 后台管理员列表
      * @url /admin/admin
      * @method get

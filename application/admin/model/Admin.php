@@ -61,6 +61,33 @@ class Admin extends Common {
         show_json(1, $list);
     }
 
+    public function Summarize($params) {
+        if (empty($params['type']) && $params['type'] == 1) {
+            $time = 'today';
+        } elseif ($params['type'] == 2) {
+            $time = 'yesterday';
+        } elseif ($params['type'] == 3) {
+            $time = '-7 days';
+        } elseif ($params['type'] == 4) {
+            $time = 'month';
+        } else {
+            $time = 'today';
+        }
+        $list             = array();
+        $list['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', $time)->count('id');
+        $list['volume']   = db('goods_order')->whereTime('createtime', $time)->count('id');
+        $list['number']   = db('goods_order')->whereTime('paytime', $time)->sum('money');
+        $list['number1']  = db('goods_order')->whereTime('createtime', $time)->sum('money');
+        $member           = db('goods_order')->whereTime('paytime', $time)->group('uid')->count('id');
+        if ($member > 0) {
+            $list['average'] = round($list['number'] / $member, 2);
+        } else {
+            $list['average'] = 0;
+        }
+
+        show_json(1, $list);
+    }
+
     public function GetAll($params) {
         $map = array();
         if (!empty($params['starttime']) && !empty($params['endtime'])) {
