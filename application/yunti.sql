@@ -383,6 +383,7 @@ CREATE TABLE `yunti_goods` (
   KEY `bid` (`bid`),
   KEY `cid` (`cid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_goods` add  `view_number` int(10) DEFAULT NULL COMMENT '浏览量';
 
 -- 订单表
 DROP TABLE IF EXISTS `yunti_goods_order`;

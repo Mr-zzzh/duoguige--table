@@ -50,6 +50,8 @@ class Goods extends Common {
      * @method get
      * @return id:id
      * @return name:商品名
+     * @return subhead:副标题
+     * @return sort:排序(越小越靠前)
      * @return bid:品牌id
      * @return bname:品牌名
      * @return cid:商品分类id

@@ -29,7 +29,7 @@ class Goods extends Common {
             }
         }
         $list = $this->field('id,name,thumbnail,price')->where($map)->where($where)
-            ->order('sale_number desc')->paginate($params['limit'])->toArray();
+            ->order('sort asc,sale_number desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
@@ -41,6 +41,7 @@ class Goods extends Common {
 
     public function GetOne($id) {
         global $member;
+        $this->where('id', $id)->setInc('view_number');
         $item = $this->alias('a')
             ->join('brand b', 'a.bid=b.id', 'left')
             ->field('a.*,b.name bname')->where('a.id', $id)->find();
