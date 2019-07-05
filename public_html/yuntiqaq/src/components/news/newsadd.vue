@@ -165,7 +165,6 @@ import UE from '../common/ue.vue';
             },
 
 
-
             // 读取数据
             getinfo(){
                 this.$axios({
