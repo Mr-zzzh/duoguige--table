@@ -66,8 +66,9 @@ export default new Router({
                         title: '物业公司审核',
                     },
                 },
-                {
 
+
+                {
                     path: '/admin_flgl',
                     name: 'admin_flgl',
                     component: resolve => require(['../components/shopgl/flgl/flgl.vue'], resolve),
@@ -98,6 +99,22 @@ export default new Router({
                   component: resolve => require(['../components/shopgl/label/label.vue'], resolve),
                   meta: {
                     title: '标签管理',
+                  },
+                },
+                {
+                  path: '/admin_news',
+                  name: 'admin_news',
+                  component: resolve => require(['../components/news/news.vue'], resolve),
+                  meta: {
+                    title: '新闻动态',
+                  },
+                },
+                {
+                  path: '/admin_newsadd',
+                  name: 'admin_newsadd',
+                  component: resolve => require(['../components/news/newsadd.vue'], resolve),
+                  meta: {
+                    title: '新闻动态新增or编辑',
                   },
                 },
             ]
