@@ -8,6 +8,7 @@ class User extends Common {
         $salt = random(6);
         $data = array(
             'phone'      => trim($params['phone']),
+            'name'       => trim($params['phone']),
             'password'   => md5(trim($params['password']) . $salt),
             'salt'       => $salt,
             'avatar'     => request()->domain() . '/uploads/nopic.png',
@@ -19,7 +20,7 @@ class User extends Common {
         if (empty($data['phone'])) {
             show_json('手机号不能为空');
         }
-        if (is_mobilenumber($data['phone'])) {
+        if (!is_mobilenumber($data['phone'])) {
             show_json('请传正确手机号');
         }
         if (empty($data['password'])) {
@@ -50,6 +51,9 @@ class User extends Common {
                 $rand          = random(8);
                 $info['token'] = md5($rand . $info['id'] . $info['phone'] . time());
                 $this->where(array('id' => $info['id']))->update(array('token' => $info['token']));
+            }
+            if (empty($info['intro'])) {
+                $info['intro'] = '';
             }
             $info['createtime'] = date('Y-m-d H:i:s', $info['createtime']);
             unset($info['salt'], $info['password']);
@@ -138,6 +142,9 @@ class User extends Common {
             $rand          = random(8);
             $info['token'] = md5($rand . $info['id'] . $info['phone'] . time());
             $this->where(array('id' => $info['id']))->update(array('token' => $info['token']));
+        }
+        if (empty($info['intro'])) {
+            $info['intro'] = '';
         }
         $info['createtime'] = date('Y-m-d H:i:s', $info['createtime']);
         unset($info['salt'], $info['password']);
