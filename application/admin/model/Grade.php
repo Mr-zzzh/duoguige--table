@@ -17,27 +17,20 @@ class Grade extends Common {
 
     public function AddOne($params) {
         $data = array(
-            'url'        => trim($params['url']),
-            'jumpurl'    => trim($params['jumpurl']),
-            'sort'       => intval($params['sort']),
-            'type'       => intval($params['type']),
+            'name'       => trim($params['name']),
+            'score'      => intval($params['score']),
+            'number'     => intval($params['number']),
             'status'     => intval($params['status']),
             'createtime' => time(),
         );
-        if (empty($data['url'])) {
-            show_json(0, '请传图片url');
+        if (empty($data['name'])) {
+            show_json(0, '请传等级名称');
         }
-        if (empty($data['sort'])) {
-            show_json(0, '请传序号');
+        if (empty($data['score'])) {
+            show_json(0, '请传分数');
         }
-        if (empty($data['type'])) {
-            show_json(0, '请传图片类型');
-        }
-        if ($data['type'] == 3) {
-            if (empty($params['newsid'])) {
-                show_json(0, '请传新闻id');
-            }
-            $data['newsid'] = intval($params['newsid']);
+        if (empty($data['number'])) {
+            show_json(0, '请传接单数');
         }
         if (empty($data['status'])) {
             $data['status'] == 1;

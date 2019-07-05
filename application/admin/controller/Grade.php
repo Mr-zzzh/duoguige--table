@@ -25,7 +25,7 @@ class Grade extends Common {
      * @author 开发者
      */
     public function index() {
-        $m = new \app\admin\model\grade();
+        $m = new \app\admin\model\Grade();
         $m->GetAll(request()->get());
     }
 
@@ -33,16 +33,14 @@ class Grade extends Common {
      * @title 添加
      * @url /admin/grade
      * @method post
-     * @param name:url type:string require:1 default:- other:- desc:图片url
-     * @param name:jumpurl type:string require:0 default:- other:- desc:跳转链接地址
-     * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
-     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
-     * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示
-     * @param name:newsid type:int require:0 default:- other:- desc:新闻id(type为3时)
+     * @param name:name type:string require:1 default:- other:- desc:等级名称
+     * @param name:score type:int require:1 default:- other:- desc:分数
+     * @param name:number type:int require:1 default:- other:- desc:接单数
+     * @param name:status type:string require:1 default:- other:- desc:状态_1开启_2不开启
      * @author 开发者
      */
     public function save() {
-        $m = new \app\admin\model\grade();
+        $m = new \app\admin\model\Grade();
         $m->AddOne(request()->post());
     }
 
@@ -56,7 +54,7 @@ class Grade extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\grade();
+        $m = new \app\admin\model\Grade();
         $m->DelOne($id);
     }
 
@@ -76,7 +74,7 @@ class Grade extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\grade();
+        $m = new \app\admin\model\Grade();
         $m->EditOne($request->put(), $id);
     }
 
@@ -100,7 +98,7 @@ class Grade extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\grade();
+        $m = new \app\admin\model\Grade();
         $m->GetOne($id);
     }
 
