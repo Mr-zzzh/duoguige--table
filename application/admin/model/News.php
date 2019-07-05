@@ -135,4 +135,33 @@ class News extends Common {
         show_json(1, $item);
     }
 
+    public function Comment($params) {
+        $map = array();
+        if (empty($params['nid'])) {
+            show_json(0, '请传新闻id');
+        }
+        $map['a.type'] = 1;
+        $map['a.nid']  = intval($params['nid']);
+        $list          = db('leave_message')->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->field('a.id,a.content,a.like_number,a.createtime,u.name,u.avatar')
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
+    public function CommentDel($id) {
+        if (db('leave_message')->where(array('id' => $id))->delete()) {
+            //logs('删除??,ID:' . $id, 2);
+            show_json(1, '删除成功');
+        } else {
+            show_json(0, '删除失败');
+        }
+    }
+
 }
