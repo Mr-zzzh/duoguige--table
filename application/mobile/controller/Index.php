@@ -100,7 +100,7 @@ class Index extends Common {
     public function insurance() {
         $banner = db('banner')->field('id,url,jumpurl')
             ->where(array('type' => 2, 'status' => 1))->order('sort asc,createtime desc')->select();
-        show_json(1, $banner);
+        show_json(1, array('data' => $banner));
     }
 
     /**
