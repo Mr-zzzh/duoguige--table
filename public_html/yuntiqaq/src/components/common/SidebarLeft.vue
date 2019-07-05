@@ -127,6 +127,22 @@ export default {
                     index: "/admin_news",
                     title: "新闻动态",
                 },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg18.png",
+                    index: "/admin_zfset",
+                    title: "综合设置",
+                    subs: [
+                        {
+                            index: "/admin_zfset",
+                            title: "支付设置"
+                        },
+                        {
+                            index: "/admin_noteset",
+                            title: "短信接口设置"
+                        },
+                    ]
+                },
             ],
          
             

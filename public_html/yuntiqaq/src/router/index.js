@@ -117,6 +117,31 @@ export default new Router({
                     title: '新闻动态新增or编辑',
                   },
                 },
+                {
+                  path: '/admin_newsxq',
+                  name: 'admin_newsxq',
+                  component: resolve => require(['../components/news/newsxq.vue'], resolve),
+                  meta: {
+                    title: '新闻动态详情',
+                  },
+                },
+
+                {
+                  path: '/admin_zfset',
+                  name: 'admin_zfset',
+                  component: resolve => require(['../components/set/zfset/zfset.vue'], resolve),
+                  meta: {
+                    title: '支付设置',
+                  },
+                },
+                {
+                  path: '/admin_noteset',
+                  name: 'admin_noteset',
+                  component: resolve => require(['../components/set/noteset/noteset.vue'], resolve),
+                  meta: {
+                    title: '短信接口设置',
+                  },
+                },
             ]
         },
     ]

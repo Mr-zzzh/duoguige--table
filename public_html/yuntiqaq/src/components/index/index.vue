@@ -124,12 +124,12 @@
             <div class="section-r">
                 <div>
                     热点新闻
-                    <span>
+                    <span @click="tonews">
                         查看更多
                     </span>
                 </div>
                 <div>
-                    <div v-for="(item,index) in this.form3" :key="index">
+                    <div v-for="(item,index) in this.form3" :key="index" @click="tonesxq(item)">
                         <span>{{index+1}}、{{item.title}}</span>
                         <span>{{item.createtime}}</span>
                     </div>
@@ -184,7 +184,22 @@
             btn44(){
                 this.type2 = '4'
             },
-
+            // 去新闻列表
+            tonews(){
+                this.$router.push({
+                    name:"admin_news"
+                })
+            },
+            // 去新闻详情
+            tonesxq(e){
+                console.log(e)
+                this.$router.push({
+                    name:'admin_newsxq',
+                    query:{
+                        id:e.id
+                    }
+                })
+            },
 
             drawLine(){
                 // 基于准备好的dom，初始化echarts实例
@@ -442,6 +457,7 @@
                     padding-bottom: 10px;
                     margin-top: 20px;
                     border-bottom: 0.25px solid #ccc;
+                    cursor: pointer;
                     >span:nth-child(2){
                         float: right;
                     }
