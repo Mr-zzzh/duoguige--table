@@ -154,6 +154,10 @@ import UE from '../../common/ue.vue';
             },
             // 新增
             btn2(){
+                if(!(/^1[3456789]\d{9}$/.test(this.form.phone))){ 
+                    this.$message.error('手机号码有误，请重填') 
+                    return; 
+                } 
                 console.log(this.$refs.xx.getUEContent())
                 this.form.intro = this.$refs.xx.getUEContent()
                 this.$axios({
@@ -172,6 +176,10 @@ import UE from '../../common/ue.vue';
                 })
             },
             btn3(){
+                if(!(/^1[3456789]\d{9}$/.test(this.form.phone))){ 
+                    this.$message.error('手机号码有误，请重填') 
+                    return; 
+                } 
                 this.form.intro = this.$refs.xx.getUEContent()
                 this.$axios({
                     method:'put',
