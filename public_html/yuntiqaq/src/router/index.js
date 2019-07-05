@@ -94,5 +94,20 @@ export default new Router({
                 },
             ]
         },
+<<<<<<< HEAD
     ]
 })
+=======
+        {
+          path: '/admin_label',
+          name: 'admin_label',
+          component: resolve => require(['../components/shopgl/label/label.vue'], resolve),
+          meta: {
+            title: '标签管理',
+          },
+        },
+      ]
+    },
+  ]
+})
+>>>>>>> adc469536ba62140398c46300d87dc1d26c7d624
