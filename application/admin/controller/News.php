@@ -114,4 +114,41 @@ class News extends Common {
         $m->GetOne($id);
     }
 
+    /**
+     * @title 评论列表
+     * @url /admin/news/comment
+     * @method get
+     * @param name:nid type:int require:1 default:- other:- desc:新闻id
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return number:评论数量
+     * @return data:列表@
+     * @data id:评论id content:评论内容 like_number:评论点赞数量 name:评论发布人姓名 avatar:评论发布人头像 createtime:创建时间
+     * @author 开发者
+     */
+    public function leavemessage() {
+        $m = new \app\admin\model\News();
+        $m->Comment(request()->get());
+    }
+
+    /**
+     * @title 删除评论
+     * @url /admin/news/comment_del
+     * @param name:id type:int require:1 default:- other:- desc:评论id
+     * @method delete
+     * @author 开发者
+     */
+    public function comment_del() {
+        $id = \request()->param('id');
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $m = new \app\admin\model\News();
+        $m->CommentDel($id);
+    }
+
 }

@@ -528,6 +528,18 @@ CREATE TABLE `yunti_grade` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 分享设置表
+DROP TABLE IF EXISTS `yunti_share`;
+CREATE TABLE `yunti_share` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '分享标题',
+  `icon` varchar(255) DEFAULT NULL COMMENT '分享图标',
+  `intro` varchar(255) DEFAULT NULL COMMENT '分享描述',
+  `share_link` varchar(255) DEFAULT NULL COMMENT '分享链接',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 
 

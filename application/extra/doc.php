@@ -33,6 +33,7 @@ return [
         'app\admin\controller\Remind',
         //'app\admin\controller\Role',
         'app\admin\controller\Set',
+        'app\admin\controller\Share',
         'app\admin\controller\User',
 
         //mobile

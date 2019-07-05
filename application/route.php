@@ -47,6 +47,8 @@ Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::rule('admin/maintenance/editstatus', 'admin/Maintenance/editstatus', 'GET|POST');
 
 Route::resource('admin/news', 'admin/News');
+Route::rule('admin/news/comment', 'admin/News/comment', 'GET');
+Route::rule('admin/news/comment_del', 'admin/News/comment_del', 'GET');
 Route::resource('admin/note', 'admin/Note');
 //问答
 Route::resource('admin/question', 'admin/Question');
@@ -57,6 +59,7 @@ Route::resource('admin/remind', 'admin/Remind');
 Route::rule('admin/remind/unreadnum', 'admin/Remind/unreadnum', 'GET|POST');
 //Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
+Route::resource('admin/share', 'admin/Share');
 Route::resource('admin/user', 'admin/User');
 Route::rule('admin/user/editstatus', 'admin/User/editstatus', 'POST|GET');
 Route::rule('admin/user/forbidden', 'admin/User/forbidden', 'POST|GET');
