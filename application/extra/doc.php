@@ -26,6 +26,7 @@ return [
         'app\admin\controller\JobWanted',
         'app\admin\controller\Maintenance',
         'app\admin\controller\News',
+        'app\admin\controller\Note',
         'app\admin\controller\Payset',
         'app\admin\controller\Question',
         'app\admin\controller\Remind',

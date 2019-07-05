@@ -36,7 +36,7 @@ Route::resource('admin/goodscate', 'admin/GoodsCate');
 Route::resource('admin/goodslabel', 'admin/GoodsLabel');
 Route::resource('admin/goodsorder', 'admin/GoodsOrder');
 Route::rule('admin/goodsorder/deliver', 'admin/GoodsOrder/deliver', 'POST|GET');
-Route::rule('admin/goodsorder/trend_chart', 'admin/GoodsOrder/trend_chart', 'GET');
+Route::rule('admin/goodsorder/summarize', 'admin/GoodsOrder/summarize', 'GET');
 //招聘求职
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');
@@ -46,6 +46,7 @@ Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::rule('admin/maintenance/editstatus', 'admin/Maintenance/editstatus', 'GET|POST');
 
 Route::resource('admin/news', 'admin/News');
+Route::resource('admin/note', 'admin/Note');
 //问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');

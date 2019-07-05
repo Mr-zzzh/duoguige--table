@@ -246,6 +246,7 @@
                     }
                 })
             },
+            
         },
         mounted(){
 
@@ -253,6 +254,7 @@
         created(){
             this.getlist()
             this.getlist1()
+           
         }
     }
 </script>

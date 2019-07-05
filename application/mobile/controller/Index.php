@@ -118,7 +118,7 @@ class Index extends Common {
                 ->where(array('level' => 2))->select();
             Cache::set('city_list', $list);
         }
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     /**
