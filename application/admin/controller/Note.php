@@ -57,12 +57,11 @@ class Note extends Common {
      * @title 编辑
      * @url /admin/note/:id
      * @method put
-     * @param name:url type:int require:1 default:- other:- desc:图片url
-     * @param name:jumpurl type:int require:0 default:- other:- desc:跳转链接地址
-     * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
-     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
-     * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示
-     * @param name:newsid type:int require:0 default:- other:- desc:新闻id(type为3时)
+     * @param name:appkey type:string require:1 default:- other:- desc:短信appkey
+     * @param name:tid type:string require:0 default:- other:- desc:模板id
+     * @param name:code type:string require:1 default:- other:- desc:短信验证码变量
+     * @param name:service type:string require:1 default:- other:- desc:客服电话
+     * @param name:agreement type:string require:1 default:- other:- desc:协议
      * @author 开发者
      */
     public function update(Request $request, $id) {
@@ -78,14 +77,11 @@ class Note extends Common {
      * @url /admin/note/:id
      * @method get
      * @return id:id
-     * @return url:图片url
-     * @return jumpurl:跳转链接地址
-     * @return sort:排序(越小越靠前)
-     * @return type:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
-     * @return type_text:类型文本
-     * @return newsid:新闻id(type为3时)
-     * @return status:状态_1显示_2不显示
-     * @return status_text:状态文本
+     * @return appkey:短信appkey
+     * @return tid:模板id
+     * @return code:短信验证码变量
+     * @return service:客服电话
+     * @return agreement:协议
      * @return createtime:创建时间
      * @author 开发者
      */
