@@ -29,11 +29,27 @@ export default new Router({
           },
         },
         {
-          path: '/admin_shopgl',
-          name: 'admin_shopgl',
-          component: resolve => require(['../components/shopgl/shopgl.vue'], resolve),
+          path: '/admin_flgl',
+          name: 'admin_flgl',
+          component: resolve => require(['../components/shopgl/flgl/flgl.vue'], resolve),
           meta: {
             title: '分类管理',
+          },
+        },
+        {
+          path: '/admin_dtgl',
+          name: 'admin_dtgl',
+          component: resolve => require(['../components/shopgl/dtgl/dtgl.vue'], resolve),
+          meta: {
+            title: '电梯管理',
+          },
+        },
+        {
+          path: '/admin_dtgladd',
+          name: 'admin_dtgladd',
+          component: resolve => require(['../components/shopgl/dtgl/dtgladd.vue'], resolve),
+          meta: {
+            title: '电梯管理新增or编辑',
           },
         },
       ]
