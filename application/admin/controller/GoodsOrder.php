@@ -57,9 +57,22 @@ class GoodsOrder extends Common {
      * @series name:名称 type:line stack:总量 data:数据
      * @author 开发者 (echarst图 https://www.echartsjs.com/examples/editor.html?c=line-stack)
      */
-    public function trend_chart() {
+    /*public function trend_chart() {
         $m = new \app\admin\model\GoodsOrder();
         $m->TrendChart(request()->param());
+    }*/
+
+    /**
+     * @title 订单概述
+     * @url /admin/goodsorder/summarize
+     * @method get
+     * @return data:列表@(today_今日_yesterday昨日_seven近7日_month近30日)
+     * @data turnover:成交量 volume:交易量 number:成交额 number1:交易额 average:人均消费 trend:近30日交易走势(https://www.echartsjs.com/examples/editor.html?c=line-stack)
+     * @author 开发者
+     */
+    public function summarize() {
+        $m = new \app\admin\model\GoodsOrder();
+        $m->Summarize();
     }
 
     /**
