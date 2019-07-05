@@ -20,7 +20,7 @@ class Goods extends Common {
      */
     public function goodscate() {
         $list = db('goods_cate')->field('id,name')->select();
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     /**
