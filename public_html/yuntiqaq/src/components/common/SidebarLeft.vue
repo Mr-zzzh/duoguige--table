@@ -132,6 +132,16 @@ export default {
                     img1: "../../../static/img/sz/dfbrrbg18.png",
                     index: "/admin_brandgl",
                     title: "品牌管理",
+                    subs: [
+                        {
+                            index: "/admin_brandgl",
+                            title: "品牌管理"
+                        },
+                        {
+                            index: "/admin_brandzlgl",
+                            title: "品牌资料管理"
+                        },
+                    ]
                 },
                 {
                     img: "../../../static/img/sz/dfbrrbg1.png",
