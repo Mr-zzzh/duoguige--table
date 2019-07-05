@@ -87,9 +87,40 @@ export default {
                             index: "/admin_dtgl",
                             title: "电梯管理"
                         },
+                        {
+                            index: "/admin_label",
+                            title: "标签管理"
+                        },
                     ]
                 },
-                
+                 {
+          img: "../../../static/img/sz/dfbrrbg1.png",
+          img1: "../../../static/img/sz/dfbrrbg1.png",
+          index: "/admin_user",
+          title: "用户管理",
+          subs: [
+            {
+              index: "/admin_user",
+              title: "普通用户"
+            },
+            {
+              index: "/admin_pope", //大师
+              title: "技术大师"
+            },
+            {
+              index: "/admin_audit", //审核
+              title: "技术大师审核"
+            },
+            {
+              index: "/admin_property", //物业公司
+              title: "物业公司"
+            },
+            {
+              index: "/admin_p_audit", //物业公司审核
+              title: "物业公司审核"
+            }
+          ]
+        }
             ],
          
             

@@ -1,77 +1,37 @@
 <template>
     <div class="page">
 
-        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加电梯</el-button>
+        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加新标签</el-button>
         
         <el-input placeholder="请输入内容" v-model="keyword" class="input-with-select" style="width:700px;background: white;float: right;">
             <el-button slot="append" type="primary" @click="ss(keyword)" icon="el-icon-search" style="background:#409EFF;color: white;"></el-button>
         </el-input>
-
-        <el-select v-model="cid" placeholder="请选择" @change="xzfl" style="float:right;margin-right:20px">
-            <el-option
-            v-for="item in options"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-            </el-option>
-        </el-select>
 
 
         <el-table
             :data="tableData"
             border
             style="width: 100%">
-            <!-- <el-table-column
+            <el-table-column
             type="index"
             label="序号"
             width="100"
             align="center"
             >
+            </el-table-column>
+            <!-- <el-table-column
+            prop=""
+            label="显示顺序" align="center"
+            >
             </el-table-column> -->
             <el-table-column
-            prop="sort"
-            label="排序" align="center"
-            >
-            </el-table-column>
-            <el-table-column
             prop="name" align="center"
-            label="商品名">
+            label="分类名称">
             </el-table-column>
-            <el-table-column
-            prop="subhead" align="center"
-            label="副标题">
-            </el-table-column>
-            <el-table-column
-            prop="bnam" align="center"
-            label="品牌名">
-            </el-table-column>
-            <el-table-column
-            prop="thumbnail" align="center"
-            label="缩略图">
-                <template slot-scope="scope">
-                    <img :src="scope.row.thumbnail" alt="" style="width:50px;height:50px">
-                </template>
-            </el-table-column>
-            <el-table-column
-            prop="manufacturers" align="center"
-            label="厂家名称">
-            </el-table-column>
-            <el-table-column
-            prop="phone" align="center"
-            label="销售电话">
-            </el-table-column>
-            <el-table-column
-            prop="price" align="center"
-            label="价格">
-            </el-table-column>
-            <el-table-column
-            prop="sale_number" align="center"
-            label="销量">
-            </el-table-column>
-            <el-table-column
-            prop="label" align="center"
-            label="标签">
-            </el-table-column>
+            <!-- <el-table-column
+            prop="address" align="center"
+            label="状态">
+            </el-table-column> -->
             <el-table-column
             prop="createtime" align="center"
             label="操作时间">
@@ -99,6 +59,37 @@
         </el-pagination>
 
 
+        <!-- 新增or编辑 -->
+        <el-dialog
+        title="新增or编辑"
+        :visible.sync="dialogVisible"
+        width="60%"
+        :before-close="handleClose">
+        <span>
+            <el-form ref="form" :model="form" label-width="100px">
+                <el-form-item label="标签名">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <!-- <el-form-item label="活动名称">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="活动名称">
+                    <el-radio v-model="radio" label="1">备选项</el-radio>
+                    <el-radio v-model="radio" label="2">备选项</el-radio>
+                </el-form-item> -->
+            </el-form>
+        </span>
+
+
+
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="xzbtn" v-if="this.bjid == ''">新增</el-button>
+            <el-button type="primary" @click="bjbtn" v-if="this.bjid != ''">编辑</el-button>
+        </span>
+        </el-dialog>
+
+
     </div>
 </template>
 
@@ -107,14 +98,9 @@
         name: '',
         data() {
             return {
-                options: [
-                    {
-                        id:'',
-                        name:'全部分类'
-                    }
-                ],
-                cid: '',
                 bjid:'',
+                form:{name:''},
+                dialogVisible:false,
                 page:1,
                 limit:15,
                 keyword:'',
@@ -151,7 +137,7 @@
                 }).then(() => {
                     this.$axios({
                         method:'delete',
-                        url:`${this.api}admin/goods/${e.id}`,
+                        url:`${this.api}admin/goodslabel/${e.id}`,
                         data:{
                         }
                     }).then(res=>{
@@ -172,21 +158,60 @@
             },
             // 新增
             btn1(){
+                this.dialogVisible = true
+                this.form.name = ''
                 this.bjid = ''
-                this.$router.push({
-                    name:'admin_dtgladd',
-                    query:{
-                        bjid:this.bjid
+            },
+            xzbtn(){
+                this.$axios({
+                    method:'post',
+                    url:`${this.api}admin/goodslabel`,
+                    data:this.form
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.$message.success(res.data.message)
+                        this.dialogVisible = false
+                        this.page = 1
+                        this.getlist()
+                    }else{
+                        this.$message.error(res.data.message)
                     }
                 })
             },
             // 编辑
             bj(e){
                 this.bjid = e.id
-                this.$router.push({
-                    name:'admin_dtgladd',
-                    query:{
-                        bjid:this.bjid
+                this.dialogVisible = true
+                this.$axios({
+                    method:'get',
+                    url:`${this.api}admin/goodslabel/${this.bjid}`,
+                    params:{
+
+                    }
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.form.name = res.data.data.name
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            bjbtn(){
+                this.$axios({
+                    method:'put',
+                    url:`${this.api}admin/goodslabel/${this.bjid}`,
+                    data:this.form
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.$message.success(res.data.message)
+                        this.dialogVisible = false
+                        this.page = 1
+                        this.getlist()
+                    }else{
+                        this.$message.error(res.data.message)
                     }
                 })
             },
@@ -196,25 +221,17 @@
                 this.limit = 15
                 this.getlist()
             },
-            // 分类
-            xzfl(){
-              this.page = 1
-              this.limit = 15
-              this.getlist()  
-            },
-
 
 
 
             getlist(){
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/goods`,
+                    url:`${this.api}admin/goodslabel`,
                     params:{
                         keyword:this.keyword,
                         limit:this.limit,
-                        page:this.page,
-                        cid:this.cid
+                        page:this.page
                     },
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -226,35 +243,12 @@
                     }
                 })
             },
-            // 获取分类
-            getlist1(){
-                this.$axios({
-                    method:'get',
-                    url:`${this.api}admin/goodscate`,
-                    params:{
-                        limit:9999999,
-                        page:1
-                    },
-                }).then(res=>{
-                    if(res.data.status == 1){
-                        console.log(res.data.data)
-                        res.data.data.data.forEach(res => {
-                            this.options.push(res)
-                        });
-                    }else{
-                        this.$message.error(res.data.message)
-                    }
-                })
-            },
-            
         },
         mounted(){
 
         },
         created(){
             this.getlist()
-            this.getlist1()
-           
         }
     }
 </script>

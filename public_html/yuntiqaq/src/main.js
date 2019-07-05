@@ -18,19 +18,20 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 
-axios.interceptors.request.use(function (config) {
-  let token = ''
-  if(localStorage.getItem('admin_info') == null){
-    return config
-  }else{
-    token = JSON.parse(localStorage.getItem('admin_info')).token
-  }
+axios.interceptors.request.use(function(config) {
+    let token = ''
+    if (localStorage.getItem('admin_info') == null) {
+        return config
+    } else {
+        token = JSON.parse(localStorage.getItem('admin_info')).token
+    }
     config.headers['token'] = token;
     return config
+    console.log(token);
 
-}, function (error) {
+}, function(error) {
 
-  return Promise.reject(error)
+    return Promise.reject(error)
 })
 
 
@@ -38,8 +39,8 @@ axios.interceptors.request.use(function (config) {
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+    el: '#app',
+    router,
+    components: { App },
+    template: '<App/>'
 })

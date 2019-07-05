@@ -49,9 +49,9 @@
                         <el-select v-model="form.label" multiple placeholder="请选择" style="width:100%">
                             <el-option
                             v-for="item in options2"
-                            :key="item.id"
+                            :key="item.name"
                             :label="item.name"
-                            :value="item.id">
+                            :value="item.name">
                             </el-option>
                         </el-select>
                     </el-form-item>
@@ -71,7 +71,7 @@
                         </el-dialog>
                     </el-form-item>
                     <el-form-item label="电梯详情">
-                        <UE :defaultMsg=form.intro :config=config ref="ue"></UE>
+                        <UE :defaultMsg=content :config=config ref="xx"></UE>
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
@@ -89,6 +89,9 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="规格">
+                        <el-input v-model="form.specification"></el-input>
+                    </el-form-item>
                     <el-form-item label="型号">
                         <el-input v-model="form.model"></el-input>
                     </el-form-item>
@@ -103,6 +106,9 @@
                     </el-form-item>
                     <el-form-item label="厂家">
                         <el-input v-model="form.manufacturers"></el-input>
+                    </el-form-item>
+                    <el-form-item label="颜色">
+                        <el-input v-model="form.color"></el-input>
                     </el-form-item>
                 </el-form>
                 <el-button style="float: right;margin-right:20px" type="primary" @click="btn2" v-if="this.bjid == ''">确定新增</el-button>
@@ -120,6 +126,8 @@ import UE from '../../common/ue.vue';
         components: {UE},
         data() {
             return {
+                content:'请输入内容',
+                dialogVisible: false,
                 dialogImageUrl:[],
                 config: {
                     initialFrameWidth: null,
@@ -130,7 +138,8 @@ import UE from '../../common/ue.vue';
                 form:{
                     thumbnail:'',
                     label:[],
-                    intro:''
+                    intro:'',
+                    image:[]
                 },
                 options:[],
                 options1:[],
@@ -143,11 +152,41 @@ import UE from '../../common/ue.vue';
                     name:'admin_dtgl'
                 })
             },
+            // 新增
             btn2(){
-
+                console.log(this.$refs.xx.getUEContent())
+                this.form.intro = this.$refs.xx.getUEContent()
+                this.$axios({
+                    method:'post',
+                    url:`${this.api}admin/goods`,
+                    data:this.form,
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.$router.push({
+                            name:'admin_dtgl'
+                        })
+                        this.$message.success(res.data.message)    
+                    }else{
+                        this.$message.error(res.data.message)                    }
+                })
             },
             btn3(){
-
+                this.form.intro = this.$refs.xx.getUEContent()
+                this.$axios({
+                    method:'put',
+                    url:`${this.api}admin/goods/${this.bjid}`,
+                    data:this.form,
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.$router.push({
+                            name:'admin_dtgl'
+                        })
+                        this.$message.success(res.data.message)    
+                    }else{
+                        this.$message.error(res.data.message)                    }
+                })
             },
             // 上传缩略图
             beforeAvatarUpload(file) {
@@ -179,11 +218,11 @@ import UE from '../../common/ue.vue';
                 console.log(file, fileList);
                 let a = file.url
                 console.log(a)
-                let b = this.imageUrl.indexOf(a)
+                let b = this.form.image.indexOf(a)
                 console.log(b)
-                this.imageUrl.splice(b,1)
+                this.form.image.splice(b,1)
                 this.dialogImageUrl.splice(b,1)
-                console.log(this.imageUrl)
+                console.log(this.form.image)
             },
             //点击已上传文件的事件
             handlePictureCardPreview(file) {
@@ -191,7 +230,7 @@ import UE from '../../common/ue.vue';
                 this.dialogVisible = true;
             },
             // 头像上传之前
-            beforeAvatarUpload14(file) {
+            beforeAvatarUpload1(file) {
                     
                 var that = this;
                 // 判断类型是不是图片
@@ -208,11 +247,11 @@ import UE from '../../common/ue.vue';
                     }).then(res => {
                         // console.log(res);
                         if(res.data.status == 1){
-                            that.form.image.push(res.data.result.url);
+                            that.form.image.push(res.data.data.url);
                             this.dialogImageUrl.push({
-                                'url':res.data.result.url
+                                'url':res.data.data.url
                             })
-                            console.log(that.imageUrl)
+                            console.log(that.form.image)
                         }
                     });
                 }
@@ -238,7 +277,7 @@ import UE from '../../common/ue.vue';
                 })
             },
             // 获取品牌
-            getlist1(){
+            getlist2(){
                 this.$axios({
                     method:'get',
                     url:`${this.api}admin/brand`,
@@ -258,7 +297,7 @@ import UE from '../../common/ue.vue';
                 })
             },
             // 获取标签
-            getlist1(){
+            getlist3(){
                 this.$axios({
                     method:'get',
                     url:`${this.api}admin/goodslabel`,
@@ -277,11 +316,40 @@ import UE from '../../common/ue.vue';
                     }
                 })
             },
+
+            // 读取数据
+            getinfo(){
+                this.$axios({
+                    method:"get",
+                    url:`${this.api}admin/goods/${this.bjid}`,
+                    params:{
+
+                    }
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        this.form = res.data.data
+                        this.form.image.forEach(red=>{
+                            this.dialogImageUrl.push({
+                                'url':red
+                            })
+                        })
+                        setTimeout(()=>{
+                            this.$refs.xx.setUEContent(this.form.intro)
+                        },2000)
+                        console.log(res.data.data)                        
+                    }
+                })
+            },
         },
         created(){
+            this.getlist1()
+            this.getlist2()
+            this.getlist3()
             this.bjid = this.$route.query.bjid
             console.log(this.bjid == '')
-            this.getlist1()
+            if(this.bjid != ''){
+                this.getinfo()
+            }
         }
     }
 </script>
