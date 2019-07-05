@@ -46,6 +46,7 @@ Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::rule('admin/maintenance/editstatus', 'admin/Maintenance/editstatus', 'GET|POST');
 
 Route::resource('admin/news', 'admin/News');
+Route::resource('admin/note', 'admin/Note');
 //问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
