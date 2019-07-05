@@ -36,6 +36,9 @@ class GoodsCate extends Common {
     }
 
     public function DelOne($id) {
+        if (db('goods')->where('cid', $id)->select()) {
+            show_json(0, '该分类下有商品,不能删除');
+        }
         if ($this->where(array('id' => $id))->delete()) {
             //logs('删除??,ID:' . $id, 2);
             show_json(1, '删除成功');
