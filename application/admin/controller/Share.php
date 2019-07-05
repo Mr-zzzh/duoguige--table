@@ -9,22 +9,6 @@ use think\Request;
  * @group ADMIN
  */
 class Share extends Common {
-
-    /**
-     * @title 添加
-     * @url /admin/share
-     * @method post
-     * @param name:title type:string require:1 default:- other:- desc:分享标题
-     * @param name:icon type:string require:1 default:- other:- desc:分享图标
-     * @param name:intro type:string require:1 default:- other:- desc:分享描述
-     * @param name:share_link type:string require:1 default:- other:- desc:分享链接
-     * @author 开发者
-     */
-    public function save() {
-        $m = new \app\admin\model\Share();
-        $m->AddOne(request()->post());
-    }
-
     /**
      * @title 编辑
      * @url /admin/share/:id

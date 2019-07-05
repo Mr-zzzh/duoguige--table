@@ -52,11 +52,20 @@ class Share extends Common {
         if (empty($data['share_link'])) {
             show_json(0, '请传分享链接');
         }
-        if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
-            show_json(1, '编辑成功');
+        if ($this->select()) {
+            if ($this->data($data, true)->isUpdate(false)->save()) {
+                //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
+                show_json(1, '添加成功');
+            } else {
+                show_json(0, '添加失败');
+            }
         } else {
-            show_json(0, '编辑失败');
+            if ($this->save($data, array('id' => $id)) !== false) {
+                //logs('编辑??,ID:' . $id, 3);
+                show_json(1, '编辑成功');
+            } else {
+                show_json(0, '编辑失败');
+            }
         }
     }
 
