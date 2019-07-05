@@ -54,26 +54,20 @@ class Grade extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'url'     => trim($params['url']),
-            'jumpurl' => trim($params['jumpurl']),
-            'sort'    => intval($params['sort']),
-            'type'    => intval($params['type']),
-            'status'  => intval($params['status']),
+            'name'       => trim($params['name']),
+            'score'      => intval($params['score']),
+            'number'     => intval($params['number']),
+            'status'     => intval($params['status']),
+            'createtime' => time(),
         );
-        if (empty($data['url'])) {
-            show_json(0, '请传图片url');
+        if (empty($data['name'])) {
+            show_json(0, '请传等级名称');
         }
-        if (empty($data['sort'])) {
-            show_json(0, '请传序号');
+        if (empty($data['score'])) {
+            show_json(0, '请传分数');
         }
-        if (empty($data['type'])) {
-            show_json(0, '请传图片类型');
-        }
-        if ($data['type'] == 3) {
-            if (empty($params['newsid'])) {
-                show_json(0, '请传新闻id');
-            }
-            $data['newsid'] = intval($params['newsid']);
+        if (empty($data['number'])) {
+            show_json(0, '请传接单数');
         }
         if (empty($data['status'])) {
             $data['status'] == 1;
@@ -91,11 +85,8 @@ class Grade extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $type                = array(1 => '首页轮播图', 2 => '保险页面图', 3 => '新闻轮播图');
-            $item                = $item->toArray();
-            $item['type_text']   = $type[$item['type']];
-            $item['status_text'] = $item['status'] == 1 ? '显示' : '不显示';
-            $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            $item               = $item->toArray();
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
     }
