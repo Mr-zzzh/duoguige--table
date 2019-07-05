@@ -224,7 +224,6 @@
 
 
 
-
             getlist(){
                 this.$axios({
                     method:'get',
