@@ -60,8 +60,8 @@ class Share extends Common {
         }
     }
 
-    public function GetOne($id) {
-        $item = $this->get($id);
+    public function GetOne() {
+        $item = $this->order('createtime desc')->limit(1)->find();
         if (empty($item)) {
             show_json(1);
         } else {

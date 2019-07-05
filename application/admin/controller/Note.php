@@ -58,12 +58,9 @@ class Note extends Common {
      * @return createtime:创建时间
      * @author 开发者
      */
-    public function read($id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
+    public function read() {
         $m = new \app\admin\model\Note();
-        $m->GetOne($id);
+        $m->GetOne();
     }
 
 }
