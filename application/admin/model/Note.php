@@ -4,14 +4,6 @@ namespace app\admin\model;
 
 class Note extends Common {
 
-    public function GetAll() {
-        $list = $this->order('createtime desc')->limit(1)->find();
-        if (!empty($list)) {
-            $list->toArray();
-        }
-        show_json(1, $list);
-    }
-
     public function AddOne($params) {
         $data = array(
             'appkey'     => trim($params['appkey']),
@@ -41,15 +33,6 @@ class Note extends Common {
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
-        }
-    }
-
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
         }
     }
 
