@@ -208,6 +208,7 @@
                     }
                 })
             },
+            
             bjbtn(){
                 this.$axios({
                     method:'put',
