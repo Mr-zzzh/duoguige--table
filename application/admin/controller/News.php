@@ -139,7 +139,7 @@ class News extends Common {
      * @title 删除评论
      * @url /admin/news/comment_del
      * @param name:id type:int require:1 default:- other:- desc:评论id
-     * @method delete
+     * @method get|post
      * @author 开发者
      */
     public function comment_del() {
