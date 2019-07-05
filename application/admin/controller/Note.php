@@ -19,7 +19,7 @@ class Note extends Common {
      * @author 开发者
      */
     public function index() {
-        $m = new \app\admin\model\note();
+        $m = new \app\admin\model\Note();
         $m->GetAll();
     }
 
@@ -27,16 +27,15 @@ class Note extends Common {
      * @title 添加
      * @url /admin/note
      * @method post
-     * @param name:url type:int require:1 default:- other:- desc:图片url
-     * @param name:jumpurl type:int require:0 default:- other:- desc:跳转链接地址
-     * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
-     * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
-     * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示
-     * @param name:newsid type:int require:0 default:- other:- desc:新闻id(type为3时)
+     * @param name:appkey type:string require:1 default:- other:- desc:短信appkey
+     * @param name:tid type:string require:0 default:- other:- desc:模板id
+     * @param name:code type:string require:1 default:- other:- desc:短信验证码变量
+     * @param name:service type:string require:1 default:- other:- desc:客服电话
+     * @param name:agreement type:string require:1 default:- other:- desc:协议
      * @author 开发者
      */
     public function save() {
-        $m = new \app\admin\model\note();
+        $m = new \app\admin\model\Note();
         $m->AddOne(request()->post());
     }
 
@@ -50,7 +49,7 @@ class Note extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\note();
+        $m = new \app\admin\model\Note();
         $m->DelOne($id);
     }
 
@@ -70,7 +69,7 @@ class Note extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\note();
+        $m = new \app\admin\model\Note();
         $m->EditOne($request->put(), $id);
     }
 
@@ -94,7 +93,7 @@ class Note extends Common {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
-        $m = new \app\admin\model\note();
+        $m = new \app\admin\model\Note();
         $m->GetOne($id);
     }
 
