@@ -37,6 +37,7 @@ Route::resource('admin/goodslabel', 'admin/GoodsLabel');
 Route::resource('admin/goodsorder', 'admin/GoodsOrder');
 Route::rule('admin/goodsorder/deliver', 'admin/GoodsOrder/deliver', 'POST|GET');
 Route::rule('admin/goodsorder/summarize', 'admin/GoodsOrder/summarize', 'GET');
+Route::resource('admin/grade', 'admin/Grade');
 //招聘求职
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');

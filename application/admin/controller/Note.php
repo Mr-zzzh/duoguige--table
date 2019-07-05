@@ -28,7 +28,7 @@ class Note extends Common {
      * @url /admin/note
      * @method post
      * @param name:appkey type:string require:1 default:- other:- desc:短信appkey
-     * @param name:tid type:string require:0 default:- other:- desc:模板id
+     * @param name:tid type:string require:1 default:- other:- desc:模板id
      * @param name:code type:string require:1 default:- other:- desc:短信验证码变量
      * @param name:service type:string require:1 default:- other:- desc:客服电话
      * @param name:agreement type:string require:1 default:- other:- desc:协议
@@ -58,7 +58,7 @@ class Note extends Common {
      * @url /admin/note/:id
      * @method put
      * @param name:appkey type:string require:1 default:- other:- desc:短信appkey
-     * @param name:tid type:string require:0 default:- other:- desc:模板id
+     * @param name:tid type:string require:1 default:- other:- desc:模板id
      * @param name:code type:string require:1 default:- other:- desc:短信验证码变量
      * @param name:service type:string require:1 default:- other:- desc:客服电话
      * @param name:agreement type:string require:1 default:- other:- desc:协议

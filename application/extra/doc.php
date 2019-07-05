@@ -22,6 +22,7 @@ return [
         'app\admin\controller\GoodsCate',
         'app\admin\controller\GoodsLabel',
         'app\admin\controller\GoodsOrder',
+        'app\admin\controller\Grade',
         'app\admin\controller\Invite',
         'app\admin\controller\JobWanted',
         'app\admin\controller\Maintenance',

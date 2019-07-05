@@ -16,9 +16,9 @@ class Note extends Common {
         $data = array(
             'appkey'     => trim($params['appkey']),
             'tid'        => trim($params['tid']),
-            'code'       => intval($params['code']),
-            'service'    => intval($params['service']),
-            'agreement'  => intval($params['agreement']),
+            'code'       => trim($params['code']),
+            'service'    => trim($params['service']),
+            'agreement'  => trim($params['agreement']),
             'createtime' => time(),
         );
         if (empty($data['appkey'])) {
@@ -57,9 +57,9 @@ class Note extends Common {
         $data = array(
             'appkey'     => trim($params['appkey']),
             'tid'        => trim($params['tid']),
-            'code'       => intval($params['code']),
-            'service'    => intval($params['service']),
-            'agreement'  => intval($params['agreement']),
+            'code'       => trim($params['code']),
+            'service'    => trim($params['service']),
+            'agreement'  => trim($params['agreement']),
             'createtime' => time(),
         );
         if (empty($data['appkey'])) {

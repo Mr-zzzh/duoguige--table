@@ -516,6 +516,18 @@ CREATE TABLE `yunti_note` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 技师等级表
+DROP TABLE IF EXISTS `yunti_grade`;
+CREATE TABLE `yunti_grade` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL COMMENT '等级名称',
+  `score` int(10) DEFAULT NULL COMMENT '分数',
+  `number` int(10) DEFAULT NULL COMMENT '接单数',
+  `status` int(10) DEFAULT '1' COMMENT '状态_1开启_2关闭',
+  `createtime` int(1) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 
 

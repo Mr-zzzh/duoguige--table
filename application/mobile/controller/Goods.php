@@ -36,7 +36,7 @@ class Goods extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:商品名 thumbnail:商品缩略图 price:价格
+     * @data id:id name:商品名 thumbnail:商品缩略图 price:价格 sale_number:销量
      * @author 开发者
      */
     public function index() {
