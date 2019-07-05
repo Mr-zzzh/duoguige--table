@@ -8,9 +8,9 @@
             <div>
                 <img src="../../../static/img/news1.png" alt="" style="width: 16px;height: 12px;">
                 <span style="margin-right:20px">{{this.form.view_number}}</span>
-                <img src="../../../static/img/news2.png" alt="" style="width: 12px;height: 12px;">
-                <span style="margin-right:20px">{{this.form.like_number}}</span>
                 <img src="../../../static/img/news3.png" alt="" style="width: 15px;height: 15px;">
+                <span style="margin-right:20px">{{this.form.like_number}}</span>
+                <img src="../../../static/img/news2.png" alt="" style="width: 12px;height: 12px;">
                 <span style="margin-right:20px">{{this.form.createtime}}</span>
             </div>
 
@@ -65,10 +65,39 @@
             }
         },
         methods:{
+            tosc(e){
+                this.$confirm('是否确定删除?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$axios({
+                        method:'post',
+                        url:`${this.api}admin/news/comment_del`,
+                        data:{
+                            id:e
+                        }
+                    }).then(res=>{
+                        if(res.data.status==1){
+                            this.$message.success(res.data.message)
+                            this.page = 1
+                            this.getinfo1()
+                            this.getinfo2()
+                        }else{
+                            this.$message.error(res.data.message)
+                        }
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
 
 
 
-
+            // 新闻数据
             getinfo(){
                 this.$axios({
                     method:'get',
@@ -83,6 +112,7 @@
                     }
                 })
             },
+            // 评论数据
             getinfo1(){
                 this.$axios({
                     method:'get',

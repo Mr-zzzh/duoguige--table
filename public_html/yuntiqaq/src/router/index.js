@@ -127,6 +127,15 @@ export default new Router({
                 },
 
                 {
+                  path: '/admin_brandgl',
+                  name: 'admin_brandgl',
+                  component: resolve => require(['../components/brandgl/brandgl.vue'], resolve),
+                  meta: {
+                    title: '品牌管理',
+                  },
+                },
+
+                {
                   path: '/admin_zfset',
                   name: 'admin_zfset',
                   component: resolve => require(['../components/set/zfset/zfset.vue'], resolve),

@@ -130,7 +130,7 @@
                 </div>
                 <div>
                     <div v-for="(item,index) in this.form3" :key="index" @click="tonesxq(item)">
-                        <span>{{index+1}}、{{item.title}}</span>
+                        <span class="yc">{{index+1}}、{{item.title}}</span>
                         <span>{{item.createtime}}</span>
                     </div>
                 </div>
@@ -464,5 +464,15 @@
                 }
             }
         }
+    }
+
+
+    .yc{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        //判断超出一行隐藏
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
 </style>
