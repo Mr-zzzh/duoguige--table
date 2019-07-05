@@ -52,6 +52,14 @@ export default new Router({
             title: '电梯管理新增or编辑',
           },
         },
+        {
+          path: '/admin_label',
+          name: 'admin_label',
+          component: resolve => require(['../components/shopgl/label/label.vue'], resolve),
+          meta: {
+            title: '标签管理',
+          },
+        },
       ]
     },
   ]
