@@ -125,6 +125,7 @@ class News extends Common {
      * @return per_page:每页记录数
      * @return current_page:当前的页码
      * @return last_page:最后的页码
+     * @return number:评论数量
      * @return data:列表@
      * @data id:评论id content:评论内容 like_number:评论点赞数量 name:评论发布人姓名 avatar:评论发布人头像 createtime:创建时间
      * @author 开发者

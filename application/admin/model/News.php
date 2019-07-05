@@ -152,6 +152,7 @@ class News extends Common {
             }
             unset($item);
         }
+        $list['number'] = db('leave_message')->alias('a')->where($map)->count('id');
         show_json(1, $list);
     }
 
