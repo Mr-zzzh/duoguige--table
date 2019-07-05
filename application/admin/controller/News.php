@@ -130,7 +130,7 @@ class News extends Common {
      * @data id:评论id content:评论内容 like_number:评论点赞数量 name:评论发布人姓名 avatar:评论发布人头像 createtime:创建时间
      * @author 开发者
      */
-    public function leavemessage() {
+    public function comment() {
         $m = new \app\admin\model\News();
         $m->Comment(request()->get());
     }
