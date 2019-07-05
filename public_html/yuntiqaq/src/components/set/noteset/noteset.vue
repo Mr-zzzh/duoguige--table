@@ -41,7 +41,7 @@ import UE from '../../common/ue.vue';
             onSubmit(){
                 if(!(/^1[3456789]\d{9}$/.test(this.form.service))){ 
                     this.$message.error('手机号码有误，请重填') 
-                    return false; 
+                    return; 
                 } 
                 this.form.agreement = this.$refs.xx.getUEContent()
                 this.$axios({
