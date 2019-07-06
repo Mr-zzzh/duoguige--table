@@ -26,7 +26,7 @@
             </div>
 
             <div style="overflow: hidden;"> 
-                <div class="box" style="cursor: pointer;float: left;" @click="toxzbtn">
+                <div class="box" style="cursor: pointer;float: left;" @click="btn1">
                     <img src="../../../../static/img/sc.png" alt="">
                     <div class="yc" style="font-size:12px"></div>
                     <div style="font-size:12px">上传</div>
@@ -37,10 +37,12 @@
                     <div style="font-size:12px">{{ia.createtime}}</div>
                     <div class="scys" v-if='scind == index'>
                         <div @click="sc(ia.id)">删除</div>
+                        <div @click="bj(ia.id)">编辑</div>
                     </div>
                 </div>
             </div>
         </section>
+
 
 
         <el-dialog
@@ -67,7 +69,8 @@
         </span>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            <el-button type="primary" @click="xzbtn" v-if="this.bjid == ''">确 定</el-button>
+            <el-button type="primary" @click="bjbtn" v-if="this.bjid != ''">编辑</el-button>
         </span>
         </el-dialog>
 
@@ -82,7 +85,10 @@
         data() {
             return {
                 dialogVisible:false,
-                form:{},
+                form:{
+                    name:'',
+                    datum:'',
+                },
 
 
                 scind:-12,
@@ -102,9 +108,6 @@
             }
         },
         methods:{
-            handleClose(){
-                this.dialogVisible = false
-            },
             toxz(e,q){
                 this.ind = e
                 this.bid = q
@@ -171,12 +174,14 @@
             btn1(){
                 this.dialogVisible = true
                 this.form.name = ''
+                this.form.datum = ''
                 this.bjid = ''
             },
             xzbtn(){
+                this.form.bid = this.bid
                 this.$axios({
                     method:'post',
-                    url:`${this.api}admin/goodscate`,
+                    url:`${this.api}admin/branddatum`,
                     data:this.form
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -192,11 +197,11 @@
             },
             // 编辑
             bj(e){
-                this.bjid = e.id
+                this.bjid = e
                 this.dialogVisible = true
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/goodscate/${this.bjid}`,
+                    url:`${this.api}admin/branddatum/${this.bjid}`,
                     params:{
 
                     }
@@ -204,6 +209,9 @@
                     if(res.data.status == 1){
                         console.log(res.data.data)
                         this.form.name = res.data.data.name
+                        this.form.datum = res.data.data.datum
+                        this.form.bid = res.data.data.bid
+                        this.bid = res.data.data.bid
                     }else{
                         this.$message.error(res.data.message)
                     }
@@ -212,7 +220,7 @@
             bjbtn(){
                 this.$axios({
                     method:'put',
-                    url:`${this.api}admin/goodscate/${this.bjid}`,
+                    url:`${this.api}admin/branddatum/${this.bjid}`,
                     data:this.form
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -225,10 +233,6 @@
                         this.$message.error(res.data.message)
                     }
                 })
-            },
-
-            toxzbtn(){
-                this.dialogVisible = true
             },
             // 上传缩略图
             beforeAvatarUpload(file) {
