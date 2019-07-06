@@ -28,17 +28,23 @@
             <!-- </span> -->
             <!-- <span style="outline: none;    color: white;margin-top: 30px;margin-left: 31px;display: inline-block;">{{adminname_a}}，欢迎您进入乐游购淘宝客后台管理系统！</span> -->
             <span style="outline: none;color: white;float: right;margin-right: 250px;margin-top: 30px;">
-                {{nn}}年{{yy+1}}月{{rr}}日 &nbsp; {{ss}}:{{ff}}:{{miao}} &nbsp; {{zz}}
+                <!-- {{nn}}年{{yy+1}}月{{rr}}日 &nbsp; {{ss}}:{{ff}}:{{miao}} &nbsp; {{zz}} -->
             </span>
            </el-menu>
         </div>
+        <div style="position: absolute;left: 85%;top: 25px" @click.stop="dianji_a()">
+            <i class="el-icon-bell" style="color: #fff;font-size: 25px"></i>
+            <span class="dddcccc">{{total_x}}</span>
+        </div>
         <div class="dropdowm">
+            
             <el-dropdown trigger="click" >
                 <span class="el-dropdown-link" style="position: absolute;right: 30px;    top: -6px;">
                     <!-- {{aduser}} -->
                     <!-- admin -->
                     <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
-                    <img src="../../../static/img/1_06.png" alt="">
+                    <span style="position: absolute;top: 6px;color:#fff;left:50px;font-size:16px;display: inline-block;width: 100px;">{{this.boxx.name}}</span>
+                    <img :src="this.boxx.avatar" alt="" style="width: 30px;height: 30px;border-radius: 50%;">
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <!-- <el-dropdown-item @click.native="toqxgl">权限管理</el-dropdown-item> -->
@@ -81,6 +87,25 @@
                     <el-button @click="dialogFormVisible = false">取 消</el-button>
                 </div>
             </el-dialog>
+        </div>
+
+
+        <!--公告记录-->
+        <div ref="TheeditorBox">
+          <div class="gogngao" v-show="azx==1">
+            <div class="gogngao_a">
+              <i class="el-icon-bell" style="color: black;font-size: 25px"></i>
+              <span>新消息提醒 ({{total_x}}) 条</span>
+              <div style="margin-top: 20px;height: 250px;overflow:auto;">
+                <div class="gogngao_list" v-for="(item,index) in list_xin" :key="index">
+                  <div>{{item.name}}</div>
+                  <div>{{item.createtime}}</div>
+                </div>
+              </div>
+
+              <p @click="gonggao()" class="chankan">查看所有消息提醒</p>
+            </div>
+          </div>
         </div>
 
     </div>
@@ -139,9 +164,21 @@ export default {
                 avatar:'',
                 status:'',
             },
+
+            boxx:{},
+
+            //  新消息体系
+          azx:0,
+          total_x:'',
+          list_xin:[],
         }
     },
     created(){
+        this.boxx = JSON.parse(localStorage.getItem('admin_info'))
+        console.log(this.boxx)
+
+        this.unreadnum()
+
         this.getsj()
                 let a = new Date()
                 this.nn = a.getFullYear()
@@ -193,49 +230,18 @@ export default {
         // this.getlist()
     },
     mounted(){
-        // console.log('usequnxian',this.usequnxian)
-        // this.usequnxian.forEach(item => {
-        //     if(item.title=='商品'){
-        //         console.log('商品',item.showarr[0].tzurl)
-        //         this.productheader = item.active
-        //         this.togoodsurl =item.showarr[0].tzurl?item.showarr[0].tzurl:''
-        //     }else if(item.title=='会员'){
-        //         // console.log('会员',item.active)
-        //         this.memberheader = item.active
-        //         this.tomemberurl =item.showarr[0].tzurl?item.showarr[0].tzurl:''
-        //         // this.memberheader = 0
-        //     }else if(item.title=='财务'){
-        //         // console.log('财务',item.active)
-        //         this.cashierheader = item.active
-        //         this.tocashierurl =item.showarr[0].tzurl?item.showarr[0].tzurl:''
-        //         // this.cashierheader = 0
-        //     }else if(item.title=='订单'){
-        //         // console.log('订单',item.active)
-        //         this.orderheader = item.active
-        //         this.toorderurl =item.showarr[0].tzurl?item.showarr[0].tzurl:''
-        //     }else if(item.title=='设置'){
-        //         // console.log('设置',item.active)
-        //         this.setlistheader = item.active
-        //         this.toseturl =item.showarr[0].tzurl?item.showarr[0].tzurl:''
-        //     }
-        // });
+        this.$nextTick(function () {
+        document.addEventListener('click', (e)=> {
+          if (this.$refs.TheeditorBox) {
+            if(!this.$refs.TheeditorBox.contains(e.target)) {
+              this.azx = 0
+            }
+          }
+        })
+      })
     },
     watch:{
-        $route(to,from){
-            if(this.indexarr.includes(to.name)){
-                this.index = '/index'
-            }else if(this.productarr.includes(to.name)){
-                this.index="/productlist"
-            }else if(this.memberarr.includes(to.name)){
-                this.index="/memberlist"
-            }else if(this.orderarr.includes(to.name)){
-                this.index="/toSendgoods"
-            }else if(this.cashierarr.includes(to.name)){
-                this.index="/outlog"
-            }else if(this.setlistarr.includes(to.name)){
-                this.index="/paysetlist"
-            }
-        }
+
     },
     methods: {
         getsj(){
@@ -279,55 +285,54 @@ export default {
         this.dialogFormVisible=true
         let a = JSON.parse(localStorage.getItem('admin_info'))
         console.log(a)
-        this.adminname = a.nickname
-        this.adminuserneme = a.username
+        // 编辑
+        this.$axios({
+            method:'get',
+            url:`${this.api}admin/admin/${a.id}`,
+            params:{
+
+            }
+        }).then(res=>{
+            if(res.data.status == 1){
+                console.log(res.data.data)
+                this.form11 = res.data.data
+                this.form11.status = this.form11.status.toString()
+                this.form11.password = ''
+            }else{
+                this.$message.error(res.data.message)
+            }
+        })
         // this.getlist()
       },
-    //   getlist(){
-    //       this.$http.post(this.api+'admin/admin/info',{
-    //           id:this.ms_id
-    //       }).then(res=>{
-    //         //   console.log(res)
-    //           if(res.data.status==1){
-    //               this.form=res.data.result
-    //               this.imageUrl = this.form.admin_img
-    //               this.form.password=''
-    //           }
-    //       })
-    //   },
-    //   handleAvatarSuccess(res, file) {
-    //         this.imageUrl = URL.createObjectURL(file.raw);
-    //         // console.log(file)
-    //     },
 
-        // beforeAvatarUpload(file) {
-        //     let image_base64;
-        //     let that = this
-        //     if (!/image\/\w+/.test(file.type)) {
-        //         that.$message("请确保文件为图像类型");
-        //         return false;
-        //     } else {
-        //         let reader = new FileReader();
-        //         reader.readAsDataURL(file);
-        //         reader.onload = function(e) {
-        //             image_base64 = this.result.split(",")[1];
-        //             var params = {
-        //                 imgdata: image_base64
-        //             };
-        //             that.$http
-        //                 .post(that.api + "index/index/uploadimg", params)
-        //                 .then(res => {
-        //                        console.log(res)
-        //                     if (res.data.status == 1) {
-        //                         that.imageUrl = res.data.result.url
-        //                         that.$message.success(res.data.message);
-        //                     } else if (res.data.status == 0) {
-        //                         this.$message.error(res.data.message);
-        //                     }
-        //                 });
-        //         };
-        //     }
-        // },
+      //  新消息提现
+      unreadnum(){
+         this.$axios({
+           method:'post',
+           url:this.api+'admin/remind/unreadnum',
+           data:{}
+         }).then(res=>{
+           if(res.data.status==1){
+             this.total_x = res.data.data.total
+           }
+         })
+      },
+        dianji_a(){
+        this.azx = 1
+        this.$axios({
+          method:'get',
+          url:this.api+`admin/remind`,
+          data:{
+              limit:5,
+              page:1
+          }
+        }).then(res=>{
+          if (res.data.status==1){
+              console.log(res.data.data)
+            this.list_xin = res.data.data.data
+          }
+        })
+      },
       // 上传缩略图
             beforeAvatarUpload(file) {
               var that = this;
@@ -487,6 +492,72 @@ export default {
 //    background: url("../../../static/images/page/shanjiao.png") no-repeat;
    background-size: 100% 100%;
  }
+
+
+
+ .dddcccc{
+    position: absolute;
+    background-color: #f56c6c;
+    border-radius: 10px;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 6px;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #fff;
+    top: 0;
+    right: 13px;
+    transform: translateY(-50%) translateX(100%);
+  }
+  .gogngao{
+    background: red;
+    position: absolute;
+    right: 13%;
+    z-index: 100;
+    top: 58px;
+    width:360px;
+    height:334px;
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(230, 230, 230, 1);
+    box-shadow:0px 2px 3px 0px rgba(0, 0, 0, 0.05);
+    border-radius:6px;
+    padding: 40px;
+  }
+  .gogngao_a span{
+    font-size:16px;
+    font-family:MicrosoftYaHei;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+  }
+  .gogngao_list{
+    display: flex;
+    font-size:14px;
+    font-family:MicrosoftYaHei;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    padding-bottom: 10px;
+    border-bottom: 1px solid  #E5E5E5;
+    margin-top: 30px;
+  }
+ .gogngao_list>div:nth-child(1){
+   flex: 6;
+ }
+ .gogngao_list>div:nth-child(2){
+   text-align: right;
+   flex: 4;
+ }
+  .chankan{
+    margin-top: 20px;
+    text-align: center;
+    font-size:16px;
+    font-family:MicrosoftYaHei;
+    font-weight:400;
+    color:rgba(71,195,207,1);
+    cursor:pointer;
+  }
 
 </style>
 
