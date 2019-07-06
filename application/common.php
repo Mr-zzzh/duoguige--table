@@ -105,10 +105,36 @@ if (!function_exists('is_comc')) {
         }
     }
 }
+
+//省市区转树
+if (!function_exists('list_to_tree')) {
+    function list_to_tree($list, $pk = 'id', $pid = 'pid', $child = '_child', $root = 0) {
+        $tree = array();
+        if (is_array($list)) {
+            $refer = array();
+            foreach ($list as $key => $data) {
+                $refer[$data[$pk]] = &$list[$key];
+            }
+            foreach ($list as $key => $data) {
+                $parentId = $data[$pid];
+                if ($root == $parentId) {
+                    $tree[$data[$pk]] = &$list[$key];
+                } else {
+                    if (isset($refer[$parentId])) {
+                        $parent                     = &$refer[$parentId];
+                        $parent[$child][$data[$pk]] = &$list[$key];
+                    }
+                }
+            }
+        }
+        return $tree;
+    }
+}
+
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/ue_upload', 'admin/admin/register', 'mobile/index/login', 'mobile/index/login_code', 'mobile/index/insurance', 'mobile/index/search', 'mobile/index/city', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum', 'mobile/brand/read', 'mobile/invite/salary', 'mobile/invite/experience', 'mobile/fault/transition', 'mobile/fault/index', 'mobile/fault/read', 'mobile/question/index', 'mobile/question/read', 'mobile/question/answer', 'mobile/news/index', 'mobile/technician/index', 'mobile/technician/read', 'mobile/technician/question');
+        $comc = array('admin/admin/login', 'admin/admin/ue_upload', 'admin/admin/register', 'mobile/index/login', 'mobile/index/login_code', 'mobile/index/insurance', 'mobile/index/search', 'mobile/area/index', 'mobile/index/city', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum', 'mobile/brand/read', 'mobile/invite/salary', 'mobile/invite/experience', 'mobile/fault/transition', 'mobile/fault/index', 'mobile/fault/read', 'mobile/question/index', 'mobile/question/read', 'mobile/question/answer', 'mobile/news/index', 'mobile/technician/index', 'mobile/technician/read', 'mobile/technician/question');
         return $comc;
     }
 }

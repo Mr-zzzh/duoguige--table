@@ -100,7 +100,8 @@ class Admin extends Common {
             $time = 'today';
         }
         $list = db('goods_order')->alias('a')
-            ->join('goods b', 'a.gid=b.id', 'left')->where('a.status', 1)
+            ->join('goods b', 'a.gid=b.id', 'left')
+            ->where('a.status', 1)
             ->whereTime('a.paytime', $time)
             ->field('b.name,count(a.id) as number,sum(a.money) as money')
             ->group('a.gid')->order('money desc')->limit(5)->select();
