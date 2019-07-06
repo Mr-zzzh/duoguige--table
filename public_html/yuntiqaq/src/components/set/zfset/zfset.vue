@@ -505,24 +505,30 @@ export default {
                         this.wxpay_MCHID=res.data.data.result.wxpay_MCHID,
                         this.wxpay_KEY=res.data.data.result.wxpay_KEY,
                         this.wxpay_APPSECRET=res.data.data.result.wxpay_APPSECRET,
-                        this.wxpay_apiclient_cert=res.data.data.result.wxpay_apiclient_cert,
-                        this.wxpay_apiclient_key=res.data.data.result.wxpay_apiclient_key
+                        // this.wxpay_apiclient_cert=res.data.data.result.wxpay_apiclient_cert,
+                        // this.wxpay_apiclient_key=res.data.data.result.wxpay_apiclient_key
+                        this.wxpay_apiclient_cert='',
+                        this.wxpay_apiclient_key=''
                     }else if(this.q==3){
                         this.paytype = '3'
                         this.wxpay_APPID=res.data.data.result.wxpay_APPID,
                         this.wxpay_MCHID=res.data.data.result.wxpay_MCHID,
                         this.wxpay_KEY=res.data.data.result.wxpay_KEY,
                         this.wxpay_APPSECRET=res.data.data.result.wxpay_APPSECRET,
-                        this.wxpay_apiclient_cert=res.data.data.result.wxpay_apiclient_cert,
-                        this.wxpay_apiclient_key=res.data.data.result.wxpay_apiclient_key
+                        // this.wxpay_apiclient_cert=res.data.data.result.wxpay_apiclient_cert,
+                        // this.wxpay_apiclient_key=res.data.data.result.wxpay_apiclient_key
+                        this.wxpay_apiclient_cert='',
+                        this.wxpay_apiclient_key=''
                     }else if(this.q==4){
                         this.paytype = '4'
                         this.wxpay_APPID=res.data.data.result.wxpay_APPID,
                         this.wxpay_MCHID=res.data.data.result.wxpay_MCHID,
                         this.wxpay_KEY=res.data.data.result.wxpay_KEY,
                         this.wxpay_APPSECRET=res.data.data.result.wxpay_APPSECRET,
-                        this.wxpay_apiclient_cert=res.data.data.result.wxpay_apiclient_cert,
-                        this.wxpay_apiclient_key=res.data.data.result.wxpay_apiclient_key
+                        // this.wxpay_apiclient_cert=res.data.data.result.wxpay_apiclient_cert,
+                        // this.wxpay_apiclient_key=res.data.data.result.wxpay_apiclient_key
+                        this.wxpay_apiclient_cert='',
+                        this.wxpay_apiclient_key=''
                     }
                 }else{
                     this.paytype = ''

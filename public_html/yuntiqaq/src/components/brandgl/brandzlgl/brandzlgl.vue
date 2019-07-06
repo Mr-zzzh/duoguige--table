@@ -60,6 +60,7 @@
                     class="avatar-uploader"
                     :action="`${api}upload`"
                     :show-file-list="true"
+                    :file-list="fileList"
                     :before-upload="beforeAvatarUpload">
                     <!-- <img v-if="form.datum" :src="form.datum" class="avatar" style="width:100px;height:100px;"> -->
                     <i class="el-icon-plus avatar-uploader-icon"></i>
@@ -84,6 +85,7 @@
         name: '',
         data() {
             return {
+                fileList: [],
                 dialogVisible:false,
                 form:{
                     name:'',
@@ -208,6 +210,11 @@
                 }).then(res=>{
                     if(res.data.status == 1){
                         console.log(res.data.data)
+                        this.fileList = [
+                            {
+                                name: 'pdf', 
+                                url: res.data.data.datum}
+                            ]
                         this.form.name = res.data.data.name
                         this.form.datum = res.data.data.datum
                         this.form.bid = res.data.data.bid
