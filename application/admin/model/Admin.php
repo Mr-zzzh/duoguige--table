@@ -152,6 +152,8 @@ class Admin extends Common {
         }
         if (empty($params['avatar'])) {
             $data['avatar'] = request()->domain() . '/uploads/nopic.png';
+        } else {
+            $data['avatar'] = trim($params['avatar']);
         }
         if ($this->where('name', $data['name'])->value('id')) {
             show_json(0, '该账号已添加');
@@ -247,6 +249,8 @@ class Admin extends Common {
         }
         if (empty($params['avatar'])) {
             $data['avatar'] = request()->domain() . '/uploads/nopic.png';
+        } else {
+            $data['avatar'] = trim($params['avatar']);
         }
         if ($this->where(array('phone' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
             show_json(0, '该手机号已存在');
