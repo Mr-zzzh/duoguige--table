@@ -1,7 +1,7 @@
 <template>
     <div class="page">
 
-        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加技师等级</el-button>
+        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加薪资</el-button>
         
   
 
@@ -19,10 +19,10 @@
             </el-table-column>
             <el-table-column
             prop="name"
-            label="等级名称" align="center"
+            label="薪资描述" align="center"
             >
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
             prop="score" align="center"
             label="分数">
             </el-table-column>
@@ -37,7 +37,7 @@
             <el-table-column
             prop="number" align="center"
             label="接单数">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
             prop="createtime" align="center"
             label="创建时间">
@@ -73,10 +73,10 @@
         :before-close="handleClose">
         <span>
             <el-form ref="form" :model="form" label-width="100px">
-                <el-form-item label="名称">
+                <el-form-item label="薪资描述">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="分数">
+                <!-- <el-form-item label="分数">
                     <el-input v-model="form.score"></el-input>
                 </el-form-item>
                 <el-form-item label="接单数">
@@ -85,7 +85,7 @@
                 <el-form-item label="状态">
                     <el-radio v-model="form.status" label="1">开启</el-radio>
                     <el-radio v-model="form.status" label="2">不开启</el-radio>
-                </el-form-item>
+                </el-form-item> -->
             </el-form>
         </span>
 
@@ -110,9 +110,6 @@
                 bjid:'',
                 form:{
                     name:'',
-                    score:'',
-                    number:'',
-                    status:'',
                 },
                 dialogVisible:false,
                 page:1,
@@ -151,7 +148,7 @@
                 }).then(() => {
                     this.$axios({
                         method:'delete',
-                        url:`${this.api}admin/grade/${e.id}`,
+                        url:`${this.api}admin/salary/${e.id}`,
                         data:{
                         }
                     }).then(res=>{
@@ -174,15 +171,12 @@
             btn1(){
                 this.dialogVisible = true
                 this.form.name = ''
-                this.form.score = ''
-                this.form.number = ''
-                this.form.status = ''
                 this.bjid = ''
             },
             xzbtn(){
                 this.$axios({
                     method:'post',
-                    url:`${this.api}admin/grade`,
+                    url:`${this.api}admin/salary`,
                     data:this.form
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -202,7 +196,7 @@
                 this.dialogVisible = true
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/grade/${this.bjid}`,
+                    url:`${this.api}admin/salary/${this.bjid}`,
                     params:{
 
                     }
@@ -210,7 +204,7 @@
                     if(res.data.status == 1){
                         console.log(res.data.data)
                         this.form = res.data.data
-                        this.form.status = this.form.status.toString()
+                        // this.form.status = this.form.status.toString()
                     }else{
                         this.$message.error(res.data.message)
                     }
@@ -219,7 +213,7 @@
             bjbtn(){
                 this.$axios({
                     method:'put',
-                    url:`${this.api}admin/grade/${this.bjid}`,
+                    url:`${this.api}admin/salary/${this.bjid}`,
                     data:this.form
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -244,7 +238,7 @@
             getlist(){
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/grade`,
+                    url:`${this.api}admin/salary`,
                     params:{
                         limit:this.limit,
                         page:this.page

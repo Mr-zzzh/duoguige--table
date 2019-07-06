@@ -175,6 +175,18 @@ export default {
                             index: "/admin_jsleve",
                             title: "技师等级"
                         },
+                        {
+                            index: "/admin_payset",
+                            title: "薪资设置"
+                        },
+                        {
+                            index: "/admin_ageset",
+                            title: "年限设置"
+                        },
+                        {
+                            index: "/admin_fxset",
+                            title: "分享设置"
+                        },
                     ]
                 },
             ],

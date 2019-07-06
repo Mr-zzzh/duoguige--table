@@ -1,9 +1,11 @@
 <template>
     <div class="page">
 
-        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加技师等级</el-button>
+        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加年限设置</el-button>
         
-  
+        <el-input placeholder="请输入内容" v-model="keyword" class="input-with-select" style="width:700px;background: white;float: right;">
+            <el-button slot="append" type="primary" @click="ss(keyword)" icon="el-icon-search" style="background:#409EFF;color: white;"></el-button>
+        </el-input>
 
 
         <el-table
@@ -17,30 +19,22 @@
             align="center"
             >
             </el-table-column>
-            <el-table-column
-            prop="name"
-            label="等级名称" align="center"
+            <!-- <el-table-column
+            prop=""
+            label="显示顺序" align="center"
             >
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
-            prop="score" align="center"
-            label="分数">
+            prop="name" align="center"
+            label="分类名称">
             </el-table-column>
-            <el-table-column
-            prop="status_text" align="center"
+            <!-- <el-table-column
+            prop="address" align="center"
             label="状态">
-            <template slot-scope="scope">
-                <div v-if='scope.row.status == 1'>开启</div>
-                <div v-if='scope.row.status == 2'>不开启</div>
-            </template>
-            </el-table-column>
-            <el-table-column
-            prop="number" align="center"
-            label="接单数">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
             prop="createtime" align="center"
-            label="创建时间">
+            label="操作时间">
             </el-table-column>
             <el-table-column
             align="center"
@@ -73,19 +67,16 @@
         :before-close="handleClose">
         <span>
             <el-form ref="form" :model="form" label-width="100px">
-                <el-form-item label="名称">
+                <el-form-item label="工作年限描述">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="分数">
-                    <el-input v-model="form.score"></el-input>
+                <!-- <el-form-item label="活动名称">
+                    <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="接单数">
-                    <el-input v-model="form.number"></el-input>
-                </el-form-item>
-                <el-form-item label="状态">
-                    <el-radio v-model="form.status" label="1">开启</el-radio>
-                    <el-radio v-model="form.status" label="2">不开启</el-radio>
-                </el-form-item>
+                <el-form-item label="活动名称">
+                    <el-radio v-model="radio" label="1">备选项</el-radio>
+                    <el-radio v-model="radio" label="2">备选项</el-radio>
+                </el-form-item> -->
             </el-form>
         </span>
 
@@ -108,19 +99,14 @@
         data() {
             return {
                 bjid:'',
-                form:{
-                    name:'',
-                    score:'',
-                    number:'',
-                    status:'',
-                },
+                form:{name:''},
                 dialogVisible:false,
                 page:1,
                 limit:15,
+                keyword:'',
                 total:0,
                 currentPage: 1,
-                tableData: [],
-
+                tableData: []
             }
         },
         methods:{
@@ -151,7 +137,7 @@
                 }).then(() => {
                     this.$axios({
                         method:'delete',
-                        url:`${this.api}admin/grade/${e.id}`,
+                        url:`${this.api}admin/experience/${e.id}`,
                         data:{
                         }
                     }).then(res=>{
@@ -174,15 +160,12 @@
             btn1(){
                 this.dialogVisible = true
                 this.form.name = ''
-                this.form.score = ''
-                this.form.number = ''
-                this.form.status = ''
                 this.bjid = ''
             },
             xzbtn(){
                 this.$axios({
                     method:'post',
-                    url:`${this.api}admin/grade`,
+                    url:`${this.api}admin/experience`,
                     data:this.form
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -202,15 +185,14 @@
                 this.dialogVisible = true
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/grade/${this.bjid}`,
+                    url:`${this.api}admin/experience/${this.bjid}`,
                     params:{
 
                     }
                 }).then(res=>{
                     if(res.data.status == 1){
                         console.log(res.data.data)
-                        this.form = res.data.data
-                        this.form.status = this.form.status.toString()
+                        this.form.name = res.data.data.name
                     }else{
                         this.$message.error(res.data.message)
                     }
@@ -219,7 +201,7 @@
             bjbtn(){
                 this.$axios({
                     method:'put',
-                    url:`${this.api}admin/grade/${this.bjid}`,
+                    url:`${this.api}admin/experience/${this.bjid}`,
                     data:this.form
                 }).then(res=>{
                     if(res.data.status == 1){
@@ -241,11 +223,14 @@
             },
 
 
+
+
             getlist(){
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/grade`,
+                    url:`${this.api}admin/experience`,
                     params:{
+                        keyword:this.keyword,
                         limit:this.limit,
                         page:this.page
                     },

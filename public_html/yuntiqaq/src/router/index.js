@@ -200,6 +200,30 @@ export default new Router({
                     title: '技师等级',
                   },
                 },
+                {
+                  path: '/admin_payset',
+                  name: 'admin_payset',
+                  component: resolve => require(['../components/set/payset.vue'], resolve),
+                  meta: {
+                    title: '薪资设置',
+                  },
+                },
+                {
+                  path: '/admin_ageset',
+                  name: 'admin_ageset',
+                  component: resolve => require(['../components/set/ageset.vue'], resolve),
+                  meta: {
+                    title: '年限设置',
+                  },
+                },
+                {
+                  path: '/admin_fxset',
+                  name: 'admin_fxset',
+                  component: resolve => require(['../components/set/fxset.vue'], resolve),
+                  meta: {
+                    title: '分享设置',
+                  },
+                },
             ]
         },
     ]
