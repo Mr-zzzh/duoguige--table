@@ -18,24 +18,25 @@
             >
             </el-table-column>
             <el-table-column
-            prop="phone"
-            label="手机号" align="center"
+            prop="name"
+            label="等级名称" align="center"
             >
             </el-table-column>
             <el-table-column
-            prop="name" align="center"
-            label="分类名称">
+            prop="score" align="center"
+            label="分数">
             </el-table-column>
             <el-table-column
             prop="status_text" align="center"
             label="状态">
+            <template slot-scope="scope">
+                <div v-if='scope.row.status == 1'>开启</div>
+                <div v-if='scope.row.status == 2'>不开启</div>
+            </template>
             </el-table-column>
             <el-table-column
-            prop="avatar" align="center"
-            label="用户头像">
-                <template slot-scope="scope">
-                    <img :src="scope.row.avatar" alt="" style="width:50px;height:50px">
-                </template>
+            prop="number" align="center"
+            label="接单数">
             </el-table-column>
             <el-table-column
             prop="createtime" align="center"
@@ -215,38 +216,29 @@
                     }
                 })
             },
+            bjbtn(){
+                this.$axios({
+                    method:'put',
+                    url:`${this.api}admin/grade/${this.bjid}`,
+                    data:this.form
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.$message.success(res.data.message)
+                        this.dialogVisible = false
+                        this.page = 1
+                        this.getlist()
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
             // 搜索
             ss(){
                 this.page = 1
                 this.limit = 15
                 this.getlist()
             },
-
-            // 上传缩略图
-            beforeAvatarUpload(file) {
-                var that = this;
-                // 判断类型是不是图片
-                if (!/image\/\w+/.test(file.type)) {
-                    that.$message("请确保文件为图像类型");
-                    return false;
-                } else {
-                    let fd = new FormData();
-                    fd.append("media", file); //传文件
-                    that.$axios({
-                        method: "post",
-                        url: that.api + "upload",
-                        data: fd
-                    }).then(res => {
-                        // console.log(res);
-                        if(res.data.status == 1){
-                            that.form.avatar = res.data.data.url;
-                            console.log(that.form)
-                        }
-                    });
-                }
-            },
-
-
 
 
             getlist(){
