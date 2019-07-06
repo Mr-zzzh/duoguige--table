@@ -57,6 +57,20 @@ class Question extends Common {
         show_json(1, $list);
     }
 
+    public function GetDetail($id) {
+        $item = $this->get($id);
+        if (empty($item)) {
+            show_json(1);
+        } else {
+            $item = $item->toArray();
+            if (!empty($item['thumb'])) {
+                $item['thumb'] = explode(',', $item['thumb']);
+            }
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+        }
+        show_json(1, $item);
+    }
+
     public function DelAnswer($id) {
         if (db('answer')->where(array('id' => $id))->delete()) {
             //logs('删除??,ID:' . $id, 2);

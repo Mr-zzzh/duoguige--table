@@ -47,6 +47,26 @@ class Question extends Common {
     }
 
     /**
+     * @title 读取
+     * @url /admin/question/:id
+     * @method get
+     * @return id:id
+     * @return uid:提问人id
+     * @return uname:提问人姓名
+     * @return title:标题
+     * @return thumb:图片(数组)
+     * @return createtime:创建时间
+     * @author 开发者
+     */
+    public function read($id) {
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $m = new \app\admin\model\Question();
+        $m->GetDetail($id);
+    }
+
+    /**
      * @title 回答列表
      * @url /admin/question/answer
      * @method get
