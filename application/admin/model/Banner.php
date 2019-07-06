@@ -5,7 +5,11 @@ namespace app\admin\model;
 class Banner extends Common {
 
     public function GetAll($params) {
-        $list = $this->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
+        $map = array();
+        if (!empty($params['type'])) {
+            $map['type'] = intval($params['type']);
+        }
+        $list = $this->order('sort asc,createtime desc')->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $type = array(1 => '首页轮播图', 2 => '保险页面图', 3 => '新闻轮播图');
             foreach ($list['data'] as $k => &$item) {
