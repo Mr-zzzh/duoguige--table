@@ -44,7 +44,7 @@ class Question extends Common {
         }
         $list = db('answer')->alias('a')
             ->join('user u', 'a.uid=u.id')
-            ->field('a.*,u.name uname')->where('a.qid', intval($params['id']))
+            ->field('a.*,u.name uname,u.avatar avatar')->where('a.qid', intval($params['id']))
             ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(1 => '显示', 2 => '隐藏');

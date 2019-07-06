@@ -79,7 +79,7 @@ class Question extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:提问人id uname:提问人姓名 answer:回答 qid:问题id status:状态_1显示_2隐藏 status_text:状态文本 createtime:创建时间
+     * @data id:id uid:提问人id uname:提问人姓名 avatar:提问人头像 answer:回答 qid:问题id status:状态_1显示_2隐藏 status_text:状态文本 createtime:创建时间
      * @author 开发者
      */
     public function answer() {
