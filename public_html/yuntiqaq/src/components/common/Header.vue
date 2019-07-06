@@ -179,6 +179,9 @@ export default {
         console.log(this.boxx)
 
         this.unreadnum()
+        setTimeout(()=>{
+            this.unreadnum()
+        },60000)
 
         this.getsj()
                 let a = new Date()
