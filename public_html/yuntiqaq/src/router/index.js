@@ -200,6 +200,14 @@ export default new Router({
                     title: '技师等级',
                   },
                 },
+                {
+                  path: '/admin_payset',
+                  name: 'admin_payset',
+                  component: resolve => require(['../components/set/payset.vue'], resolve),
+                  meta: {
+                    title: '薪资设置',
+                  },
+                },
             ]
         },
     ]
