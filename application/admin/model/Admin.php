@@ -252,7 +252,7 @@ class Admin extends Common {
         } else {
             $data['avatar'] = trim($params['avatar']);
         }
-        if ($this->where(array('phone' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
+        if ($this->where(array('name' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
             show_json(0, '该手机号已存在');
         }
         if (!empty($params['password'])) {
@@ -268,7 +268,7 @@ class Admin extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get(4);
+        $item = $this->get(array('id' => $id));
         if (empty($item)) {
             show_json(1);
         } else {

@@ -454,16 +454,15 @@ CREATE TABLE `yunti_search_history` (
 DROP TABLE IF EXISTS `yunti_admin`;
 CREATE TABLE `yunti_admin` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
- /* `roleid` int(11) NOT NULL COMMENT '角色id',*/
   `name` varchar(50) NOT NULL COMMENT '名称(账号)',
-  `phone` varchar(20) NOT NULL COMMENT '手机号',
   `password` varchar(50) NOT NULL COMMENT '密码',
   `salt` varchar(50) NOT NULL COMMENT '随机盐',
   `status` int(2) NOT NULL COMMENT '状态：0-禁用，1-启用',
   `token` varchar(255) NOT NULL COMMENT '用户token',
   `createtime` int(11) NOT NULL COMMENT '创建时间',
+  `phone` varchar(20) NOT NULL COMMENT '手机号',
   `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
