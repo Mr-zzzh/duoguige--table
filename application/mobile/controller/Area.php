@@ -15,7 +15,7 @@ class Area extends Common {
      * @url /area
      * @method get
      * @return id:父级数据@!
-     * @id id:ID name:名称 pid:上级id rank:评级 _child:子级数据@!
+     * @id id:ID name:名称 pid:上级id rank:评级 code:编码 _child:子级数据@!
      * @_child _id:子级ID@!
      * @_id id:ID name:名称 pid:上级id rank:评级 _child:子级数据(同上)
      * @author 开发者
