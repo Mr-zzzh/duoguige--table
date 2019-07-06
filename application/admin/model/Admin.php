@@ -253,7 +253,7 @@ class Admin extends Common {
             $data['avatar'] = trim($params['avatar']);
         }
         if ($this->where(array('name' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
-            show_json(0, '该手机号已存在');
+            show_json(0, '该账号已存在');
         }
         if (!empty($params['password'])) {
             $data['salt']     = random(6);
