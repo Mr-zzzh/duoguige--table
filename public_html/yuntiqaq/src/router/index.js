@@ -184,6 +184,22 @@ export default new Router({
                     title: '轮播图设置',
                   },
                 },
+                {
+                  path: '/admin_admingl',
+                  name: 'admin_admingl',
+                  component: resolve => require(['../components/set/admingl.vue'], resolve),
+                  meta: {
+                    title: '操作员',
+                  },
+                },
+                {
+                  path: '/admin_jsleve',
+                  name: 'admin_jsleve',
+                  component: resolve => require(['../components/set/jsleve.vue'], resolve),
+                  meta: {
+                    title: '技师等级',
+                  },
+                },
             ]
         },
     ]

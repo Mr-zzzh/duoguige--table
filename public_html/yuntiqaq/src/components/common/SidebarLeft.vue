@@ -167,6 +167,14 @@ export default {
                             index: "/admin_lbtset",
                             title: "轮播图设置"
                         },
+                        {
+                            index: "/admin_admingl",
+                            title: "操作员"
+                        },
+                        {
+                            index: "/admin_jsleve",
+                            title: "技师等级"
+                        },
                     ]
                 },
             ],
