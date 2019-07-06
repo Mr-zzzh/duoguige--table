@@ -130,6 +130,12 @@ export default {
                 {
                     img: "../../../static/img/sz/dfbrrbg1.png",
                     img1: "../../../static/img/sz/dfbrrbg18.png",
+                    index: "/admin_problemgl",
+                    title: "问答管理",
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg18.png",
                     index: "/admin_brandgl",
                     title: "品牌管理",
                     subs: [
