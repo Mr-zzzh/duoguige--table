@@ -176,6 +176,14 @@ export default new Router({
                     title: '短信接口设置',
                   },
                 },
+                {
+                  path: '/admin_lbtset',
+                  name: 'admin_lbtset',
+                  component: resolve => require(['../components/set/lbtset.vue'], resolve),
+                  meta: {
+                    title: '轮播图设置',
+                  },
+                },
             ]
         },
     ]
