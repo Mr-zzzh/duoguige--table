@@ -216,6 +216,14 @@ export default new Router({
                     title: '年限设置',
                   },
                 },
+                {
+                  path: '/admin_fxset',
+                  name: 'admin_fxset',
+                  component: resolve => require(['../components/set/fxset.vue'], resolve),
+                  meta: {
+                    title: '分享设置',
+                  },
+                },
             ]
         },
     ]

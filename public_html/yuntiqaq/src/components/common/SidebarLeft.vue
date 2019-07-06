@@ -183,6 +183,10 @@ export default {
                             index: "/admin_ageset",
                             title: "年限设置"
                         },
+                        {
+                            index: "/admin_fxset",
+                            title: "分享设置"
+                        },
                     ]
                 },
             ],
