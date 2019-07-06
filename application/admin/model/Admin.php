@@ -119,7 +119,7 @@ class Admin extends Common {
             $map['a.name|password|salt|token'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
         $list = $this->alias('a')
-            ->field('a.id,a.name,a.status,a.phone,a.createtime')
+            ->field('a.id,a.name,a.status,a.phone,a.avatar,a.createtime')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
@@ -152,6 +152,8 @@ class Admin extends Common {
         }
         if (empty($params['avatar'])) {
             $data['avatar'] = request()->domain() . '/uploads/nopic.png';
+        } else {
+            $data['avatar'] = trim($params['avatar']);
         }
         if ($this->where('name', $data['name'])->value('id')) {
             show_json(0, '该账号已添加');
@@ -247,6 +249,8 @@ class Admin extends Common {
         }
         if (empty($params['avatar'])) {
             $data['avatar'] = request()->domain() . '/uploads/nopic.png';
+        } else {
+            $data['avatar'] = trim($params['avatar']);
         }
         if ($this->where(array('phone' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
             show_json(0, '该手机号已存在');
