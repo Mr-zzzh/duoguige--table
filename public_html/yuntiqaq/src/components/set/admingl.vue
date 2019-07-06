@@ -249,6 +249,7 @@
                         console.log(res.data.data)
                         this.form = res.data.data
                         this.form.status = this.form.status.toString()
+                        this.form.password = ''
                     }else{
                         this.$message.error(res.data.message)
                     }
