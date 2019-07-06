@@ -268,12 +268,12 @@ class Admin extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->get(4);
         if (empty($item)) {
             show_json(1);
         } else {
             $item               = $item->toArray();
-            $item['createtime'] = date('Y - m - d H:i:s', $item['createtime']);
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
     }
