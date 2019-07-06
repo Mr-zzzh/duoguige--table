@@ -233,6 +233,15 @@ export default new Router({
                     title: '消息列表',
                   },
                 },
+
+                {
+                  path: '/admin_gzku',
+                  name: 'admin_gzku',
+                  component: resolve => require(['../components/gzku/gzku.vue'], resolve),
+                  meta: {
+                    title: '故障库',
+                  },
+                },
             ]
         },
     ]
