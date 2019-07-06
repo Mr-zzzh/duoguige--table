@@ -97,7 +97,7 @@
               <i class="el-icon-bell" style="color: black;font-size: 25px"></i>
               <span>新消息提醒 ({{total_x}}) 条</span>
               <div style="margin-top: 20px;height: 250px;overflow:auto;">
-                <div class="gogngao_list" v-for="(item,index) in list_xin" :key="index">
+                <div class="gogngao_list" v-for="(item,index) in list_xin" :key="index" @click="gonggao1(item.id)">
                   <div>{{item.name}}</div>
                   <div>{{item.createtime}}</div>
                 </div>
@@ -333,6 +333,19 @@ export default {
           }
         })
       },
+      gonggao(){
+          this.$router.push({
+              name:'admin_nifox',
+          })
+      },
+      gonggao1(e){
+          this.$router.push({
+              name:'admin_nifox',
+              query:{
+                  id:e
+              }
+          })
+      },
       // 上传缩略图
             beforeAvatarUpload(file) {
               var that = this;
@@ -541,6 +554,7 @@ export default {
     padding-bottom: 10px;
     border-bottom: 1px solid  #E5E5E5;
     margin-top: 30px;
+    cursor: pointer;
   }
  .gogngao_list>div:nth-child(1){
    flex: 6;
@@ -555,7 +569,7 @@ export default {
     font-size:16px;
     font-family:MicrosoftYaHei;
     font-weight:400;
-    color:rgba(71,195,207,1);
+    color:rgb(1, 119, 213);
     cursor:pointer;
   }
 

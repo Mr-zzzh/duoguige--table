@@ -224,6 +224,15 @@ export default new Router({
                     title: '分享设置',
                   },
                 },
+
+                {
+                  path: '/admin_nifox',
+                  name: 'admin_nifox',
+                  component: resolve => require(['../components/nifox/nifox.vue'], resolve),
+                  meta: {
+                    title: '消息列表',
+                  },
+                },
             ]
         },
     ]

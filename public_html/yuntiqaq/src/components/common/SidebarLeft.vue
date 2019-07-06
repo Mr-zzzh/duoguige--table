@@ -189,6 +189,12 @@ export default {
                         },
                     ]
                 },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg18.png",
+                    index: "/admin_nifox",
+                    title: "消息列表",
+                },
             ],
          
             
