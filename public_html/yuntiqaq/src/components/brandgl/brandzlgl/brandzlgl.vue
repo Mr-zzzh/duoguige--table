@@ -59,10 +59,10 @@
                     <el-upload
                     class="avatar-uploader"
                     :action="`${api}upload`"
-                    :show-file-list="false"
+                    :show-file-list="true"
                     :before-upload="beforeAvatarUpload">
-                    <img v-if="form.datum" :src="form.datum" class="avatar" style="width:100px;height:100px;">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    <!-- <img v-if="form.datum" :src="form.datum" class="avatar" style="width:100px;height:100px;"> -->
+                    <i class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
             </el-form>
@@ -236,10 +236,11 @@
             },
             // 上传缩略图
             beforeAvatarUpload(file) {
+                console.log(file)
                 var that = this;
                 // 判断类型是不是图片
-                if (!/image\/\w+/.test(file.type)) {
-                    that.$message("请确保文件为图像类型");
+                if (!/pdf/.test(file.type)) {
+                    that.$message("请上传pdf文件");
                     return false;
                 } else {
                     let fd = new FormData();

@@ -1,9 +1,9 @@
 <template>
     <div class="page">
 
-        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加新闻</el-button>
+        <!-- <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加电梯</el-button> -->
         
-        <el-input placeholder="请输入内容" v-model="keyword" class="input-with-select" style="width:700px;background: white;float: right;">
+        <el-input placeholder="请输入内容" v-model="keyword" class="input-with-select" style="width:700px;background: white;float: right;margin-bottom: 20px;">
             <el-button slot="append" type="primary" @click="ss(keyword)" icon="el-icon-search" style="background:#409EFF;color: white;"></el-button>
         </el-input>
 
@@ -21,16 +21,16 @@
             :data="tableData"
             border
             style="width: 100%">
-            <!-- <el-table-column
+            <el-table-column
             type="index"
             label="序号"
             width="100"
             align="center"
             >
-            </el-table-column> -->
+            </el-table-column>
             <el-table-column
-            prop="sort"
-            label="排序" align="center"
+            prop="uname"
+            label="提问人姓名" align="center"
             >
             </el-table-column>
             <el-table-column
@@ -38,34 +38,8 @@
             label="标题">
             </el-table-column>
             <el-table-column
-            prop="type_text" align="center"
-            label="类型">
-            </el-table-column>
-            <el-table-column
-            prop="status_text" align="center"
-            label="状态">
-            </el-table-column>
-            <el-table-column
-            prop="thumb" align="center"
-            label="缩略图">
-                <template slot-scope="scope">
-                    <img :src="scope.row.thumb" alt="" style="width:50px;height:50px" v-if='scope.row.type == 1'>
-                    <video style="width:50px;height:50px" controls v-if='scope.row.type == 2'>
-                        <source :src="scope.row.video"  type="video/mp4">
-                    </video>
-                </template>
-            </el-table-column>
-            <el-table-column
-            prop="view_number" align="center"
-            label="浏览量">
-            </el-table-column>
-            <el-table-column
-            prop="like_number" align="center"
-            label="点赞量">
-            </el-table-column>
-            <el-table-column
             prop="createtime" align="center"
-            label="操作时间">
+            label="创建时间">
             </el-table-column>
             <el-table-column
             align="center"
@@ -73,7 +47,7 @@
             >
             <template slot-scope="scope">
                 <el-button @click="sc(scope.row)" type="text" size="small">删除</el-button>
-                <el-button @click="bj(scope.row)" type="text" size="small">编辑</el-button>
+                <!-- <el-button @click="bj(scope.row)" type="text" size="small">编辑</el-button> -->
                 <el-button @click="xq(scope.row)" type="text" size="small">详情</el-button>
             </template>
             </el-table-column>
@@ -100,7 +74,7 @@
         data() {
             return {
                 timer: '',
-                bjid:'',
+                // bjid:'',
                 page:1,
                 limit:15,
                 keyword:'',
@@ -139,7 +113,7 @@
                 }).then(() => {
                     this.$axios({
                         method:'delete',
-                        url:`${this.api}admin/news/${e.id}`,
+                        url:`${this.api}admin/question/${e.id}`,
                         data:{
                         }
                     }).then(res=>{
@@ -158,33 +132,32 @@
                     });
                 });
             },
-            // 新增
-            btn1(){
-                this.bjid = ''
-                this.$router.push({
-                    name:'admin_newsadd',
-                    query:{
-                        bjid:this.bjid
-                    }
-                })
-            },
-            // 编辑
-            bj(e){
-                this.bjid = e.id
-                this.$router.push({
-                    name:'admin_newsadd',
-                    query:{
-                        bjid:this.bjid
-                    }
-                })
-            },
+            // // 新增
+            // btn1(){
+            //     this.bjid = ''
+            //     this.$router.push({
+            //         name:'admin_newsadd',
+            //         query:{
+            //             bjid:this.bjid
+            //         }
+            //     })
+            // },
+            // // 编辑
+            // bj(e){
+            //     this.bjid = e.id
+            //     this.$router.push({
+            //         name:'admin_newsadd',
+            //         query:{
+            //             bjid:this.bjid
+            //         }
+            //     })
+            // },
             // 详情
             xq(e){
-                this.bjid = e.id
                 this.$router.push({
-                    name:'admin_newsxq',
+                    name:'admin_problemglxq',
                     query:{
-                        id:this.bjid
+                        id:e.id
                     }
                 })
             },
@@ -196,7 +169,7 @@
             },
             // 时间
             xzfl(e){
-                console.log(e == null)
+               console.log(e == null)
                 if(e == null){
                     this.starttime = ''
                     this.endtime = ''
@@ -204,7 +177,6 @@
                     this.starttime = e[0]
                     this.endtime = e[1]
                 }
-                
               this.page = 1
               this.limit = 15
               this.getlist()  
@@ -216,13 +188,13 @@
             getlist(){
                 this.$axios({
                     method:'get',
-                    url:`${this.api}admin/news`,
+                    url:`${this.api}admin/question`,
                     params:{
                         keyword:this.keyword,
                         limit:this.limit,
                         page:this.page,
                         starttime:this.starttime,
-                        endtime:this.endtime
+                        endtime:this.endtime,
                     },
                 }).then(res=>{
                     if(res.data.status == 1){

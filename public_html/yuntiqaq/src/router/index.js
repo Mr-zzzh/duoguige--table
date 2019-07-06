@@ -144,6 +144,23 @@ export default new Router({
                 },
 
                 {
+                  path: '/admin_problemgl',
+                  name: 'admin_problemgl',
+                  component: resolve => require(['../components/problemgl/problemgl.vue'], resolve),
+                  meta: {
+                    title: '问答管理',
+                  },
+                },
+                {
+                  path: '/admin_problemglxq',
+                  name: 'admin_problemglxq',
+                  component: resolve => require(['../components/problemgl/problemglxq.vue'], resolve),
+                  meta: {
+                    title: '问答管理',
+                  },
+                },
+
+                {
                   path: '/admin_zfset',
                   name: 'admin_zfset',
                   component: resolve => require(['../components/set/zfset/zfset.vue'], resolve),
