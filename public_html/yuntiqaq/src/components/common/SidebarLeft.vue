@@ -179,6 +179,10 @@ export default {
                             index: "/admin_payset",
                             title: "薪资设置"
                         },
+                        {
+                            index: "/admin_ageset",
+                            title: "年限设置"
+                        },
                     ]
                 },
             ],

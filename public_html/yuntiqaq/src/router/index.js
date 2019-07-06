@@ -208,6 +208,14 @@ export default new Router({
                     title: '薪资设置',
                   },
                 },
+                {
+                  path: '/admin_ageset',
+                  name: 'admin_ageset',
+                  component: resolve => require(['../components/set/ageset.vue'], resolve),
+                  meta: {
+                    title: '年限设置',
+                  },
+                },
             ]
         },
     ]
