@@ -66,6 +66,7 @@ class Question extends Common {
             if (!empty($item['thumb'])) {
                 $item['thumb'] = explode(',', $item['thumb']);
             }
+            $item['uname']      = db('user')->where('id', $item['uid'])->value('name');
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
