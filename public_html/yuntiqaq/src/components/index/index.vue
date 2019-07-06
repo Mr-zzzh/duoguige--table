@@ -86,27 +86,36 @@
                         <span @click="btn44" :class="type2 == '4'?'bs':''">本月</span>
                     </span>
                 </div>
-                <div>
-                    <el-table
-                        :data="form2"
-                        stripe
-                        style="width: 100%">
-                        <el-table-column
-                        prop="name" align="center"
-                        label="电梯名称"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                        prop="number" align="center"
-                        label="成交量"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                        prop="money" align="center"
-                        label="成交金额">
-                        </el-table-column>
-                    </el-table>
+                <div class="bll" style="background: #f8f8f8;padding: 10px;">
+                    <div>排名</div>
+                    <div>电梯名称</div>
+                    <div>成交量</div>
+                    <div>成交金额</div>
                 </div>
+                <div class="bll1" >
+                    <div>1</div>
+                    <div>23</div>
+                    <div>12414</div>
+                    <div>asdasd</div>
+                </div>
+                <div class="bll1" >
+                    <div>1</div>
+                    <div>23</div>
+                    <div>12414</div>
+                    <div>asdasd</div>
+                </div>
+                <div class="bll1" >
+                    <div>1</div>
+                    <div>23</div>
+                    <div>12414</div>
+                    <div>asdasd</div>
+                </div>
+                <!-- <div class="bll" v-for="(ia,index) in this.form2" :key="ia.id">
+                    <div>{{index}}</div>
+                    <div>{{ia.name}}</div>
+                    <div>{{ia.number}}</div>
+                    <div>{{ia.money}}</div>
+                </div> -->
             </div>
         </section>
 
@@ -130,7 +139,7 @@
                 </div>
                 <div>
                     <div v-for="(item,index) in this.form3" :key="index" @click="tonesxq(item)">
-                        <span class="yc">{{index+1}}、{{item.title}}</span>
+                        <span class="yc" style="width: 60%;display: inline-block;">{{index+1}}、{{item.title}}</span>
                         <span>{{item.createtime}}</span>
                     </div>
                 </div>
@@ -174,15 +183,19 @@
             // 销售排行---时间
             btn11(){
                 this.type2 = '1'
+                this.getlist3()
             },
             btn22(){
                 this.type2 = '2'
+                this.getlist3()
             },
             btn33(){
                 this.type2 = '3'
+                this.getlist3()
             },
             btn44(){
                 this.type2 = '4'
+                this.getlist3()
             },
             // 去新闻列表
             tonews(){
@@ -474,5 +487,29 @@
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+    }
+
+
+
+    .bll{
+        display: flex;
+        margin-top: 10px;
+        >div{
+            flex:1;
+            text-align: center;
+        }
+    }
+    .bll1{
+        border-top: 0.25px solid #ccc;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin: 0;
+        display: flex;
+        font-size: 14px;
+        color: #666;
+        >div{
+            flex:1;
+            text-align: center;
+        }
     }
 </style>

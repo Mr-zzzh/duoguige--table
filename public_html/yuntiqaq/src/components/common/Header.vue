@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="logo">
-            <img height="30px" src="../../../static/img/1_01.png" alt="">
+            <img style="width: 60%;height: 60%;margin-top: 10px;" src="../../../static/img/1_01.png" alt="">
         </div>
         <div>
             <el-menu
@@ -95,7 +95,8 @@
           <div class="gogngao" v-show="azx==1">
             <div class="gogngao_a">
               <i class="el-icon-bell" style="color: black;font-size: 25px"></i>
-              <span>新消息提醒 ({{total_x}}) 条</span>
+              <!-- <span>新消息提醒 ({{total_x}}) 条</span> -->
+              <span>消息提醒</span>
               <div style="margin-top: 20px;height: 250px;overflow:auto;">
                 <div class="gogngao_list" v-for="(item,index) in list_xin" :key="index" @click="gonggao1(item.id)">
                   <div>{{item.name}}</div>
@@ -391,21 +392,10 @@ export default {
           })
       },
       backlogin(){
-        // let c= JSON.parse(localStorage.getItem('admin_info')).token
-          this.$axios({
-           method:'post',
-           url:this.api+'admin/Users/logout',
-           data:{}
-          }).then(res=>{
-           if (res.data.status==1){
-             this.$message.success(res.data.message)
-             // localStorage.removeItem('admin_info')
-             this.$router.push('/')
-           } else {
-             this.$message.error(res.data.message)
-           }
-          })
-
+        localStorage.removeItem('admin_info')
+        this.$router.push({
+          name:'register'
+        })
       },//用户注销
     }
 }
@@ -436,7 +426,7 @@ export default {
             height: 80px;
             float: left;
             // color: white;
-            background-color: #0177D5;
+            background-color: rgb(29, 43, 54);
             text-align: center;
             img{
                 width: 100%;

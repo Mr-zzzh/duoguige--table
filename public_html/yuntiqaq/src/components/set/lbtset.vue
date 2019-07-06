@@ -141,8 +141,12 @@
             return {
                 bjid:'',
                 form:{
+                    url:'',
+                    jumpurl:'',
+                    sort:'',
                     type:'',
                     url:'',
+                    status:'',
                 },
                 dialogVisible:false,
                 page:1,

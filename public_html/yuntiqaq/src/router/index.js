@@ -9,7 +9,7 @@ export default new Router({
             name: 'register',
             component: resolve => require(['../components/register.vue'], resolve),
             meta: {
-                title: '员工首页',
+                title: '登录',
             },
         },
         {
