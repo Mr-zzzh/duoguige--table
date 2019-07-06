@@ -44,7 +44,7 @@ class Question extends Common {
         }
         $list = db('answer')->alias('a')
             ->join('user u', 'a.uid=u.id')
-            ->field('a.*,u.name uname')->where('a.qid', intval($params['id']))
+            ->field('a.*,u.name uname,u.avatar avatar')->where('a.qid', intval($params['id']))
             ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(1 => '显示', 2 => '隐藏');
@@ -55,6 +55,21 @@ class Question extends Common {
             unset($item);
         }
         show_json(1, $list);
+    }
+
+    public function GetDetail($id) {
+        $item = $this->get($id);
+        if (empty($item)) {
+            show_json(1);
+        } else {
+            $item = $item->toArray();
+            if (!empty($item['thumb'])) {
+                $item['thumb'] = explode(',', $item['thumb']);
+            }
+            $item['uname']      = db('user')->where('id', $item['uid'])->value('name');
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+        }
+        show_json(1, $item);
     }
 
     public function DelAnswer($id) {
