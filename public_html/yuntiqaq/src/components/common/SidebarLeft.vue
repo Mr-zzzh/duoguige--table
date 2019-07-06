@@ -163,6 +163,10 @@ export default {
                             index: "/admin_noteset",
                             title: "短信接口设置"
                         },
+                        {
+                            index: "/admin_lbtset",
+                            title: "轮播图设置"
+                        },
                     ]
                 },
             ],
