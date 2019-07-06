@@ -32,7 +32,7 @@
             </span>
            </el-menu>
         </div>
-        <div style="position: absolute;left: 85%;top: 25px" @click.stop="dianji_a()">
+        <div style="position: absolute;left: 85%;top: 30px" @click.stop="dianji_a()">
             <i class="el-icon-bell" style="color: #fff;font-size: 25px"></i>
             <span class="dddcccc">{{total_x}}</span>
         </div>
