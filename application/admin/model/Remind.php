@@ -14,7 +14,7 @@ class Remind extends Common {
             ->join('goods_order b', 'a.oid=b.id', 'left')
             ->join('goods c', 'b.gid=c.id', 'left')
             ->join('user u', 'b.uid=u.id', 'left')
-            ->field('a.id,a.createtime,c.name,u.name uname,u.phone uphone,b.ordersn')
+            ->field('a.id,a.status,a.createtime,c.name,u.name uname,u.phone uphone,b.ordersn')
             ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
