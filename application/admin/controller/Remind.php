@@ -37,7 +37,7 @@ class Remind extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:商品名 createtime:创建时间
+     * @data id:id uname:购买人姓名 uphone:购买人电话 name:商品名 ordersn:订单号 createtime:创建时间
      * @author 开发者
      */
     public function index() {
@@ -66,6 +66,7 @@ class Remind extends Common {
      * @return id:id
      * @return name:商品名
      * @return uname:购买用户姓名
+     * @return uphone:购买人电话
      * @return ordersn:订单号
      * @return createtime:创建时间
      * @author 开发者
