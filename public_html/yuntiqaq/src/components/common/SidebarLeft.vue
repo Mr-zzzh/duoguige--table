@@ -35,6 +35,14 @@
                 <template v-else>
                     <el-menu-item :index="item.index" :key="item.index">
                         <!-- <i :class="item.icon"></i> -->
+                        <!-- {{item.index}} -->
+                        <!-- {{openindex}} -->
+                        <!-- {{item.index == openindex}} -->
+                        <!-- {{item.index!= closeindex}} -->
+                        <i :class="item.icon" style="margin:0">
+                            <img style="margin-bottom:3px" :src="item.img" alt="" v-if="(item.index != openindex)||(item.index == closeindex)">
+                            <img style="margin-bottom:3px" :src="item.img1" alt="" v-if="(item.index == openindex)&&(item.index!= closeindex)">
+                        </i>
                         <span slot="title">{{ item.title }}</span>
                     </el-menu-item>
                 </template>
@@ -62,7 +70,7 @@ export default {
             noindex:false,
             ms_menu:'',
             defaultitems:[],
-            productarr:[],
+            productarr:['admin_index','admin_flgl','admin_user','admin_news','admin_problemgl','admin_gzku','admin_brandgl','admin_zfset','admin_nifox'],
             ms_level:sessionStorage.getItem("ms_level"),
             usequnxian:JSON.parse(sessionStorage.getItem("usequnxian")),
             // 侧边栏
@@ -95,7 +103,7 @@ export default {
                 },
                  {
                     img: "../../../static/img/sz/dfbrrbg1.png",
-                    img1: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg18.png",
                     index: "/admin_user",
                     title: "用户管理",
                     subs: [
@@ -211,7 +219,9 @@ export default {
             console.log(key);
             this.openindex = key;
             this.closeindex = "";
-            // this.defaultitems = key
+            // this.defaultitems = [key]
+            
+            // console.log(this.defaultitems)
         },
         closesub(key, keyPath) {
             // console.log(key, keyPath);
@@ -247,9 +257,11 @@ export default {
             // console.log(from)
             // 会员
             if(this.productarr.includes(to.name)){
-                // console.log('to.name',to.name)
-                this.openindex='/admin_index'
-                this.defaultitems =['admin_index']
+                console.log('to.name',to.name)
+                this.openindex=to.path
+                console.log(this.openindex)
+                this.defaultitems =[to.path]
+                console.log(this.defaultitems)
                 let ms_tabstr = JSON.stringify(this.productlisttab)
                 localStorage.setItem('ms_tab',ms_tabstr)
             }
@@ -263,7 +275,7 @@ export default {
             // 唯一一个侧边栏
                 this.openindex='/admin_index'
                 // console.log(this.openindex)
-                // this.defaultitems =['/admin_index']
+                this.defaultitems =['/admin_index']
                 let ms_tabstr = JSON.stringify(this.productlisttab)
                 localStorage.setItem('ms_tab',ms_tabstr)
                 sessionStorage.setItem('openindex',this.openindex)
@@ -322,7 +334,7 @@ export default {
         box-sizing: border-box;
         font-size: 14px;
         // border-left: 2px solid #fe7d6f;
-        padding-left: 45px !important;
+        // padding-left: 45px !important;
         color: rgba(255,255,255,0.5) !important;
         
     }

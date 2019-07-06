@@ -92,30 +92,18 @@
                     <div>成交量</div>
                     <div>成交金额</div>
                 </div>
-                <div class="bll1" >
+                <!-- <div class="bll1" >
                     <div>1</div>
                     <div>23</div>
                     <div>12414</div>
                     <div>asdasd</div>
-                </div>
-                <div class="bll1" >
-                    <div>1</div>
-                    <div>23</div>
-                    <div>12414</div>
-                    <div>asdasd</div>
-                </div>
-                <div class="bll1" >
-                    <div>1</div>
-                    <div>23</div>
-                    <div>12414</div>
-                    <div>asdasd</div>
-                </div>
-                <!-- <div class="bll" v-for="(ia,index) in this.form2" :key="ia.id">
+                </div> -->
+                <div class="bll1" v-for="(ia,index) in this.form2" :key="ia.id">
                     <div>{{index}}</div>
                     <div>{{ia.name}}</div>
                     <div>{{ia.number}}</div>
                     <div>{{ia.money}}</div>
-                </div> -->
+                </div>
             </div>
         </section>
 
