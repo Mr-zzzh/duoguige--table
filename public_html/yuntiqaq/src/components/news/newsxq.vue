@@ -34,7 +34,7 @@
                             <i class="el-icon-delete" @click="tosc(ia.id)"></i>
                         </span>
                         <span style="float:right">
-                            <img src="../../../static/img/news1.png" alt="" style="width: 12px;height: 12px;">
+                            <img src="../../../static/img/news1.png" alt="" style="width: 16px;height: 12px;">
                             <span style="margin-right:20px">{{ia.like_number}}</span>
                         </span>
                     </div>
