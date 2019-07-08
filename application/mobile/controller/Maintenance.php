@@ -201,6 +201,18 @@ class Maintenance extends Common {
     }
 
     /**
+     * @title 领取任务(技术大师)
+     * @url /draw
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @author 开发者
+     */
+    public function draw() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Draw(request()->post());
+    }
+
+    /**
      * @title 更改维保单状态(技术大师)
      * @url /receive_task
      * @method post

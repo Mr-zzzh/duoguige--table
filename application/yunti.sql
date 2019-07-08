@@ -337,6 +337,18 @@ CREATE TABLE `yunti_complaint` (
   KEY `mid` (`mid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 领取维保单表
+DROP TABLE IF EXISTS `yunti_draw`;
+CREATE TABLE `yunti_draw` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '用户id',
+  `mid` int(11) NOT NULL COMMENT '维保单id',
+  `createtime` int(11) NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `mid` (`mid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- 商品分类表
 DROP TABLE IF EXISTS `yunti_goods_cate`;
 CREATE TABLE `yunti_goods_cate` (

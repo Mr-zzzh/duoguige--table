@@ -310,12 +310,36 @@ class Maintenance extends Common {
         show_json(1, $list);
     }
 
+    public function Draw($params) {
+        global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        $id = intval($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维保单id');
+        }
+        $data = [
+            'uid'        => $member['id'],
+            'mid'        => $id,
+            'createtime' => time(),
+        ];
+        if (db('draw')->where(array('uid' => $member['id'], 'mid' => $id))->value('id')) {
+            show_json(0, '您已接取过该任务');
+        }
+        if (db('draw')->insert($data)) {
+            show_json(1, '领取成功');
+        } else {
+            show_json(0, '领取失败');
+        }
+    }
+
     public function ReceiveTask($params) {
         global $member;
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
-        $id = trim($params['id']);
+        $id = intval($params['id']);
         if (empty($id)) {
             show_json(0, '请传维保单id');
         }
@@ -344,7 +368,6 @@ class Maintenance extends Common {
         } else {
             show_json(0, '类型不正确');
         }
-
     }
 
     public function MyTask($params) {
