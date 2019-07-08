@@ -57,7 +57,7 @@
 }
 .noindex {
     position: absolute;
-    left: 200px !important;
+    left: 170px !important;
     top: 80px;
     bottom: 0;
 }

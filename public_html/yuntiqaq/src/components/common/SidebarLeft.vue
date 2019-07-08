@@ -322,7 +322,7 @@ export default {
         // overflow-y: scroll;
     // }
     .sidebar-el-menu:not(.el-menu--collapse) {
-        width:200px !important; /* 左侧公共侧边栏的宽度 */
+        width:170px !important; /* 左侧公共侧边栏的宽度 */
     }
     & > ul {
         background-color: #1e222b;

@@ -35,7 +35,7 @@
             </el-table-column>
             <el-table-column
             prop="name" align="center"
-            label="分类名称">
+            label="账号">
             </el-table-column>
             <el-table-column
             prop="status_text" align="center"
