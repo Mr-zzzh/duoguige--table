@@ -19,3 +19,16 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+
+
+vue说明
+yuntiqaq   云梯后台管理项目
+
+
+插件
+npm i element-ui -S
+npm install axios -S
+npm install less less-loader --save
+npm install echarts --save
