@@ -14,9 +14,7 @@ class Maintenance extends Common {
                 $map['m.status'] = array('in', '1,2');
             }
         }
-        if (empty($params['genre'])) {
-            $map['m.genre'] = 1;
-        } else {
+        if (!empty($params['genre'])) {
             $map['m.genre'] = intval($params['genre']);
         }
         $map['m.uid'] = $member['id'];
