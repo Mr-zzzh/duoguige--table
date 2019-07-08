@@ -231,7 +231,7 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:创建时间 name:发布人姓名 avatar:发布人头像 company_name:发布人认证公司
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:创建时间 name:发布人姓名 avatar:发布人头像 company_name:发布人认证公司
      * @author 开发者
      */
     public function inquire() {

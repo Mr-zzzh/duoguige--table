@@ -318,7 +318,7 @@ class Maintenance extends Common {
             ->join('maintenance m', 'm.id=d.mid', 'left')
             ->join('company c', 'c.uid=d.uid', 'left')
             ->join('user u', 'u.id=d.uid', 'left')
-            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.createtime,c.company_name,u.name,u.avatar')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.status,m.type,m.company,m.city,m.area,m.address,m.createtime,c.company_name,u.name,u.avatar')
             ->where($map)->group('m.id')->order('d.createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
