@@ -297,6 +297,7 @@ CREATE TABLE `yunti_maintenance` (
   KEY `city` (`city`),
   KEY `area` (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_maintenance` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 
 -- 维保单进度表
 DROP TABLE IF EXISTS `yunti_plan`;
