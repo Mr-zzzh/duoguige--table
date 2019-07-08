@@ -115,6 +115,7 @@ Route::rule('plan', 'mobile/Maintenance/plan', 'POST');
 Route::rule('receive_task', 'mobile/Maintenance/receive_task', 'POST');
 Route::rule('draw', 'mobile/Maintenance/draw', 'POST');
 Route::rule('complaint_detail', 'mobile/Maintenance/complaint_detail', 'GET');
+Route::rule('maintenance/city', 'mobile/Maintenance/city', 'GET');
 
 Route::resource('news', 'mobile/News');
 Route::rule('comment', 'mobile/News/leavemessage', 'GET');

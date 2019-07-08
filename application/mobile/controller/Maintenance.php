@@ -201,6 +201,26 @@ class Maintenance extends Common {
     }
 
     /**
+     * @title 任务大厅区列表
+     * @url /maintenance/city
+     * @method GET
+     * @param name:city type:string require:1 default:- other:- desc:城市名称(武汉市)
+     * @return data:区列表@
+     * @inflist id:id name:城市名 code:城市编码
+     * @author 开发者
+     */
+    public function city() {
+        $params = \request()->param();
+        $city   = trim($params['city']);
+        if (empty($city)) {
+            show_json(0, '请传城市名');
+        }
+        $id   = db('area')->where('name', $city)->value('id');
+        $list = db('area')->where('pid', $id)->field('id,name,code')->select();
+        show_json(1, array('data' => $list));
+    }
+
+    /**
      * @title 任务查询(技术大师)
      * @url /inquire
      * @method get
