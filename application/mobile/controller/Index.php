@@ -239,4 +239,23 @@ class Index extends Common {
         }
     }
 
+    /**
+     * @title 翻译
+     * @url /translate
+     * @method post
+     * @param name:content type:string require:1 default:- other:- desc:类型_1首页搜索_2故障库搜索(不传默认首页)
+     * @author 开发者
+     */
+    public function translate() {
+        global $member;
+        $content    = request()->post('content');
+        $ret        = $this->do_request($content);
+        $map['uid'] = $member['id'];
+        if (db('search_history')->where($map)->delete()) {
+            show_json(1, '删除成功');
+        } else {
+            show_json(0, '删除失败');
+        }
+    }
+
 }
