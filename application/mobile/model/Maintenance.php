@@ -14,6 +14,11 @@ class Maintenance extends Common {
                 $map['m.status'] = array('in', '1,2');
             }
         }
+        if (empty($params['genre'])) {
+            $map['a.genre'] = 1;
+        } else {
+            $map['a.genre'] = intval($params['genre']);
+        }
         $map['m.uid'] = $member['id'];
         $list         = $this->alias('m')
             ->join('evaluate e', 'e.mid=m.id', 'left')
