@@ -201,6 +201,25 @@ class Maintenance extends Common {
     }
 
     /**
+     * @title 任务查询(技术大师)
+     * @url /inquire
+     * @method get
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:创建时间 name:发布人姓名 avatar:发布人头像 company_name:发布人认证公司
+     * @author 开发者
+     */
+    public function inquire() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Inquire(request()->get());
+    }
+
+    /**
      * @title 领取任务(技术大师)
      * @url /draw
      * @method post

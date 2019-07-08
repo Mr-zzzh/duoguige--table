@@ -107,6 +107,7 @@ Route::rule('evaluate', 'mobile/Maintenance/evaluate', 'POST|GET');
 Route::rule('complaint', 'mobile/Maintenance/complaint', 'POST|GET');
 Route::rule('maintenance/status_edit', 'mobile/Maintenance/status_edit', 'POST');
 Route::rule('allevaluate', 'mobile/Maintenance/allevaluate', 'GET');
+Route::rule('inquire', 'mobile/Maintenance/inquire', 'GET');
 Route::rule('task_hall', 'mobile/Maintenance/task_hall', 'GET');
 Route::rule('my_task', 'mobile/Maintenance/my_task', 'GET');
 Route::rule('task_detail', 'mobile/Maintenance/task_detail', 'GET');

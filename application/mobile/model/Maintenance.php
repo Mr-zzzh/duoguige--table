@@ -310,6 +310,27 @@ class Maintenance extends Common {
         show_json(1, $list);
     }
 
+    public function Inquire($params) {
+        global $member;
+        $map          = array();
+        $map['d.uid'] = $member['id'];
+        $list         = db('draw')->alias('d')
+            ->join('maintenance m', 'm.id=d.mid', 'left')
+            ->join('company c', 'c.uid=d.uid', 'left')
+            ->join('user u', 'u.id=d.uid', 'left')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.createtime,c.company_name,u.name,u.avatar')
+            ->where($map)->group('m.id')->order('d.createtime desc')
+            ->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
     public function Draw($params) {
         global $member;
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
