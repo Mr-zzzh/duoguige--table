@@ -1,16 +1,3 @@
 export default {
-    apicom:'http://yunti.hongbao19.net/',
- }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+    apicom: 'http://yunti.hongbao19.net/',
+}

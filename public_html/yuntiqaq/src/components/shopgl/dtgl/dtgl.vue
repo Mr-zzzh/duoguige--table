@@ -225,6 +225,7 @@
                         this.$message.error(res.data.message)
                     }
                 })
+
             },
             // 获取分类
             getlist1(){

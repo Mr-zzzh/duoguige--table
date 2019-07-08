@@ -3,274 +3,224 @@
   <div class="user">
     <!-- 上面的搜索框 -->
     <div class="serch">
-      <el-select
-        v-model="value"
-        multiple
-        filterable
-        remote
-        reserve-keyword
-        placeholder="黑名单"
-        :remote-method="remoteMethod"
-        :loading="loading"
-      >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-      <el-select
-        v-model="value"
-        multiple
-        filterable
-        remote
-        reserve-keyword
+      <el-input
         placeholder="请输入姓名/手机号搜索"
-        :remote-method="remoteMethod"
-        :loading="loading"
+        v-model="keyword"
+        class="input-with-select"
+        style="width:500px;background: white;float: right;"
+      >
+        <el-button
+          type="primary"
+          slot="append"
+          style="background:#409EFF;color: white;"
+          @click="search(keyword)"
+        >搜索</el-button>
+      </el-input>
+
+      <el-select
+        @change="categry"
+        v-model="aa"
+        placeholder="黑名单"
+        style="width:250px;background: white;float: right;"
       >
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="(item ,index) in options"
+          :key="index"
+          :label="item.type_text"
+          :value="item.id"
         ></el-option>
       </el-select>
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
     </div>
 
-    <div id="button">
-      <div class="button">
-        <el-radio v-model="radio" label="1" id="btn">设置黑名单</el-radio>
-        <el-radio v-model="radio" label="2">取消黑名单</el-radio>
-      </div>
+    <div class="btn">
+      <el-button type="danger" @click="setBlackList">设置黑名单</el-button>
+      <el-button type="primary" @click="cancelBlackList">取消黑名单</el-button>
     </div>
+
     <!-- 下面的表格 -->
     <div class="table">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column label="ID" width="180">
-          <span>1</span>
-        </el-table-column>
+        <el-table-column label="ID" width="180" type="index"></el-table-column>
 
-        <el-table-column label="姓名" width="180">
-          <span>王建国</span>
+        <el-table-column label="姓名" width="180" prop="name"></el-table-column>
+        <el-table-column label="电话" prop="phone"></el-table-column>
+        <el-table-column label="类型" prop="type_text"></el-table-column>
+        <el-table-column label="注册时间" prop="createtime"></el-table-column>
+        <el-table-column label="成交" prop="createtime">
+          <template slot-scope="scope">
+            <span>订单:{{ scope.row.order || 10 }}</span>
+            <br />
+            <span>金额:{{ scope.row.price || 10 }}</span>
+          </template>
         </el-table-column>
-        <el-table-column label="电话" prop>
-          <span>12345678900</span>
-        </el-table-column>
-        <el-table-column label="类型" prop>
-          <span>普通会员</span>
-        </el-table-column>
-        <el-table-column label="注册时间" prop="date">
-         
-        </el-table-column>
-        <el-table-column label="成交" prop="">
-           <div>订单:111</div>
-          <div>金额:111</div>
-        </el-table-column>
-        <el-table-column label="黑名单" prop="date">
-          
+        <el-table-column label="黑名单">
+          <template slot-scope="scope">
+            <!-- <el-button v-if="scope.$index>1" type="primary">黑名单</el-button>
+            <el-button v-else type="info">正常</el-button>-->
+
+            <el-button v-if="scope.$index>1" type="info">黑名单</el-button>
+            <el-button v-else type="primary">正常</el-button>
+          </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <i class="el-icon-delete" @click="del(scope.row.id)"></i>
           </template>
         </el-table-column>
       </el-table>
+    </div>
+
+    <!-- 分页 -->
+    <div class="fenye">
+      <el-pagination
+        style="margin-top:20px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[15, 20, 30, 40]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import { getCategory } from "@/components/apicom/index";
+import { getUserTab } from "@/components/apicom/index";
+import { delUser } from "@/components/apicom/index";
 
 export default {
   data() {
     return {
-      radio: 3,
+      // 下拉列表里面的数据
       options: [],
-      value: [],
-      list: [],
-      loading: false,
-      states: [
-        "Alabama",
-        "Alaska",
-        "Arizona",
-        "Arkansas",
-        "California",
-        "Colorado",
-        "Connecticut",
-        "Delaware",
-        "Florida",
-        "Georgia",
-        "Hawaii",
-        "Idaho",
-        "Illinois",
-        "Indiana",
-        "Iowa",
-        "Kansas",
-        "Kentucky",
-        "Louisiana",
-        "Maine",
-        "Maryland",
-        "Massachusetts",
-        "Michigan",
-        "Minnesota",
-        "Mississippi",
-        "Missouri",
-        "Montana",
-        "Nebraska",
-        "Nevada",
-        "New Hampshire",
-        "New Jersey",
-        "New Mexico",
-        "New York",
-        "North Carolina",
-        "North Dakota",
-        "Ohio",
-        "Oklahoma",
-        "Oregon",
-        "Pennsylvania",
-        "Rhode Island",
-        "South Carolina",
-        "South Dakota",
-        "Tennessee",
-        "Texas",
-        "Utah",
-        "Vermont",
-        "Virginia",
-        "Washington",
-        "West Virginia",
-        "Wisconsin",
-        "Wyoming"
-      ],
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      page: 0, //获取的页面
+      limit: 15, //每页记录数
+      keyword: "", //关键字检索
+      total: 0, //默认的总条数
+      currentPage: 1, // 当前页
+      tableData: [], //获得的数据
+      // 需要做判断的类型
+      selectedList: "",
+      // 选择框里的黑名单和正常的时候
+      aa: "",
+      id: "",
+      options_son: {}
     };
   },
-  mounted() {
-    this.list = this.states.map(item => {
-      return { value: item, label: item };
-      console.log(1111);
-    });
-  },
+
   methods: {
-    remoteMethod(query) {
-      if (query !== "") {
-        this.loading = true;
-        setTimeout(() => {
-          this.loading = false;
-          this.options = this.list.filter(item => {
-            return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1;
-          });
-        }, 200);
-      } else {
-        this.options = [];
-      }
+    // 这三个是表格中的
+    // 当选择项发生变化时会触发该事件
+    selectionChange(list) {
+      this.selectedList = list.map(v => v.id).join(",");
+      console.log(this.selectedList);
     },
-    handleEdit(index, row) {
-      console.log(index, row);
-      this.getUser();
+    // 这是自己封装的，意思是当点击设置或是取消的时候出发
+    async setBlackList() {
+      // await setBlackList(this.selectedList)
+      this.getUserTab();
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    async cancelBlackList() {
+      // await cancelBlackList(this.selectedList)
+      this.getUserTab();
     },
     // 这是获取用户列表的请求
-    getUser() {
-      console.log(22222);
-
-      getCategory().then(res => {
-        console.log(res);
-        console.log(111);
+    async getUserTab() {
+      let data = await getUserTab({
+        keyword: this.keyword,
+        limit: this.limit,
+        page: this.page,
+        type: 1,
+        aa: this.aa
+        // id:this.id
       });
+      console.log(data, 11111);
+      // this.tableData = data.data = [{}]//  模仿的假数据
+      this.tableData = data.data;
+      //  this.options=data.data
+      this.total = data.total;
+      this.page = data.total / this.limit;
+      this.options = data.dtat;
+      this.options.forEach(item => {
+        
+      });
+      data.data.forEach(item => {
+        this.id = item.id;
+        console.log(item);
+      });
+    },
+    // 删除
+    del(id) {
+      this.$confirm("是否确定删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          delUser(id);
+          // this.page = 1;
+          this.getUserTab();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    // 搜索
+    search() {
+      this.getUserTab();
+    },
+    // 获取分类
+    categry() {
+      this.getUserTab();
+    },
+
+    // 分页----这是选择每页多少条的时候触发
+    handleSizeChange(val) {
+      this.limit = val; //让其相等
+      this.getUserTab();
+      console.log(`每页 ${val} 条`);
+    },
+    // 分页------当前页码切换的时候触发
+    handleCurrentChange(val) {
+      this.limit = 15;
+      this.page = val;
+      this.getUserTab();
+      console.log(`当前页: ${val}`);
     }
   },
+  mounted() {
+    // this.getUserTab();
+  },
   created() {
-    this.getUser();
-    console.log(1111);
+    this.getUserTab();
   }
 };
-</script>、
+</script>
 
 
 <style lang="less" scoped>
-/deep/.content {
-  margin-top: 80px;
-}
 .user {
-  position: relative;
-  height: 100%;
-  clear: both;
-  background-color: rgba(255, 255, 255, 1);
-
-  .serch {
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    clear: both;
-    height: 100px;
-    .el-select:nth-of-type(2) {
-      width: 350px;
-    }
+  padding: 8px;
+  background-color: #fff;
+}
+.serch {
+  height: 60px;
+  .el-input {
+    margin-left: 18px;
   }
-  #button {
-    .button {
-      width: 100%;
-      height: 80px;
-      margin-top: 40px;
-      > #btn {
-        margin-top: 70px;
-        > span {
-          border-radius: no;
-          /deep/span {
-            display: block;
-            width: 25px;
-            height: 25px;
-            border-radius: no;
-            .el-radio__original {
-              border-radius: no;
-            }
-          }
-        }
-      }
-    }
-  }
-  .table {
-    clear: both;
-    margin-top: 10px;
-    .el-table {
-      border-top: 1px solid #000;
-      thead.has-gutter {
-        color: #000;
-        tr {
-          background-color: pink;
-        }
-      }
-    }
-  }
+}
+.btn {
+  margin: 10px 5px;
+  padding-left: 10px;
+}
+.el-table__row .el-table td {
+  padding: 8px;
 }
 </style>
 
