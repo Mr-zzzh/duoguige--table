@@ -78,6 +78,7 @@ class Maintenance extends Common {
      * @return receive_id:接取保单师傅id
      * @return rname:接取师傅姓名
      * @return receive_time:接取时间
+     * @return remark:审核备注
      * @author 开发者
      */
     public function read($id) {
@@ -94,6 +95,7 @@ class Maintenance extends Common {
      * @method post|get
      * @param name:id type:int require:1 default:- other:- desc:维保单id
      * @param name:status type:int require:1 default:- other:- desc:状态_1通过_2不通过
+     * @param name:remark type:string require:0 default:- other:- desc:审核备注
      * @author 开发者
      */
     public function editstatus() {
