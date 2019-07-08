@@ -165,6 +165,10 @@ class User extends Common {
             $this->insert($data);
             $info = $this->where('phone', $phone)->find();
         }
+        if (empty($info)) {
+            $this->error = '未找到用户!';
+            return false;
+        }
         $info = $info->toArray();
         if ($info['normal'] == 2) {
             $this->error = '该账号已禁用!';
