@@ -190,6 +190,7 @@ CREATE TABLE `yunti_invite` (
   KEY `experience` (`experience`),
   KEY `area` (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_invite` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 
 -- 求职表
 DROP TABLE IF EXISTS `yunti_job_wanted`;
@@ -216,6 +217,7 @@ CREATE TABLE `yunti_job_wanted` (
   KEY `area` (`area`),
   KEY `salary` (`salary`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_job_wanted` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 
 -- 品牌表
 DROP TABLE IF EXISTS `yunti_brand`;
@@ -489,6 +491,7 @@ CREATE TABLE `yunti_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 地区表
 DROP TABLE IF EXISTS `yunti_area`;
 CREATE TABLE `yunti_area` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',

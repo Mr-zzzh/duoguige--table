@@ -117,6 +117,7 @@ class JobWanted extends Common {
      * @return status_text:状态文本
      * @return createtime:创建时间
      * @return createtime:审核时间
+     * @return remark:审核备注
      * @author 开发者
      */
     public function read($id) {
@@ -133,6 +134,7 @@ class JobWanted extends Common {
      * @method post|get
      * @param name:id type:int require:1 default:- other:- desc:招聘信息id
      * @param name:status type:int require:1 default:- other:- desc:状态_1通过_2不通过
+     * @param name:remark type:string require:0 default:- other:- desc:审核备注
      * @author 开发者
      */
     public function editstatus() {
