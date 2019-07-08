@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="logo">
-            <img style="width: 60%;height: 60%;margin-top: 10px;" src="../../../static/img/1_01.png" alt="">
+            <img style="width: 70%;height: 55%;margin-top: 18px;" src="../../../static/img/1_01.png" alt="">
         </div>
         <div>
             <el-menu
