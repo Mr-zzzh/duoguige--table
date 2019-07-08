@@ -28,7 +28,12 @@ yuntiqaq   云梯后台管理项目
 
 
 插件
+```bash
 npm i element-ui -S
+
 npm install axios -S
+
 npm install less less-loader --save
+
 npm install echarts --save
+```
