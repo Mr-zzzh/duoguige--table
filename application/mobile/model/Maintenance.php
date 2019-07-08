@@ -15,9 +15,9 @@ class Maintenance extends Common {
             }
         }
         if (empty($params['genre'])) {
-            $map['a.genre'] = 1;
+            $map['m.genre'] = 1;
         } else {
-            $map['a.genre'] = intval($params['genre']);
+            $map['m.genre'] = intval($params['genre']);
         }
         $map['m.uid'] = $member['id'];
         $list         = $this->alias('m')
