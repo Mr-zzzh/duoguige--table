@@ -157,7 +157,9 @@ class User extends Common {
         if (empty($info)) {     //注册
             $data = array(
                 'phone'      => trim($phone),
+                'name'       => trim($phone),
                 'status'     => 0,
+                'avatar'     => request()->domain() . '/uploads/nopic.png',
                 'type'       => 1,
                 'createtime' => time(),
                 'normal'     => 1,
