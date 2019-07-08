@@ -23,7 +23,7 @@ class Maintenance extends Common {
         $list         = $this->alias('m')
             ->join('evaluate e', 'e.mid=m.id', 'left')
             ->join('user u', 'u.id=m.receive_id', 'left')
-            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,count(e.id) as evaluate')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,u.avatar as receive_avatar,count(e.id) as evaluate')
             ->where($map)->group('m.id')->order('m.createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
@@ -35,6 +35,9 @@ class Maintenance extends Common {
                 }
                 if (empty($item['receive_name'])) {
                     $item['receive_name'] = '';
+                }
+                if (empty($item['receive_avatar'])) {
+                    $item['receive_avatar'] = '';
                 }
             }
             unset($item);
