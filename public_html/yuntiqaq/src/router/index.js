@@ -82,7 +82,7 @@ export default new Router({
                     name: 'admin_dtgl',
                     component: resolve => require(['../components/shopgl/dtgl/dtgl.vue'], resolve),
                     meta: {
-                        title: '电梯管理',
+                        title: '商品管理',
                     },
                 },
                 {
@@ -90,7 +90,7 @@ export default new Router({
                     name: 'admin_dtgladd',
                     component: resolve => require(['../components/shopgl/dtgl/dtgladd.vue'], resolve),
                     meta: {
-                        title: '电梯管理新增or编辑',
+                        title: '商品管理新增or编辑',
                     },
                 },
                 {
