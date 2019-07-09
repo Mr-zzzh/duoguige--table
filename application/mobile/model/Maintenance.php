@@ -289,7 +289,8 @@ class Maintenance extends Common {
         }
         $user         = db('user')->alias('a')
             ->join('technician t', 'a.id=t.uid', 'left')
-            ->field('a.name,a.avatar,t.company_name')->where('a.id', $id)->find();
+            ->join('user u', 'u.id=t.uid', 'left')
+            ->field('u.name,a.avatar,t.company_name')->where('a.id', $id)->find();
         $list['user'] = $user;
         show_json(1, $list);
     }
