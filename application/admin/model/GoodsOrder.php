@@ -16,7 +16,7 @@ class GoodsOrder extends Common {
             $map['a.paytype'] = intval($params['paytype']);
         }
         if (!empty($params['keyword'])) {
-            $map['a.ordersn'] = array('LIKE', ' % ' . trim($params['keyword']) . ' % ');
+            $map['a.ordersn'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
         $list = $this->alias('a')
             ->join('user u', 'a.uid = u.id', 'left')
