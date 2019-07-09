@@ -149,7 +149,7 @@ class Maintenance extends Common {
         if ($data['status'] == -1) {
             $createtime = $this->where('id', $id)->value('createtime');
             if (time() - $createtime > 300) {
-                show_json('此单现在不能取消');
+                show_json(0, '此单现在不能取消');
             }
             $data['canceltime'] = time();
         } elseif ($data['status'] == 4) {
