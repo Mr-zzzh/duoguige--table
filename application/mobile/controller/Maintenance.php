@@ -14,7 +14,7 @@ class Maintenance extends Common {
      * @title 维保单列表(物业)
      * @url /maintenance
      * @method get
-     * @param name:genre type:int require:1 default:- other:- desc:类型_1维修单_2保养单
+     * @param name:genre type:int require:0 default:- other:- desc:类型_1维修单_2保养单
      * @param name:type type:int require:0 default:- other:- desc:状态_1待审批_2已审批(不传是所有)
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
