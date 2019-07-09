@@ -443,6 +443,7 @@ class Maintenance extends Common {
                 } else {
                     $item['complaint_time'] = db('complaint')->where('mid', $item['id'])->value('createtime');
                     $item['complaint_time'] = date('Y-m-d H:i', $item['complaint_time']);
+                    $item['evaluate']       = null;
                 }
             }
             unset($item);
