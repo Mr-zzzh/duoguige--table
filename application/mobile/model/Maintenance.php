@@ -28,6 +28,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
                 if (empty($item['receive_id'])) {
                     $item['receive_id'] = '';
                 }
