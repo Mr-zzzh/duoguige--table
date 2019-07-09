@@ -93,7 +93,7 @@ export default {
                         },
                         {
                             index: "/admin_dtgl",
-                            title: "电梯管理"
+                            title: "商品管理"
                         },
                         {
                             index: "/admin_label",
