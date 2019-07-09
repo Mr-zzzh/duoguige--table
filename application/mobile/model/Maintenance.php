@@ -264,9 +264,10 @@ class Maintenance extends Common {
     }
 
     public function AllEvaluate($params) {
+        global $member;
         $id = intval($params['id']);
         if (empty($id)) {
-            show_json(0, '请传维修师傅id');
+            $id = $member['id'];
         }
         $map                 = array();
         $map['m.receive_id'] = $id;

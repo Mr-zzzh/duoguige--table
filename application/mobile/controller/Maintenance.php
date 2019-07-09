@@ -163,7 +163,7 @@ class Maintenance extends Common {
      * @title 全部评价(物业)
      * @url /allevaluate
      * @method get
-     * @param name:id type:int require:1 default:- other:- desc:维修师傅id
+     * @param name:id type:int require:0 default:- other:- desc:维修师傅id(物业看传,自己看自己不传)
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
