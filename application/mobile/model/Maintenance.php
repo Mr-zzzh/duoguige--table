@@ -177,6 +177,7 @@ class Maintenance extends Common {
         } else {
             $item            = $item->toArray();
             $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
             $plan            = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
             if (!empty($item['receive_time'])) {
                 array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
@@ -305,6 +306,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
             }
             unset($item);
         }
@@ -326,6 +328,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
             }
             unset($item);
         }
@@ -413,6 +416,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
                 if (intval($params['type']) != 2) {
                     $item['evaluate'] = db('evaluate')->alias('a')
                         ->join('user u', 'u.id=a.uid', 'left')
@@ -444,6 +448,7 @@ class Maintenance extends Common {
         } else {
             $item            = $item->toArray();
             $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
             $item['plan']    = db('plan')->where('mid', $id)->order('createtime desc')->limit(1)->value('plan');
         }
         show_json(1, $item);
@@ -496,6 +501,7 @@ class Maintenance extends Common {
             if (!empty($complaint['thumb'])) {
                 $complaint['thumb'] = explode(',', $complaint['thumb']);
             }
+            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
             $item['content'] = $complaint['content'];
             $item['thumb']   = $complaint['thumb'];
         }
