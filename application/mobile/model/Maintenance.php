@@ -11,7 +11,7 @@ class Maintenance extends Common {
             if (intval($params['type']) == 1) {
                 $map['m.status'] = 0;
             } else {
-                $map['m.status'] = array('>', 1);
+                $map['m.status'] = array('>=', 1);
             }
         }
         if (!empty($params['genre'])) {
