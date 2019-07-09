@@ -414,14 +414,19 @@ class Maintenance extends Common {
             $days                = date('t', strtotime(intval($params['year']) . '-' . intval($params['month'])));
             $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-' . intval($params['month']) . '-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-' . intval($params['month']) . '-' . $days . ' 23:59:59'));
         }
-        $list = $this->field('id,brand,model,floor_number,type,company,city,area,address,status,createtime')
+        $list = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('company c', 'a.uid=c.uid', 'left')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,a.receive_time,a.createtime,u.name,u.avatar,c.company_name')
             ->where($map)->order('createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
-                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
+                $item['address']        = city_name($item['city']) . city_name($item['area']) . $item['address'];
+                $item['createtime']     = date('Y-m-d H:i', $item['createtime']);
+                $item['receive_time']   = date('Y-m-d H:i', $item['receive_time']);
+                $item['image']          = request()->domain() . '/uploads/maintenance.jpg';
+                $item['complaint_time'] = '';
                 if (intval($params['type']) != 2) {
                     $item['evaluate'] = db('evaluate')->alias('a')
                         ->join('user u', 'u.id=a.uid', 'left')
@@ -430,6 +435,9 @@ class Maintenance extends Common {
                     if (!empty($item['evaluate'])) {
                         $item['evaluate']['createtime'] = date('Y-m-d', $item['evaluate']['createtime']);
                     }
+                } else {
+                    $item['complaint_time'] = db('complaint')->where('mid', $item['id'])->value('createtime');
+                    $item['complaint_time'] = date('Y-m-d H:i', $item['complaint_time']);
                 }
             }
             unset($item);
