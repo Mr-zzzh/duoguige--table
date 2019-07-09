@@ -134,7 +134,7 @@ if (!function_exists('list_to_tree')) {
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/ue_upload', 'admin/admin/register', 'mobile/index/login', 'mobile/index/login_code', 'mobile/index/insurance', 'mobile/index/home', 'mobile/index/search', 'mobile/area/index', 'mobile/index/city', 'mobile/index/translate', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/maintenance/city', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum', 'mobile/brand/read', 'mobile/invite/salary', 'mobile/invite/experience', 'mobile/fault/transition', 'mobile/fault/index', 'mobile/fault/read', 'mobile/question/index', 'mobile/question/read', 'mobile/question/answer', 'mobile/news/index', 'mobile/technician/index', 'mobile/technician/read', 'mobile/technician/question');
+        $comc = array('admin/admin/login', 'admin/admin/ue_upload', 'admin/admin/register', 'mobile/index/login', 'mobile/index/login_code', 'mobile/index/insurance', 'mobile/index/home', 'mobile/index/search', 'mobile/index/upload', 'mobile/area/index', 'mobile/index/city', 'mobile/index/translate', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/maintenance/city', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum', 'mobile/brand/read', 'mobile/invite/salary', 'mobile/invite/experience', 'mobile/fault/transition', 'mobile/fault/index', 'mobile/fault/read', 'mobile/question/index', 'mobile/question/read', 'mobile/question/answer', 'mobile/news/index', 'mobile/technician/index', 'mobile/technician/read', 'mobile/technician/question');
         return $comc;
     }
 }
