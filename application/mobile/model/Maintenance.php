@@ -405,14 +405,14 @@ class Maintenance extends Common {
         $map               = array();
         $map['receive_id'] = $member['id'];
         if (intval($params['type']) == 2) {
-            $map['status'] = array('>', 4);
+            $map['a.status'] = array('>', 4);
         }
         if (!empty($params['year'])) {
-            $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-01-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-12-31 23:59:59'));
+            $map['a.receive_time'] = array('between', strtotime(intval($params['year']) . '-01-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-12-31 23:59:59'));
         }
         if (!empty($params['year']) && !empty($params['month'])) {
-            $days                = date('t', strtotime(intval($params['year']) . '-' . intval($params['month'])));
-            $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-' . intval($params['month']) . '-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-' . intval($params['month']) . '-' . $days . ' 23:59:59'));
+            $days                  = date('t', strtotime(intval($params['year']) . '-' . intval($params['month'])));
+            $map['a.receive_time'] = array('between', strtotime(intval($params['year']) . '-' . intval($params['month']) . '-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-' . intval($params['month']) . '-' . $days . ' 23:59:59'));
         }
         $list = $this->alias('a')
             ->join('user u', 'a.uid=u.id', 'left')
