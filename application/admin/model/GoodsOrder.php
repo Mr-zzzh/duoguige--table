@@ -12,38 +12,41 @@ class GoodsOrder extends Common {
         if (isset($params['status']) && $params['status'] !== '') {
             $map['a.status'] = intval($params['status']);
         }
+        if (!empty($params['paytype'])) {
+            $map['a . paytype'] = intval($params['paytype']);
+        }
         if (!empty($params['keyword'])) {
-            $map['a.ordersn|a.expresscom|u.phone|u.name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['a . ordersn | a . expresscom | u . phone | u . name'] = array('LIKE', ' % ' . trim($params['keyword']) . ' % ');
         }
         $list = $this->alias('a')
-            ->join('user u', 'a.uid=u.id', 'left')
-            ->join('goods g', 'a.gid=g.id', 'left')
-            ->join('delivery_address d', 'a.addressid=d.id', 'left')
-            ->field('a.*,u.name uname,g.name gname,g.thumbnail,d.name dname,d.phone,d.area,d.address')
+            ->join('user u', 'a . uid = u . id', 'left')
+            ->join('goods g', 'a . gid = g . id', 'left')
+            ->join('delivery_address d', 'a . addressid = d . id', 'left')
+            ->field('a .*,u . name uname,g . name gname,g . thumbnail,d . name dname,d . phone,d . area,d . address')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
-            $status = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
+            $status = array(' - 1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
             foreach ($list['data'] as $k => &$item) {
                 $item['status_text']  = $status[$item['status']];
-                $item['paytype_text'] = $item['paytype_text'] == 1 ? '支付宝' : '微信';
+                $item['paytype_text'] = $item['paytype'] == 1 ? '支付宝' : '微信';
                 if (empty($item['paytime'])) {
-                    $item['paytime'] = date('Y-m-d H:i:s', $item['paytime']);
+                    $item['paytime'] = date('Y - m - d H:i:s', $item['paytime']);
                 }
                 if (empty($item['finishtime'])) {
-                    $item['finishtime'] = date('Y-m-d H:i:s', $item['finishtime']);
+                    $item['finishtime'] = date('Y - m - d H:i:s', $item['finishtime']);
                 }
                 if (empty($item['canceltime'])) {
-                    $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
+                    $item['canceltime'] = date('Y - m - d H:i:s', $item['canceltime']);
                 }
                 if (empty($item['delivertime'])) {
-                    $item['delivertime'] = date('Y-m-d H:i:s', $item['delivertime']);
+                    $item['delivertime'] = date('Y - m - d H:i:s', $item['delivertime']);
                 }
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['createtime'] = date('Y - m - d H:i:s', $item['createtime']);
             }
             unset($item);
         }
-        $list['number'] = $this->alias('a')->where($map)->count('a.id');
-        $list['money']  = $this->alias('a')->where($map)->count('a.money');
+        $list['number'] = $this->alias('a')->where($map)->count('a . id');
+        $list['money']  = $this->alias('a')->where($map)->count('a . money');
         show_json(1, $list);
     }
 
@@ -54,7 +57,7 @@ class GoodsOrder extends Common {
         $data['status']      = 2;
         $data['delivertime'] = time();
         if ($this->save($data, array('id' => intval($params['id']))) != false) {
-            //logs('编辑??,ID:' . $id, 3);
+            //logs('编辑 ??,ID:' . $id, 3);
             show_json(1, '发货成功');
         } else {
             show_json(0, '发货失败');
@@ -71,9 +74,9 @@ class GoodsOrder extends Common {
         $time      = array();
         $starttime = strtotime($params['starttime']);
         $endtime   = $params['endtime'];
-        $time[]    = date('Y-m-d', $starttime);
-        while (($starttime = strtotime('+1 day', $starttime)) <= strtotime($endtime)) {
-            $time[] = date('Y-m-d', $starttime); // 取得递增月;
+        $time[]    = date('Y - m - d', $starttime);
+        while (($starttime = strtotime(' + 1 day', $starttime)) <= strtotime($endtime)) {
+            $time[] = date('Y - m - d', $starttime); // 取得递增月;
         }
         $order  = array();       //下单
         $order1 = array();      //付款
@@ -123,22 +126,22 @@ class GoodsOrder extends Common {
             $list['yesterday']['average'] = 0;
         }
         //近七日
-        $list['seven']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', '-7 days')->count('id');
-        $list['seven']['volume']   = db('goods_order')->whereTime('createtime', '-7 days')->count('id');
-        $list['seven']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', '-7 days')->sum('money');
-        $list['seven']['number1']  = db('goods_order')->whereTime('createtime', '-7 days')->sum('money');
-        $member3                   = db('goods_order')->whereTime('paytime', '-7 days')->group('uid')->count('id');
+        $list['seven']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 7 days')->count('id');
+        $list['seven']['volume']   = db('goods_order')->whereTime('createtime', ' - 7 days')->count('id');
+        $list['seven']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 7 days')->sum('money');
+        $list['seven']['number1']  = db('goods_order')->whereTime('createtime', ' - 7 days')->sum('money');
+        $member3                   = db('goods_order')->whereTime('paytime', ' - 7 days')->group('uid')->count('id');
         if ($member3 > 0) {
             $list['seven']['average'] = round($list['seven']['number'] / $member3, 2);
         } else {
             $list['seven']['average'] = 0;
         }
         //近30天
-        $list['month']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', '-30 days')->count('id');
-        $list['month']['volume']   = db('goods_order')->whereTime('createtime', '-30 days')->count('id');
-        $list['month']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', '-30 days')->sum('money');
-        $list['month']['number1']  = db('goods_order')->whereTime('createtime', '-30 days')->sum('money');
-        $member4                   = db('goods_order')->whereTime('paytime', '-30 days')->group('uid')->count('id');
+        $list['month']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 30 days')->count('id');
+        $list['month']['volume']   = db('goods_order')->whereTime('createtime', ' - 30 days')->count('id');
+        $list['month']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 30 days')->sum('money');
+        $list['month']['number1']  = db('goods_order')->whereTime('createtime', ' - 30 days')->sum('money');
+        $member4                   = db('goods_order')->whereTime('paytime', ' - 30 days')->group('uid')->count('id');
         if ($member4 > 0) {
             $list['month']['average'] = round($list['month']['number'] / $member4, 2);
         } else {
@@ -148,9 +151,9 @@ class GoodsOrder extends Common {
         $endtime   = time();
         $starttime = time() - 29 * 24 * 60 * 60;
         $weekarray = array("日", "一", "二", "三", "四", "五", "六");
-        $time[]    = date('m-d', $starttime) . '周' . $weekarray[date("w", $starttime)];
-        while (($starttime = strtotime('+1 day', $starttime)) <= $endtime) {
-            $time[] = date('m-d', $starttime) . '周' . $weekarray[date("w", $starttime)]; // 取得递增月;
+        $time[]    = date('m - d', $starttime) . '周' . $weekarray[date("w", $starttime)];
+        while (($starttime = strtotime(' + 1 day', $starttime)) <= $endtime) {
+            $time[] = date('m - d', $starttime) . '周' . $weekarray[date("w", $starttime)]; // 取得递增月;
         }
         $number1 = array();       //交易量
         $number2 = array();      //成交量
@@ -190,7 +193,7 @@ class GoodsOrder extends Common {
 
     public function DelOne($id) {
         if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
+            //logs('删除 ??,ID:' . $id, 2);
             show_json(1, '删除成功');
         } else {
             show_json(0, '删除失败');
@@ -199,31 +202,31 @@ class GoodsOrder extends Common {
 
     public function GetOne($id) {
         $item = $this->alias('a')
-            ->join('user u', 'a.uid=u.id', 'left')
-            ->join('goods g', 'a.gid=g.id', 'left')
-            ->join('delivery_address d', 'a.addressid=d.id', 'left')
-            ->field('a.*,u.name uname,g.name gname,g.thumbnail,d.name dname,d.phone,a.area,d.address')
-            ->where('a.id', $id)->find();
+            ->join('user u', 'a . uid = u . id', 'left')
+            ->join('goods g', 'a . gid = g . id', 'left')
+            ->join('delivery_address d', 'a . addressid = d . id', 'left')
+            ->field('a .*,u . name uname,g . name gname,g . thumbnail,d . name dname,d . phone,a . area,d . address')
+            ->where('a . id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $status               = array('-1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
+            $status               = array(' - 1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
             $item                 = $item->toArray();
             $item['status_text']  = $status[$item['status']];
             $item['paytype_text'] = $item['paytype_text'] == 1 ? '支付宝' : '微信';
             if (empty($item['paytime'])) {
-                $item['paytime'] = date('Y-m-d H:i:s', $item['paytime']);
+                $item['paytime'] = date('Y - m - d H:i:s', $item['paytime']);
             }
             if (empty($item['finishtime'])) {
-                $item['finishtime'] = date('Y-m-d H:i:s', $item['finishtime']);
+                $item['finishtime'] = date('Y - m - d H:i:s', $item['finishtime']);
             }
             if (empty($item['canceltime'])) {
-                $item['canceltime'] = date('Y-m-d H:i:s', $item['canceltime']);
+                $item['canceltime'] = date('Y - m - d H:i:s', $item['canceltime']);
             }
             if (empty($item['delivertime'])) {
-                $item['delivertime'] = date('Y-m-d H:i:s', $item['delivertime']);
+                $item['delivertime'] = date('Y - m - d H:i:s', $item['delivertime']);
             }
-            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item['createtime'] = date('Y - m - d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
     }
