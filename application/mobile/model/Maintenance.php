@@ -11,7 +11,7 @@ class Maintenance extends Common {
             if (intval($params['type']) == 1) {
                 $map['m.status'] = 0;
             } else {
-                $map['m.status'] = array('>=', 1);
+                $map['m.status'] = array('in', '1,3,4,5,6');
             }
         }
         if (!empty($params['genre'])) {
@@ -264,9 +264,10 @@ class Maintenance extends Common {
     }
 
     public function AllEvaluate($params) {
+        global $member;
         $id = intval($params['id']);
         if (empty($id)) {
-            show_json(0, '请传维修师傅id');
+            $id = $member['id'];
         }
         $map                 = array();
         $map['m.receive_id'] = $id;
@@ -282,6 +283,10 @@ class Maintenance extends Common {
             }
             unset($item);
         }
+        $user         = db('user')->alias('a')
+            ->join('technician t', 'a.id=t.uid', 'left')
+            ->field('a.name,a.avatar,t.company_name')->find();
+        $list['user'] = $user;
         show_json(1, $list);
     }
 

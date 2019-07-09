@@ -61,7 +61,7 @@ class Index extends Common {
 
     /**
      * @title 文件上传
-     * @url /upload
+     * @url /mobile/upload
      * @method post
      * @param name:fileid type:string require:0 default:'media' desc:表单name值
      * @param name:media type:文件 require:0 default:'' desc:上传的文件
