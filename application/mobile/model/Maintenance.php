@@ -283,6 +283,10 @@ class Maintenance extends Common {
             }
             unset($item);
         }
+        $user         = db('user')->alias('a')
+            ->join('technician t', 'a.id=t.uid', 'left')
+            ->field('a.name,a.avatar,t.company_name')->find();
+        $list['user'] = $user;
         show_json(1, $list);
     }
 

@@ -171,7 +171,9 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
+     * @return user:大师信息@
      * @data brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 name:评价人姓名 avatar:评价人头像 start:评价星星 content:评价内容 createtime:0评价时间
+     * @user name:姓名 avatar:头像 company_name:公司名
      * @author 开发者
      */
     public function allevaluate() {
