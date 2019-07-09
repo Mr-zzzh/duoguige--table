@@ -13,16 +13,16 @@ class GoodsOrder extends Common {
             $map['a.status'] = intval($params['status']);
         }
         if (!empty($params['paytype'])) {
-            $map['a . paytype'] = intval($params['paytype']);
+            $map['a.paytype'] = intval($params['paytype']);
         }
         if (!empty($params['keyword'])) {
-            $map['a . ordersn | u . phone | u . name'] = array('LIKE', ' % ' . trim($params['keyword']) . ' % ');
+            $map['a.ordersn'] = array('LIKE', ' % ' . trim($params['keyword']) . ' % ');
         }
         $list = $this->alias('a')
-            ->join('user u', 'a . uid = u . id', 'left')
-            ->join('goods g', 'a . gid = g . id', 'left')
-            ->join('delivery_address d', 'a . addressid = d . id', 'left')
-            ->field('a .*,u . name uname,g . name gname,g . thumbnail,d . name dname,d . phone,d . area,d . address')
+            ->join('user u', 'a.uid = u.id', 'left')
+            ->join('goods g', 'a.gid = g.id', 'left')
+            ->join('delivery_address d', 'a.addressid = d.id', 'left')
+            ->field('a .*,u.name uname,g.name gname,g .thumbnail,d.name dname,d.phone,d.area,d.address')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(' - 1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
