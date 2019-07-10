@@ -187,6 +187,9 @@ class Maintenance extends Common {
                 array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
                 foreach ($plan as &$v) {
                     $v['createtime'] = date('Y-n-d H:i', $v['createtime']);
+                    if (strpos($v['plan'], '完成') !== false) {
+                        $v['plan'] = $v['plan'] . "<br/>若未确认则订单将在3天后自动确认";
+                    }
                 }
                 unset($v);
             }
