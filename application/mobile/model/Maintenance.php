@@ -14,17 +14,29 @@ class Maintenance extends Common {
                 $map['m.status'] = array('in', '1,2');
             }
         }
+        if (!empty($params['genre'])) {
+            $map['m.genre'] = intval($params['genre']);
+        }
         $map['m.uid'] = $member['id'];
         $list         = $this->alias('m')
             ->join('evaluate e', 'e.mid=m.id', 'left')
             ->join('user u', 'u.id=m.receive_id', 'left')
-            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,count(e.id) as evaluate')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.type,m.company,m.city,m.area,m.address,m.status,m.createtime,m.receive_id,u.name as receive_name,u.avatar as receive_avatar,count(e.id) as evaluate')
             ->where($map)->group('m.id')->order('m.createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                if (empty($item['receive_id'])) {
+                    $item['receive_id'] = '';
+                }
+                if (empty($item['receive_name'])) {
+                    $item['receive_name'] = '';
+                }
+                if (empty($item['receive_avatar'])) {
+                    $item['receive_avatar'] = '';
+                }
             }
             unset($item);
         }
@@ -278,7 +290,7 @@ class Maintenance extends Common {
         }
         $map = array();
         if (!empty($params['city'])) {
-            $map['m.city'] = intval($params['city']);
+            $map['m.city'] = db('area')->where('name', trim($params['city']))->value('code');
         }
         if (!empty($params['area'])) {
             $map['m.area'] = intval($params['area']);
@@ -298,12 +310,57 @@ class Maintenance extends Common {
         show_json(1, $list);
     }
 
+    public function Inquire($params) {
+        global $member;
+        $map          = array();
+        $map['d.uid'] = $member['id'];
+        $list         = db('draw')->alias('d')
+            ->join('maintenance m', 'm.id=d.mid', 'left')
+            ->join('company c', 'c.uid=d.uid', 'left')
+            ->join('user u', 'u.id=d.uid', 'left')
+            ->field('m.id,m.brand,m.model,m.floor_number,m.status,m.type,m.company,m.city,m.area,m.address,d.createtime,c.company_name,u.name,u.avatar')
+            ->where($map)->group('m.id')->order('d.createtime desc')
+            ->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
+                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
+    public function Draw($params) {
+        global $member;
+        if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
+            show_json(0, '请勿频繁操作');
+        }
+        $id = intval($params['id']);
+        if (empty($id)) {
+            show_json(0, '请传维保单id');
+        }
+        $data = [
+            'uid'        => $member['id'],
+            'mid'        => $id,
+            'createtime' => time(),
+        ];
+        if (db('draw')->where(array('uid' => $member['id'], 'mid' => $id))->value('id')) {
+            show_json(0, '您已接取过该任务');
+        }
+        if (db('draw')->insert($data)) {
+            show_json(1, '领取成功');
+        } else {
+            show_json(0, '领取失败');
+        }
+    }
+
     public function ReceiveTask($params) {
         global $member;
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
-        $id = trim($params['id']);
+        $id = intval($params['id']);
         if (empty($id)) {
             show_json(0, '请传维保单id');
         }
@@ -332,7 +389,6 @@ class Maintenance extends Common {
         } else {
             show_json(0, '类型不正确');
         }
-
     }
 
     public function MyTask($params) {
@@ -342,9 +398,12 @@ class Maintenance extends Common {
         if (intval($params['type']) == 2) {
             $map['status'] = array('>', 4);
         }
-        if (!empty($params['time'])) {
-            $days                = date('t', strtotime($params['time']));
-            $map['receive_time'] = array('between', strtotime($params['time'] . '-01 00:00:00') . ',' . strtotime($params['time'] . '-' . $days . ' 23:59:59'));
+        if (!empty($params['year'])) {
+            $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-01-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-12-31 23:59:59'));
+        }
+        if (!empty($params['year']) && !empty($params['month'])) {
+            $days                = date('t', strtotime(intval($params['year']) . '-' . intval($params['month'])));
+            $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-' . intval($params['month']) . '-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-' . intval($params['month']) . '-' . $days . ' 23:59:59'));
         }
         $list = $this->field('id,brand,model,floor_number,type,company,city,area,address,status,createtime')
             ->where($map)->order('createtime desc')

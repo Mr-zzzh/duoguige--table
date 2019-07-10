@@ -100,7 +100,8 @@ class Admin extends Common {
             $time = 'today';
         }
         $list = db('goods_order')->alias('a')
-            ->join('goods b', 'a.gid=b.id', 'left')->where('a.status', 1)
+            ->join('goods b', 'a.gid=b.id', 'left')
+            ->where('a.status', 1)
             ->whereTime('a.paytime', $time)
             ->field('b.name,count(a.id) as number,sum(a.money) as money')
             ->group('a.gid')->order('money desc')->limit(5)->select();
@@ -119,7 +120,7 @@ class Admin extends Common {
             $map['a.name|password|salt|token'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
         $list = $this->alias('a')
-            ->field('a.id,a.name,a.status,a.phone,a.createtime')
+            ->field('a.id,a.name,a.status,a.phone,a.avatar,a.createtime')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
@@ -152,6 +153,8 @@ class Admin extends Common {
         }
         if (empty($params['avatar'])) {
             $data['avatar'] = request()->domain() . '/uploads/nopic.png';
+        } else {
+            $data['avatar'] = trim($params['avatar']);
         }
         if ($this->where('name', $data['name'])->value('id')) {
             show_json(0, '该账号已添加');
@@ -247,9 +250,11 @@ class Admin extends Common {
         }
         if (empty($params['avatar'])) {
             $data['avatar'] = request()->domain() . '/uploads/nopic.png';
+        } else {
+            $data['avatar'] = trim($params['avatar']);
         }
-        if ($this->where(array('phone' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
-            show_json(0, '该手机号已存在');
+        if ($this->where(array('name' => $data['phone'], 'id' => ['<>', $id]))->value('id')) {
+            show_json(0, '该账号已存在');
         }
         if (!empty($params['password'])) {
             $data['salt']     = random(6);
@@ -264,12 +269,12 @@ class Admin extends Common {
     }
 
     public function GetOne($id) {
-        $item = $this->get($id);
+        $item = $this->get(array('id' => $id));
         if (empty($item)) {
             show_json(1);
         } else {
             $item               = $item->toArray();
-            $item['createtime'] = date('Y - m - d H:i:s', $item['createtime']);
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
         }
         show_json(1, $item);
     }

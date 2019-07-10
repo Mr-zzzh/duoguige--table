@@ -36,7 +36,8 @@ Route::resource('admin/goodscate', 'admin/GoodsCate');
 Route::resource('admin/goodslabel', 'admin/GoodsLabel');
 Route::resource('admin/goodsorder', 'admin/GoodsOrder');
 Route::rule('admin/goodsorder/deliver', 'admin/GoodsOrder/deliver', 'POST|GET');
-Route::rule('admin/goodsorder/trend_chart', 'admin/GoodsOrder/trend_chart', 'GET');
+Route::rule('admin/goodsorder/summarize', 'admin/GoodsOrder/summarize', 'GET');
+Route::resource('admin/grade', 'admin/Grade');
 //招聘求职
 Route::resource('admin/invite', 'admin/Invite');
 Route::rule('admin/invite/editstatus', 'admin/Invite/editstatus', 'POST|GET');
@@ -46,6 +47,9 @@ Route::resource('admin/maintenance', 'admin/Maintenance');
 Route::rule('admin/maintenance/editstatus', 'admin/Maintenance/editstatus', 'GET|POST');
 
 Route::resource('admin/news', 'admin/News');
+Route::rule('admin/news/comment', 'admin/News/comment', 'GET');
+Route::rule('admin/news/comment_del', 'admin/News/comment_del', 'GET|POST');
+Route::resource('admin/note', 'admin/Note');
 //问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
@@ -55,6 +59,7 @@ Route::resource('admin/remind', 'admin/Remind');
 Route::rule('admin/remind/unreadnum', 'admin/Remind/unreadnum', 'GET|POST');
 //Route::resource('admin/role', 'admin/Role');
 Route::resource('admin/set', 'admin/Set');
+Route::resource('admin/share', 'admin/Share');
 Route::resource('admin/user', 'admin/User');
 Route::rule('admin/user/editstatus', 'admin/User/editstatus', 'POST|GET');
 Route::rule('admin/user/forbidden', 'admin/User/forbidden', 'POST|GET');
@@ -73,6 +78,7 @@ Route::rule('insurance', 'mobile/Index/insurance', 'GET|POST');
 Route::rule('search', 'mobile/Index/search', 'GET|POST');
 Route::rule('history', 'mobile/Index/history', 'GET');
 Route::rule('history_del', 'mobile/Index/history_del', 'POST');
+Route::rule('translate', 'mobile/Index/translate', 'POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');
@@ -102,12 +108,15 @@ Route::rule('evaluate', 'mobile/Maintenance/evaluate', 'POST|GET');
 Route::rule('complaint', 'mobile/Maintenance/complaint', 'POST|GET');
 Route::rule('maintenance/status_edit', 'mobile/Maintenance/status_edit', 'POST');
 Route::rule('allevaluate', 'mobile/Maintenance/allevaluate', 'GET');
+Route::rule('inquire', 'mobile/Maintenance/inquire', 'GET');
 Route::rule('task_hall', 'mobile/Maintenance/task_hall', 'GET');
 Route::rule('my_task', 'mobile/Maintenance/my_task', 'GET');
 Route::rule('task_detail', 'mobile/Maintenance/task_detail', 'GET');
 Route::rule('plan', 'mobile/Maintenance/plan', 'POST');
 Route::rule('receive_task', 'mobile/Maintenance/receive_task', 'POST');
+Route::rule('draw', 'mobile/Maintenance/draw', 'POST');
 Route::rule('complaint_detail', 'mobile/Maintenance/complaint_detail', 'GET');
+Route::rule('maintenance/city', 'mobile/Maintenance/city', 'GET');
 
 Route::resource('news', 'mobile/News');
 Route::rule('comment', 'mobile/News/leavemessage', 'GET');

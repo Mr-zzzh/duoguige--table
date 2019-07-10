@@ -190,6 +190,7 @@ CREATE TABLE `yunti_invite` (
   KEY `experience` (`experience`),
   KEY `area` (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_invite` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 
 -- 求职表
 DROP TABLE IF EXISTS `yunti_job_wanted`;
@@ -216,6 +217,7 @@ CREATE TABLE `yunti_job_wanted` (
   KEY `area` (`area`),
   KEY `salary` (`salary`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_job_wanted` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 
 -- 品牌表
 DROP TABLE IF EXISTS `yunti_brand`;
@@ -297,6 +299,7 @@ CREATE TABLE `yunti_maintenance` (
   KEY `city` (`city`),
   KEY `area` (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_maintenance` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 
 -- 维保单进度表
 DROP TABLE IF EXISTS `yunti_plan`;
@@ -332,6 +335,18 @@ CREATE TABLE `yunti_complaint` (
   `content` varchar(255) DEFAULT NULL COMMENT '投诉内容',
   `thumb` varchar(255) DEFAULT NULL COMMENT '图片',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `mid` (`mid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 领取维保单表
+DROP TABLE IF EXISTS `yunti_draw`;
+CREATE TABLE `yunti_draw` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '用户id',
+  `mid` int(11) NOT NULL COMMENT '维保单id',
+  `createtime` int(11) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
   KEY `mid` (`mid`)
@@ -454,16 +469,15 @@ CREATE TABLE `yunti_search_history` (
 DROP TABLE IF EXISTS `yunti_admin`;
 CREATE TABLE `yunti_admin` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
- /* `roleid` int(11) NOT NULL COMMENT '角色id',*/
   `name` varchar(50) NOT NULL COMMENT '名称(账号)',
-  `phone` varchar(20) NOT NULL COMMENT '手机号',
   `password` varchar(50) NOT NULL COMMENT '密码',
   `salt` varchar(50) NOT NULL COMMENT '随机盐',
   `status` int(2) NOT NULL COMMENT '状态：0-禁用，1-启用',
   `token` varchar(255) NOT NULL COMMENT '用户token',
   `createtime` int(11) NOT NULL COMMENT '创建时间',
+  `phone` varchar(20) NOT NULL COMMENT '手机号',
   `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -477,6 +491,7 @@ CREATE TABLE `yunti_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 地区表
 DROP TABLE IF EXISTS `yunti_area`;
 CREATE TABLE `yunti_area` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -503,6 +518,42 @@ CREATE TABLE `yunti_banner` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 短信设置表
+DROP TABLE IF EXISTS `yunti_note`;
+CREATE TABLE `yunti_note` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `appkey` varchar(255) DEFAULT NULL COMMENT '短信appkey',
+  `tid` varchar(50) NOT NULL COMMENT '模板id',
+  `code` varchar(255) DEFAULT NULL COMMENT '短信验证码变量',
+  `service` varchar(30) DEFAULT NULL COMMENT '客服电话',
+  `agreement` text COMMENT '协议',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 技师等级表
+DROP TABLE IF EXISTS `yunti_grade`;
+CREATE TABLE `yunti_grade` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL COMMENT '等级名称',
+  `score` int(10) DEFAULT NULL COMMENT '分数',
+  `number` int(10) DEFAULT NULL COMMENT '接单数',
+  `status` int(10) DEFAULT '1' COMMENT '状态_1开启_2关闭',
+  `createtime` int(1) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 分享设置表
+DROP TABLE IF EXISTS `yunti_share`;
+CREATE TABLE `yunti_share` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL COMMENT '分享标题',
+  `icon` varchar(255) DEFAULT NULL COMMENT '分享图标',
+  `intro` varchar(255) DEFAULT NULL COMMENT '分享描述',
+  `share_link` varchar(255) DEFAULT NULL COMMENT '分享链接',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 

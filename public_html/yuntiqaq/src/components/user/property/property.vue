@@ -27,12 +27,15 @@
         :key="index"
         :label="item.type_text"
         :value="item.id"
-      
       ></el-option>
     </el-select>
 
     <!-- 下面的表格 -->
-    <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      @selection-change="selectionChange"
+    >
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="ID" width="180"></el-table-column>
 
@@ -47,7 +50,8 @@
       <el-table-column label="审核时间" prop="createtime"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <i class="el-icon-delete" @click="del(scope.row.id)"></i>
+          <el-button @click="info(scope.row.id)" type="text" size="small">详情</el-button>
+          <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,17 +105,24 @@ export default {
       this.selectedList = list.map(v => v.id).join(",");
       console.log(this.selectedList);
       this.id = this.selectedList;
-      if (this.selectedList != null) {
-        this.info(this.selectedList);
+      console.log(this.id);
+
+    
+      
+     if (this.selectedList) {
+        this.$message.success("已启用");
+      } else {
+        this.$message.info("已禁用");
       }
     },
+
     // 点击去详情页
     info(id) {
       this.$router.push({
         name: "/admin_p_audit",
         params: { id }
       });
-      console.log(this.userInfo,22222);
+      console.log(this.userInfo, 22222);
       localStorage.setItem("user", JSON.stringify(this.userInfo));
     },
     // 获得物业公司列表的请求
@@ -140,7 +151,7 @@ export default {
           return true;
         }
       });
-      console.log(this.userInfo,11111);
+      console.log(this.userInfo, 11111);
     },
     // 删除
     del(id) {
@@ -196,8 +207,9 @@ export default {
 
 
 <style lang="less" scoped>
-.user{
+.user {
   background-color: #fff;
+  padding: 8px;
 }
 </style>
 

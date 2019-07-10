@@ -1,40 +1,44 @@
 <template>
   <!-- 技术大师审核页面 -->
   <div class="audit">
-    
-
     <!-- 用element-ui表单写 -->
     <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
       <el-form-item label="姓名">
-        <el-input v-model="sizeForm.check.company_name"></el-input>
+        <el-input v-model="sizeForm.check.name"></el-input>
       </el-form-item>
       <el-form-item label="性别">
-        <el-input v-model="sizeForm.name"></el-input>
+        <el-input v-model="sizeForm.check.sex"></el-input>
       </el-form-item>
       <el-form-item label="身份证号">
-        <el-input v-model="sizeForm.check.phone"></el-input>
+        <el-input v-model="sizeForm.check.idcardno"></el-input>
       </el-form-item>
       <el-form-item label="企业名称">
-        <el-input v-model="sizeForm.check.address"></el-input>
+        <el-input v-model="sizeForm.check.company_name"></el-input>
       </el-form-item>
       <el-form-item label="营业执照注册号">
-        <el-input v-model="sizeForm.check.number"></el-input>
+        <el-input v-model="sizeForm.check.license_number"></el-input>
       </el-form-item>
-      <el-form-item label="证件照">
+      <el-form-item label="证件照" class="box">
         <div>
-          <img :src="sizeForm.check.image" alt />
+          <p>在职证明</p>
+          <img :src="sizeForm.check.prove_image" alt />
         </div>
         <div>
-          <img :src="sizeForm.check.image" alt />
+          <p>营业执照</p>
+          <img :src="sizeForm.check.company_image" alt />
         </div>
         <div>
-          <img :src="sizeForm.check.image" alt />
+          <p>技师证件</p>
+          <img :src="sizeForm.check.technician_image" alt />
         </div>
       </el-form-item>
 
       <el-form-item label="审核状态">
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
@@ -52,11 +56,12 @@ export default {
     return {
       radio: 2,
       //备选按钮的选中状态
-      id: 0,
+      id: this.$route.params.id,
       status: 0,
       list: [],
       state: "",
       numberValidateForm: {},
+      textarea: "",
       sizeForm: {
         id: 0,
         name: "",
@@ -129,7 +134,7 @@ export default {
     submitForm() {
       this.getAudit();
       this.$router.push({
-        name: "/admin_property"
+        name: "/admin_pope"
       });
     },
     resetForm() {}
@@ -137,7 +142,7 @@ export default {
   mounted() {},
   created() {
     // 调用store中的方法------获取到当前用户的详细情况
-    var user = JSON.parse(localStorage.getItem("user") || "{}");
+    var user = JSON.parse(localStorage.getItem("user") || "[]");
     console.log(user); // ----------是数组,这些操作知识为了获取当前的id，发请求，通过id获取更多的当前这行的数据
     user.forEach(element => {
       (this.id = element.id), (this.status = element.status);
@@ -153,85 +158,20 @@ export default {
 
 
 <style lang="less" scoped>
-.content {
-  .audit {
-    color: #000;
-    padding-top: 30px;
-    background-color: rgba(255, 255, 255, 1);
-    padding: 40px;
-    background-color: #fff;
-
-    .info {
-      font-size: 18px;
-      p {
-        line-height: 40px;
-      }
-    }
-    .photo {
-      margin-top: 30px;
-      // padding: 40px 0;
-      height: 200px;
-      box-sizing: border-box;
-
-      h6 {
-        font-size: 20px;
-        font-weight: normal;
-        margin: 8px 8px;
-        box-sizing: border-box;
-        margin-left: 0;
-      }
-      ul {
-        clear: both;
-        height: 100%;
-        box-sizing: border-box;
-        margin-left: 0;
-        border-bottom: 1px solid #000;
-        li {
-          list-style: none;
-          float: left;
-          margin: 0 10px;
-          margin-left: 0px;
-          box-sizing: border-box;
-          p {
-            margin: 8px 0;
-          }
-          div {
-            width: 200px;
-            height: 120px;
-            background-color: bisque;
-            margin-right: 8px;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-        }
-      }
-    }
-    .check {
-      margin-top: 15px;
-      padding: 18px 0;
-
-      h6 {
-        font-size: 20px;
-        font-weight: normal;
-        margin: 20px 8px;
-        box-sizing: border-box;
-        margin-left: 0;
-      }
-      span {
-        margin: 25px;
-        margin-left: 0;
-      }
-      .tex {
-        margin-top: 20px;
-        span {
-          font-size: 14px;
-          line-height: 12px;
-        }
-      }
+.audit {
+  color: #000;
+  padding: 20px;
+  background-color: #fff;
+  font-size: 20px;
+  .box {
+    div {
+      margin: 0 20px;
+      float: left;
     }
   }
+}
+.el-form-item__label {
+  width: 120px;
 }
 </style>
 

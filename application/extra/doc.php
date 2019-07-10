@@ -22,15 +22,18 @@ return [
         'app\admin\controller\GoodsCate',
         'app\admin\controller\GoodsLabel',
         'app\admin\controller\GoodsOrder',
+        'app\admin\controller\Grade',
         'app\admin\controller\Invite',
         'app\admin\controller\JobWanted',
         'app\admin\controller\Maintenance',
         'app\admin\controller\News',
+        'app\admin\controller\Note',
         'app\admin\controller\Payset',
         'app\admin\controller\Question',
         'app\admin\controller\Remind',
         //'app\admin\controller\Role',
         'app\admin\controller\Set',
+        'app\admin\controller\Share',
         'app\admin\controller\User',
 
         //mobile

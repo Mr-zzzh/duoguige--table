@@ -23,8 +23,8 @@
       @change="down"
     >
       <el-option
-        v-for="item in options1"
-        :key="item.id"
+        v-for="item in options1_son"
+        :key="item.status"
         :label="item.status_text"
         :value="item.status"
       ></el-option>
@@ -46,7 +46,7 @@
 
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <i class="el-icon-time" @click="info(scope.row.id)"></i>
+            <el-button @click="info(scope.row.id)" type="text" size="small" v-model="id">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -83,27 +83,44 @@ export default {
       currentPage: 1,
       tableData: [],
       aa: "",
-      options1: []
+      id: "",
+      options1_son: [
+        {
+          status: 0,
+          status_text: "待审"
+        },
+        {
+          status: 1,
+          status_text: "通过"
+        },
+        {
+          status: 2,
+          status_text: "不通过"
+        },
+        {
+          status: 3,
+          status_text: "已找到工作接单"
+        }
+      ]
     };
   },
   mounted() {},
   methods: {
-    // 获得求职信息的请求
     async getJobs() {
       let data = await getJobs({
         keyword: this.keyword,
         limit: this.limit,
         page: this.page,
-        status:this.status
+        status: this.status
       });
       console.log(data);
       this.tableData = data.data;
       this.total = data.total;
-      this.options1 = data.data;
     },
+
     down() {
       this.getJobs();
-      console.log(1111111);
+      console.log(this.status);
     },
     // 搜索
     search_2() {
@@ -114,12 +131,13 @@ export default {
     },
 
     // 详细
-    info() {
+    info(id) {
+      console.log(id);
       this.$router.push({
-        name: "admin_wait"
+        name: "admin_wait",
+        params: { id: id }
       });
     },
-
     // 分页
     handleSizeChange(val) {
       this.limit = val;

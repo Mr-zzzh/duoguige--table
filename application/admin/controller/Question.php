@@ -47,6 +47,26 @@ class Question extends Common {
     }
 
     /**
+     * @title 读取
+     * @url /admin/question/:id
+     * @method get
+     * @return id:id
+     * @return uid:提问人id
+     * @return uname:提问人姓名
+     * @return title:标题
+     * @return thumb:图片(数组)
+     * @return createtime:创建时间
+     * @author 开发者
+     */
+    public function read($id) {
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $m = new \app\admin\model\Question();
+        $m->GetDetail($id);
+    }
+
+    /**
      * @title 回答列表
      * @url /admin/question/answer
      * @method get
@@ -59,7 +79,7 @@ class Question extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id uid:提问人id uname:提问人姓名 answer:回答 qid:问题id status:状态_1显示_2隐藏 status_text:状态文本 createtime:创建时间
+     * @data id:id uid:提问人id uname:提问人姓名 avatar:提问人头像 answer:回答 qid:问题id status:状态_1显示_2隐藏 status_text:状态文本 createtime:创建时间
      * @author 开发者
      */
     public function answer() {

@@ -34,7 +34,7 @@
             </el-table-column> -->
             <el-table-column
             prop="createtime" align="center"
-            label="操作时间">
+            label="创建时间">
             </el-table-column>
             <el-table-column
             align="center"

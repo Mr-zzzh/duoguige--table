@@ -23,14 +23,14 @@
       <!-- label:分组的名称 -->
       <!-- value:选项的值 -->
       <el-option
-        v-for="item in options1"
-        :key="item.id"
+        v-for="item in options1_son"
+        :key="item.status"
         :label="item.status_text"
         :value="item.status"
       ></el-option>
     </el-select>
 
-    <el-table :data="tableData" style="width: 100%" @row-click="go(row)" ref="moviesTable">
+    <el-table :data="tableData" style="width: 100%">
       <el-table-column label="ID" width="180" type="index"></el-table-column>
 
       <el-table-column label="单位名称" width="180" prop="company"></el-table-column>
@@ -42,12 +42,12 @@
       <el-table-column label="类型" prop="genre_text"></el-table-column>
       <el-table-column label="下单时间" prop="createtime"></el-table-column>
       <el-table-column label="审核时间" prop="checktime"></el-table-column>
-      <!-- 点击状态的时候去哪里 -->
       <el-table-column label="状态" prop="status_text"></el-table-column>
 
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <i class="el-icon-delete" @click="del(scope.row.id)"></i>
+          <el-button @click="info(scope.row.id)" type="text" size="small">详情</el-button>
+          <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -71,6 +71,9 @@
 
     <script>
 import { getMaintenance } from "@/components/apicom/index";
+import { delM } from "@/components/apicom/index";
+
+
 export default {
   data() {
     return {
@@ -83,7 +86,36 @@ export default {
       options1: [],
       aa: "",
       status: "",
-      // status_text: ["取消","待审","审核通过","不通过","已接单","已完成","投诉","投诉已处理"]
+      options1_son: [
+        {
+          status: 0,
+          status_text: "取消"
+        },
+        {
+          status: 1,
+          status_text: "审核通过"
+        },
+        {
+          status: 2,
+          status_text: "不通过"
+        },
+        {
+          status: 3,
+          status_text: "已接单"
+        },
+        {
+          status: 4,
+          status_text: "已完成"
+        },
+        {
+          status: 5,
+          status_text: "投诉"
+        },
+        {
+          status: 6,
+          status_text: "投诉已处理"
+        }
+      ]
     };
   },
   mounted() {},
@@ -101,8 +133,6 @@ export default {
       // this.tableData = data.data = [{}]//  模仿的假数据
       this.tableData = data.data;
       this.total = data.total;
-      this.options1 = data.data;
-      console.log(this.options1);
     },
     // 删除
     del(id) {
@@ -112,7 +142,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delUser(id);
+          delM(id);
           this.page = 1;
           this.getMaintenance();
         })
@@ -123,14 +153,8 @@ export default {
           });
         });
     },
+
     // 点击状态的时候去到那里
-    go(row, event, column) {
-      console.log(1111111);
-      console.log(row, event, column);
-      // this.$router.push({
-      //   name: "/admin_check"
-      // });
-    },
     categry() {
       console.log(1111);
 
@@ -142,6 +166,13 @@ export default {
       this.page = 1;
       this.limit = 15;
       this.getMaintenance();
+    },
+    info(id) {
+      console.log(id);
+      this.$router.push({
+        name: "admin_aa",
+        params: { id: id }
+      });
     },
     // 分页
     handleSizeChange(val) {
@@ -160,7 +191,6 @@ export default {
   },
   created() {
     this.getMaintenance();
-    this.go();
   }
 };
 </script>
@@ -169,5 +199,6 @@ export default {
 <style lang="less" scoped>
 .user {
   background-color: #fff;
+  padding: 15px;
 }
 </style>

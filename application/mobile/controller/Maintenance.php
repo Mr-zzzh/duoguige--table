@@ -14,6 +14,7 @@ class Maintenance extends Common {
      * @title 维保单列表(物业)
      * @url /maintenance
      * @method get
+     * @param name:genre type:int require:1 default:- other:- desc:类型_1维修单_2保养单
      * @param name:type type:int require:0 default:- other:- desc:状态_1待审批_2已审批(不传是所有)
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -22,7 +23,7 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 createtime:创建时间 receive_id:接取人id receive_name:接取人姓名 evaluate:评价(0未评1已评价)
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 createtime:创建时间 receive_id:接取人id receive_name:接取人姓名 receive_avatar:接单人头像 evaluate:评价(0未评1已评价)
      * @author 开发者
      */
     public function index() {
@@ -182,7 +183,7 @@ class Maintenance extends Common {
      * @title 任务大厅(技术大师)
      * @url /task_hall
      * @method get
-     * @param name:city type:int require:1 default:- other:- desc:城市编码
+     * @param name:city type:string require:1 default:- other:- desc:城市名称(武汉市)
      * @param name:area type:int require:1 default:- other:- desc:区编码
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
@@ -197,6 +198,57 @@ class Maintenance extends Common {
     public function task_hall() {
         $m = new \app\mobile\model\Maintenance();
         $m->TaskHall(request()->get());
+    }
+
+    /**
+     * @title 任务大厅区列表
+     * @url /maintenance/city
+     * @method GET
+     * @param name:city type:string require:1 default:- other:- desc:城市名称(武汉市)
+     * @return data:区列表@
+     * @inflist id:id name:城市名 code:城市编码
+     * @author 开发者
+     */
+    public function city() {
+        $params = \request()->param();
+        $city   = trim($params['city']);
+        if (empty($city)) {
+            show_json(0, '请传城市名');
+        }
+        $id   = db('area')->where('name', $city)->value('id');
+        $list = db('area')->where('pid', $id)->field('id,name,code')->select();
+        show_json(1, array('data' => $list));
+    }
+
+    /**
+     * @title 任务查询(技术大师)
+     * @url /inquire
+     * @method get
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码
+     * @return data:列表@
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:领取时间 name:发布人姓名 avatar:发布人头像 company_name:发布人认证公司
+     * @author 开发者
+     */
+    public function inquire() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Inquire(request()->get());
+    }
+
+    /**
+     * @title 领取任务(技术大师)
+     * @url /draw
+     * @method post
+     * @param name:id type:int require:1 default:- other:- desc:维保单id
+     * @author 开发者
+     */
+    public function draw() {
+        $m = new \app\mobile\model\Maintenance();
+        $m->Draw(request()->post());
     }
 
     /**
@@ -217,7 +269,8 @@ class Maintenance extends Common {
      * @url /my_task
      * @method get
      * @param name:type type:int require:1 default:- other:- desc:类型_1我的任务_2投诉处理(不传为我的任务)
-     * @param name:time type:string require:0 default:- other:- desc:时间(Y-m)-我的任务(type为1)
+     * @param name:year type:int require:0 default:- other:- desc:时间(Y)-我的任务(type为1)
+     * @param name:month type:int require:0 default:- other:- desc:时间(m)-我的任务(type为1)
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数

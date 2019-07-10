@@ -13,7 +13,8 @@ class Remind extends Common {
         $list = $this->alias('a')
             ->join('goods_order b', 'a.oid=b.id', 'left')
             ->join('goods c', 'b.gid=c.id', 'left')
-            ->field('a.id,a.createtime,c.name')
+            ->join('user u', 'b.uid=u.id', 'left')
+            ->field('a.id,a.status,a.createtime,c.name,u.name uname,u.phone uphone,b.ordersn')
             ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
@@ -39,7 +40,7 @@ class Remind extends Common {
             ->join('goods_order b', 'a.oid=b.id', 'left')
             ->join('goods c', 'b.gid=c.id', 'left')
             ->join('user u', 'b.uid=u.id', 'left')
-            ->field('a.id,a.createtime,c.name,b.ordersn,u.name uname')
+            ->field('a.id,a.createtime,c.name,b.ordersn,u.name uname,u.phone uphone')
             ->where('a.id', $id)
             ->find();
         if (empty($item)) {

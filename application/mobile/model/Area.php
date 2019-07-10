@@ -4,75 +4,17 @@ namespace app\mobile\model;
 
 class Area extends Common {
 
-    public function GetAll($params) {
-        $map = array();
-        if (!empty($params['keyword'])) {
-            $map['name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+    public function pca_tree() {
+        $tree = cache('pca_tree');
+        if (empty($tree)) {
+            $list = $this->field('id,name,pid,code')->select()->toArray();
+            $tree = list_to_tree($list);
+            cache('pca_tree', $tree);
         }
-        $list = $this->where($map)->paginate($params['limit'])->toArray();
-        if (!empty($list['data'])) {
-            foreach ($list['data'] as $k => &$item) {
-                //TODO 进行数据处理
-            }
-            unset($item);
-        }
-        show_json(1, $list);
+        return $tree;
     }
 
-    public function AddOne($params) {
-        $data = array(
-            'name' => trim($params['name']),
-            'level' => intval($params['level']),
-            'pid' => intval($params['pid']),
-            'code' => intval($params['code']),
-        );
-        $this->checkData($data, 0);
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
-        }
+    public function GetAll() {
+        show_json(1, $this->pca_tree());
     }
-
-    private function checkData(&$data, $id = 0) {
-        //TODO 数据校验
-    }
-
-    public function DelOne($id) {
-        if ($this->where(array('id' => $id))->delete()) {
-            //logs('删除??,ID:' . $id, 2);
-            show_json(1, '删除成功');
-        } else {
-            show_json(0, '删除失败');
-        }
-    }
-
-    public function EditOne($params, $id) {
-        $data = array(
-            'name' => trim($params['name']),
-            'level' => intval($params['level']),
-            'pid' => intval($params['pid']),
-            'code' => intval($params['code']),
-        );
-        $this->checkData($data, $id);
-        if ($this->save($data, array('id' => $id)) !== false) {
-            //logs('编辑??,ID:' . $id, 3);
-            show_json(1, '编辑成功');
-        } else {
-            show_json(0, '编辑失败');
-        }
-    }
-
-    public function GetOne($id) {
-        $item = $this->get($id);
-        if (empty($item)) {
-            show_json(1);
-        } else {
-            $item = $item->toArray();
-            //TODO 进行数据处理
-        }
-        show_json(1, $item);
-    }
-
 }

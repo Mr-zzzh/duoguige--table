@@ -30,6 +30,9 @@
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
+       <el-form-item label="备注">
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+      </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
         <el-button @click="resetForm('ruleForm')">取消</el-button>
@@ -67,7 +70,8 @@ export default {
       id: 0,
       status: 1,
       state: "",
-      numberValidateForm: {}
+      numberValidateForm: {},
+      textarea:""
     };
   },
   methods: {

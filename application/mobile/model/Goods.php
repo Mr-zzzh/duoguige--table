@@ -28,7 +28,7 @@ class Goods extends Common {
                 unset($v1);
             }
         }
-        $list = $this->field('id,name,thumbnail,price')->where($map)->where($where)
+        $list = $this->field('id,name,thumbnail,price,sale_number')->where($map)->where($where)
             ->order('sort asc,sale_number desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {

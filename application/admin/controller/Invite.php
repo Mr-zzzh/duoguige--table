@@ -129,6 +129,7 @@ class Invite extends Common {
      * @return createtime:创建时间
      * @return checktime:审核时间
      * @return number:招聘人数
+     * @return remark:审核备注
      * @author 开发者
      */
     public function read($id) {
@@ -145,6 +146,7 @@ class Invite extends Common {
      * @method post|get
      * @param name:id type:int require:1 default:- other:- desc:招聘信息id
      * @param name:status type:int require:1 default:- other:- desc:状态_1通过_2不通过
+     * @param name:remark type:string require:0 default:- other:- desc:审核备注
      * @author 开发者
      */
     public function editstatus() {

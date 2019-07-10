@@ -26,6 +26,8 @@ class GoodsOrder extends Common {
      * @return last_page:最后的页码
      * @return data:列表@
      * @data id:id uid:用户id uname:用户姓名 gid:商品id gname:商品名 thumbnail:商品缩略图 ordersn:订单号 number:商品数量 money:商品金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货 status_text:状态文本 paytype:1支付宝_2微信 paytype_text:付款方式文本 tradeno:交易单号 addressid:地址id paytime:支付时间 finishtime:完成时间 canceltime:取消时间 createtime:创建时间 delivertime:发货时间 dname:收货人姓名 phone:收货人联系方式 area:地区 address:收货地址
+     * @return number:订单数
+     * @return money:订单金额
      * @author 开发者
      */
     public function index() {
@@ -57,9 +59,22 @@ class GoodsOrder extends Common {
      * @series name:名称 type:line stack:总量 data:数据
      * @author 开发者 (echarst图 https://www.echartsjs.com/examples/editor.html?c=line-stack)
      */
-    public function trend_chart() {
+    /*public function trend_chart() {
         $m = new \app\admin\model\GoodsOrder();
         $m->TrendChart(request()->param());
+    }*/
+
+    /**
+     * @title 订单概述
+     * @url /admin/goodsorder/summarize
+     * @method get
+     * @return data:列表@(today_今日_yesterday昨日_seven近7日_month近30日)
+     * @data turnover:成交量 volume:交易量 number:成交额 number1:交易额 average:人均消费 trend:近30日交易走势(https://www.echartsjs.com/examples/editor.html?c=line-stack)
+     * @author 开发者
+     */
+    public function summarize() {
+        $m = new \app\admin\model\GoodsOrder();
+        $m->Summarize();
     }
 
     /**

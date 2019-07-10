@@ -6,24 +6,8 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-// 注册vuex
-// import Vuex from 'vuex'
 
-// Vue.use(Vuex)
-// var store = new Vuex.Store({
-//     state: {
-//         user: {}
-//     },
-//     mutations: {
-//         // 把值存入这里，
-//         // getUserInfo(state, userInfo) {
-//         //     state.user = userInfo;
-//         //     localStorage.setItem("user", JSON.stringify(state.user));
-//         //     console.log(JSON.stringify(state.user));
-//         // }
-//     },
-//     getters: {},
-// })
+
 
 
 Vue.prototype.$axios = axios;
@@ -35,6 +19,10 @@ Vue.prototype.api = global.apicom // 绑定原型链的公共api
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
+
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 
 
 axios.interceptors.request.use(function(config) {
@@ -52,6 +40,19 @@ axios.interceptors.request.use(function(config) {
 
     return Promise.reject(error)
 })
+
+
+axios.interceptors.response.use(function (response) {
+    if (response.data.status == -3) {
+        router.replace({
+            path: '/',
+        })
+    } 
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
+  });
 
 
 

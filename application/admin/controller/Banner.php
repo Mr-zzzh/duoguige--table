@@ -14,7 +14,7 @@ class Banner extends Common {
      * @title 列表
      * @url /admin/banner
      * @method get
-     * @param name:type type:int require:0 default:- other:- desc:类型_1首页轮播图_2保险页面图
+     * @param name:type type:int require:0 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
      * @return total:总记录数
@@ -34,8 +34,8 @@ class Banner extends Common {
      * @title 添加
      * @url /admin/banner
      * @method post
-     * @param name:url type:int require:1 default:- other:- desc:图片url
-     * @param name:jumpurl type:int require:0 default:- other:- desc:跳转链接地址
+     * @param name:url type:string require:1 default:- other:- desc:图片url
+     * @param name:jumpurl type:string require:0 default:- other:- desc:跳转链接地址
      * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
      * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
      * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示
@@ -65,8 +65,8 @@ class Banner extends Common {
      * @title 编辑
      * @url /admin/banner/:id
      * @method put
-     * @param name:url type:int require:1 default:- other:- desc:图片url
-     * @param name:jumpurl type:int require:0 default:- other:- desc:跳转链接地址
+     * @param name:url type:string require:1 default:- other:- desc:图片url
+     * @param name:jumpurl type:string require:0 default:- other:- desc:跳转链接地址
      * @param name:sort type:string require:1 default:- other:- desc:排序(越小越靠前)
      * @param name:type type:string require:1 default:- other:- desc:类型_1首页轮播图_2保险页面图_3新闻页面轮播图
      * @param name:status type:string require:1 default:- other:- desc:状态_1显示_2不显示

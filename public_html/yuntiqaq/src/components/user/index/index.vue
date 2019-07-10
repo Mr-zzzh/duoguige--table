@@ -19,21 +19,21 @@
 
       <el-select
         @change="categry"
-        v-model="aa"
-        placeholder="黑名单"
+        v-model="status"
+        placeholder="状态"
         style="width:250px;background: white;float: right;"
       >
         <el-option
-          v-for="(item ,index) in options"
-          :key="index"
-          :label="item.type_text"
-          :value="item.id"
+          v-for="item  in options"
+          :key="item.status"
+          :label="item.status_text"
+          :value="item.status"
         ></el-option>
       </el-select>
     </div>
 
     <div class="btn">
-      <el-button type="danger" @click="setBlackList">设置黑名单</el-button>
+      <el-button type="danger" @click="get()">设置黑名单</el-button>
       <el-button type="primary" @click="cancelBlackList">取消黑名单</el-button>
     </div>
 
@@ -54,15 +54,14 @@
             <span>金额:{{ scope.row.price || 10 }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="黑名单">
-          <template slot-scope="scope">
-            <!-- <el-button v-if="scope.$index>1" type="primary">黑名单</el-button>
-            <el-button v-else type="info">正常</el-button>-->
 
-            <el-button v-if="scope.$index>1" type="info">黑名单</el-button>
-            <el-button v-else type="primary">正常</el-button>
-          </template>
+        <el-table-column label="黑名单">
+           <template slot-scope="scope">
+          <el-button   v-if="scope.row.normal==1" size="small" type="primary" v-model="normal">启用</el-button>
+          <el-button   v-else size="small"  type="info">禁用</el-button>
+        </template>
         </el-table-column>
+        <el-table-column label="状态" prop="status_text"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <i class="el-icon-delete" @click="del(scope.row.id)"></i>
@@ -90,12 +89,12 @@
 <script>
 import { getUserTab } from "@/components/apicom/index";
 import { delUser } from "@/components/apicom/index";
+import { getForbidden } from "@/components/apicom/index";
 
 export default {
   data() {
     return {
       // 下拉列表里面的数据
-      options: [],
       page: 0, //获取的页面
       limit: 15, //每页记录数
       keyword: "", //关键字检索
@@ -105,9 +104,25 @@ export default {
       // 需要做判断的类型
       selectedList: "",
       // 选择框里的黑名单和正常的时候
-      aa: "",
-      id: "",
-      options_son: {}
+      normal: "",
+      options: [
+        {
+          status: 0,
+          status_text: "待审"
+        },
+        {
+          status: 1,
+          status_text: "通过"
+        },
+        {
+          status: 2,
+          status_text: "不通过"
+        }
+      ],
+      normal_text: "",
+      normal: "",
+      id:"",
+      status: ""
     };
   },
 
@@ -115,17 +130,24 @@ export default {
     // 这三个是表格中的
     // 当选择项发生变化时会触发该事件
     selectionChange(list) {
-      this.selectedList = list.map(v => v.id).join(",");
-      console.log(this.selectedList);
+      this.selectedList = Number(list.map(v => v.id).join(","));
+      this.id = this.selectedList;
+      console.log(this.id);
     },
     // 这是自己封装的，意思是当点击设置或是取消的时候出发
-    async setBlackList() {
-      // await setBlackList(this.selectedList)
-      this.getUserTab();
+     get() {
+      getForbidden({
+        id:this.id,
+        normal:this.normal,
+        status:this.status
+      }).then(res=>{
+        console.log(res);
+        
+      })
     },
     async cancelBlackList() {
       // await cancelBlackList(this.selectedList)
-      this.getUserTab();
+      // this.getUserTab();
     },
     // 这是获取用户列表的请求
     async getUserTab() {
@@ -134,22 +156,18 @@ export default {
         limit: this.limit,
         page: this.page,
         type: 1,
-        aa: this.aa
-        // id:this.id
+        // id: this.id
+        normal: this.normal,
+        status:this.status,
       });
       console.log(data, 11111);
-      // this.tableData = data.data = [{}]//  模仿的假数据
       this.tableData = data.data;
-      //  this.options=data.data
       this.total = data.total;
       this.page = data.total / this.limit;
-      this.options = data.dtat;
-      this.options.forEach(item => {
-        
-      });
-      data.data.forEach(item => {
-        this.id = item.id;
-        console.log(item);
+      data.data.forEach(element => {
+        console.log(element);
+        this.id = element.id;
+        this.normal = element.normal;
       });
     },
     // 删除
@@ -171,8 +189,12 @@ export default {
           });
         });
     },
+      handleEdit(index, row) {
+        console.log(index, row.normal);
+      },
     // 搜索
     search() {
+      this.normal = 2;
       this.getUserTab();
     },
     // 获取分类

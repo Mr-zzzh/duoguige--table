@@ -105,6 +105,7 @@ class JobWanted extends Common {
             show_json('请传审核状态');
         }
         $data['status']    = intval($params['status']);
+        $data['remark']    = trim($params['remark']);
         $data['checktime'] = time();
         if ($this->save($data, array('id' => intval($params['id']))) !== false) {
             //logs('编辑??,ID:' . $id, 3);

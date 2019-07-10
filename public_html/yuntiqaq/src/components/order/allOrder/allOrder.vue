@@ -24,10 +24,10 @@
         style="width:250px;background: white;float: right;margin-right:15px"
       >
         <el-option
-          v-for="(item,i) in options_2"
-          :key="i "
-          :label="item.paytype"
-          :value="item.paytype_text"
+          v-for="item in options_2"
+          :key="item.paytype "
+          :label="item.paytype_text"
+          :value="item.paytype"
         ></el-option>
       </el-select>
 
@@ -44,28 +44,28 @@
 
       <el-select
         @change="down"
-        v-model="options.item"
+        v-model="status"
         placeholder="状态"
         style="width:250px;background: white;float: right;"
       >
         <el-option
-          v-for="(item ,index) in options"
-          :key="index"
+          v-for="item in options"
+          :key="item.status"
           :label="item.status_text"
-          :value="item.value"
+          :value="item.status"
         ></el-option>
       </el-select>
     </div>
     <div class="orderNum">
       <p>
         订单数:
-        <span>00000</span>&nbsp;&nbsp;&nbsp;&nbsp;订单金额
-        <span>9999999</span>
+        <span>{{number}}</span>&nbsp;&nbsp;&nbsp;&nbsp;订单金额
+        <span>{{money}}</span>
       </p>
     </div>
     <!-- 下面的表格 -->
 
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="ID" width="180" type="index"></el-table-column>
 
@@ -76,50 +76,80 @@
       <el-table-column label="下单时间" prop="createtime"></el-table-column>
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
+      <el-table-column label="黑名单">
+        <template slot-scope="scope">
+          <el-button @click="fh(scope.row.id)" type="primary" size="small" v-model="status" v-if="status==2">发货</el-button>
+            <el-button @click="fh(scope.row.id)" type="primary" size="small" v-model="status" v-if="status==2">已发货</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <div class="fenye">
+      <el-pagination
+        style="margin-top:20px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[15, 20, 30, 40]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-import { getGoodsOrder } from "@/components/apicom/index";
+import {
+  getGoodsOrder,
+  delGoods,
+  getGoodsdeliver
+} from "@/components/apicom/index";
 
 export default {
   data() {
     return {
       options: [
         {
-          value: -1,
+          status: -1,
           status_text: "取消订单"
         },
         {
-          value: 0,
+          status: 0,
           status_text: "待支付"
         },
         {
-          value: 1,
+          status: 1,
           status_text: "支付"
         },
         {
-          value: 2,
+          status: 2,
           status_text: "已发货"
         },
         {
-          value: 3,
+          status: 3,
           status_text: "已收货"
         }
       ],
-      paytype: "",
+
       options_2: [
         {
-          value: 1,
+          paytype: 1,
           paytype_text: "支付宝"
         },
         {
-          value: 2,
+          paytype: 2,
           paytype_text: "微信"
         }
       ],
-
+      paytype: "",
+      status: "",
       page: 1,
       limit: 15,
       keyword: "",
@@ -127,17 +157,28 @@ export default {
       currentPage: 1,
       tableData: [],
       timer: "",
-      status: null,
+
       aa: "",
       bb: null,
       option_1: {},
       starttime: "",
-      endtime: ""
+      endtime: "",
+      money: "",
+      number: "",
+      id:this.id
     };
   },
   mounted() {},
   methods: {
     // 这是获取全部订单的请求
+    async getGoodsdeliver() {
+      let data = await getGoodsdeliver({
+       id:this.id
+      });
+      console.log(data);
+    },
+
+     // 这是发货的请求
     async getGoodsOrder() {
       let data = await getGoodsOrder({
         keyword: this.keyword,
@@ -145,30 +186,27 @@ export default {
         page: this.page,
         starttime: this.starttime,
         endtime: this.endtime,
-        status: this.options.value,
-        paytype: this.paytype.value
+        status: this.status,
+        paytype: this.paytype
       });
       console.log(data);
-      // this.tableData = data.data = [{}]//  模仿的假数据
       this.tableData = data.data;
       this.total = data.total;
-      data.data.forEach(element => {
-        // console.log(element);
-        // this.option_1.value = element.status;
-        // this.option_1.status_text = element.status_text;
-        // this.options.push(this.option_1)
-      });
+      this.money = data.money;
+      this.number = data.number;
     },
     down(e) {
       this.page = 1;
       this.limit = 15;
       this.getGoodsOrder();
-      console.log(e);
+      // console.log(e);
+      console.log(this.status);
     },
     down2(e) {
       this.page = 1;
       this.limit = 15;
       this.getGoodsOrder();
+      console.log(this.paytype);
     },
 
     // 时间
@@ -190,6 +228,64 @@ export default {
       this.page = 1;
       this.limit = 15;
       this.getGoodsOrder();
+    },
+
+    // 删除
+    del(id) {
+      this.$confirm("是否确定删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          delGoods(id);
+          // this.page = 1;
+          this.getGoodsdeliver(id);
+          this.getGoodsOrder();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    fh(id){
+       this.$confirm("是否确定发货?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          delGoods(id);
+          // this.page = 1;
+          this.getGoodsOrder();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    // 这三个是表格中的
+    // 当选择项发生变化时会触发该事件
+    selectionChange(list) {
+      this.selectedList = list.map(v => v.id).join(",");
+      console.log(this.selectedList);
+    },
+    // 分页----这是选择每页多少条的时候触发
+    handleSizeChange(val) {
+      this.limit = val; //让其相等
+      this.getGoodsOrder();
+      console.log(`每页 ${val} 条`);
+    },
+    // 分页------当前页码切换的时候触发
+    handleCurrentChange(val) {
+      this.limit = 15;
+      this.page = val;
+      this.getGoodsOrder();
+      console.log(`当前页: ${val}`);
     }
   },
   created() {

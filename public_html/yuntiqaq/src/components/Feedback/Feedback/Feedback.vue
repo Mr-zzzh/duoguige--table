@@ -1,31 +1,37 @@
 <template>
-  <div>
+  <div class="user">
     <el-table :data="tableData" style="width:100% ,display:flex">
-      <el-table-column label="ID" style= "flex:1" type="index"></el-table-column>
+      <el-table-column label="ID" style="flex:1" type="index"></el-table-column>
 
-      <el-table-column label="反馈内容" style= "flex:1" prop="content">
+      <el-table-column label="反馈内容" style="flex:1">
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
             <!-- 附框 -->
+            <p>反馈:{{ scope.row.content }}</p>
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
+              <el-tag size="medium">{{ scope.row.content}}</el-tag>
             </div>
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="反馈人信息" style= "flex:1" prop="uname"></el-table-column>
+      <el-table-column label="反馈人信息" style="flex:1" prop="uname"></el-table-column>
 
-      <el-table-column label="反馈时间" prop="createtime" style= "flex:1"></el-table-column>
+      <el-table-column label="反馈时间" prop="createtime" style="flex:1"></el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
-   <!-- 分页 -->
+    <!-- 分页 -->
     <div class="fenye">
       <el-pagination
         style="margin-top:20px"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-       :page-sizes="[15, 20, 30, 40]"
+        :page-sizes="[15, 20, 30, 40]"
         :page-size="100"
         layout="total, sizes, prev, pager, next, jumper"
         :total="this.total"
@@ -36,7 +42,7 @@
 
 
     <script>
-import { getFeedback } from "@/components/apicom/index";
+import { getFeedback, delFeedback } from "@/components/apicom/index";
 export default {
   data() {
     return {
@@ -67,15 +73,35 @@ export default {
     handleSizeChange(val) {
       this.limit = val;
       this.page = 1;
-      this.getUserTab();
+      this.getFeedback();
       console.log(`每页 ${val} 条`);
     },
     // 分页
     handleCurrentChange(val) {
       this.limit = 15;
       this.page = val;
-      this.getUserTab();
+      this.getFeedback();
       console.log(`当前页: ${val}`);
+    },
+
+    // 删除
+    del(id) {
+      this.$confirm("是否确定删除?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          delFeedback(id);
+          this.page = 1;
+          this.getMaintenance();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   created() {
@@ -86,4 +112,7 @@ export default {
     
 
 <style lang="less" scoped>
+.user{
+  background-color: #fff;
+}
 </style>
