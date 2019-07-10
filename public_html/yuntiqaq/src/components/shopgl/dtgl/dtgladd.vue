@@ -1,16 +1,16 @@
 <template>
     <div class="page">
         <el-tabs v-model="activeName">
-            <el-tab-pane label="电梯设置" name="first">
+            <el-tab-pane label="商品设置" name="first">
                 <el-form ref="form" :model="form" label-width="120px" style="margin-top:40px">
                     <el-form-item label="排序">
                         <el-input v-model="form.sort"></el-input>
                         <div style="font-size: 12px;color: #666;">越小越靠前</div>
                     </el-form-item>
-                    <el-form-item label="电梯主标题" >
+                    <el-form-item label="商品主标题" >
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="电梯分类">
+                    <el-form-item label="商品分类">
                         <el-select v-model="form.cid" placeholder="请选择">
                             <el-option
                             v-for="item in options"
@@ -23,7 +23,7 @@
                     <el-form-item label="销售电话">
                         <el-input v-model="form.phone"></el-input>
                     </el-form-item>
-                    <el-form-item label="电梯图片">
+                    <el-form-item label="商品图片">
                         <el-upload
                         class="avatar-uploader"
                         :action="`${api}upload`"
@@ -33,7 +33,7 @@
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                     </el-form-item>
-                    <el-form-item label="电梯价格">
+                    <el-form-item label="商品价格">
                         <el-input v-model="form.price"></el-input>
                     </el-form-item>
                 </el-form>
@@ -42,10 +42,10 @@
             
             <el-tab-pane label="详情设置" name="second">
                 <el-form ref="form" :model="form" label-width="120px" style="margin-top:40px">
-                    <el-form-item label="电梯副标题">
+                    <el-form-item label="商品副标题">
                         <el-input v-model="form.subhead"></el-input>
                     </el-form-item>
-                    <el-form-item label="电梯标签">
+                    <el-form-item label="商品标签">
                         <el-select v-model="form.label" multiple placeholder="请选择" style="width:100%">
                             <el-option
                             v-for="item in options2"
@@ -54,8 +54,9 @@
                             :value="item.name">
                             </el-option>
                         </el-select>
+                        <el-button type="primary" style="margin-top:10px;" @click="xzbq">新增标签</el-button>
                     </el-form-item>
-                    <el-form-item label="电梯详情">
+                    <el-form-item label="商品详情">
                         <el-upload
                         :action="api+'upload'"
                         list-type="picture-card"
@@ -70,14 +71,14 @@
                         <img width="100%" :src="dialogImageUrl" alt="">
                         </el-dialog>
                     </el-form-item>
-                    <el-form-item label="电梯详情">
+                    <el-form-item label="商品详情">
                         <UE :defaultMsg=content :config=config ref="xx"></UE>
                     </el-form-item>
                 </el-form>
             </el-tab-pane>
 
 
-            <el-tab-pane label="电梯参数" name="third">
+            <el-tab-pane label="商品参数" name="third">
                 <el-form ref="form" :model="form" label-width="120px" style="margin-top:40px">
                     <el-form-item label="品牌">
                         <el-select v-model="form.bid" placeholder="请选择">
@@ -116,6 +117,36 @@
                 <el-button style="float: right;margin-right:20px" @click="btn1">返回列表</el-button>
             </el-tab-pane>
         </el-tabs>
+
+
+
+
+        <el-dialog
+        title="新增标签"
+        :visible.sync="dialogVisible1"
+        width="30%"
+        :before-close="handleClose">
+        <span>
+            <el-form ref="form1" :model="form1" label-width="100px">
+                <el-form-item label="标签名">
+                    <el-input v-model="form1.name"></el-input>
+                </el-form-item>
+                <!-- <el-form-item label="活动名称">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="活动名称">
+                    <el-radio v-model="radio" label="1">备选项</el-radio>
+                    <el-radio v-model="radio" label="2">备选项</el-radio>
+                </el-form-item> -->
+            </el-form>
+        </span>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible1 = false">取 消</el-button>
+            <el-button type="primary" @click="xzbtn">新增</el-button>
+        </span>
+        </el-dialog>
+
+
     </div>
 </template>
 
@@ -126,8 +157,13 @@ import UE from '../../common/ue.vue';
         components: {UE},
         data() {
             return {
+                dialogVisible1:false,
+                form1:{
+                    name:''
+                },
+                dialogVisible:false,
                 content:'请输入内容',
-                dialogVisible: false,
+                1: false,
                 dialogImageUrl:[],
                 config: {
                     initialFrameWidth: null,
@@ -147,6 +183,31 @@ import UE from '../../common/ue.vue';
             }
         },
         methods:{
+            // 新增标签
+            xzbq(){
+                this.dialogVisible1 = true
+            },
+            xzbtn(){
+                this.$axios({
+                    method:'post',
+                    url:`${this.api}admin/goodslabel`,
+                    data:this.form1
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data.data)
+                        this.$message.success(res.data.message)
+                        this.dialogVisible1 = false
+                        this.getlist3()
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
+            // 弹窗
+            handleClose(){
+                this.dialogVisible1 = false
+            },
+
             btn1(){
                 this.$router.push({
                     name:'admin_dtgl'
@@ -316,9 +377,10 @@ import UE from '../../common/ue.vue';
                 }).then(res=>{
                     if(res.data.status == 1){
                         console.log(res.data.data)
-                        res.data.data.data.forEach(res => {
-                            this.options2.push(res)
-                        });
+                        this.options2 = res.data.data.data
+                        // res.data.data.data.forEach(res => {
+                        //     this.options2.push(res)
+                        // });
                     }else{
                         this.$message.error(res.data.message)
                     }

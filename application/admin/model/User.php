@@ -18,14 +18,14 @@ class User extends Common {
         if (!empty($params['keyword'])) {
             $map['name|phone|avatar|password|salt|intro|token'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->field('id,name,phone,avatar,intro,status,type,createtime')->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->field('id,name,phone,avatar,intro,status,type,normal,createtime')->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array('0' => '待审', '1' => '通过', '2' => '不通过');
             $type   = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');
             foreach ($list['data'] as $k => &$item) {
                 $item['status_text'] = $status[$item['status']];
                 $item['type_text']   = $type[$item['type']];
-                $item['normal_text'] = $item['type'] == 1 ? '启用' : '禁用';
+                $item['normal_text'] = $item['normal'] == 1 ? '启用' : '禁用';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
             }
             unset($item);

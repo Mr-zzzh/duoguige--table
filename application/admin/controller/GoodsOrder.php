@@ -17,6 +17,7 @@ class GoodsOrder extends Common {
      * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
      * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
      * @param name:status type:int require:0 default:- other:- desc:-1取消订单_0待支付_1已支付_2已发货_3已收货
+     * @param name:paytype type:int require:0 default:- other:- desc:1支付宝_2微信
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码

@@ -2,6 +2,7 @@
 
 namespace app\mobile\controller;
 
+use http\Client;
 use think\Cache;
 
 /**
@@ -60,7 +61,7 @@ class Index extends Common {
 
     /**
      * @title 文件上传
-     * @url /upload
+     * @url /mobile/upload
      * @method post
      * @param name:fileid type:string require:0 default:'media' desc:表单name值
      * @param name:media type:文件 require:0 default:'' desc:上传的文件
@@ -243,19 +244,35 @@ class Index extends Common {
      * @title 翻译
      * @url /translate
      * @method post
-     * @param name:content type:string require:1 default:- other:- desc:类型_1首页搜索_2故障库搜索(不传默认首页)
+     * @param name:content type:string require:1 default:- other:- desc:翻译内容
+     * @param name:type type:int require:1 default:- other:- desc:类型_1中英_2英中
      * @author 开发者
      */
     public function translate() {
-        global $member;
-        $content    = request()->post('content');
-        $ret        = $this->do_request($content);
-        $map['uid'] = $member['id'];
-        if (db('search_history')->where($map)->delete()) {
-            show_json(1, '删除成功');
+        $params  = request()->post();
+        $content = trim($params['content']);
+        if (empty($params['type'])) {
+            $type = 1;
         } else {
-            show_json(0, '删除失败');
+            $type = intval($params['type']);
         }
+        $url     = "http://fanyi.sogou.com:80/reventondc/api/sogouTranslate";
+        $pid     = "933674c0031f9b9d2d5a29c32add87ec";
+        $salt    = random(13, true);
+        $key     = "1e121b06b6108f1651f03c9dc45f4e5f";
+        $sign    = md5($pid . $content . $salt . trim($key));
+        $headers = [
+            'content-type' => "application/x-www-form-urlencoded",
+            'accept'       => "application/json"
+        ];
+        if ($type == 1) {
+            $payload = "from=zh-CHS&to=en&pid=" . $pid . "&q=" . $content . "&sign=" . $sign . "&salt=" . $salt;
+        } else {
+            $payload = "from=en&to=zh-CHS&pid=" . $pid . "&q=" . $content . "&sign=" . $sign . "&salt=" . $salt;
+        }
+        $result = curl($url, 'POST', $payload, $headers);
+        show_json(1, $result);
+
     }
 
 }

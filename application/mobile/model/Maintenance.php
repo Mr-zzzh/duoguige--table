@@ -11,7 +11,7 @@ class Maintenance extends Common {
             if (intval($params['type']) == 1) {
                 $map['m.status'] = 0;
             } else {
-                $map['m.status'] = array('in', '1,2');
+                $map['m.status'] = array('in', '1,3,4,5,6');
             }
         }
         if (!empty($params['genre'])) {
@@ -28,6 +28,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
                 if (empty($item['receive_id'])) {
                     $item['receive_id'] = '';
                 }
@@ -146,6 +147,10 @@ class Maintenance extends Common {
             'status' => trim($params['status']),
         );
         if ($data['status'] == -1) {
+            $createtime = $this->where('id', $id)->value('createtime');
+            if (time() - $createtime > 300) {
+                show_json(0, '此单现在不能取消');
+            }
             $data['canceltime'] = time();
         } elseif ($data['status'] == 4) {
             $data['finishtime'] = time();
@@ -176,6 +181,7 @@ class Maintenance extends Common {
         } else {
             $item            = $item->toArray();
             $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
             $plan            = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
             if (!empty($item['receive_time'])) {
                 array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
@@ -262,9 +268,10 @@ class Maintenance extends Common {
     }
 
     public function AllEvaluate($params) {
+        global $member;
         $id = intval($params['id']);
         if (empty($id)) {
-            show_json(0, '请传维修师傅id');
+            $id = $member['id'];
         }
         $map                 = array();
         $map['m.receive_id'] = $id;
@@ -280,6 +287,11 @@ class Maintenance extends Common {
             }
             unset($item);
         }
+        $user         = db('user')->alias('a')
+            ->join('technician t', 'a.id=t.uid', 'left')
+            ->join('user u', 'u.id=t.uid', 'left')
+            ->field('u.name,a.avatar,t.company_name')->where('a.id', $id)->find();
+        $list['user'] = $user;
         show_json(1, $list);
     }
 
@@ -304,6 +316,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
             }
             unset($item);
         }
@@ -325,6 +338,7 @@ class Maintenance extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
             }
             unset($item);
         }
@@ -396,22 +410,28 @@ class Maintenance extends Common {
         $map               = array();
         $map['receive_id'] = $member['id'];
         if (intval($params['type']) == 2) {
-            $map['status'] = array('>', 4);
+            $map['a.status'] = array('>', 4);
         }
         if (!empty($params['year'])) {
-            $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-01-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-12-31 23:59:59'));
+            $map['a.receive_time'] = array('between', strtotime(intval($params['year']) . '-01-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-12-31 23:59:59'));
         }
         if (!empty($params['year']) && !empty($params['month'])) {
-            $days                = date('t', strtotime(intval($params['year']) . '-' . intval($params['month'])));
-            $map['receive_time'] = array('between', strtotime(intval($params['year']) . '-' . intval($params['month']) . '-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-' . intval($params['month']) . '-' . $days . ' 23:59:59'));
+            $days                  = date('t', strtotime(intval($params['year']) . '-' . intval($params['month'])));
+            $map['a.receive_time'] = array('between', strtotime(intval($params['year']) . '-' . intval($params['month']) . '-01 00:00:00') . ',' . strtotime(intval($params['year']) . '-' . intval($params['month']) . '-' . $days . ' 23:59:59'));
         }
-        $list = $this->field('id,brand,model,floor_number,type,company,city,area,address,status,createtime')
+        $list = $this->alias('a')
+            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('company c', 'a.uid=c.uid', 'left')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,a.receive_time,a.createtime,u.name,u.avatar,c.company_name')
             ->where($map)->order('createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
-                $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['address']        = city_name($item['city']) . city_name($item['area']) . $item['address'];
+                $item['createtime']     = date('Y-m-d H:i', $item['createtime']);
+                $item['receive_time']   = date('Y-m-d H:i', $item['receive_time']);
+                $item['image']          = request()->domain() . '/uploads/maintenance.jpg';
+                $item['complaint_time'] = '';
                 if (intval($params['type']) != 2) {
                     $item['evaluate'] = db('evaluate')->alias('a')
                         ->join('user u', 'u.id=a.uid', 'left')
@@ -420,6 +440,10 @@ class Maintenance extends Common {
                     if (!empty($item['evaluate'])) {
                         $item['evaluate']['createtime'] = date('Y-m-d', $item['evaluate']['createtime']);
                     }
+                } else {
+                    $item['complaint_time'] = db('complaint')->where('mid', $item['id'])->value('createtime');
+                    $item['complaint_time'] = date('Y-m-d H:i', $item['complaint_time']);
+                    $item['evaluate']       = null;
                 }
             }
             unset($item);
@@ -443,6 +467,7 @@ class Maintenance extends Common {
         } else {
             $item            = $item->toArray();
             $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
             $item['plan']    = db('plan')->where('mid', $id)->order('createtime desc')->limit(1)->value('plan');
         }
         show_json(1, $item);
@@ -495,6 +520,7 @@ class Maintenance extends Common {
             if (!empty($complaint['thumb'])) {
                 $complaint['thumb'] = explode(',', $complaint['thumb']);
             }
+            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
             $item['content'] = $complaint['content'];
             $item['thumb']   = $complaint['thumb'];
         }

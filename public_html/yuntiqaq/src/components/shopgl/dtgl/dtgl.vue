@@ -1,7 +1,7 @@
 <template>
     <div class="page">
 
-        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加电梯</el-button>
+        <el-button type="primary" style="margin-bottom: 20px;" @click="btn1">添加商品</el-button>
         
         <el-input placeholder="请输入内容" v-model="keyword" class="input-with-select" style="width:700px;background: white;float: right;">
             <el-button slot="append" type="primary" @click="ss(keyword)" icon="el-icon-search" style="background:#409EFF;color: white;"></el-button>
