@@ -16,6 +16,8 @@ CREATE TABLE `yunti_user` (
   PRIMARY KEY (`id`),
   KEY `phone` (`phone`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_user` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
+ALTER TABLE `yunti_user` add  `checktime` int(11) DEFAULT NULL COMMENT '审核时间';
 
 -- 技术大师认证表
 DROP TABLE IF EXISTS `yunti_technician`;
