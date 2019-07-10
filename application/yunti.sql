@@ -300,6 +300,7 @@ CREATE TABLE `yunti_maintenance` (
   KEY `area` (`area`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ALTER TABLE `yunti_maintenance` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
+ALTER TABLE `yunti_maintenance` add  `complete_time` varchar(255) DEFAULT NULL COMMENT '技术大师完成时间';
 
 -- 维保单进度表
 DROP TABLE IF EXISTS `yunti_plan`;
