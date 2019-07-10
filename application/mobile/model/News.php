@@ -6,8 +6,10 @@ class News extends Common {
 
     public function GetAll($params) {
         $map    = array();
-        $banner = db('banner')->where(array('type' => 3, 'status' => 1))
-            ->field('id,url,jumpurl,newsid')->order('sort asc,createtime desc')->select();
+        $banner = db('banner')->alias('a')
+            ->join('news n', 'a.newsid=n.id', 'left')
+            ->where(array('a.type' => 3, 'a.status' => 1))
+            ->field('a.id,a.url,a.jumpurl,a.newsid,n.title,n.type,n.view_number,n.like_number')->order('a.sort asc,a.createtime desc')->select();
         $id     = db('banner')->where(array('type' => 3, 'status' => 1))->column('newsid');
         if (!empty($params['keyword'])) {
             $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');

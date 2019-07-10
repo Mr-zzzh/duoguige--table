@@ -21,8 +21,8 @@ class News extends Common {
      * @return per_page:每页记录数
      * @return current_page:当前的页码
      * @return last_page:最后的页码
-     * @return data:头部轮播图@
-     * @data id:id url:图片url jumpurl:跳转地址 newsid:新闻id
+     * @return banner:头部轮播图@
+     * @banner id:id url:图片url jumpurl:跳转地址 newsid:新闻id view_number:浏览量 like_number:点赞量 trype:类型_1图文_2视频
      * @return data:列表@
      * @data id:id title:标题 thumb:图片 view_number:浏览量 like_number:点赞量 trype:类型_1图文_2视频
      * @author 开发者
