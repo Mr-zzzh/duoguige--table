@@ -36,7 +36,7 @@ class Grade extends Common {
      * @url /admin/grade
      * @method post
      * @param name:name type:string require:1 default:- other:- desc:等级名称
-     * @param name:content type:array require:1 default:- other:- desc:晋级条件(数组)name_等级名称min_score_最小分数max_score_最大分数 min_number_最小接单数max_number_最大接单数
+     * @param name:content type:array require:1 default:- other:- desc:晋级条件(数组)name_等级名称min_score_最小分数max_score_最大分数min_number_最小接单数max_number_最大接单数
      * @param name:status type:string require:1 default:- other:- desc:状态_1开启_2不开启
      * @author 开发者
      */
