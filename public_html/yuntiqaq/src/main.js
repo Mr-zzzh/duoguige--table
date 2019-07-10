@@ -7,6 +7,9 @@ import router from './router'
 Vue.config.productionTip = false
 
 
+
+
+
 Vue.prototype.$axios = axios;
 import global from './components/apicom/apicom'
 axios.defaults.withCredentials = true; //让ajax携带cookie
@@ -58,6 +61,7 @@ axios.interceptors.response.use(function (response) {
 new Vue({
     el: '#app',
     router,
+    // store,
     components: { App },
     template: '<App/>'
 })

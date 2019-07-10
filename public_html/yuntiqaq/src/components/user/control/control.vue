@@ -30,7 +30,6 @@
       ></el-option>
     </el-select>
 
-    <el-button type="primary" plain @click="go()">大师管理</el-button>
 
     <!-- 下面的表格 -->
 
@@ -41,25 +40,12 @@
       <el-table-column label="姓名" width="180" prop="name"></el-table-column>
       <el-table-column label="性别" width="180">男</el-table-column>
 
-      <el-table-column label="类型" prop="type_text"></el-table-column>
+      <el-table-column label="手机号" prop="type_text"></el-table-column>
 
-      <el-table-column label="状态" prop="status_text"></el-table-column>
-      <el-table-column label="审核人" prop>暂无</el-table-column>
-      <el-table-column label="申请时间" prop="createtime"></el-table-column>
-      <el-table-column label="审核时间" prop="createtime"></el-table-column>
-      <!-- <el-table-column label="启用"> -->
-          <!-- <template slot-scope="scope"> -->
-        <!-- <template>
-          <el-button v-if="normal!=1" type="primary" v-model="normal">警用</el-button>
-          <el-button v-else type="info" v-model="normal">启用</el-button>
-        </template> -->
-      <!-- </el-table-column> -->
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button @click="info(scope.row.id)" type="text" size="small">详情</el-button>
-          <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
-        </template>
-      </el-table-column>
+      <el-table-column label="类型" prop="status_text"></el-table-column>
+      <el-table-column label="综合分数" prop>暂无</el-table-column>
+      <el-table-column label="综合订单数" prop="createtime"></el-table-column>
+      <el-table-column label="级别" prop="createtime"></el-table-column>
     </el-table>
 
     <!-- 分页 -->
@@ -127,19 +113,6 @@ export default {
         this.$message.info("已禁用");
       }
     },
-    // 点击去详情页
-    info(id) {
-      id: this.id;
-      console.log(id);
-      this.$router.push({
-        name: "/admin_audit",
-        params: { id }
-      });
-      // 用不上vuex
-      // this.$store.commit("getUserInfo",this.userInfo)
-      console.log(this.userInfo);
-      localStorage.setItem("user", JSON.stringify(this.userInfo));
-    },
     // 获得技术大师列表的请求
     async getUserTab() {
       let data = await getUserTab({
@@ -172,30 +145,7 @@ export default {
       });
       console.log(this.userInfo);
     },
-    // 删除
-    del(id) {
-      this.$confirm("是否确定删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          delUser(id);
-          // this.page = 1;
-          this.getUserTab();
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
-    go() {
-      this.$router.push({
-        name: "/admin_control"
-      });
-    },
+   
     // 获取分类
     categry() {
       this.getUserTab();
@@ -236,7 +186,7 @@ export default {
 
 .el-button--primary.is-plain {
   background-color: #409eff;
-  color: #fff;
+  color: none;
 }
 </style>
 
