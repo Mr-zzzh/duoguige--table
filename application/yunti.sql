@@ -16,6 +16,8 @@ CREATE TABLE `yunti_user` (
   PRIMARY KEY (`id`),
   KEY `phone` (`phone`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_user` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
+ALTER TABLE `yunti_user` add  `checktime` int(11) DEFAULT NULL COMMENT '审核时间';
 
 -- 技术大师认证表
 DROP TABLE IF EXISTS `yunti_technician`;
@@ -536,9 +538,8 @@ CREATE TABLE `yunti_note` (
 DROP TABLE IF EXISTS `yunti_grade`;
 CREATE TABLE `yunti_grade` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL COMMENT '等级名称',
-  `score` int(10) DEFAULT NULL COMMENT '分数',
-  `number` int(10) DEFAULT NULL COMMENT '接单数',
+  `name` varchar(50) DEFAULT NULL COMMENT '规则名称',
+  `content` text COMMENT '晋级条件(名称,最小分数,最大分数,最小单数,最大单数)',
   `status` int(10) DEFAULT '1' COMMENT '状态_1开启_2关闭',
   `createtime` int(1) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
