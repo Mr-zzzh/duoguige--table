@@ -29,6 +29,7 @@ class Grade extends Common {
         if (empty($data['content'])) {
             show_json(0, '晋级条件');
         }
+        $data['content'] = serialize($data['content']);
         if (empty($data['status'])) {
             $data['status'] == 2;
         }
@@ -65,6 +66,7 @@ class Grade extends Common {
         if (empty($data['content'])) {
             show_json(0, '晋级条件');
         }
+        $data['content'] = serialize($data['content']);
         if (empty($data['status'])) {
             $data['status'] == 2;
         }
