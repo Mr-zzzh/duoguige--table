@@ -21,7 +21,9 @@ class Grade extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:等级名称 score:分数 number:接单数 status:状态_1开启_2不开启 createtime:创建时间
+     * @return content:晋级条件@
+     * @data id:id name:规则名称 status:状态_1开启_2不开启 createtime:创建时间
+     * @content name:等级名称 min_score:最小分数 max_score:最大分数 min_number:最小接单数 max_number:最大接单数
      * @author 开发者
      */
     public function index() {
@@ -34,8 +36,7 @@ class Grade extends Common {
      * @url /admin/grade
      * @method post
      * @param name:name type:string require:1 default:- other:- desc:等级名称
-     * @param name:score type:int require:1 default:- other:- desc:分数
-     * @param name:number type:int require:1 default:- other:- desc:接单数
+     * @param name:content type:array require:1 default:- other:- desc:晋级条件(数组)name:等级名称 min_score:最小分数 max_score:最大分数 min_number:最小接单数 max_number:最大接单数
      * @param name:status type:string require:1 default:- other:- desc:状态_1开启_2不开启
      * @author 开发者
      */
@@ -77,15 +78,9 @@ class Grade extends Common {
     }
 
     /**
-     * @title 读取
+     * @title 使用
      * @url /admin/grade/:id
      * @method get
-     * @return id:id
-     * @return name:等级名称
-     * @return score:分数
-     * @return number:接单数
-     * @return status:状态_1开启_2不开启
-     * @return createtime:创建时间
      * @author 开发者
      */
     public function read($id) {
