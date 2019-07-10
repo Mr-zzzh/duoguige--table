@@ -13,7 +13,7 @@ class Technician extends Common {
         $map['u.type']   = 2;
         $list            = db('user')->alias('u')
             ->join('technician t', 't.uid=u.id', 'left')
-            ->field('u.id,t.name,u.avatar,u.phone')
+            ->field('u.id,u.name,u.avatar,u.phone')
             ->where($map)->order('u.createtime desc')
             ->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
