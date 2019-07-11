@@ -10,12 +10,6 @@
 //     return axios.delete(`admin/user/${params}`,{});
 // }
 
-// //  获得用户分类/用户管理
-// export const getPopeTab = (params) => {
-
-//     return axios.get(`admin/user/${params}`);
-// }
-
 
 // 这是配置了config之后
 import request from '@/utils/request'
@@ -42,13 +36,13 @@ export const getUserInfo = (params) => {
 // 用户分类页面/读取用户的的详细信息的接口-----去到用户审核的页面，必须有改用户的id
 export const getAudit = (params) => {
     // console.log('test')
-    return request.get("/admin/user/editstatus", { params, isLoading: true, isSuccessTip: true });
+    return request.get("/admin/user/editstatus", { params, isLoading: true });
 }
 
 // 用户分类页面/启用，禁用
 export const getForbidden  = (params) => {
     // console.log('test')
-    return request.get("/admin/user/forbidden", { params, isLoading: true, isSuccessTip: true });
+    return request.get("/admin/user/forbidden", { params, isLoading: true});
 }
 
 

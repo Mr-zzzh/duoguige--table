@@ -38,7 +38,7 @@
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
@@ -63,6 +63,7 @@ export default {
       numberValidateForm: {},
       textarea: "",
       sizeForm: {
+        remark:"",
         id: 0,
         name: "",
         phone: "",
@@ -114,7 +115,8 @@ export default {
     async getAudit() {
       let data = await getAudit({
         id: this.id,
-        status: this.status
+        status: this.status,
+        remark:this.remark
       });
       console.log(data);
     },

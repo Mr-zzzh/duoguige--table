@@ -33,14 +33,19 @@
     </div>
 
     <div class="btn">
-      <el-button type="danger" @click="get()">设置黑名单</el-button>
-      <el-button type="primary" @click="cancelBlackList">取消黑名单</el-button>
+      <el-button type="danger" @click="get" v-model="normal">设置黑名单</el-button>
+      <el-button type="primary" @click="getQU">取消黑名单</el-button>
     </div>
 
     <!-- 下面的表格 -->
     <div class="table">
-      <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
-        <el-table-column type="selection" width="55"></el-table-column>
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        @selection-change="selectionChange"
+        @select-all="clickAll"
+      >
+        <el-table-column type="selection" width="55" v-model="normal"></el-table-column>
         <el-table-column label="ID" width="180" type="index"></el-table-column>
 
         <el-table-column label="姓名" width="180" prop="name"></el-table-column>
@@ -56,12 +61,23 @@
         </el-table-column>
 
         <el-table-column label="黑名单">
-           <template slot-scope="scope">
-          <el-button   v-if="scope.row.normal==1" size="small" type="primary" v-model="normal">启用</el-button>
-          <el-button   v-else size="small"  type="info">禁用</el-button>
-        </template>
+          <template slot-scope="scope">
+            <el-button
+              v-if="scope.row.normal==1"
+              size="small"
+              type="primary"
+              v-model="normal"
+              @click="btn(scope.row.id,scope.row)"
+            >启用</el-button>
+            <el-button
+              v-else
+              size="small"
+              type="info"
+              @click="btn(scope.row.id,scope.row)"
+              v-model="normal"
+            >禁用</el-button>
+          </template>
         </el-table-column>
-        <el-table-column label="状态" prop="status_text"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <i class="el-icon-delete" @click="del(scope.row.id)"></i>
@@ -121,8 +137,10 @@ export default {
       ],
       normal_text: "",
       normal: "",
-      id:"",
-      status: ""
+      id: "",
+      status: "",
+      ids: [],
+      op: {}
     };
   },
 
@@ -132,22 +150,45 @@ export default {
     selectionChange(list) {
       this.selectedList = Number(list.map(v => v.id).join(","));
       this.id = this.selectedList;
-      console.log(this.id);
     },
     // 这是自己封装的，意思是当点击设置或是取消的时候出发
-     get() {
-      getForbidden({
-        id:this.id,
-        normal:this.normal,
-        status:this.status
-      }).then(res=>{
-        console.log(res);
-        
-      })
-    },
     async cancelBlackList() {
       // await cancelBlackList(this.selectedList)
       // this.getUserTab();
+    },
+    // 点击设置黑名单的时候
+    get() {
+      this.tableData.forEach(res => {
+        console.log(res);
+        this.id = res.id;
+        this.normal = 1;
+        this.getForbidden();
+        this.getUserTab();
+        this.normal_text = "禁用";
+      });
+    },
+    // 点击取消黑名单的时候
+    getQU() {
+      this.normal = 2;
+      this.getForbidden();
+      this.getUserTab();
+    },
+    // 当点击全部的时候
+    clickAll(selection) {},
+    // 点击其中一个按钮的时候
+    btn(id, row) {
+      this.id = id;
+      console.log(this.id);
+      console.log(row);
+      if (row.normal == 1) {
+        this.normal = 2;
+        this.normal_text = "禁用";
+      } else if (row.normal == 2) {
+        this.normal = 1;
+        this.normal_text = "启用";
+      }
+      this.getForbidden();
+      this.getUserTab();
     },
     // 这是获取用户列表的请求
     async getUserTab() {
@@ -156,10 +197,13 @@ export default {
         limit: this.limit,
         page: this.page,
         type: 1,
-        // id: this.id
         normal: this.normal,
-        status:this.status,
+        status: this.status,
+        normal_text: this.normal_text,
+        id: this.id,
+        normal: this.normal
       });
+      console.log(this.normal);
       console.log(data, 11111);
       this.tableData = data.data;
       this.total = data.total;
@@ -167,9 +211,19 @@ export default {
       data.data.forEach(element => {
         console.log(element);
         this.id = element.id;
-        this.normal = element.normal;
       });
     },
+
+    // 这是启用，禁用的请求
+    async getForbidden() {
+      let data = await getForbidden({
+        id: this.id,
+        normal: this.normal,
+        status: this.status
+      });
+      console.log(data);
+    },
+
     // 删除
     del(id) {
       this.$confirm("是否确定删除?", "提示", {
@@ -189,9 +243,6 @@ export default {
           });
         });
     },
-      handleEdit(index, row) {
-        console.log(index, row.normal);
-      },
     // 搜索
     search() {
       this.normal = 2;
@@ -216,9 +267,7 @@ export default {
       console.log(`当前页: ${val}`);
     }
   },
-  mounted() {
-    // this.getUserTab();
-  },
+  mounted() {},
   created() {
     this.getUserTab();
   }
