@@ -560,7 +560,7 @@ CREATE TABLE `yunti_share` (
 -- 审核信息通知表
 DROP TABLE IF EXISTS `yunti_inform`;
 CREATE TABLE `yunti_inform` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL COMMENT '用户id',
   `title` varchar(255) DEFAULT NULL COMMENT '标题',
   `status` int(2) DEFAULT NULL COMMENT '审核状态_1通过_2不通过',
