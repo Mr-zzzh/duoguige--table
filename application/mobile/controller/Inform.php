@@ -46,41 +46,17 @@ class Inform extends Common {
     }
 
     /**
-     * @title 编辑
-     * @url /company/:id
-     * @method put
-     * @param name:company_name type:string require:1 default:- other:- desc:公司名称
-     * @param name:phone type:string require:1 default:- other:- desc:联系电话
-     * @param name:name type:string require:1 default:- other:- desc:法人姓名
-     * @param name:area type:string require:1 default:- other:- desc:公司地址省市区
-     * @param name:address type:string require:1 default:- other:- desc:公司详细地址
-     * @param name:number type:int require:1 default:- other:- desc:电梯数量
-     * @param name:brand type:string require:1 default:- other:- desc:电梯品牌
-     * @param name:image type:string require:1 default:- other:- desc:营业执照
-     * @author 开发者
-     */
-    public function update(Request $request, $id) {
-        if ($id < 1) {
-            show_json(0, '参数ID错误');
-        }
-        $m = new \app\mobile\model\Inform();
-        $m->EditOne($request->put(), $id);
-    }
-
-    /**
      * @title 读取
-     * @url /company/:id
+     * @url /inform/:id
      * @method get
      * @return id:id
      * @return uid:用户id
-     * @return company_name:公司名称
-     * @return phone:联系电话
-     * @return name:法人姓名
-     * @return area:公司地址省市区
-     * @return address:公司详细地址
-     * @return number:电梯数量
-     * @return brand:电梯品牌
-     * @return image:营业执照
+     * @return title:标题
+     * @return status:审核状态_1通过_2不通过
+     * @return content:审核备注
+     * @return type:类型_1公司认证_2技师认证_3维保单审核_4招聘审核_5求职审核
+     * @return checkid:审核id
+     * @return read:0未阅_1已阅
      * @return createtime:创建时间
      * @author 开发者
      */
