@@ -51,6 +51,9 @@ class JobWanted extends Common {
 
     public function AddOne($params) {
         global $member;
+        if ($member['type'] == 2 || $member['type'] == 3) {
+            show_json(0, '此账号没有发布求职信息权限!');
+        }
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
