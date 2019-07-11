@@ -168,7 +168,8 @@ class User extends Common {
     }
 
     public function EditStatus($params) {
-        if (empty($params['id']) || $params['id'] < 1) {
+        $id = intval($params['id']);
+        if (empty($id) || $id < 1) {
             show_json('id传输错误');
         }
         if (empty($params['status'])) {
@@ -177,7 +178,16 @@ class User extends Common {
         $data['status']    = intval($params['status']);
         $data['remark']    = trim($params['remark']);
         $data['checktime'] = time();
-        if ($this->save($data, array('id' => intval($params['id']))) !== false) {
+        if ($this->save($data, array('id' => $id)) !== false) {
+            $type1 = $this->where('id', $id)->value('type');
+            if ($type1 == 2) {
+                $type    = 2;
+                $checkid = db('technician')->where('uid', $id)->value('id');
+            } else {
+                $type    = 1;
+                $checkid = db('company')->where('uid', $id)->value('id');
+            }
+            inform_add($id, $data['status'], $type, $checkid, $data['remark']);
             //logs('编辑??,ID:' . $id, 3);
             show_json(1, '审核成功');
         } else {
