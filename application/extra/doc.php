@@ -46,6 +46,7 @@ return [
         'app\mobile\controller\Goods',
         'app\mobile\controller\GoodsOrder',
         'app\mobile\controller\Index',
+        'app\mobile\controller\Inform',
         'app\mobile\controller\Invite',
         'app\mobile\controller\JobWanted',
         'app\mobile\controller\Maintenance',

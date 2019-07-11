@@ -99,7 +99,8 @@ Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::rule('goodsorder/affirm', 'mobile/GoodsOrder/affirm', 'GET|POST');
 Route::rule('goodsorder/pay', 'mobile/GoodsOrder/pay', 'POST');
-
+Route::resource('inform', 'mobile/Inform');
+Route::rule('inform/unreadnum', 'mobile/Inform/unreadnum', 'GET');
 Route::resource('invite', 'mobile/Invite');
 Route::rule('salary', 'mobile/Invite/salary', 'GET');
 Route::rule('experience', 'mobile/Invite/experience', 'GET');
