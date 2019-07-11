@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-    <el-form ref="form" :model="info" label-width="80px">
+    <el-form ref="form" :model="info" label-width="80px"  size="mini">
       <el-form-item label="招聘信息">
         <el-input v-model="info.status_text" class="login-form-input"></el-input>
       </el-form-item>
@@ -9,35 +9,35 @@
       </el-form-item>
 
       <el-form-item label="联系方式">
-        <el-input v-model="info.name"></el-input>
+        <el-input v-model="info.phone"></el-input>
       </el-form-item>
       <el-form-item label="招聘岗位">
-        <el-input v-model="info.name"></el-input>
+        <el-input v-model="info.post"></el-input>
       </el-form-item>
       <el-form-item label="薪资范围">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.sname"></el-input>
       </el-form-item>
       <el-form-item label="学历要求">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.education"></el-input>
       </el-form-item>
       <el-form-item label="工作地点">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.city_text"></el-input>
       </el-form-item>
       <el-form-item label="详细地址">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.address"></el-input>
       </el-form-item>
       <el-form-item label="职位描述">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.description"></el-input>
       </el-form-item>
       <el-form-item label="岗位职责">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.duty"></el-input>
       </el-form-item>
       <el-form-item label="详细地址">
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
@@ -69,7 +69,8 @@ export default {
       },
       status: "".status,
       id: this.$route.params.id,
-      info: {}
+      info: {},
+      remark: ""
     };
   },
   methods: {
@@ -94,8 +95,10 @@ export default {
     async RecruitEditstatus() {
       let data = await RecruitEditstatus({
         id: this.id,
-        status: this.status
+        status: this.status,
+        remark: this.remark
       });
+      this.info = data;
       console.log(data);
     },
     // 当选中的时候的,通过的值是1，驳回的值是2
@@ -128,12 +131,5 @@ export default {
 }
 .el-form {
   background-color: #fff;
-}
-.login-form-input .el-input__inner {
-  border: 0 none;
-
-  border-bottom: 1px solid #ccc;
-
-  border-radius: 0px;
 }
 </style>

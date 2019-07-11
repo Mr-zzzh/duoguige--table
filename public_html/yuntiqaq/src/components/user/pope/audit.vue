@@ -20,14 +20,14 @@
       </el-form-item>
       <el-form-item label="证件照" class="box">
         <div>
-          <p>在职证明</p>
+          <p class="aa">在职证明</p>
           <img :src="sizeForm.check.prove_image" alt />
         </div>
-        <div>
+        <div class="aa">
           <p>营业执照</p>
           <img :src="sizeForm.check.company_image" alt />
         </div>
-        <div>
+        <div class="aa">
           <p>技师证件</p>
           <img :src="sizeForm.check.technician_image" alt />
         </div>
@@ -174,6 +174,13 @@ export default {
 }
 .el-form-item__label {
   width: 120px;
+}
+.aa{
+  img{
+     display: inline-block;
+    width: 200px;
+    height: 200px;
+  }
 }
 </style>
 

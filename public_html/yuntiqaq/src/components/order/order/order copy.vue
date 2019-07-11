@@ -76,8 +76,8 @@
       </div>
     </div>
 
-    <div class="cc">
-      <div id="myChart" :style="{width: '100%', height: '300px'}"></div>
+    <div class="echarts">
+      <se-echarts :option="option" idName="option" :isCarousel="true" />
     </div>
   </div>
 </template>
@@ -91,59 +91,35 @@ export default {
   components: { seEcharts },
   data() {
     return {
-      today: {}, // 今日
-      yesterday: {}, //昨日
-      seven: {}, //近七日
-      month: {}, //近一个月
-      info: {}
-    };
-  },
-  methods: {
-    // 这是获取全部订单的请求
-    async Goodssummarize() {
-      let data = await Goodssummarize({});
-      console.log(data);
-      this.info = data;
-      this.month = data.month;
-      this.yesterday = data.yesterday;
-      this.seven = data.seven;
-      this.today = data.today;
-      console.log(this.today);
-    },
-    // 获得数据
-    getshuju() {
-      Goodssummarize().then(res => {
-        console.log(res);
-        this.drawLine();
-      });
-    },
-    drawLine() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById("myChart"));
-      // 绘制图表
-      myChart.setOption({
-        tooltip: {
-          trigger: "axis"
-        },
-        legend: {
-          data: this.info.trend.legend
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
+      option: {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          data: this.info.trend.time
+          data: [
+            "10-23周日",
+            "10-24周一",
+            "10-25周二",
+            "10-26周三",
+            "10-27周四",
+            "10-28周五",
+            "10-29周六"
+          ]
         },
         yAxis: {
           type: "value"
         },
-        // title:"近一个月成交",
-        series: this.info.trend.series,
+        series: [
+          {
+            data: [0, 15, 30, 45, 60],
+            data: [35, 34, 28, 45, 40, 58, 30, 40],
+            type: "line",
+            areaStyle: {},
+            smooth: true //这个是把线变成曲线
+          }
+        ],
+        legend: {
+          data: ["销量"]
+        },
         color: {
           type: "linear",
           x: 0,
@@ -162,22 +138,39 @@ export default {
           ],
           global: false // 缺省为 false
         }
-      });
+      },
+      today: {}, // 今日
+      yesterday: {}, //昨日
+      seven: {}, //近七日
+      month: {}, //近一个月
+      info: {}
+    };
+  },
+  methods: {
+    // 这是获取全部订单的请求
+    async Goodssummarize() {
+      let data = await Goodssummarize({});
+      console.log(data);
+      this.info = data;
+      this.month = data.month;
+      this.yesterday = data.yesterday;
+      this.seven = data.seven;
+      this.today = data.today;
+      console.log(this.today);
     }
   },
   created() {
-    this.Goodssummarize();
-    this.getshuju();
+    this.Goodssummarize(this.today);
   }
 };
 </script>
 
 <style lang="less" scoped>
-// .echarts {
-//   height: 40vh;
-//   background-color: #fff;
-//   margin: 0 66px;
-// }
+.echarts {
+  height: 40vh;
+  background-color: #fff;
+  margin: 0 66px;
+}
 .box {
   display: flex;
   justify-content: space-around;
@@ -219,14 +212,6 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-  }
-}
-
-.cc {
-   margin: 0 30px;
-   width: 100%;
-  div {
-    background-color: #fff;
   }
 }
 </style>
