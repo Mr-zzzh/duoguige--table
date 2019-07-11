@@ -114,19 +114,16 @@ class User extends Common {
         }
         $info = $this->where($map)->find();
         if (empty($info)) {
-            $this->error = '未找到用户!';
-            return false;
+            show_json(0, '未找到该用户!');
         }
         $info = $info->toArray();
         if (empty($token)) {
             if (md5($password . $info['salt']) != $info['password']) {
-                $this->error = '密码错误,请重新输入!';
-                return false;
+                show_json(0, '密码错误,请重新输入!');
             }
         }
         if ($info['normal'] == 2) {
-            $this->error = '该账号已禁用!';
-            return false;
+            show_json(0, '该账号已禁用!');
         }
         if ($info['type'] == 1) {
             $info['identity'] = '普通用户';
@@ -169,8 +166,7 @@ class User extends Common {
         }
         $info = $info->toArray();
         if ($info['normal'] == 2) {
-            $this->error = '该账号已禁用!';
-            return false;
+            show_json(0, '该账号已禁用!');
         }
         if ($info['type'] == 1) {
             $info['identity'] = '普通用户';
