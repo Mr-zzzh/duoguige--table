@@ -12,36 +12,14 @@ class Inform extends Common {
     }
 
     public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
-        }
-        if (!empty($params['salary'])) {
-            $map['a.salary'] = intval($params['salary']);
-        }
-        if (!empty($params['province'])) {
-            $map['a.province'] = intval($params['province']);
-        }
-        if (!empty($params['city'])) {
-            $map['a.city'] = intval($params['city']);
-        }
-        if (!empty($params['area'])) {
-            $map['a.area'] = intval($params['area']);
-        }
-        if (!empty($params['keyword'])) {
-            $map['a.post|a.description|a.duty|a.name|a.phone|c.company_name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
-        }
-        $map['a.status'] = 1;
-        $list            = $this->alias('a')
-            ->join('salary s', 'a.salary=s.id', 'left')
-            ->join('company c', 'a.uid=c.uid', 'left')
-            ->field('a.id,a.post,a.province,a.city,a.createtime,a.name,a.phone,s.name salary_text,c.company_name')
-            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        global $member;
+        $map        = array();
+        $map['uid'] = 1;
+        $list       = $this->field('id,title,read,createtime')
+            ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                $item['province_text'] = city_name($item['province']);
-                $item['city_text']     = city_name($item['city']);
-                $item['createtime']    = date('Y-m-d', $item['createtime']);
+                $item['createtime'] = date('Y-m-d', $item['createtime']);
             }
             unset($item);
         }
