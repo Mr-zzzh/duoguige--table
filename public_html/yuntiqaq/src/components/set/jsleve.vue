@@ -19,24 +19,49 @@
             </el-table-column>
             <el-table-column
             prop="name"
-            label="等级名称" align="center"
+            label="规则名称" align="center"
             >
             </el-table-column>
             <el-table-column
             prop="score" align="center"
-            label="分数">
+            label="等级名称">
+            <template slot-scope="scope">
+                <div v-for="ia in scope.row.content" :key="ia.id">
+                    {{ia.name}}
+                </div>
+            </template>
+            </el-table-column>
+            <el-table-column
+            prop="score" align="center"
+            label="晋级条件">
+            <template slot-scope="scope">
+                <div style="display:flex">
+                    <div style="flex:1">
+                        <div v-for="ia in scope.row.content" :key="ia.id">
+                           分数：{{ia.min_score}}--{{ia.max_score}}
+                        </div>
+                    </div>
+                    <div style="flex:1">
+                        <div v-for="ia in scope.row.content" :key="ia.id">
+                            订单量：{{ia.min_number}}--{{ia.max_number}}
+                        </div>
+                    </div>
+                </div>
+            </template>
             </el-table-column>
             <el-table-column
             prop="status_text" align="center"
             label="状态">
             <template slot-scope="scope">
-                <div v-if='scope.row.status == 1'>开启</div>
-                <div v-if='scope.row.status == 2'>不开启</div>
+                <el-switch
+                v-model="scope.row.status"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                active-value="1"
+                @change="gbzt(scope.row.id,scope.row.status)"
+                inactive-value="2">
+                </el-switch>
             </template>
-            </el-table-column>
-            <el-table-column
-            prop="number" align="center"
-            label="接单数">
             </el-table-column>
             <el-table-column
             prop="createtime" align="center"
@@ -81,19 +106,19 @@
                     <el-radio v-model="form.status" label="2">不开启</el-radio>
                 </el-form-item>
                 <el-form-item label="晋级条件">
-                    <div v-for="ia in form.content" :key='ia.id'>
+                    <div v-for="(ia,index) in form.content" :key='ia.id' style="margin-bottom:10px;">
                         <el-input v-model="ia.name" style='width: 10%;'></el-input>
                         <span>分数:</span>
-                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <el-input v-model="ia.min_score" style='width: 10%;'></el-input>
                         <span>-</span>
-                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <el-input v-model="ia.max_score" style='width: 10%;'></el-input>
                         <span>订单量:</span>
-                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <el-input v-model="ia.min_number" style='width: 10%;'></el-input>
                         <span>-</span>
-                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
-                        <i class="el-icon-remove-outline"></i>
+                        <el-input v-model="ia.max_number" style='width: 10%;'></el-input>
+                        <i class="el-icon-remove-outline" style="font-size:24px" @click="sctj(index)"></i>
                     </div>
-                    <i class="el-icon-circle-plus-outline"></i>
+                    <i class="el-icon-circle-plus-outline" style="font-size: 30px" @click="xztj"></i>
                 </el-form-item>
             </el-form>
         </span>
@@ -119,12 +144,10 @@
                 bjid:'',
                 form:{
                     name:'',
-                    score:'',
-                    number:'',
                     status:'',
                     content:[{}],
                 },
-                dialogVisible:true,
+                dialogVisible:false,
                 page:1,
                 limit:15,
                 total:0,
@@ -134,6 +157,33 @@
             }
         },
         methods:{
+            gbzt(e,q){
+                console.log(q)
+                this.$axios({
+                    method:'get',
+                    url:`${this.api}admin/grade/${e}`,
+                    params:{
+                        status:q
+                    }
+                }).then(res=>{
+                    if(res.data.status == 1){
+                        console.log(res.data)
+                        this.page = 1
+                        this.limit = 15
+                        this.getlist()
+                        this.$message.success(res.data.message)
+                    }else{
+                        this.$messages.error(res.data.message)
+                    }
+                })
+            },
+            // 新增晋级条件
+            xztj(){
+                this.form.content.push({})
+            },
+            sctj(e){
+                this.form.content.splice(e,1)
+            },
             // 弹窗
             handleClose(){
                 this.dialogVisible = false
@@ -208,23 +258,27 @@
             },
             // 编辑
             bj(e){
+                console.log(e)
+                this.form.name = e.name
+                this.form.status = e.status
+                this.form.content = e.content
                 this.bjid = e.id
                 this.dialogVisible = true
-                this.$axios({
-                    method:'get',
-                    url:`${this.api}admin/grade/${this.bjid}`,
-                    params:{
+                // this.$axios({
+                //     method:'get',
+                //     url:`${this.api}admin/grade/${this.bjid}`,
+                //     params:{
 
-                    }
-                }).then(res=>{
-                    if(res.data.status == 1){
-                        console.log(res.data.data)
-                        this.form = res.data.data
-                        this.form.status = this.form.status.toString()
-                    }else{
-                        this.$message.error(res.data.message)
-                    }
-                })
+                //     }
+                // }).then(res=>{
+                //     if(res.data.status == 1){
+                //         console.log(res.data.data)
+                //         this.form = res.data.data
+                //         this.form.status = this.form.status.toString()
+                //     }else{
+                //         this.$message.error(res.data.message)
+                //     }
+                // })
             },
             bjbtn(){
                 this.$axios({
@@ -263,6 +317,9 @@
                     if(res.data.status == 1){
                         console.log(res.data.data)
                         this.tableData = res.data.data.data
+                        this.tableData.forEach(res=>{
+                            res.status = res.status.toString()
+                        })
                         this.total = res.data.data.total
                     }else{
                         this.$message.error(res.data.message)
