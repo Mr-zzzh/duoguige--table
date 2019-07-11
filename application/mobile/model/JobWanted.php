@@ -5,9 +5,18 @@ namespace app\mobile\model;
 class JobWanted extends Common {
 
     public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
+        $map   = array();
+        $where = '';
+        if (!empty($params['type'])) {
+            if (intval($params['type']) == 1) {
+                $where = "-3 days";
+            } elseif (intval($params['type']) == 2) {
+                $where = "-7 days";
+            } elseif (intval($params['type']) == 3) {
+                $where = "-1 months";
+            } else {
+                $where = '';
+            }
         }
         if (!empty($params['salary'])) {
             $map['a.salary'] = intval($params['salary']);
@@ -29,7 +38,8 @@ class JobWanted extends Common {
             ->join('user u', 'a.uid=u.id', 'left')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->field('a.id,a.post,a.name,a.createtime,a.intro,s.name salary_text,u.phone,u.avatar')
-            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+            ->where($map)
+            ->whereTime('a.createtime', $where)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d', $item['createtime']);
