@@ -14,7 +14,7 @@ class Inform extends Common {
     public function GetAll($params) {
         global $member;
         $map        = array();
-        $map['uid'] = 1;
+        $map['uid'] = $member['id'];
         $list       = $this->field('id,title,read,createtime')
             ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
