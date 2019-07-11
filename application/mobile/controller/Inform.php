@@ -46,6 +46,20 @@ class Inform extends Common {
     }
 
     /**
+     * @title 删除
+     * @url /inform/:id
+     * @method delete
+     * @author 开发者
+     */
+    public function delete($id) {
+        if ($id < 1) {
+            show_json(0, '参数ID错误');
+        }
+        $m = new \app\mobile\model\Inform();
+        $m->DelOne($id);
+    }
+
+    /**
      * @title 读取
      * @url /inform/:id
      * @method get

@@ -74,6 +74,14 @@ class Inform extends Common {
         }
     }
 
+    public function DelOne($id) {
+        if ($this->where(array('id' => $id))->delete()) {
+            show_json(1, '删除成功');
+        } else {
+            show_json(0, '删除失败');
+        }
+    }
+
     public function GetOne($id) {
         $item = $this->get($id);
         if (empty($item)) {
