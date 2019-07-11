@@ -35,6 +35,26 @@ class User extends Common {
     }
 
     /**
+     * @title 大师管理
+     * @url /admin/user/technician
+     * @method get
+     * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
+     * @param name:limit type:int require:0 default:15 desc:每页记录数
+     * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @return total:总记录数
+     * @return per_page:每页记录数
+     * @return current_page:当前的页码
+     * @return last_page:最后的页码+
+     * @return data:列表@
+     * @data id:id name:姓名 phone:电话 number:订单数 score:分数 grade:等级
+     * @author 开发者
+     */
+    public function technician() {
+        $m = new \app\admin\model\User();
+        $m->Technician(request()->get());
+    }
+
+    /**
      * @title 添加
      * @url /admin/user
      * @method post

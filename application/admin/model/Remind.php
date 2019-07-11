@@ -52,4 +52,22 @@ class Remind extends Common {
         show_json(1, $item);
     }
 
+    //审核通知添加
+    public function InformAdd($uid, $status, $type, $checkid, $content) {
+        $a     = array('1' => '公司信息', '2' => '技师信息', '3' => '维保信息', '4' => '招聘信息', '5' => '求职');
+        $b     = array('1' => '通过', '2' => '未通过');
+        $title = '您提交的' . $a[$type] . '审核' . $b[$status] . '审核';
+        $data  = [
+            'uid'        => $uid,
+            'title'      => $title,
+            'status'     => $status,
+            'content'    => $content,
+            'type'       => $type,
+            'checkid'    => $checkid,
+            'read'       => 0,
+            'createtime' => time(),
+        ];
+        db('inform')->insert($data);
+    }
+
 }

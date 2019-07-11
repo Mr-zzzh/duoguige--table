@@ -81,12 +81,14 @@ class Grade extends Common {
         }
     }
 
-    public function GetOne($id) {
-        $this->where('status', 1)->update(array('status' => 2));
-        if ($this->save(array('status' => 1), array('id' => $id)) !== false) {
-            show_json(1, '编辑成功');
+    public function GetOne($id, $status) {
+        if ($status == 1) {
+            $this->where('status', 1)->update(array('status' => 2));
+        }
+        if ($this->save(array('status' => $status), array('id' => $id)) !== false) {
+            show_json(1, '切换成功');
         } else {
-            show_json(0, '编辑失败');
+            show_json(0, '切换失败');
         }
     }
 

@@ -557,6 +557,22 @@ CREATE TABLE `yunti_share` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 审核信息通知表
+DROP TABLE IF EXISTS `yunti_inform`;
+CREATE TABLE `yunti_inform` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) DEFAULT NULL COMMENT '用户id',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `status` int(2) DEFAULT NULL COMMENT '审核状态_1通过_2不通过',
+  `content` varchar(255) DEFAULT NULL COMMENT '审核备注',
+  `type` int(4) DEFAULT NULL COMMENT '类型_1公司认证_2技师认证_3维保单审核_4招聘审核_5求职审核',
+  `checkid` int(11) DEFAULT NULL COMMENT '审核id',
+  `read` int(2) DEFAULT '0' COMMENT '0未阅_1已阅',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 
 

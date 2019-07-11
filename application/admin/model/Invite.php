@@ -119,6 +119,8 @@ class Invite extends Common {
         $data['checktime'] = time();
         if ($this->save($data, array('id' => intval($params['id']))) !== false) {
             //logs('编辑??,ID:' . $id, 3);
+            $uid = $this->where('id', intval($params['id']))->value('uid');
+            inform_add($uid, $data['status'], 4, intval($params['id']), $data['remark']);
             show_json(1, '审核成功');
         } else {
             show_json(0, '审核失败');
