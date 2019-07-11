@@ -574,3 +574,11 @@ if (!function_exists('sendCode')) {
         }
     }
 }
+
+//审核信息通知
+if (!function_exists('inform_add')) {
+    function inform_add($uid = '', $status = '', $type = '', $checkid = '', $content = '') {
+        $address = new \app\admin\model\Remind();
+        $address->InformAdd($uid, $status, $type, $checkid, $content);
+    }
+}
