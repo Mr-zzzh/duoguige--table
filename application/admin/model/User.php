@@ -34,19 +34,55 @@ class User extends Common {
     }
 
     public function Technician($params) {
-        $map           = array();
-        $map['status'] = 1;
-        $map['type']   = 2;
-        $map['normal'] = 1;
+        $map             = array();
+        $map['u.status'] = 1;
+        $map['u.type']   = 2;
+        $map['u.normal'] = 1;
         if (!empty($params['keyword'])) {
-            $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['u.name|u.phone|u.intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->field('id,name,phone')->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->alias('u')
+            ->join('maintenance m', 'u.id=receive_id', 'left')
+            ->field('u.id,u.name,u.phone,count(m.id) as number')
+            ->where($map)->group('u.id')->order('u.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
-                
+                $item['score'] = db('maintenance')->alias('a')
+                    ->join('evaluate e', 'a.id=e.mid', 'right')
+                    ->where('a.receive_id', $item['id'])->sum('start');
+                $item['score'] = intval($item['score']) * 10;
             }
             unset($item);
+        }
+        $grade = db('grade')->where('status', 1)->find();
+        if (empty($grade)) {
+            foreach ($list['data'] as $k => &$v) {
+                $v['grade'] = '暂未开启等级制度';
+            }
+            unset($v);
+        } else {
+            $grade['content'] = unserialize($grade['content']);
+            foreach ($list['data'] as $k => &$v1) {
+                $a = 0;
+                $b = 0;
+                foreach ($grade['content'] as $key2 => &$v2) {
+                    if ($v1['score'] >= $v2['min_score'] && $v1['score'] < $v2['max_score']) {
+                        $a1 = $v2['name'];
+                        $a  = $key2;
+                    }
+                    if ($v1['number'] >= $v2['min_number'] && $v1['number'] < $v2['max_number']) {
+                        $b1 = $v2['name'];
+                        $b  = $key2;
+                    }
+                }
+                if ($a > $b) {
+                    $v2['grade'] = $a1;
+                } else {
+                    $v2['grade'] = $b1;
+                }
+                unset($v2);
+            }
+            unset($v1);
         }
         show_json(1, $list);
     }
