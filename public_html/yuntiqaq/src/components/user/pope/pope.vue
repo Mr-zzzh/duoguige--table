@@ -218,7 +218,6 @@ export default {
     }
   },
   mounted() {
-    // this.getUserTab();
   },
   created() {
     this.getUserTab();

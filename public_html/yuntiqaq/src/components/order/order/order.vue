@@ -106,7 +106,7 @@ export default {
           ]
         },
         yAxis: {
-          // type: "value"
+          type: "value"
         },
         series: [
           {

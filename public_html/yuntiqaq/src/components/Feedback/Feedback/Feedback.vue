@@ -1,25 +1,16 @@
 <template>
   <div class="user">
-    <el-table :data="tableData" style="width:100% ,display:flex">
-      <el-table-column label="ID" style="flex:1" type="index"></el-table-column>
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column label="ID" type="index"  width="180"></el-table-column>
 
-      <el-table-column label="反馈内容" style="flex:1">
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top">
-            <!-- 附框 -->
-            <p>反馈:{{ scope.row.content }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.content}}</el-tag>
-            </div>
-          </el-popover>
-        </template>
-      </el-table-column>
-      <el-table-column label="反馈人信息" style="flex:1" prop="uname"></el-table-column>
+      <el-table-column label="反馈内容" prop="content" overflow="hidden" text-overflow="ellipsis" white-space="nowrap"></el-table-column>
+      <el-table-column label="反馈人信息" prop="uname"></el-table-column>
 
-      <el-table-column label="反馈时间" prop="createtime" style="flex:1"></el-table-column>
+      <el-table-column label="反馈时间" prop="createtime"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
+          <el-button @click="info(scope.row.id)" type="text" size="small">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -37,6 +28,24 @@
         :total="this.total"
       ></el-pagination>
     </div>
+
+    <!-- 新增or编辑 -->
+    <el-dialog title="反馈信息" :visible.sync="dialogVisible" width="60%" :before-close="handleClose">
+      <span>
+        <el-form ref="form" :model="form" label-width="100px" disabled>
+          <el-form-item label="反馈人信息">
+            <el-input v-model="form.uname"></el-input>
+          </el-form-item>
+          <el-form-item label="反馈内容">
+            <el-input type="textarea" v-model="form.content"></el-input>
+          </el-form-item>
+        </el-form>
+      </span>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false" type="primary">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -51,7 +60,17 @@ export default {
       keyword: "",
       total: 0,
       currentPage: 1,
-      tableData: []
+      tableData: [],
+
+      // 与弹窗相关
+      dialogVisible: false,
+      form: {
+        content: "",
+        createtime: "",
+        id: "",
+        uid: "",
+        uname: ""
+      }
     };
   },
   mounted() {},
@@ -62,7 +81,8 @@ export default {
         keyword: this.keyword,
         limit: this.limit,
         page: this.page,
-        type: 1
+        type: 1,
+        id: this.id
       });
       console.log(data);
       // this.tableData = data.data = [{}]//  模仿的假数据
@@ -102,6 +122,24 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    info(id) {
+      console.log(id);
+      console.log(this.tableData);
+      this.tableData.forEach(item => {
+        console.log(item);
+        if (id == item.id) {
+          this.form = item;
+          this.form.content = item.content;
+          this.form.uname = item.uname;
+          console.log(this.form);
+        }
+      });
+      this.dialogVisible = true;
+    },
+    // 弹窗
+    handleClose() {
+      this.dialogVisible = false;
     }
   },
   created() {
@@ -112,7 +150,8 @@ export default {
     
 
 <style lang="less" scoped>
-.user{
+.user {
   background-color: #fff;
+  padding: 8px;
 }
 </style>

@@ -85,6 +85,18 @@ export default new Router({
           },
 
         },
+<<<<<<< HEAD
+
+        {
+          path: '/admin_label',
+          name: 'admin_label',
+          component: resolve => require(['../components/shopgl/label/label.vue'], resolve),
+          meta: {
+            title: '标签管理',
+          },
+        },
+=======
+>>>>>>> 06ea6bd36b55da817141678d851a5ec4b0ebdf2f
         {
           path: '/admin_order',
           name: 'admin_order',
@@ -214,6 +226,82 @@ export default new Router({
           },
         },
         {
+<<<<<<< HEAD
+          path: '/admin_label',
+          name: 'admin_label',
+          component: resolve => require(['../components/shopgl/label/label.vue'], resolve),
+          meta: {
+            title: '标签管理',
+          },
+        },
+        {
+          path: '/admin_news',
+          name: 'admin_news',
+          component: resolve => require(['../components/news/news.vue'], resolve),
+          meta: {
+            title: '新闻动态',
+          },
+        },
+        {
+          path: '/admin_newsadd',
+          name: 'admin_newsadd',
+          component: resolve => require(['../components/news/newsadd.vue'], resolve),
+          meta: {
+            title: '新闻动态新增or编辑',
+          },
+        },
+        {
+          path: '/admin_newsxq',
+          name: 'admin_newsxq',
+          component: resolve => require(['../components/news/newsxq.vue'], resolve),
+          meta: {
+            title: '新闻动态详情',
+          },
+        },
+        {
+          path: '/admin_dtgl',
+          name: 'admin_dtgl',
+          component: resolve => require(['../components/shopgl/dtgl/dtgl.vue'], resolve),
+          meta: {
+            title: '商品管理',
+          },
+        },
+        {
+          path: '/admin_dtgladd',
+          name: 'admin_dtgladd',
+          component: resolve => require(['../components/shopgl/dtgl/dtgladd.vue'], resolve),
+          meta: {
+            title: '商品管理新增or编辑',
+          },
+        },
+        {
+          path: '/admin_news',
+          name: 'admin_news',
+          component: resolve => require(['../components/news/news.vue'], resolve),
+          meta: {
+            title: '新闻动态',
+          },
+        },
+        {
+          path: '/admin_newsadd',
+          name: 'admin_newsadd',
+          component: resolve => require(['../components/news/newsadd.vue'], resolve),
+          meta: {
+            title: '新闻动态新增or编辑',
+          },
+        },
+        {
+          path: '/admin_newsxq',
+          name: 'admin_newsxq',
+          component: resolve => require(['../components/news/newsxq.vue'], resolve),
+          meta: {
+            title: '新闻动态详情',
+          },
+        },
+
+        {
+=======
+>>>>>>> 06ea6bd36b55da817141678d851a5ec4b0ebdf2f
           path: '/admin_brandgl',
           name: 'admin_brandgl',
           component: resolve => require(['../components/brandgl/brandgl/brandgl.vue'], resolve),
