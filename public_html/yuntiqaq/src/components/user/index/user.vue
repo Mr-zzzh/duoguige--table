@@ -33,19 +33,14 @@
     </div>
 
     <div class="btn">
-      <el-button type="danger" @click="get" v-model="normal">设置黑名单</el-button>
-      <el-button type="primary" @click="getQU">取消黑名单</el-button>
+      <el-button type="danger" @click="getSz">设置黑名单</el-button>
+      <el-button type="primary" @click="getQx">取消黑名单</el-button>
     </div>
 
     <!-- 下面的表格 -->
     <div class="table">
-      <el-table
-        :data="tableData"
-        style="width: 100%"
-        @selection-change="selectionChange"
-        @select-all="clickAll"
-      >
-        <el-table-column type="selection" width="55" v-model="normal"></el-table-column>
+      <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
+        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column label="ID" width="180" type="index"></el-table-column>
 
         <el-table-column label="姓名" width="180" prop="name"></el-table-column>
@@ -59,8 +54,8 @@
             <span>金额:{{ scope.row.price || 10 }}</span>
           </template>
         </el-table-column>
-
-        <el-table-column label="黑名单">
+        <el-table-column label="注册时间" prop="status_text"></el-table-column>
+        <el-table-column label="黑名单" v-model="normal">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.normal==1"
@@ -110,6 +105,10 @@ import { getForbidden } from "@/components/apicom/index";
 export default {
   data() {
     return {
+      status: "",
+      total: 1,
+      id: "",
+      normal: "",
       // 下拉列表里面的数据
       page: 0, //获取的页面
       limit: 15, //每页记录数
@@ -118,9 +117,6 @@ export default {
       currentPage: 1, // 当前页
       tableData: [], //获得的数据
       // 需要做判断的类型
-      selectedList: "",
-      // 选择框里的黑名单和正常的时候
-      normal: "",
       options: [
         {
           status: 0,
@@ -134,96 +130,79 @@ export default {
           status: 2,
           status_text: "不通过"
         }
-      ],
-      normal_text: "",
-      normal: "",
-      id: "",
-      status: "",
-      ids: [],
-      op: {}
+      ]
     };
   },
 
   methods: {
-    // 这三个是表格中的
-    // 当选择项发生变化时会触发该事件
-    selectionChange(list) {
-      this.selectedList = Number(list.map(v => v.id).join(","));
-      this.id = this.selectedList;
-    },
-    // 这是自己封装的，意思是当点击设置或是取消的时候出发
-    async cancelBlackList() {
-      // await cancelBlackList(this.selectedList)
-      // this.getUserTab();
-    },
-    // 点击设置黑名单的时候
-    get() {
-      this.tableData.forEach(res => {
-        console.log(res);
-        this.id = res.id;
-        this.normal = 1;
-        this.getForbidden();
-        this.getUserTab();
-        this.normal_text = "禁用";
-      });
-    },
-    // 点击取消黑名单的时候
-    getQU() {
-      this.normal = 2;
-      this.getForbidden();
-      this.getUserTab();
-    },
-    // 当点击全部的时候
-    clickAll(selection) {},
-    // 点击其中一个按钮的时候
-    btn(id, row) {
-      this.id = id;
-      console.log(this.id);
-      console.log(row);
-      if (row.normal == 1) {
-        this.normal = 2;
-        this.normal_text = "禁用";
-      } else if (row.normal == 2) {
-        this.normal = 1;
-        this.normal_text = "启用";
-      }
-      this.getForbidden();
-      this.getUserTab();
-    },
-    // 这是获取用户列表的请求
-    async getUserTab() {
-      let data = await getUserTab({
+    //获得表格数据的请求
+    aa() {
+      getUserTab({
+        total: this.total,
+        type: 1,
         keyword: this.keyword,
         limit: this.limit,
         page: this.page,
-        type: 1,
-        normal: this.normal,
-        status: this.status,
-        normal_text: this.normal_text,
+        status: this.status
+      }).then(res => {
+        console.log(res);
+        this.tableData = res.data;
+        res.data.forEach(item => {
+          this.id = item.id;
+        });
+      });
+    },
+    // 启用和禁用的请求
+    bb(id, normal) {
+      getForbidden({
         id: this.id,
         normal: this.normal
-      });
-      console.log(this.normal);
-      console.log(data, 11111);
-      this.tableData = data.data;
-      this.total = data.total;
-      this.page = data.total / this.limit;
-      data.data.forEach(element => {
-        console.log(element);
-        this.id = element.id;
+      }).then(res => {
+        console.log(res);
       });
     },
-
-    // 这是启用，禁用的请求
-    async getForbidden() {
-      let data = await getForbidden({
-        id: this.id,
-        normal: this.normal,
-        status: this.status
-      });
-      console.log(data);
+    // 点击启用和禁用按钮的时候
+    btn(id, row) {
+      console.log(id, row); //--可以获取该行的id，和详情
+      this.id = id;
+      if (row.normal == 1) {
+        this.normal = row.normal = 2;
+        this.normal_text = row.normal_text = "禁用";
+      } else if (row.normal == 2) {
+        this.normal = row.normal = 1;
+        this.normal_text = row.normal_text = "启用";
+      }
+      this.bb(id, this.normal);
+      this.bb(this.id, this.normal);
+      console.log(id, row);
     },
-
+    // 点击设置黑名单的时候
+    getSz() {
+      this.tableData.forEach(res => {
+        this.id = res.id;
+        this.normal = res.normal = 2;
+        this.bb(res.id, this.normal);
+        console.log(this.tableData);
+      });
+    },
+    // 点击取消黑名单的时候
+    getQx() {
+      this.selectionChange(this.tableData);
+    },
+    // 单独点击一个选择框的时候,当选择框发生改变的时候,
+    // 当选中的时候才出发
+    selectionChange(row) {
+      console.log(row.length);
+      if (row.length >= 1) {
+        // 至少有一项被选中
+        row.forEach(item => {
+          this.id = item.id;
+          this.normal = item.normal = 1;
+          this.bb(this.id, this.normal);
+          console.log(row);
+        });
+      }
+    },
     // 删除
     del(id) {
       this.$confirm("是否确定删除?", "提示", {
@@ -243,16 +222,14 @@ export default {
           });
         });
     },
-    // 搜索
-    search() {
-      this.normal = 2;
-      this.getUserTab();
-    },
     // 获取分类
     categry() {
-      this.getUserTab();
+      this.aa();
     },
-
+    // 搜索
+    search() {
+      this.aa();
+    },
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
@@ -269,7 +246,7 @@ export default {
   },
   mounted() {},
   created() {
-    this.getUserTab();
+    this.aa();
   }
 };
 </script>

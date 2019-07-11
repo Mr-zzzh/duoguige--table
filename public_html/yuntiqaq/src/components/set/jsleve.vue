@@ -76,15 +76,24 @@
                 <el-form-item label="名称">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="分数">
-                    <el-input v-model="form.score"></el-input>
-                </el-form-item>
-                <el-form-item label="接单数">
-                    <el-input v-model="form.number"></el-input>
-                </el-form-item>
                 <el-form-item label="状态">
                     <el-radio v-model="form.status" label="1">开启</el-radio>
                     <el-radio v-model="form.status" label="2">不开启</el-radio>
+                </el-form-item>
+                <el-form-item label="晋级条件">
+                    <div v-for="ia in form.content" :key='ia.id'>
+                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <span>分数:</span>
+                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <span>-</span>
+                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <span>订单量:</span>
+                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <span>-</span>
+                        <el-input v-model="ia.name" style='width: 10%;'></el-input>
+                        <i class="el-icon-remove-outline"></i>
+                    </div>
+                    <i class="el-icon-circle-plus-outline"></i>
                 </el-form-item>
             </el-form>
         </span>
@@ -113,8 +122,9 @@
                     score:'',
                     number:'',
                     status:'',
+                    content:[{}],
                 },
-                dialogVisible:false,
+                dialogVisible:true,
                 page:1,
                 limit:15,
                 total:0,

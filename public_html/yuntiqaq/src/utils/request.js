@@ -16,8 +16,8 @@ const request = axios.create({
 
 request.interceptors.request.use(
     config => {
-        isLoading = config.isLoading || true
-        isSuccessTip = config.isSuccessTip || true
+        // isLoading = config.isLoading || true
+        // isSuccessTip = config.isSuccessTip || true
         isLoading && (loading = Loading.service({ text: '正在加载中', background: 'rgba(0, 0, 0, 0.3)' }))
         config.qs && (config.data = qs.stringify(config.data, { indices: false }))
         if (localStorage.getItem('admin_info')) {

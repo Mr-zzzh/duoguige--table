@@ -131,5 +131,6 @@ export default {
 <style lang="less" scoped>
 .user{
   background-color: #fff;
+  padding: 8px
 }
 </style>

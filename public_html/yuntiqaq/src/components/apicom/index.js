@@ -18,7 +18,7 @@ import request from '@/utils/request'
 // 用户管理模块
 // 获得用户分类/分类管理的接口
 export const getUserTab = (params) => {
-    return request.get("admin/user", { params, isLoading: true, isSuccessTip: true });
+    return request.get("admin/user", { params, isLoading: true});
 }
 
 //  获得用户分类/获得删除用户
@@ -30,7 +30,7 @@ export const delUser = (params) => {
 // 获取用户详情的接口
 export const getUserInfo = (params) => {
     console.log('test')
-    return request.get(`admin/user/${params}`, { params, isLoading: true, isSuccessTip: true });
+    return request.get(`admin/user/${params}`, { params, isLoading: true});
 }
 
 // 用户分类页面/读取用户的的详细信息的接口-----去到用户审核的页面，必须有改用户的id

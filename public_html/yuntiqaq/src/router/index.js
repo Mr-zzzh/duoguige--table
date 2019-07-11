@@ -29,7 +29,7 @@ export default new Router({
         {
           path: '/admin_user',
           name: '/admin_user',
-          component: resolve => require(['../components/user/index/index.vue'], resolve),
+          component: resolve => require(['../components/user/index/user.vue'], resolve),
           meta: {
             title: '用户管理',
           },

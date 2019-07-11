@@ -6,17 +6,17 @@
           <h5>今日成交</h5>
 
           <div>
-            <span>人均消费:0</span>
+            <span>人均消费:￥{{today.average}}</span>
           </div>
         </div>
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{today.turnover}}/{{today.volume}}</div>
           </div>
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{today.turnover}}/{{today.volume}}</div>
           </div>
         </div>
       </div>
@@ -24,17 +24,17 @@
         <div class="top">
           <h5>昨日成交</h5>
           <div>
-            <span>人均消费:0</span>
+            <span>人均消费:￥{{yesterday.average}}</span>
           </div>
         </div>
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{yesterday.average}}/{{yesterday.average}}</div>
           </div>
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{yesterday.average}}/{{yesterday.average}}</div>
           </div>
         </div>
       </div>
@@ -42,17 +42,17 @@
         <div class="top">
           <h5>近7日成交</h5>
           <div>
-            <span>人均消费:￥120元</span>
+            <span>人均消费:￥{{seven.average}}</span>
           </div>
         </div>
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{seven.average}}/{{seven.average}}</div>
           </div>
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{seven.average}}/{{seven.average}}</div>
           </div>
         </div>
       </div>
@@ -60,17 +60,17 @@
         <div class="top">
           <h5>近一个月成交</h5>
           <div>
-            <span>人均消费:0</span>
+            <span>人均消费:￥{{month.average}}</span>
           </div>
         </div>
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{month.average}}、{{month.average}}</div>
           </div>
           <div>
             <div>成交量/交易量(件)</div>
-            <div>0/0</div>
+            <div>{{month.average}}、{{month.average}}</div>
           </div>
         </div>
       </div>
@@ -92,20 +92,49 @@ export default {
   data() {
     return {
       option: {
-    xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',
-        areaStyle: {}
-    }]
-},
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: [
+            "10-23周日",
+            "10-24周一",
+            "10-25周二",
+            "10-26周三",
+            "10-27周四",
+            "10-28周五",
+            "10-29周六"
+          ]
+        },
+        yAxis: {
+          // type: "value"
+        },
+        series: [
+          {
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: "line",
+            areaStyle: {}
+          }
+        ],
+        color: {
+          type: "linear",
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            {
+              offset: 0,
+              color: "skyblue" // 0% 处的颜色
+             
+            },
+            {
+              offset: 1,
+              color: "skyblue" // 100% 处的颜色
+            }
+          ],
+          global: false // 缺省为 false
+        }
+      },
       today: {}, // 今日
       yesterday: {}, //昨日
       seven: {}, //近七日
@@ -119,10 +148,10 @@ export default {
       let data = await Goodssummarize({});
       console.log(data);
       this.info = data;
-      // this.month=data.month
-      // this.yesterday=data.yesterday
-      // this.seven=data.seven
-      // this.today=data.today
+      this.month = data.month;
+      this.yesterday = data.yesterday;
+      this.seven = data.seven;
+      this.today = data.today;
       console.log(this.today);
     }
   },
