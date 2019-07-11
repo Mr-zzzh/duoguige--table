@@ -81,14 +81,19 @@ class Grade extends Common {
      * @title 使用
      * @url /admin/grade/:id
      * @method get
+     * @param name:status type:string require:1 default:- other:- desc:状态_1开启_2不开启
      * @author 开发者
      */
     public function read($id) {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
+        $status = intval(request()->param('status'));
+        if (empty($status)) {
+            show_json(0, '请传状态');
+        }
         $m = new \app\admin\model\Grade();
-        $m->GetOne($id);
+        $m->GetOne($id, $status);
     }
 
 }
