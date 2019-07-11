@@ -75,12 +75,12 @@ class User extends Common {
                         $b  = $key2;
                     }
                 }
-                if ($a > $b) {
-                    $v2['grade'] = $a1;
-                } else {
-                    $v2['grade'] = $b1;
-                }
                 unset($v2);
+                if ($a > $b) {
+                    $v1['grade'] = $a1;
+                } else {
+                    $v1['grade'] = $b1;
+                }
             }
             unset($v1);
         }
