@@ -57,6 +57,9 @@ class Technician extends Common {
                 if (!empty($item['thumb'])) {
                     $item['thumb'] = explode(',', $item['thumb']);
                 }
+                if (empty($item['answer'])) {
+                    $item['answer'] = '';
+                }
             }
             unset($item);
         }
