@@ -94,7 +94,7 @@ export default {
         .then(() => {
           delFeedback(id);
           this.page = 1;
-          this.getMaintenance();
+          this.getFeedback();
         })
         .catch(() => {
           this.$message({

@@ -18,15 +18,15 @@
 
     <el-select
       @change="categry"
-      v-model="aa"
-      placeholder="黑名单"
+      v-model="status"
+      placeholder="状态"
       style="width:250px;background: white;float: right;margin-right:10px"
     >
       <el-option
-        v-for="(item ,index) in options"
-        :key="index"
-        :label="item.type_text"
-        :value="item.id"
+        v-for="item  in options"
+        :key="item.status"
+        :label="item.status_text"
+        :value="item.status"
       ></el-option>
     </el-select>
 
@@ -45,7 +45,6 @@
       <el-table-column label="联系电话" prop="phone"></el-table-column>
 
       <el-table-column label="状态" prop="status_text"></el-table-column>
-      <el-table-column label="审核人" prop></el-table-column>
       <el-table-column label="申请时间" prop="createtime"></el-table-column>
       <el-table-column label="审核时间" prop="createtime"></el-table-column>
       <el-table-column label="操作">
@@ -81,8 +80,16 @@ export default {
       // 选择框里面要下拉的选项
       options: [
         {
-          id: "",
-          name: "全部分类"
+          status: "0",
+          status_text: "待审"
+        },
+          {
+          status: "1",
+          status_text: "通过"
+        },
+          {
+          status: "2",
+          status_text: "不通过"
         }
       ],
       page: 0,
@@ -92,8 +99,8 @@ export default {
       currentPage: 1,
       tableData: [],
       aa: "",
-      id: null,
-      status: null,
+      id: "",
+      status: "",
       // 存贮当前的一条的所有的信息
       userInfo: {}
     };
@@ -106,9 +113,6 @@ export default {
       console.log(this.selectedList);
       this.id = this.selectedList;
       console.log(this.id);
-
-    
-      
      if (this.selectedList) {
         this.$message.success("已启用");
       } else {
@@ -131,9 +135,10 @@ export default {
         keyword: this.keyword,
         limit: this.limit,
         page: this.page,
-        aa: this.aa,
         // 因为这里是技术大师的页面。所以需要选择类型
-        type: 3
+        type: 3,
+        status:this.status,
+        status_text:this.status
       });
       console.log(data);
       // this.tableData = data.data = [{}]//  模仿的假数据
@@ -141,7 +146,6 @@ export default {
       this.total = data.total;
       this.page = data.total / this.limit;
       data.data.forEach(item => {
-        this.options.push(item);
         this.id = item.id;
       });
       // 主要是要在这个页面获取当前条的信息
@@ -197,7 +201,7 @@ export default {
     }
   },
   mounted() {
-    this.getUserTab();
+    // this.getUserTab();
   },
   created() {
     this.getUserTab();

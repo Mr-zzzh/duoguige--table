@@ -44,7 +44,6 @@
       <el-table-column label="类型" prop="type_text"></el-table-column>
 
       <el-table-column label="状态" prop="status_text"></el-table-column>
-      <el-table-column label="审核人" prop>暂无</el-table-column>
       <el-table-column label="申请时间" prop="createtime"></el-table-column>
       <el-table-column label="审核时间" prop="createtime"></el-table-column>
       <!-- <el-table-column label="启用"> -->
@@ -219,7 +218,7 @@ export default {
     }
   },
   mounted() {
-    this.getUserTab();
+    // this.getUserTab();
   },
   created() {
     this.getUserTab();

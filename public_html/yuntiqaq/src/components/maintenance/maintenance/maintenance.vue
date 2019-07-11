@@ -14,19 +14,37 @@
       >搜索</el-button>
     </el-input>
 
+
+<!--   placeholder="状态:待审核/已审核/已接单/维权" -->
     <el-select
       @change="categry"
       v-model="status"
-      placeholder="状态:待审核/已审核/已接单/维权"
+      placeholder="状态:审核通过/审核不通过"
       style="width:250px;background: white;float: right;margin-right:15px"
     >
       <!-- label:分组的名称 -->
       <!-- value:选项的值 -->
       <el-option
-        v-for="item in options1_son"
+        v-for="item in options1"
         :key="item.status"
         :label="item.status_text"
         :value="item.status"
+      ></el-option>
+    </el-select>
+
+    <el-select
+      @change="categry"
+      v-model="genre"
+      placeholder="维修单/保养单"
+      style="width:250px;background: white;float: right;margin-right:15px"
+    >
+      <!-- label:分组的名称 -->
+      <!-- value:选项的值 -->
+      <el-option
+        v-for="item in options"
+        :key="item.genre"
+        :label="item.genre_text"
+        :value="item.genre"
       ></el-option>
     </el-select>
 
@@ -69,10 +87,9 @@
 </template>
 
 
-    <script>
+<script>
 import { getMaintenance } from "@/components/apicom/index";
 import { delM } from "@/components/apicom/index";
-
 
 export default {
   data() {
@@ -83,38 +100,49 @@ export default {
       total: 0,
       currentPage: 1,
       tableData: [],
-      options1: [],
       aa: "",
       status: "",
-      options1_son: [
+      options: [
         {
-          status: 0,
-          status_text: "取消"
+          genre: 1,
+          genre_text: "维修单"
         },
+        {
+          genre: 2,
+          genre_text: "保养单"
+        }
+      ],
+      genre:"",
+      genre_text:"",
+      options1: [
+        // {
+        //   status: 0,
+        //   status_text: "取消"
+        // },
         {
           status: 1,
           status_text: "审核通过"
         },
         {
           status: 2,
-          status_text: "不通过"
+          status_text: "审核不通过"
         },
-        {
-          status: 3,
-          status_text: "已接单"
-        },
-        {
-          status: 4,
-          status_text: "已完成"
-        },
-        {
-          status: 5,
-          status_text: "投诉"
-        },
-        {
-          status: 6,
-          status_text: "投诉已处理"
-        }
+        // {
+        //   status: 3,
+        //   status_text: "已接单"
+        // },
+        // {
+        //   status: 4,
+        //   status_text: "已完成"
+        // },
+        // {
+        //   status: 5,
+        //   status_text: "投诉"
+        // },
+        // {
+        //   status: 6,
+        //   status_text: "投诉已处理"
+        // }
       ]
     };
   },
@@ -127,7 +155,10 @@ export default {
         limit: this.limit,
         page: this.page,
         status_text: this.status_text,
-        status: this.status
+        status: this.status,
+        genre_text:this.genre_text,
+        genre:this.genre
+
       });
       console.log(data);
       // this.tableData = data.data = [{}]//  模仿的假数据
