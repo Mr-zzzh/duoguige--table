@@ -45,6 +45,13 @@ export const getForbidden  = (params) => {
     return request.get("/admin/user/forbidden", { params, isLoading: true});
 }
 
+// 用户分类页面/大师管理的接口
+export const getdashi  = (params) => {
+    // console.log('test')
+    return request.get("/admin/user/technician", { params, isLoading: true});
+}
+
+
 
 
 

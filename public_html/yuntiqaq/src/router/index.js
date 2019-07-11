@@ -85,7 +85,7 @@ export default new Router({
           },
 
         },
- 
+
         {
           path: '/admin_label',
           name: 'admin_label',
@@ -174,7 +174,6 @@ export default new Router({
             title: '维保信息审核',
           },
         },
-<<<<<<< HEAD
         {
           path: '/admin_label',
           name: 'admin_label',
@@ -255,48 +254,46 @@ export default new Router({
             title: '新闻动态详情',
           },
         },
-=======
-                {
-                    path: '/admin_dtgl',
-                    name: 'admin_dtgl',
-                    component: resolve => require(['../components/shopgl/dtgl/dtgl.vue'], resolve),
-                    meta: {
-                        title: '商品管理',
-                    },
-                },
-                {
-                    path: '/admin_dtgladd',
-                    name: 'admin_dtgladd',
-                    component: resolve => require(['../components/shopgl/dtgl/dtgladd.vue'], resolve),
-                    meta: {
-                        title: '商品管理新增or编辑',
-                    },
-                },
-                {
-                  path: '/admin_news',
-                  name: 'admin_news',
-                  component: resolve => require(['../components/news/news.vue'], resolve),
-                  meta: {
-                    title: '新闻动态',
-                  },
-                },
-                {
-                  path: '/admin_newsadd',
-                  name: 'admin_newsadd',
-                  component: resolve => require(['../components/news/newsadd.vue'], resolve),
-                  meta: {
-                    title: '新闻动态新增or编辑',
-                  },
-                },
-                {
-                  path: '/admin_newsxq',
-                  name: 'admin_newsxq',
-                  component: resolve => require(['../components/news/newsxq.vue'], resolve),
-                  meta: {
-                    title: '新闻动态详情',
-                  },
-                },
->>>>>>> 77fb36b49ea1363efc27d9c7c4ac3397f795c204
+        {
+          path: '/admin_dtgl',
+          name: 'admin_dtgl',
+          component: resolve => require(['../components/shopgl/dtgl/dtgl.vue'], resolve),
+          meta: {
+            title: '商品管理',
+          },
+        },
+        {
+          path: '/admin_dtgladd',
+          name: 'admin_dtgladd',
+          component: resolve => require(['../components/shopgl/dtgl/dtgladd.vue'], resolve),
+          meta: {
+            title: '商品管理新增or编辑',
+          },
+        },
+        {
+          path: '/admin_news',
+          name: 'admin_news',
+          component: resolve => require(['../components/news/news.vue'], resolve),
+          meta: {
+            title: '新闻动态',
+          },
+        },
+        {
+          path: '/admin_newsadd',
+          name: 'admin_newsadd',
+          component: resolve => require(['../components/news/newsadd.vue'], resolve),
+          meta: {
+            title: '新闻动态新增or编辑',
+          },
+        },
+        {
+          path: '/admin_newsxq',
+          name: 'admin_newsxq',
+          component: resolve => require(['../components/news/newsxq.vue'], resolve),
+          meta: {
+            title: '新闻动态详情',
+          },
+        },
 
         {
           path: '/admin_brandgl',
