@@ -83,6 +83,8 @@ class Inform extends Common {
     }
 
     public function GetOne($id) {
+        $data['read'] = 1;
+        $this->where('id', $id)->update($data);
         $item = $this->get($id);
         if (empty($item)) {
             show_json(1);

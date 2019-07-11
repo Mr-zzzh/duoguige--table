@@ -6,12 +6,12 @@ class Invite extends Common {
 
     public function Salary() {
         $list = db('salary')->select();
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     public function Experience() {
         $list = db('experience')->select();
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     public function GetAll($params) {
