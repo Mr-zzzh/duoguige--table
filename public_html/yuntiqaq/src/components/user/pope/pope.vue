@@ -110,7 +110,8 @@ export default {
       status: "",
       // 存贮当前的一条的所有的信息
       userInfo: {},
-      normal: ""
+      normal: "",
+      remark:""
     };
   },
 
@@ -150,7 +151,8 @@ export default {
         type: 2,
         status: this.status,
         id: this.id,
-        normal: this.normal
+        normal: this.normal,
+        remark:this.remark
       });
       console.log(data);
 
@@ -166,6 +168,7 @@ export default {
       this.userInfo = data.data.filter(i => {
         if (i.id == this.id) {
           this.userInfo = i;
+          i.remark=this.remark
           return true;
         }
       });
