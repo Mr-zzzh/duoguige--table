@@ -16,7 +16,7 @@ class User extends Common {
             $map['type'] = intval($params['type']);
         }
         if (!empty($params['keyword'])) {
-            $map['name|phone|avatar|password|salt|intro|token'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+            $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
         $list = $this->field('id,name,phone,avatar,intro,status,type,normal,createtime')->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
@@ -27,6 +27,24 @@ class User extends Common {
                 $item['type_text']   = $type[$item['type']];
                 $item['normal_text'] = $item['normal'] == 1 ? '启用' : '禁用';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            }
+            unset($item);
+        }
+        show_json(1, $list);
+    }
+
+    public function Technician($params) {
+        $map           = array();
+        $map['status'] = 1;
+        $map['type']   = 2;
+        $map['normal'] = 1;
+        if (!empty($params['keyword'])) {
+            $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
+        }
+        $list = $this->field('id,name,phone')->where($map)->paginate($params['limit'])->toArray();
+        if (!empty($list['data'])) {
+            foreach ($list['data'] as $k => &$item) {
+                
             }
             unset($item);
         }
