@@ -83,6 +83,42 @@ export default {
                 },
                 {
                     img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg1.png",
+                    index: "/admin_user",
+                    title: "用户管理",
+                    subs: [
+                        {
+                        index: "/admin_user",
+                        title: "普通用户"
+                        },
+                        {
+                        index: "/admin_pope", //大师
+                        title: "技术大师"
+                        },
+                        {
+                        index: "/admin_property", //物业公司
+                        title: "物业公司"
+                        },
+                    ]
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg1.png",
+                    index: "/admin_jobs",
+                    title: "招聘管理",
+                    subs: [
+                        {
+                        index: "/admin_jobs",
+                        title: "求职信息"
+                        },
+                        {
+                        index: "/admin_recruit",
+                        title: "招聘信息"
+                        }
+                    ]
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
                     img1: "../../../static/img/sz/dfbrrbg18.png",
                     index: "/admin_flgl",
                     title: "商品管理",
@@ -98,6 +134,62 @@ export default {
                         {
                             index: "/admin_label",
                             title: "标签管理"
+                        },
+                    ]
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg18.png",
+                    index: "/admin_brandgl",
+                    title: "品牌管理",
+                    subs: [
+                        {
+                            index: "/admin_brandgl",
+                            title: "品牌管理"
+                        },
+                        {
+                            index: "/admin_brandzlgl",
+                            title: "品牌资料管理"
+                        },
+                    ]
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg1.png",
+                    index: "/admin_order",
+                    title: "订单管理",
+                    subs: [
+                        {
+                        index: "/admin_order",
+                        title: "订单概述"
+                        },
+                        {
+                        index: "/admin_allOrder",
+                        title: "全部订单"
+                        }
+                    ]
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg1.png",
+                    index: "/admin_Feedback",
+                    title: "意见反馈",
+                    subs: [
+                        {
+                        index: "/admin_Feedback",
+                        title: "意见反馈列表"
+                        },
+                    ]
+                },
+                {
+                    img: "../../../static/img/sz/dfbrrbg1.png",
+                    img1: "../../../static/img/sz/dfbrrbg1.png",
+                    index: "/admin_maintenance",
+                    title: "维保管理",
+                    subs: [
+                        {
+                        index: "/admin_maintenance",
+                        title: "维保管理"
                         },
                     ]
                 },
@@ -122,18 +214,8 @@ export default {
                 {
                     img: "../../../static/img/sz/dfbrrbg1.png",
                     img1: "../../../static/img/sz/dfbrrbg18.png",
-                    index: "/admin_brandgl",
-                    title: "品牌管理",
-                    subs: [
-                        {
-                            index: "/admin_brandgl",
-                            title: "品牌管理"
-                        },
-                        {
-                            index: "/admin_brandzlgl",
-                            title: "品牌资料管理"
-                        },
-                    ]
+                    index: "/admin_nifox",
+                    title: "消息列表",
                 },
                 {
                     img: "../../../static/img/sz/dfbrrbg1.png",
@@ -175,88 +257,6 @@ export default {
                         },
                     ]
                 },
-                {
-                    img: "../../../static/img/sz/dfbrrbg1.png",
-                    img1: "../../../static/img/sz/dfbrrbg18.png",
-                    index: "/admin_nifox",
-                    title: "消息列表",
-                },
-                   {
-          img: "../../../static/img/sz/dfbrrbg1.png",
-          img1: "../../../static/img/sz/dfbrrbg1.png",
-          index: "/admin_user",
-          title: "用户管理",
-          subs: [
-            {
-              index: "/admin_user",
-              title: "普通用户"
-            },
-            {
-              index: "/admin_pope", //大师
-              title: "技术大师"
-            },
-            {
-              index: "/admin_property", //物业公司
-              title: "物业公司"
-            },
-          ]
-        },
-        {
-          img: "../../../static/img/sz/dfbrrbg1.png",
-          img1: "../../../static/img/sz/dfbrrbg1.png",
-          index: "/admin_order",
-          title: "订单管理",
-          subs: [
-            {
-              index: "/admin_order",
-              title: "订单概述"
-            },
-            {
-              index: "/admin_allOrder",
-              title: "全部订单"
-            }
-          ]
-        },
-         {
-          img: "../../../static/img/sz/dfbrrbg1.png",
-          img1: "../../../static/img/sz/dfbrrbg1.png",
-          index: "/admin_jobs",
-          title: "招聘管理",
-          subs: [
-            {
-              index: "/admin_jobs",
-              title: "求职信息"
-            },
-            {
-              index: "/admin_recruit",
-              title: "招聘信息"
-            }
-          ]
-        },
-         {
-          img: "../../../static/img/sz/dfbrrbg1.png",
-          img1: "../../../static/img/sz/dfbrrbg1.png",
-          index: "/admin_Feedback",
-          title: "意见反馈",
-          subs: [
-            {
-              index: "/admin_Feedback",
-              title: "意见反馈列表"
-            },
-          ]
-        },
-          {
-          img: "../../../static/img/sz/dfbrrbg1.png",
-          img1: "../../../static/img/sz/dfbrrbg1.png",
-          index: "/admin_maintenance",
-          title: "维保管理",
-          subs: [
-            {
-              index: "/admin_maintenance",
-              title: "维保管理"
-            },
-          ]
-        },
             ],
          
             

@@ -15,9 +15,18 @@ class Invite extends Common {
     }
 
     public function GetAll($params) {
-        $map = array();
-        if (!empty($params['starttime']) && !empty($params['endtime'])) {
-            $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
+        $map   = array();
+        $where = '';
+        if (!empty($params['type'])) {
+            if (intval($params['type']) == 1) {
+                $where = "-3 days";
+            } elseif (intval($params['type']) == 2) {
+                $where = "-7 days";
+            } elseif (intval($params['type']) == 3) {
+                $where = "-1 months";
+            } else {
+                $where = '';
+            }
         }
         if (!empty($params['salary'])) {
             $map['a.salary'] = intval($params['salary']);
@@ -39,7 +48,8 @@ class Invite extends Common {
             ->join('salary s', 'a.salary=s.id', 'left')
             ->join('company c', 'a.uid=c.uid', 'left')
             ->field('a.id,a.post,a.province,a.city,a.createtime,a.name,a.phone,s.name salary_text,c.company_name')
-            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+            ->where($map)
+            ->whereTime('a.createtime', $where)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['province_text'] = city_name($item['province']);

@@ -14,8 +14,7 @@ class JobWanted extends Common {
      * @title 列表
      * @url /jobwanted
      * @method get
-     * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
-     * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
+     * @param name:type type:int require:0 default:- other:- desc:0全部_13天_2一周内_3一月内
      * @param name:salary type:int require:0 default:- other:- desc:薪资范围id
      * @param name:province type:int require:0 default:- other:- desc:省编号
      * @param name:city type:int require:0 default:- other:- desc:市编号

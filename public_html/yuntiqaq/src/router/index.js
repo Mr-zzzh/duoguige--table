@@ -85,6 +85,7 @@ export default new Router({
           },
 
         },
+<<<<<<< HEAD
 
         {
           path: '/admin_label',
@@ -94,6 +95,8 @@ export default new Router({
             title: '标签管理',
           },
         },
+=======
+>>>>>>> 06ea6bd36b55da817141678d851a5ec4b0ebdf2f
         {
           path: '/admin_order',
           name: 'admin_order',
@@ -223,6 +226,7 @@ export default new Router({
           },
         },
         {
+<<<<<<< HEAD
           path: '/admin_label',
           name: 'admin_label',
           component: resolve => require(['../components/shopgl/label/label.vue'], resolve),
@@ -296,6 +300,8 @@ export default new Router({
         },
 
         {
+=======
+>>>>>>> 06ea6bd36b55da817141678d851a5ec4b0ebdf2f
           path: '/admin_brandgl',
           name: 'admin_brandgl',
           component: resolve => require(['../components/brandgl/brandgl/brandgl.vue'], resolve),
