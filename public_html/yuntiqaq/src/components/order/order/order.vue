@@ -66,11 +66,11 @@
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>{{month.average}}、{{month.average}}</div>
+            <div>{{month.average}}/{{month.average}}</div>
           </div>
           <div>
             <div>成交量/交易量(件)</div>
-            <div>{{month.average}}、{{month.average}}</div>
+            <div>{{month.average}}/{{month.average}}</div>
           </div>
         </div>
       </div>

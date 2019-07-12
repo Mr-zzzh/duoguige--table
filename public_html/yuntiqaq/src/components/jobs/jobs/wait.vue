@@ -1,32 +1,37 @@
 <template>
   <div class="form">
-    <el-form ref="form" :model="info" label-width="80px" size="mini">
+    <el-form ref="form" :model="info" label-width="100px" size="mini" >
       <el-form-item label="求职者信息">
-        <!-- <el-input v-model="info.name"></el-input> -->
-        <!-- <el-button type="primary" disabled>待审</el-button> -->
-        <!-- <div v-model="info.status_text"></div> -->
-        <el-input v-model="info.status_text"></el-input>
+         <el-button type="primary"  v-model="info.status_text" disabled >{{info.status_text}}</el-button>
+        <!-- <el-input v-model="info.status_text" disabled ></el-input> -->
       </el-form-item>
       <el-form-item label="姓名">
         <el-input v-model="info.name"></el-input>
       </el-form-item>
-      <!-- 
-      <el-form-item label="电话">
-        <el-input v-model="info.name"></el-input>
-      </el-form-item>-->
       <el-form-item label="求职岗位">
         <el-input v-model="info.post"></el-input>
       </el-form-item>
       <el-form-item label="期望薪资">
         <el-input v-model="info.salary"></el-input>
       </el-form-item>
+       <el-form-item label="最高学历">
+        <el-input v-model="info.education"></el-input>
+      </el-form-item>
       <el-form-item label="工作地址">
         <el-input v-model="info.address"></el-input>
       </el-form-item>
-      <el-form-item label="自我描述">
+     
+     
+       <el-form-item label="详细地址">
+        <el-input v-model="info.address"></el-input>
+      </el-form-item>
+      <el-form-item label="到岗时间">
+        <el-input v-model="info.arrival"></el-input>
+      </el-form-item>
+       <el-form-item label="自我描述">
         <el-input v-model="info.intro"></el-input>
       </el-form-item>
-      <el-form-item label="详细地址">
+      <el-form-item label="审核结果">
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
