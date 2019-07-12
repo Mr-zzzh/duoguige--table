@@ -1,9 +1,15 @@
 <template>
   <div class="user">
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="ID" type="index"  width="180"></el-table-column>
+      <el-table-column label="ID" type="index" width="180"></el-table-column>
 
-      <el-table-column label="反馈内容" prop="content" overflow="hidden" text-overflow="ellipsis" white-space="nowrap"></el-table-column>
+      <el-table-column
+        label="反馈内容"
+        prop="content"
+        overflow="hidden"
+        text-overflow="ellipsis"
+        white-space="nowrap"
+      ></el-table-column>
       <el-table-column label="反馈人信息" prop="uname"></el-table-column>
 
       <el-table-column label="反馈时间" prop="createtime"></el-table-column>

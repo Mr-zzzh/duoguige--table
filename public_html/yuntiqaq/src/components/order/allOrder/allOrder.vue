@@ -33,10 +33,10 @@
 
       <el-date-picker
         @change="xzfl(timer)"
-        style=" width:250px;float:right;margin:0 20px"
+        style=" width:400px;float:right;margin:0 20px"
         v-model="timer"
         type="datetimerange"
-        value-format="yyyy-MM-dd hh-mm-ss"
+        value-format="yyyy-MM-dd"
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
@@ -67,7 +67,7 @@
 
     <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column label="ID" width="180" type="index"></el-table-column>
+      <el-table-column label="ID" width="120" type="index" ></el-table-column>
 
       <el-table-column label="订单编号" width="180" prop="ordersn"></el-table-column>
       <el-table-column label="购买商品" prop="gname"></el-table-column>
@@ -76,10 +76,10 @@
       <el-table-column label="下单时间" prop="createtime"></el-table-column>
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
-      <el-table-column label="黑名单">
+      <el-table-column label="点击发货">
         <template slot-scope="scope">
-          <el-button @click="fh(scope.row.id)" type="primary" size="small" v-model="status" v-if="status==2">发货</el-button>
-            <el-button @click="fh(scope.row.id)" type="primary" size="small" v-model="status" v-if="status==2">已发货</el-button>
+          <el-button  v-if="status==2||status==3" disabled @click="fh(scope.row.id,scope.row)" type="text" size="small">发货</el-button>
+          <el-button  v-else="" @click="fh(scope.row.id,scope.row)" type="text" size="small">发货</el-button>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -115,6 +115,7 @@ import {
 export default {
   data() {
     return {
+      radio: "1",
       options: [
         {
           status: -1,
@@ -148,6 +149,8 @@ export default {
           paytype_text: "微信"
         }
       ],
+      form: {},
+      dialogVisible: false,
       paytype: "",
       status: "",
       page: 1,
@@ -165,20 +168,39 @@ export default {
       endtime: "",
       money: "",
       number: "",
-      id:this.id
+      id: this.id,
+      status_text: ""
     };
   },
   mounted() {},
   methods: {
-    // 这是获取全部订单的请求
+    // 这是发货的请求getGoodsdeliver
     async getGoodsdeliver() {
       let data = await getGoodsdeliver({
-       id:this.id
+        id: this.id
       });
       console.log(data);
     },
+    fh(id, row) {
+      this.$confirm("是否确定发货?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          getGoodsdeliver(id);
+          // this.page = 1;
+          this.getGoodsOrder();
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消发货"
+          });
+        });
+    },
 
-     // 这是发货的请求
+    // 这是获取全部订单的请求
     async getGoodsOrder() {
       let data = await getGoodsOrder({
         keyword: this.keyword,
@@ -187,13 +209,18 @@ export default {
         starttime: this.starttime,
         endtime: this.endtime,
         status: this.status,
-        paytype: this.paytype
+        paytype: this.paytype,
+        status_text: this.status_text
       });
       console.log(data);
       this.tableData = data.data;
       this.total = data.total;
       this.money = data.money;
       this.number = data.number;
+      data.data.forEach(element => {
+        this.status_text = element.status_text;
+        this.status = element.status
+      });
     },
     down(e) {
       this.page = 1;
@@ -211,12 +238,15 @@ export default {
 
     // 时间
     xzfl(e) {
+      console.log(e);
       if (e == null) {
         this.starttime = "";
         this.endtime = "";
       } else {
         this.starttime = e[0];
         this.endtime = e[1];
+        console.log(this.starttime);
+        console.log(this.endtime);
       }
       this.page = 1;
       this.limit = 15;
@@ -240,7 +270,6 @@ export default {
         .then(() => {
           delGoods(id);
           // this.page = 1;
-          this.getGoodsdeliver(id);
           this.getGoodsOrder();
         })
         .catch(() => {
@@ -250,24 +279,7 @@ export default {
           });
         });
     },
-    fh(id){
-       this.$confirm("是否确定发货?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          delGoods(id);
-          // this.page = 1;
-          this.getGoodsOrder();
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
+
     // 这三个是表格中的
     // 当选择项发生变化时会触发该事件
     selectionChange(list) {
