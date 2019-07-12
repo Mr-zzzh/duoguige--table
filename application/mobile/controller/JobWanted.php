@@ -40,7 +40,7 @@ class JobWanted extends Common {
      * @url /jobwanted
      * @method post
      * @param name:post type:string require:1 default:- other:- desc:求职岗位
-     * @param name:salary type:string require:1 default:- other:- desc:期望薪资
+     * @param name:salary type:int require:1 default:- other:- desc:期望薪资id
      * @param name:arrival type:string require:1 default:- other:- desc:到岗时间
      * @param name:province type:int require:1 default:- other:- desc:省编号
      * @param name:city type:int require:1 default:- other:- desc:市编号
@@ -75,7 +75,7 @@ class JobWanted extends Common {
      * @url /jobwanted/:id
      * @method put
      * @param name:post type:string require:1 default:- other:- desc:求职岗位
-     * @param name:salary type:string require:1 default:- other:- desc:期望薪资
+     * @param name:salary type:int require:1 default:- other:- desc:期望薪资id
      * @param name:arrival type:string require:1 default:- other:- desc:到岗时间
      * @param name:province type:int require:1 default:- other:- desc:省编号
      * @param name:city type:int require:1 default:- other:- desc:市编号
