@@ -18,7 +18,8 @@ class GoodsOrder extends Common {
         if (!empty($params['keyword'])) {
             $map['a.ordersn'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->alias('a')
+        $map['a.status'] = array('>=', 1);
+        $list            = $this->alias('a')
             ->join('user u', 'a.uid = u.id', 'left')
             ->join('goods g', 'a.gid = g.id', 'left')
             ->join('delivery_address d', 'a.addressid = d.id', 'left')
