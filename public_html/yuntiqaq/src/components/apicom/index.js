@@ -1,15 +1,3 @@
-// import axios from "axios"
-// axios.defaults.baseURL = 'http://yunti.hongbao19.net/';
-// // 获得用户分类/分类管理的接口
-// export const getUserTab = (params) => {
-//     return axios.get("admin/user",{});
-// }
-
-// //  获得用户分类/获得删除用户
-// export const delUser = (params) => {
-//     return axios.delete(`admin/user/${params}`,{});
-// }
-
 
 // 这是配置了config之后
 import request from '@/utils/request'

@@ -31,11 +31,7 @@
     </el-select>
 
     <!-- 下面的表格 -->
-    <el-table
-      :data="tableData"
-      style="width: 100%"
-      @selection-change="selectionChange"
-    >
+    <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="ID" width="180"></el-table-column>
 
@@ -83,11 +79,11 @@ export default {
           status: "0",
           status_text: "待审"
         },
-          {
+        {
           status: "1",
           status_text: "通过"
         },
-          {
+        {
           status: "2",
           status_text: "不通过"
         }
@@ -105,7 +101,6 @@ export default {
       userInfo: {}
     };
   },
-  mounted() {},
   methods: {
     // 当选择项发生变化时会触发该事件，只有被勾上的时候才会被触发
     selectionChange(list) {
@@ -113,7 +108,7 @@ export default {
       console.log(this.selectedList);
       this.id = this.selectedList;
       console.log(this.id);
-     if (this.selectedList) {
+      if (this.selectedList) {
         this.$message.success("已启用");
       } else {
         this.$message.info("已禁用");
@@ -127,7 +122,7 @@ export default {
         params: { id }
       });
       console.log(this.userInfo, 22222);
-      localStorage.setItem("user", JSON.stringify(this.userInfo));
+      // localStorage.setItem("user", JSON.stringify(this.userInfo));
     },
     // 获得物业公司列表的请求
     async getUserTab() {
@@ -137,8 +132,8 @@ export default {
         page: this.page,
         // 因为这里是技术大师的页面。所以需要选择类型
         type: 3,
-        status:this.status,
-        status_text:this.status
+        status: this.status,
+        status_text: this.status
       });
       console.log(data);
       // this.tableData = data.data = [{}]//  模仿的假数据
@@ -166,7 +161,7 @@ export default {
       })
         .then(() => {
           delUser(id);
-          // this.page = 1;
+          this.page = 1;
           this.getUserTab();
         })
         .catch(() => {
@@ -179,28 +174,34 @@ export default {
 
     // 获取分类
     categry() {
+       this.limit = 15;
+      this.page = 1;
       this.getUserTab();
     },
 
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
+        this.page = 1;
       this.getUserTab();
       console.log(`每页 ${val} 条`);
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
       this.limit = 15;
-      this.page = val;
+      this.page = 1;
       this.getUserTab();
       console.log(`当前页: ${val}`);
     },
     // 搜索
     search_3() {
+       this.limit = 15;
+      this.page = 1;
       this.getUserTab();
     }
   },
   mounted() {
+    this.getUserTab();
   },
   created() {
     this.getUserTab();

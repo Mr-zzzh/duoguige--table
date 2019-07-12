@@ -94,17 +94,9 @@ export default {
     };
   },
   methods: {
-    // 这是获取用户列表的请求------这样发请求为什么不行
-    // async get() {
-    //   let data = await getUserInfo({
-    //     id: this.id,
-    //   });
-    //   console.log(data);
-    // }
     get() {
       getUserInfo(this.id).then(res => {
         console.log(res);
-        //后台返回的数据
         //后台返回的数据
         this.sizeForm = res;
         console.log(this.sizeForm);
@@ -143,15 +135,14 @@ export default {
   },
   mounted() {},
   created() {
-    // 调用store中的方法------获取到当前用户的详细情况
-    var user = JSON.parse(localStorage.getItem("user") || "[]");
-    console.log(user); // ----------是数组,这些操作知识为了获取当前的id，发请求，通过id获取更多的当前这行的数据
-    user.forEach(element => {
-      (this.id = element.id), (this.status = element.status);
-      if (this.status == 1) {
-        this.btn();
-      }
-    });
+    // var user = JSON.parse(localStorage.getItem("user") || "[]");
+    // console.log(user); // ----------是数组,这些操作知识为了获取当前的id，发请求，通过id获取更多的当前这行的数据
+    // user.forEach(element => {
+    //   (this.id = element.id), (this.status = element.status);
+    //   if (this.status == 1) {
+    //     this.btn();
+    //   }
+    // });
     this.get();
     this.btn();
   }

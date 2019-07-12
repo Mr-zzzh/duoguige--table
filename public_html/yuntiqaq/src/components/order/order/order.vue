@@ -140,24 +140,6 @@ export default {
           type: "value"
         },
         series: this.info.trend.series,
-        color: {
-          type: "linear",
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [
-            {
-              offset: 0,
-              color: "skyblue" // 0% 处的颜色
-            },
-            {
-              offset: 1,
-              color: "skyblue" // 100% 处的颜色
-            }
-          ],
-          global: false // 缺省为 false
-        }
       });
     }
   },

@@ -104,7 +104,6 @@ export default {
       ]
     };
   },
-  mounted() {},
   methods: {
     async getJobs() {
       let data = await getJobs({
@@ -152,6 +151,9 @@ export default {
       this.getJobs();
       console.log(`当前页: ${val}`);
     }
+  },
+  mounted() {
+    this.getJobs();
   },
   created() {
     this.getJobs();

@@ -14,8 +14,7 @@
       >搜索</el-button>
     </el-input>
 
-
-<!--   placeholder="状态:待审核/已审核/已接单/维权" -->
+    <!--   placeholder="状态:待审核/已审核/已接单/维权" -->
     <el-select
       @change="categry"
       v-model="status"
@@ -112,13 +111,9 @@ export default {
           genre_text: "保养单"
         }
       ],
-      genre:"",
-      genre_text:"",
+      genre: "",
+      genre_text: "",
       options1: [
-        // {
-        //   status: 0,
-        //   status_text: "取消"
-        // },
         {
           status: 1,
           status_text: "审核通过"
@@ -126,27 +121,10 @@ export default {
         {
           status: 2,
           status_text: "审核不通过"
-        },
-        // {
-        //   status: 3,
-        //   status_text: "已接单"
-        // },
-        // {
-        //   status: 4,
-        //   status_text: "已完成"
-        // },
-        // {
-        //   status: 5,
-        //   status_text: "投诉"
-        // },
-        // {
-        //   status: 6,
-        //   status_text: "投诉已处理"
-        // }
+        }
       ]
     };
   },
-  mounted() {},
   methods: {
     // 这是维保管理列表的请求
     async getMaintenance() {
@@ -156,9 +134,8 @@ export default {
         page: this.page,
         status_text: this.status_text,
         status: this.status,
-        genre_text:this.genre_text,
-        genre:this.genre
-
+        genre_text: this.genre_text,
+        genre: this.genre
       });
       console.log(data);
       // this.tableData = data.data = [{}]//  模仿的假数据
@@ -187,8 +164,9 @@ export default {
 
     // 点击状态的时候去到那里
     categry() {
+      this.page = 1;
+      this.limit = 15;
       console.log(1111);
-
       this.getMaintenance();
     },
     // 搜索
@@ -221,6 +199,9 @@ export default {
     }
   },
   created() {
+    this.getMaintenance();
+  },
+  mounted() {
     this.getMaintenance();
   }
 };

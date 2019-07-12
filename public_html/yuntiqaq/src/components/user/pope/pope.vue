@@ -46,13 +46,6 @@
       <el-table-column label="状态" prop="status_text"></el-table-column>
       <el-table-column label="申请时间" prop="createtime"></el-table-column>
       <el-table-column label="审核时间" prop="createtime"></el-table-column>
-      <!-- <el-table-column label="启用"> -->
-          <!-- <template slot-scope="scope"> -->
-        <!-- <template>
-          <el-button v-if="normal!=1" type="primary" v-model="normal">警用</el-button>
-          <el-button v-else type="info" v-model="normal">启用</el-button>
-        </template> -->
-      <!-- </el-table-column> -->
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="info(scope.row.id)" type="text" size="small">详情</el-button>
@@ -105,7 +98,6 @@ export default {
       total: 0,
       currentPage: 1,
       tableData: [],
-      aa: "",
       id: "",
       status: "",
       // 存贮当前的一条的所有的信息
@@ -135,10 +127,8 @@ export default {
         name: "/admin_audit",
         params: { id }
       });
-      // 用不上vuex
-      // this.$store.commit("getUserInfo",this.userInfo)
       console.log(this.userInfo);
-      localStorage.setItem("user", JSON.stringify(this.userInfo));
+      // localStorage.setItem("user", JSON.stringify(this.userInfo));
     },
     // 获得技术大师列表的请求
     async getUserTab() {
@@ -146,7 +136,6 @@ export default {
         keyword: this.keyword,
         limit: this.limit,
         page: this.page,
-        aa: this.aa,
         // 因为这里是技术大师的页面。所以需要选择类型
         type: 2,
         status: this.status,
@@ -155,15 +144,9 @@ export default {
         remark:this.remark
       });
       console.log(data);
-
-      // this.tableData = data.data = [{}]//  模仿的假数据
       this.tableData = data.data;
       this.total = data.total;
       this.page = data.total / this.limit;
-      // data.data.forEach(item => {
-      //   this.options.push(item);
-      //   this.id = item.id;
-      // });
       // 主要是要在这个页面获取当前条的信息
       this.userInfo = data.data.filter(i => {
         if (i.id == this.id) {
@@ -200,16 +183,21 @@ export default {
     },
     // 获取分类
     categry() {
+        this.limit = 15;
+      this.page = 1;
       this.getUserTab();
     },
     // 搜索
     search_2() {
+        this.limit = 15;
+      this.page = 1;
       this.getUserTab();
     },
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
       this.getUserTab();
+       this.page = 1,
       console.log(`每页 ${val} 条`);
     },
     // 分页------当前页码切换的时候触发
@@ -221,6 +209,7 @@ export default {
     }
   },
   mounted() {
+     this.getUserTab();
   },
   created() {
     this.getUserTab();
