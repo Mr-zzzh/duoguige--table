@@ -18,7 +18,7 @@ class User extends Common {
         if (!empty($params['keyword'])) {
             $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->field('id,name,phone,avatar,intro,status,type,normal,createtime')->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->field('id,name,phone,avatar,intro,status,type,normal,createtime,checktime')->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array('0' => '待审', '1' => '通过', '2' => '不通过');
             $type   = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');
@@ -27,8 +27,11 @@ class User extends Common {
                 $item['type_text']   = $type[$item['type']];
                 $item['normal_text'] = $item['normal'] == 1 ? '启用' : '禁用';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
-                $item['number']      = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->count('id');
-                $item['money']       = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->sum('money');
+                if (empty($item['checktime'])) {
+                    $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+                }
+                $item['number'] = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->count('id');
+                $item['money']  = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->sum('money');
             }
             unset($item);
         }

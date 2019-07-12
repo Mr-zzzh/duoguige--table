@@ -26,7 +26,7 @@ class User extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:姓名 phone:电话 avatar:头像 intro:简介 status:审核状态_0待审_1通过_2不通过 status_text:状态文本 type:用户类型_1普通用户_2技术大师_3物业公司 type_text:类型文本 createtime:创建时间 normal:是否启用_1启用_2禁用 normal_text:是否启用 number:订单数 money:金额
+     * @data id:id name:姓名 phone:电话 avatar:头像 intro:简介 status:审核状态_0待审_1通过_2不通过 status_text:状态文本 type:用户类型_1普通用户_2技术大师_3物业公司 type_text:类型文本 createtime:创建时间 normal:是否启用_1启用_2禁用 normal_text:是否启用 number:订单数 money:金额 checktime:审核时间
      * @author 开发者
      */
     public function index() {
