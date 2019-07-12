@@ -15,8 +15,8 @@
             <div>{{today.turnover}}/{{today.volume}}</div>
           </div>
           <div>
-            <div>成交量/交易量(件)</div>
-            <div>{{today.turnover}}/{{today.volume}}</div>
+            <div>成交额/成交额(件)</div>
+            <div>{{today.number}}/{{today.number1}}</div>
           </div>
         </div>
       </div>
@@ -30,11 +30,11 @@
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>{{yesterday.average}}/{{yesterday.average}}</div>
+            <div>{{yesterday.turnover}}/{{yesterday.volume}}</div>
           </div>
           <div>
-            <div>成交量/交易量(件)</div>
-            <div>{{yesterday.average}}/{{yesterday.average}}</div>
+            <div>成交额/成交额(件)</div>
+            <div>{{yesterday.number}}/{{yesterday.number1}}</div>
           </div>
         </div>
       </div>
@@ -48,11 +48,11 @@
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>{{seven.average}}/{{seven.average}}</div>
+            <div>{{seven.turnover}}/{{seven.volume}}</div>
           </div>
           <div>
-            <div>成交量/交易量(件)</div>
-            <div>{{seven.average}}/{{seven.average}}</div>
+            <div>成交额/成交额(件)</div>
+            <div>{{seven.number}}/{{seven.number1}}</div>
           </div>
         </div>
       </div>
@@ -66,11 +66,11 @@
         <div class="button">
           <div>
             <div>成交量/交易量(件)</div>
-            <div>{{month.average}}/{{month.average}}</div>
+            <div>{{month.turnover}}/{{month.volume}}</div>
           </div>
           <div>
-            <div>成交量/交易量(件)</div>
-            <div>{{month.average}}/{{month.average}}</div>
+            <div>成交额/成交额(件)</div>
+            <div>{{month.number}}/{{month.number1}}</div>
           </div>
         </div>
       </div>
