@@ -99,7 +99,7 @@
                     <div>asdasd</div>
                 </div> -->
                 <div class="bll1" v-for="(ia,index) in this.form2" :key="ia.id">
-                    <div>{{index}}</div>
+                    <div>{{index+1}}</div>
                     <div>{{ia.name}}</div>
                     <div>{{ia.number}}</div>
                     <div>{{ia.money}}</div>
