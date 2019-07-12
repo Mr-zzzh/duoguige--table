@@ -35,7 +35,7 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="ID" width="180" type="index"></el-table-column>
 
-        <el-table-column label="求职者信息" width="180" prop="education"></el-table-column>
+        <el-table-column label="求职者信息" width="180" prop="name"></el-table-column>
         <el-table-column label="求职岗位" width="180" prop="post"></el-table-column>
 
         <el-table-column label="工作地点" prop="city_text"></el-table-column>

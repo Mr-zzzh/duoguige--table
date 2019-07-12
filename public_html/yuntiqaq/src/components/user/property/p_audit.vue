@@ -22,7 +22,7 @@
         <el-input v-model="sizeForm.check.name"></el-input>
       </el-form-item>
       <el-form-item label="营业执照">
-        <div>
+        <div class="bb">
           <img :src="sizeForm.check.image" alt />
         </div>
       </el-form-item>
@@ -30,8 +30,8 @@
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
-       <el-form-item label="备注">
-        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="sizeForm.remark"></el-input>
+      <el-form-item label="备注">
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
@@ -46,10 +46,10 @@ import { getUserInfo, getAudit } from "@/components/apicom/index";
 export default {
   data() {
     return {
-      radio:2,
+      radio: 2,
+      remark: "",
       //备选按钮的选中状态
       sizeForm: {
-        remark:"",
         id: 0,
         name: "",
         phone: 0,
@@ -57,7 +57,6 @@ export default {
         intro: "",
         status: 0,
         createtime: "",
-         remark:"",
         check: {
           company_name: "",
           name: "",
@@ -72,8 +71,7 @@ export default {
       id: 0,
       status: 1,
       state: "",
-      numberValidateForm: {},
-     
+      numberValidateForm: {}
     };
   },
   methods: {
@@ -91,7 +89,7 @@ export default {
       let data = await getAudit({
         id: this.id,
         status: this.status,
-        
+        remark: this.remark
       });
       console.log(data);
     },
@@ -133,6 +131,13 @@ export default {
     padding-top: 30px;
     background-color: rgba(255, 255, 255, 1);
     padding: 40px;
+  }
+}
+.bb {
+  img {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
   }
 }
 </style>

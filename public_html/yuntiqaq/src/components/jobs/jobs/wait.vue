@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-    <el-form ref="form" :model="info" label-width="80px">
+    <el-form ref="form" :model="info" label-width="80px" size="mini">
       <el-form-item label="求职者信息">
         <!-- <el-input v-model="info.name"></el-input> -->
         <!-- <el-button type="primary" disabled>待审</el-button> -->
@@ -10,28 +10,28 @@
       <el-form-item label="姓名">
         <el-input v-model="info.name"></el-input>
       </el-form-item>
-
+      <!-- 
       <el-form-item label="电话">
         <el-input v-model="info.name"></el-input>
-      </el-form-item>
+      </el-form-item>-->
       <el-form-item label="求职岗位">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.post"></el-input>
       </el-form-item>
       <el-form-item label="期望薪资">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.salary"></el-input>
       </el-form-item>
       <el-form-item label="工作地址">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.address"></el-input>
       </el-form-item>
       <el-form-item label="自我描述">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="info.intro"></el-input>
       </el-form-item>
       <el-form-item label="详细地址">
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
@@ -63,7 +63,8 @@ export default {
       },
       id: this.$route.params.id,
       status: this.status,
-      info: {}
+      info: {},
+      remark: ""
     };
   },
   methods: {
@@ -71,7 +72,8 @@ export default {
     get() {
       getJobsinfo(this.$route.params.id).then(res => {
         console.log(res);
-        this.info = res;    if (res.status == 1) {
+        this.info = res;
+        if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "通过";
         } else if (res.status == 0) {
           this.info.status == 0 && this.info.status_text == "待审";
@@ -87,9 +89,11 @@ export default {
     async jobeditstatus() {
       let data = await jobeditstatus({
         id: this.id,
-        status: this.status
+        status: this.status,
+        remark: this.remark
       });
       console.log(data);
+      this.info = data;
     },
     // 当选中的时候的,通过的值是1，驳回的值是2
     btn(val) {
@@ -122,20 +126,5 @@ export default {
 .el-form {
   background-color: #fff;
 }
-label.el-form-item__label {
-  width: 100px;
-}
-div.el-input {
-  width: 90%;
-  border: none;
-}
-input.el-input__inner {
-  border: none;
-  -webkit-transition: none;
-  transition: none;
-  border: 1px solid #fff;
-}
-.el-input__inner:hover {
-  border: none;
-}
+
 </style>
