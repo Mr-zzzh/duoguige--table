@@ -59,13 +59,13 @@ export const getdashi  = (params) => {
 
 
 // 订单管理模块
-//  获得全部订单的接口
+//  获得全部订单的接口-------订单的详情页面不用写
 export const getGoodsOrder = (params) => {
     // console.log('test')
     return request.get("/admin/goodsorder", { params, isLoading: true, isSuccessTip: true });
 }
 
-//发货的接口-----这个页面没写
+//发货的接口-----这个页面没写-----只需要一个发货的按钮
 export const getGoodsdeliver = (params) => {
     // console.log('test')
     return request.get("/admin/goodsorder/delive", { params, isLoading: true, isSuccessTip: true });

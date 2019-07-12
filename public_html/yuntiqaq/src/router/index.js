@@ -111,14 +111,6 @@ export default new Router({
           },
         },
         {
-          path: '/admin_infoOrder',
-          name: 'admin_infoOrder',
-          component: resolve => require(['../components/order/infoOrder/infoOrder.vue'], resolve),
-          meta: {
-            title: '全部订单',
-          },
-        },
-        {
           path: '/admin_jobs',
           name: 'admin_jobs',
           component: resolve => require(['../components/jobs/jobs/jobs.vue'], resolve),
