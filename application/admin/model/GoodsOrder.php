@@ -104,9 +104,9 @@ class GoodsOrder extends Common {
 
     public function Summarize() {
         //今日
-        $list['today']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', 'today')->count('id');
+        $list['today']['turnover'] = db('goods_order')->whereTime('paytime', 'today')->count('id');
         $list['today']['volume']   = db('goods_order')->whereTime('createtime', 'today')->count('id');
-        $list['today']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', 'today')->sum('money');
+        $list['today']['number']   = db('goods_order')->whereTime('paytime', 'today')->sum('money');
         $list['today']['number1']  = db('goods_order')->whereTime('createtime', 'today')->sum('money');
         $member1                   = db('goods_order')->whereTime('paytime', 'today')->group('uid')->count('id');
         if ($member1 > 0) {
@@ -115,9 +115,9 @@ class GoodsOrder extends Common {
             $list['today']['average'] = 0;
         }
         //昨日
-        $list['yesterday']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', 'yesterday')->count('id');
+        $list['yesterday']['turnover'] = db('goods_order')->whereTime('paytime', 'yesterday')->count('id');
         $list['yesterday']['volume']   = db('goods_order')->whereTime('createtime', 'yesterday')->count('id');
-        $list['yesterday']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', 'yesterday')->sum('money');
+        $list['yesterday']['number']   = db('goods_order')->whereTime('paytime', 'yesterday')->sum('money');
         $list['yesterday']['number1']  = db('goods_order')->whereTime('createtime', 'yesterday')->sum('money');
         $member2                       = db('goods_order')->whereTime('paytime', 'yesterday')->group('uid')->count('id');
         if ($member2 > 0) {
@@ -126,9 +126,9 @@ class GoodsOrder extends Common {
             $list['yesterday']['average'] = 0;
         }
         //近七日
-        $list['seven']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 7 days')->count('id');
+        $list['seven']['turnover'] = db('goods_order')->whereTime('paytime', ' - 7 days')->count('id');
         $list['seven']['volume']   = db('goods_order')->whereTime('createtime', ' - 7 days')->count('id');
-        $list['seven']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 7 days')->sum('money');
+        $list['seven']['number']   = db('goods_order')->whereTime('paytime', ' - 7 days')->sum('money');
         $list['seven']['number1']  = db('goods_order')->whereTime('createtime', ' - 7 days')->sum('money');
         $member3                   = db('goods_order')->whereTime('paytime', ' - 7 days')->group('uid')->count('id');
         if ($member3 > 0) {
@@ -137,9 +137,9 @@ class GoodsOrder extends Common {
             $list['seven']['average'] = 0;
         }
         //近30天
-        $list['month']['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 30 days')->count('id');
+        $list['month']['turnover'] = db('goods_order')->whereTime('paytime', ' - 30 days')->count('id');
         $list['month']['volume']   = db('goods_order')->whereTime('createtime', ' - 30 days')->count('id');
-        $list['month']['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', ' - 30 days')->sum('money');
+        $list['month']['number']   = db('goods_order')->whereTime('paytime', ' - 30 days')->sum('money');
         $list['month']['number1']  = db('goods_order')->whereTime('createtime', ' - 30 days')->sum('money');
         $member4                   = db('goods_order')->whereTime('paytime', ' - 30 days')->group('uid')->count('id');
         if ($member4 > 0) {
@@ -150,22 +150,22 @@ class GoodsOrder extends Common {
         //近1个月交易走势
         $endtime   = time();
         $starttime = time() - 29 * 24 * 60 * 60;
-        $weekarray = array("日", "一", "二", "三", "四", "五", "六");
-        $time[]    = date('m - d', $starttime) . '周' . $weekarray[date("w", $starttime)];
+        $time[]    = date('m-d', $starttime);
         while (($starttime = strtotime(' + 1 day', $starttime)) <= $endtime) {
-            $time[] = date('m - d', $starttime) . '周' . $weekarray[date("w", $starttime)]; // 取得递增月;
+            $time[] = date('m-d', $starttime); // 取得递增月;
         }
         $number1 = array();       //交易量
         $number2 = array();      //成交量
         $order   = array();      //交易额
         $order1  = array();      //成交额
+        $year    = date('Y', time());
         foreach ($time as &$v) {
-            $time1     = strtotime($v . ' 00:00:00');
-            $time2     = strtotime($v . ' 23:59:59');
+            $time1     = strtotime($year . '-' . $v . ' 00:00:00');
+            $time2     = strtotime($year . '-' . $v . ' 23:59:59');
             $number1[] = db('goods_order')->where(array('createtime' => array('between', $time1 . ',' . $time2)))->count('id');
             $number2[] = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->count('id');
             $order[]   = db('goods_order')->where(array('createtime' => array('between', $time1 . ',' . $time2)))->sum('money');
-            $order1[] = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->sum('money');
+            $order1[]  = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->sum('money');
         }
         unset($v);
         $legend = array('交易量', '成交量', '交易额', '成交额');
