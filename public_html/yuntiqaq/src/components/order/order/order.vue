@@ -15,7 +15,7 @@
             <div>{{today.turnover}}/{{today.volume}}</div>
           </div>
           <div>
-            <div>成交额/成交额(件)</div>
+            <div>成交额/交易额(件)</div>
             <div>{{today.number}}/{{today.number1}}</div>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <div>{{yesterday.turnover}}/{{yesterday.volume}}</div>
           </div>
           <div>
-            <div>成交额/成交额(件)</div>
+            <div>成交额/交易额(件)</div>
             <div>{{yesterday.number}}/{{yesterday.number1}}</div>
           </div>
         </div>
@@ -51,7 +51,7 @@
             <div>{{seven.turnover}}/{{seven.volume}}</div>
           </div>
           <div>
-            <div>成交额/成交额(件)</div>
+            <div>成交额/交易额(件)</div>
             <div>{{seven.number}}/{{seven.number1}}</div>
           </div>
         </div>
@@ -69,7 +69,7 @@
             <div>{{month.turnover}}/{{month.volume}}</div>
           </div>
           <div>
-            <div>成交额/成交额(件)</div>
+            <div>成交额/交易额(件)</div>
             <div>{{month.number}}/{{month.number1}}</div>
           </div>
         </div>

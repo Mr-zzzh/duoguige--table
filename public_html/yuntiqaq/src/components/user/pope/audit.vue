@@ -7,7 +7,7 @@
         <el-input v-model="sizeForm.check.name"></el-input>
       </el-form-item>
       <el-form-item label="性别">
-        <el-input v-model="sizeForm.check.sex"></el-input>
+        <el-input v-model="sizeForm.check.sex==1?'男':'女'"></el-input>
       </el-form-item>
       <el-form-item label="身份证号">
         <el-input v-model="sizeForm.check.idcardno"></el-input>
@@ -77,10 +77,10 @@ export default {
         type_text: "",
         normal_text: "",
         check: {
-          id: 2,
-          uid: 12,
+          id: "",
+          uid: "",
           name: "",
-          sex: 1,
+          sex: "",
           idcardno: "",
           license_number: "",
           company_name: "",
