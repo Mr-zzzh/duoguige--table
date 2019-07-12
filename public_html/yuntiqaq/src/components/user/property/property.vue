@@ -33,16 +33,16 @@
     <!-- 下面的表格 -->
     <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column label="ID" width="180"></el-table-column>
+      <el-table-column label="ID" width="180"  type="index"></el-table-column>
 
-      <el-table-column label="公司名称" width="180" prop="name"></el-table-column>
-      <el-table-column label="法人姓名" width="180" prop></el-table-column>
+      <el-table-column label="公司名称" width="180" prop="company_name"></el-table-column>
+      <el-table-column label="法人姓名" width="180" prop="name"></el-table-column>
 
       <el-table-column label="联系电话" prop="phone"></el-table-column>
 
       <el-table-column label="状态" prop="status_text"></el-table-column>
       <el-table-column label="申请时间" prop="createtime"></el-table-column>
-      <el-table-column label="审核时间" prop="createtime"></el-table-column>
+      <el-table-column label="审核时间" prop="checktime"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="info(scope.row.id)" type="text" size="small">详情</el-button>

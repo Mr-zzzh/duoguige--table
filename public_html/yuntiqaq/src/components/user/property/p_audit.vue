@@ -19,7 +19,7 @@
         <el-input v-model="sizeForm.check.number"></el-input>
       </el-form-item>
       <el-form-item label="电梯品牌">
-        <el-input v-model="sizeForm.check.name"></el-input>
+        <el-input v-model="sizeForm.check.brand"></el-input>
       </el-form-item>
       <el-form-item label="营业执照">
         <div class="bb">

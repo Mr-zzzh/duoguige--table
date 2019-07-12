@@ -38,7 +38,7 @@
         <el-table-column label="求职者信息" width="180" prop="name"></el-table-column>
         <el-table-column label="求职岗位" width="180" prop="post"></el-table-column>
 
-        <el-table-column label="工作地点" prop="city_text"></el-table-column>
+        <el-table-column label="工作地点" prop="address"></el-table-column>
 
         <el-table-column label="申请时间" prop="createtime"></el-table-column>
         <el-table-column label="审核时间" prop="checktime"></el-table-column>

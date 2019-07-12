@@ -67,19 +67,32 @@
 
     <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column label="ID" width="120" type="index" ></el-table-column>
+      <el-table-column label="ID" width="120" type="index"></el-table-column>
 
       <el-table-column label="订单编号" width="180" prop="ordersn"></el-table-column>
       <el-table-column label="购买商品" prop="gname"></el-table-column>
       <el-table-column label="价格" prop="money"></el-table-column>
-      <el-table-column label="买家" prop="dname"></el-table-column>
+      <el-table-column label="买家" prop="uname"></el-table-column>
       <el-table-column label="下单时间" prop="createtime"></el-table-column>
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
       <el-table-column label="点击发货">
         <template slot-scope="scope">
-          <el-button  v-if="status==2||status==3" disabled @click="fh(scope.row.id,scope.row)" type="text" size="small">发货</el-button>
-          <el-button  v-else="" @click="fh(scope.row.id,scope.row)" type="text" size="small">发货</el-button>
+          <el-button
+            v-if="scope.row.status==2||status==3"
+            size="small"
+            type="info"
+            v-model="status"
+            disabled
+            @click="fh(scope.row.id,scope.row)"
+          >发货</el-button>
+          <el-button
+            v-else
+            size="small"
+            type="primary"
+            @click="fh(scope.row.id,scope.row)"
+            v-model="status"
+          >发货</el-button>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -215,7 +228,7 @@ export default {
       this.number = data.number;
       data.data.forEach(element => {
         this.status_text = element.status_text;
-        this.status = element.status
+        this.status = element.status;
       });
     },
     down(e) {
@@ -285,7 +298,7 @@ export default {
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
-       this.page = 1;
+      this.page = 1;
       this.getGoodsOrder();
       console.log(`每页 ${val} 条`);
     },

@@ -1,8 +1,10 @@
 <template>
   <div class="user">
     <el-form ref="form" :model="info" label-width="100px">
+      <el-form-item label="状态">
+        <el-button type="primary" v-model="info.status_text" disabled>{{info.status_text}}</el-button>
+      </el-form-item>
       <el-form-item label="下单时间">
-         <el-button type="primary"  v-model="info.status_text" disabled >{{info.status_text}}</el-button>
         <el-input v-model="info.createtime"></el-input>
         <!-- <el-input v-model="info.status_text"></el-input> -->
       </el-form-item>
@@ -27,7 +29,7 @@
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
       </el-form-item>
       <el-form-item size="large">
         <el-button type="primary" @click="submitForm('ruleForm')" :loading="false">提交</el-button>
@@ -63,7 +65,8 @@ export default {
       status_text: "",
       status: "",
       //备选按钮的选中状态
-      info:{},
+      info: {},
+      remark: ""
     };
   },
   methods: {
@@ -71,7 +74,8 @@ export default {
     async editstatus() {
       let data = await editstatus({
         id: this.id,
-        status: this.status
+        status: this.status,
+        remark: this.remark
       });
       console.log(data);
     },
@@ -80,11 +84,9 @@ export default {
     get() {
       getinfo(this.$route.params.id).then(res => {
         console.log(res);
-        this.info=res
-      
+        this.info = res;
 
-
-            if (res.status == 1) {
+        if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "审核通过";
         } else if (res.status == 0) {
           this.info.status == 0 && this.info.status_text == "待审";
@@ -130,8 +132,8 @@ export default {
 
 
 <style lang="less" scoped>
-.user{
+.user {
   background-color: #fff;
-  padding: 8px
+  padding: 8px;
 }
 </style>

@@ -49,12 +49,12 @@
         <el-table-column label="注册时间" prop="createtime"></el-table-column>
         <el-table-column label="成交" prop="createtime">
           <template slot-scope="scope">
-            <span>订单:{{ scope.row.order || 10 }}</span>
+            <span>订单:{{ scope.row.number || 0 }}</span>
             <br />
-            <span>金额:{{ scope.row.price || 10 }}</span>
+            <span>金额:{{ scope.row.money || 0 }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="注册时间" prop="status_text"></el-table-column>
+        <el-table-column label="状态" prop="status_text"></el-table-column>
         <el-table-column label="黑名单" v-model="normal">
           <template slot-scope="scope">
             <el-button

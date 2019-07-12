@@ -12,7 +12,7 @@
         <el-input v-model="info.post"></el-input>
       </el-form-item>
       <el-form-item label="期望薪资">
-        <el-input v-model="info.salary"></el-input>
+        <el-input v-model="info.sname"></el-input>
       </el-form-item>
        <el-form-item label="最高学历">
         <el-input v-model="info.education"></el-input>
