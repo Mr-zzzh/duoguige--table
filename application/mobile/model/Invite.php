@@ -47,7 +47,7 @@ class Invite extends Common {
         $list            = $this->alias('a')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->join('company c', 'a.uid=c.uid', 'left')
-            ->field('a.id,a.post,a.province,a.city,a.createtime,a.name,a.phone,s.name salary_text,c.company_name')
+            ->field('a.id,a.uid,a.post,a.province,a.city,a.createtime,a.name,a.phone,s.name salary_text,c.company_name')
             ->where($map)
             ->whereTime('a.createtime', $where)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
@@ -55,6 +55,9 @@ class Invite extends Common {
                 $item['province_text'] = city_name($item['province']);
                 $item['city_text']     = city_name($item['city']);
                 $item['createtime']    = date('Y-m-d', $item['createtime']);
+                if (empty($item['company_name'])) {
+                    $item['company_name'] = db('technician')->where('uid', $item['uid'])->value('company_name');
+                }
             }
             unset($item);
         }
