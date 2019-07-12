@@ -1,9 +1,10 @@
 <template>
   <div class="user">
-    <el-form ref="form" :model="info" label-width="80px">
+    <el-form ref="form" :model="info" label-width="100px">
       <el-form-item label="下单时间">
+         <el-button type="primary"  v-model="info.status_text" disabled >{{info.status_text}}</el-button>
         <el-input v-model="info.createtime"></el-input>
-        <el-input v-model="info.status_text"></el-input>
+        <!-- <el-input v-model="info.status_text"></el-input> -->
       </el-form-item>
       <el-form-item label="单位名称">
         <el-input v-model="info.company"></el-input>
@@ -19,7 +20,7 @@
         <el-input v-model="info.genre_text"></el-input>
       </el-form-item>
       <el-form-item label="电梯地址">
-        <el-input v-model="info.name"></el-input>
+        <el-input v-model="info.address"></el-input>
       </el-form-item>
       <el-form-item label="审核状态">
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
