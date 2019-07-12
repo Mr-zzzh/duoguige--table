@@ -99,21 +99,15 @@ export default {
     };
   },
   methods: {
-    // 这是获取全部订单的请求
-    async Goodssummarize() {
-      let data = await Goodssummarize({});
-      console.log(data);
-      this.info = data;
-      this.month = data.month;
-      this.yesterday = data.yesterday;
-      this.seven = data.seven;
-      this.today = data.today;
-      console.log(this.today);
-    },
     // 获得数据
     getshuju() {
-      Goodssummarize().then(res => {
-        console.log(res);
+      Goodssummarize().then(data => {
+        console.log(data);
+        this.info = data;
+        this.month = data.month;
+        this.yesterday = data.yesterday;
+        this.seven = data.seven;
+        this.today = data.today;
         this.drawLine();
       });
     },
@@ -127,6 +121,9 @@ export default {
         },
         legend: {
           data: this.info.trend.legend
+        },
+        title: {
+          text: "               近一个月交易走势"
         },
         grid: {
           left: "3%",
@@ -142,7 +139,6 @@ export default {
         yAxis: {
           type: "value"
         },
-        // title:"近一个月成交",
         series: this.info.trend.series,
         color: {
           type: "linear",
@@ -166,18 +162,12 @@ export default {
     }
   },
   created() {
-    this.Goodssummarize();
     this.getshuju();
   }
 };
 </script>
 
 <style lang="less" scoped>
-// .echarts {
-//   height: 40vh;
-//   background-color: #fff;
-//   margin: 0 66px;
-// }
 .box {
   display: flex;
   justify-content: space-around;
@@ -223,9 +213,9 @@ export default {
 }
 
 .cc {
-   margin: 0 30px;
-   width: 100%;
-  div {
+  margin: 0 70px;
+  width: 92%;
+  /deep/div {
     background-color: #fff;
   }
 }
