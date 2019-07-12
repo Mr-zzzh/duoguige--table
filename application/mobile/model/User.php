@@ -259,6 +259,9 @@ class User extends Common {
         if (empty($data['idcardno'])) {
             show_json(0, '身份证号码不能为空');
         }
+        /* if (!checkIdCard($data['idcardno'])) {
+             show_json(0, '请传正确身份证号码');
+         }*/
         if (empty($data['company_name'])) {
             show_json(0, '公司名称不能为空');
         }
