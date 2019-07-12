@@ -27,7 +27,7 @@ class User extends Common {
                 $item['type_text']   = $type[$item['type']];
                 $item['normal_text'] = $item['normal'] == 1 ? '启用' : '禁用';
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
-                if (empty($item['checktime'])) {
+                if (!empty($item['checktime'])) {
                     $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
                 }
                 $item['number'] = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->count('id');
