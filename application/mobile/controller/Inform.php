@@ -60,6 +60,17 @@ class Inform extends Common {
     }
 
     /**
+     * @title 清空
+     * @url /inform/clear
+     * @method post
+     * @author 开发者
+     */
+    public function clear() {
+        $m = new \app\mobile\model\Inform();
+        $m->Clear();
+    }
+
+    /**
      * @title 读取
      * @url /inform/:id
      * @method get

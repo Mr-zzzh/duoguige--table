@@ -101,6 +101,7 @@ Route::rule('goodsorder/affirm', 'mobile/GoodsOrder/affirm', 'GET|POST');
 Route::rule('goodsorder/pay', 'mobile/GoodsOrder/pay', 'POST');
 Route::resource('inform', 'mobile/Inform');
 Route::rule('inform/unreadnum', 'mobile/Inform/unreadnum', 'GET');
+Route::rule('inform/clear', 'mobile/Inform/clear', 'POST');
 Route::resource('invite', 'mobile/Invite');
 Route::rule('salary', 'mobile/Invite/salary', 'GET');
 Route::rule('experience', 'mobile/Invite/experience', 'GET');

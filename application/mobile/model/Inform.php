@@ -82,6 +82,15 @@ class Inform extends Common {
         }
     }
 
+    public function Clear() {
+        global $member;
+        if ($this->where(array('uid' => $member['id']))->delete()) {
+            show_json(1, '清空成功');
+        } else {
+            show_json(0, '清空失败');
+        }
+    }
+
     public function GetOne($id) {
         $data['read'] = 1;
         $this->where('id', $id)->update($data);
