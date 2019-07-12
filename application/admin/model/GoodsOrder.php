@@ -46,7 +46,7 @@ class GoodsOrder extends Common {
             unset($item);
         }
         $list['number'] = $this->alias('a')->where($map)->count('a . id');
-        $list['money']  = $this->alias('a')->where($map)->count('a . money');
+        $list['money']  = $this->alias('a')->where($map)->sum('a . money');
         show_json(1, $list);
     }
 
