@@ -67,11 +67,8 @@ export default {
           image: ""
         }
       },
-      //备选按钮的选中状态
-      id: 0,
-      status: 1,
-      state: "",
-      numberValidateForm: {}
+      id: this.$route.params.id,
+      status: 1
     };
   },
   methods: {
@@ -112,12 +109,11 @@ export default {
   },
 
   created() {
-    // 调用store中的方法------获取到当前用户的详细情况
-    var user = JSON.parse(localStorage.getItem("user") || "{}");
-    console.log(user, 33333); // ----------是数组,这些操作知识为了获取当前的id，发请求，通过id获取更多的当前这行的数据
-    user.forEach(element => {
-      (this.id = element.id), (this.status = element.status);
-    });
+    // var user = JSON.parse(localStorage.getItem("user") || "{}");
+    // console.log(user, 33333); // ----------是数组,这些操作知识为了获取当前的id，发请求，通过id获取更多的当前这行的数据
+    // user.forEach(element => {
+    //   (this.id = element.id), (this.status = element.status);
+    // });
     this.get();
   }
 };

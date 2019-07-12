@@ -16,8 +16,6 @@
       >搜索</el-button>
     </el-input>
 
-  
-
     <!-- 下面的表格 -->
 
     <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
@@ -59,7 +57,6 @@ export default {
       total: 0,
       currentPage: 1,
       tableData: [],
-      userInfo: {}
     };
   },
 
@@ -89,20 +86,24 @@ export default {
       this.total = data.total;
       this.page = data.total / this.limit;
       console.log(this.tableData);
-      
     },
 
     // 获取分类
     categry() {
+      this.limit = 15;
+      this.page = 1;
       this.getdashi();
     },
     // 搜索
     search_2() {
+      this.limit = 15;
+      this.page = 1;
       this.getdashi();
     },
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
+      this.page = 1;
       this.getdashi();
       console.log(`每页 ${val} 条`);
     },
