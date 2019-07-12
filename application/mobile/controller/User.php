@@ -72,9 +72,9 @@ class User extends Common {
      * @title 编辑
      * @url /user/:id
      * @method put
-     * @param name:name type:string require:1 default:- other:- desc:姓名
-     * @param name:avatar type:string require:1 default:- other:- desc:头像
-     * @param name:intro type:string require:1 default:- other:- desc:简介
+     * @param name:name type:string require:0 default:- other:- desc:姓名
+     * @param name:avatar type:string require:0 default:- other:- desc:头像
+     * @param name:intro type:string require:0 default:- other:- desc:简介
      * @author 开发者
      */
     public function update(Request $request, $id) {
