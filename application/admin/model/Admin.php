@@ -7,31 +7,33 @@ class Admin extends Common {
     public function Home() {
         $list = array();
         //今日付款金额
-        $money = db('goods_order')->where('status', 1)->whereTime('paytime', 'today')->sum('money');
+        $money = db('goods_order')->whereTime('paytime', 'today')->sum('money');
         //今日订单数
         $number = db('goods_order')->whereTime('createtime', 'today')->count('id');
         //今日已付款订单数
-        $pay_number = db('goods_order')->where('status', 1)->whereTime('paytime', 'today')->count('id');
+        $pay_number = db('goods_order')->whereTime('paytime', 'today')->count('id');
         //今日新增会员数
         $member    = db('user')->whereTime('createtime', 'today')->count('id');
         $endtime   = time();
         $starttime = time() - 6 * 24 * 60 * 60;
         $weekarray = array("日", "一", "二", "三", "四", "五", "六");
-        $time[]    = date('m-d', $starttime) . '周' . $weekarray[date("w", $starttime)];
+        $time[]    = date('m-d', $starttime);
         while (($starttime = strtotime('+1 day', $starttime)) <= $endtime) {
-            $time[] = date('m-d', $starttime) . '周' . $weekarray[date("w", $starttime)]; // 取得递增月;
+            $time[] = date('m-d', $starttime); // 取得递增月;
         }
         $number1 = array();       //交易量
         $number2 = array();      //成交量
         $order   = array();      //交易额
         $order1  = array();      //成交额
+        $year    = date('Y', time());
         foreach ($time as &$v) {
-            $time1     = strtotime($v . ' 00:00:00');
-            $time2     = strtotime($v . ' 23:59:59');
-            $number1[] = db('goods_order')->where(array('createtime' => array('between', $time1, $time2)))->count('id');
-            $number2[] = db('goods_order')->where(array('paytime' => array('between', $time1, $time2)))->count('id');
-            $order[]   = db('goods_order')->where(array('createtime' => array('between', $time1, $time2)))->sum('money');
-            $order1[]  = db('goods_order')->where(array('paytime' => array('between', $time1, $time2)))->sum('money');
+            $time1     = strtotime($year . '-' . $v . ' 00:00:00');
+            $time2     = strtotime($year . '-' . $v . ' 23:59:59');
+            $number1[] = db('goods_order')->where(array('createtime' => array('between', $time1 . ',' . $time2)))->count('id');
+            $number2[] = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->count('id');
+            $order[]   = db('goods_order')->where(array('createtime' => array('between', $time1 . ',' . $time2)))->sum('money');
+            $order1[]  = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->sum('money');
+            $v         = $v . '周' . $weekarray[date("w", strtotime($year . '-' . $v))];
         }
         unset($v);
         $legend = array('交易量', '成交量', '交易额', '成交额');
@@ -74,9 +76,9 @@ class Admin extends Common {
             $time = 'today';
         }
         $list             = array();
-        $list['turnover'] = db('goods_order')->where('status', 1)->whereTime('paytime', $time)->count('id');
+        $list['turnover'] = db('goods_order')->whereTime('paytime', $time)->count('id');
         $list['volume']   = db('goods_order')->whereTime('createtime', $time)->count('id');
-        $list['number']   = db('goods_order')->where('status', 1)->whereTime('paytime', $time)->sum('money');
+        $list['number']   = db('goods_order')->whereTime('paytime', $time)->sum('money');
         $list['number1']  = db('goods_order')->whereTime('createtime', $time)->sum('money');
         $member           = db('goods_order')->whereTime('paytime', $time)->group('uid')->count('id');
         if ($member > 0) {
@@ -101,7 +103,6 @@ class Admin extends Common {
         }
         $list = db('goods_order')->alias('a')
             ->join('goods b', 'a.gid=b.id', 'left')
-            ->where('a.status', 1)
             ->whereTime('a.paytime', $time)
             ->field('b.name,count(a.id) as number,sum(a.money) as money')
             ->group('a.gid')->order('money desc')->limit(5)->select();

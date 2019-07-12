@@ -162,10 +162,10 @@ class GoodsOrder extends Common {
         foreach ($time as &$v) {
             $time1     = strtotime($v . ' 00:00:00');
             $time2     = strtotime($v . ' 23:59:59');
-            $number1[] = db('goods_order')->where(array('createtime' => array('between', $time1, $time2)))->count('id');
-            $number2[] = db('goods_order')->where(array('paytime' => array('between', $time1, $time2)))->count('id');
-            $order[]   = db('goods_order')->where(array('createtime' => array('between', $time1, $time2)))->sum('money');
-            $order1[]  = db('goods_order')->where(array('paytime' => array('between', $time1, $time2)))->sum('money');
+            $number1[] = db('goods_order')->where(array('createtime' => array('between', $time1 . ',' . $time2)))->count('id');
+            $number2[] = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->count('id');
+            $order[]   = db('goods_order')->where(array('createtime' => array('between', $time1 . ',' . $time2)))->sum('money');
+            $order1[] = db('goods_order')->where(array('paytime' => array('between', $time1 . ',' . $time2)))->sum('money');
         }
         unset($v);
         $legend = array('交易量', '成交量', '交易额', '成交额');
