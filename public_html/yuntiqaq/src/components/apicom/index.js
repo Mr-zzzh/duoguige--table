@@ -53,10 +53,10 @@ export const getGoodsOrder = (params) => {
     return request.get("/admin/goodsorder", { params, isLoading: true, isSuccessTip: true });
 }
 
-//发货的接口-----这个页面没写-----只需要一个发货的按钮
+//发货的接口-----这个页面没写-----只需要一个发货的按钮--------------必须带的参数是本商品的id
 export const getGoodsdeliver = (params) => {
     // console.log('test')
-    return request.get("/admin/goodsorder/delive", { params, isLoading: true, isSuccessTip: true });
+    return request.get("/admin/goodsorder/deliver", { params, isLoading: true, isSuccessTip: true });
 }
 
 //订单概述
