@@ -1,8 +1,8 @@
 <template>
   <div class="form">
-    <el-form ref="form" :model="info" label-width="80px"  size="mini">
+    <el-form ref="form" :model="info" label-width="100px"  size="mini">
       <el-form-item label="招聘信息">
-        <el-input v-model="info.status_text" class="login-form-input"></el-input>
+         <el-button type="primary"  v-model="info.status_text" disabled >{{info.status_text}}</el-button>
       </el-form-item>
       <el-form-item label="招聘公司">
         <el-input v-model="info.name"></el-input>
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       textarea: "",
-      radio: 2,
+      radio: 1,
       //备选按钮的选中状态
       form: {
         name: "",
@@ -67,7 +67,7 @@ export default {
         resource: "",
         desc: ""
       },
-      status: "".status,
+      status: "",
       id: this.$route.params.id,
       info: {},
       remark: ""
