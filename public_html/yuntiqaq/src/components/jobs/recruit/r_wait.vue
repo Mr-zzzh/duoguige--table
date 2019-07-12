@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       textarea: "",
-      radio: 1,
+      radio: 2,
       //备选按钮的选中状态
       form: {
         name: "",
