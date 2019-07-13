@@ -90,26 +90,22 @@ export default {
 
     // 获取分类
     categry() {
-      this.limit = 15;
       this.page = 1;
       this.getdashi();
     },
     // 搜索
     search_2() {
-      this.limit = 15;
       this.page = 1;
       this.getdashi();
     },
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
-      this.page = 1;
       this.getdashi();
       console.log(`每页 ${val} 条`);
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getdashi();
       console.log(`当前页: ${val}`);

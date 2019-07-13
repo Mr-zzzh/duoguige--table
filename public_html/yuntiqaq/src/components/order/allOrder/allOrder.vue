@@ -252,14 +252,12 @@ export default {
     },
     down(e) {
       this.page = 1;
-      this.limit = 15;
       this.getGoodsOrder();
       // console.log(e);
       console.log(this.status);
     },
     down2(e) {
       this.page = 1;
-      this.limit = 15;
       this.getGoodsOrder();
       console.log(this.paytype);
     },
@@ -277,14 +275,12 @@ export default {
         console.log(this.endtime);
       }
       this.page = 1;
-      this.limit = 15;
       this.getGoodsOrder();
     },
     // 搜索
     search() {
       // console.log(1111);
       this.page = 1;
-      this.limit = 15;
       this.getGoodsOrder();
     },
 
@@ -317,13 +313,11 @@ export default {
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
-      this.page = 1;
       this.getGoodsOrder();
       console.log(`每页 ${val} 条`);
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getGoodsOrder();
       console.log(`当前页: ${val}`);

@@ -181,13 +181,11 @@
             // 分页-一页多少
             handleSizeChange(val) {
                 this.limit = val
-                this.page = 1
                 this.getlist()
                 console.log(`每页 ${val} 条`);
             },
             // 分页
             handleCurrentChange(val) {
-                this.limit = 15
                 this.page = val
                 this.getlist()
                 console.log(`当前页: ${val}`);
@@ -289,7 +287,6 @@
             // 搜索
             ss(){
                 this.page = 1
-                this.limit = 15
                 this.getlist()
             },
 

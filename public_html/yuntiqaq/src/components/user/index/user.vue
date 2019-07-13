@@ -42,16 +42,15 @@
       <el-table :data="tableData" style="width: 100%" @selection-change="selectionChange">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column label="ID" width="180" type="index"></el-table-column>
-
         <el-table-column label="姓名" width="180" prop="name"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>
         <el-table-column label="类型" prop="type_text"></el-table-column>
         <el-table-column label="注册时间" prop="createtime"></el-table-column>
         <el-table-column label="成交" prop="createtime">
           <template slot-scope="scope">
-            <span>订单:{{ scope.row.number || 0 }}</span>
+            <span>订单:{{ scope.row.number}}</span>
             <br />
-            <span>金额:{{ scope.row.money || 0 }}</span>
+            <span>金额:{{ scope.row.money}}</span>
           </template>
         </el-table-column>
         <el-table-column label="黑名单" v-model="normal">
@@ -239,7 +238,6 @@ export default {
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.aa();
       console.log(`当前页: ${val}`);
