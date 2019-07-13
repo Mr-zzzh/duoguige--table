@@ -181,7 +181,6 @@
             // 分页-一页多少
             handleSizeChange(val) {
                 this.limit = val
-                this.page = 1
                 this.getlist()
                 console.log(`每页 ${val} 条`);
             },

@@ -184,7 +184,6 @@ export default {
     // 分页
     handleSizeChange(val) {
       this.limit = val;
-      this.page = 1;
       this.getMaintenance();
       console.log(`每页 ${val} 条`);
     },

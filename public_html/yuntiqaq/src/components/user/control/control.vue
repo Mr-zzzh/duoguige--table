@@ -101,7 +101,6 @@ export default {
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
-      this.page = 1;
       this.getdashi();
       console.log(`每页 ${val} 条`);
     },

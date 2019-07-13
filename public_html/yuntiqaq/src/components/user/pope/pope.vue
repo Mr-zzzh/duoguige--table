@@ -193,7 +193,6 @@ export default {
     handleSizeChange(val) {
       this.limit = val; //让其相等
       this.getUserTab();
-       this.page = 1,
       console.log(`每页 ${val} 条`);
     },
     // 分页------当前页码切换的时候触发
