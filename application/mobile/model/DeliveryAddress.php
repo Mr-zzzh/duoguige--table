@@ -10,6 +10,8 @@ class DeliveryAddress extends Common {
         if (!empty($list)) {
             foreach ($list as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+                $item['moren']      = $item['default'];
+                unset($item['default']);
             }
             unset($item);
         }
@@ -27,7 +29,7 @@ class DeliveryAddress extends Common {
             'phone'      => trim($params['phone']),
             'area'       => trim($params['area']),
             'address'    => trim($params['address']),
-            'default'    => intval($params['default']),
+            'default'    => intval($params['moren']),
             'createtime' => time(),
         );
         if (empty($data['name'])) {
@@ -70,7 +72,7 @@ class DeliveryAddress extends Common {
             'phone'   => trim($params['phone']),
             'area'    => trim($params['area']),
             'address' => trim($params['address']),
-            'default' => intval($params['default']),
+            'default' => intval($params['moren']),
         );
         if (empty($data['name'])) {
             show_json('0', '收货人姓名不能为空');
@@ -104,6 +106,8 @@ class DeliveryAddress extends Common {
         } else {
             $item               = $item->toArray();
             $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
+            $item['moren']      = $item['default'];
+            unset($item['default']);
         }
         show_json(1, $item);
     }

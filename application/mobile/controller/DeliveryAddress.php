@@ -15,7 +15,7 @@ class DeliveryAddress extends Common {
      * @url /deliveryaddress
      * @method get
      * @return data:列表@
-     * @data id:id uid:用户ID name:收货人姓名 phone:收货人电话 area:地区 address:地址 default:是否默认_0否_1是 createtime:创建时间
+     * @data id:id uid:用户ID name:收货人姓名 phone:收货人电话 area:地区 address:地址 moren:是否默认_0否_1是 createtime:创建时间
      * @author 开发者
      */
     public function index() {
@@ -31,7 +31,7 @@ class DeliveryAddress extends Common {
      * @param name:phone type:string require:1 default:- other:- desc:收货人电话
      * @param name:area type:string require:1 default:- other:- desc:地区
      * @param name:address type:string require:1 default:- other:- desc:地址
-     * @param name:default type:int require:1 default:- other:- desc:是否默认_0否_1是
+     * @param name:moren type:int require:1 default:- other:- desc:是否默认_0否_1是
      * @author 开发者
      */
     public function save() {
@@ -61,7 +61,7 @@ class DeliveryAddress extends Common {
      * @param name:phone type:string require:1 default:- other:- desc:收货人电话
      * @param name:area type:string require:1 default:- other:- desc:地区
      * @param name:address type:string require:1 default:- other:- desc:地址
-     * @param name:default type:int require:1 default:- other:- desc:是否默认_0否_1是
+     * @param name:moren type:int require:1 default:- other:- desc:是否默认_0否_1是
      * @author 开发者
      */
     public function update(Request $request, $id) {
@@ -82,7 +82,7 @@ class DeliveryAddress extends Common {
      * @return phone:收货人电话
      * @return area:地区
      * @return address:地址
-     * @return default:是否默认_0否_1是
+     * @return moren:是否默认_0否_1是
      * @return createtime:创建时间
      * @author 开发者
      */
