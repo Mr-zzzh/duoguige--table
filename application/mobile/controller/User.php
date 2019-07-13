@@ -209,7 +209,7 @@ class User extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id nid:新闻id content:留言内容 like_number:获赞数 type:1新闻留言2空中课堂留言(暂时只有新闻) news_type:新闻类型1图文2视频 createtime:创建时间 day:日期(2019-5-31) time:时间(17:53) avatar:头像
+     * @data id:id nid:新闻id content:留言内容 like_number:获赞数 type:1新闻留言2空中课堂留言(暂时只有新闻) news_type:新闻类型1图文2视频 createtime:创建时间 day:日期(2019-5-31) time:时间(17:53) avatar:头像 name:名字
      * @author 开发者
      */
     public function my_like() {

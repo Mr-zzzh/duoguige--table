@@ -227,6 +227,7 @@ class User extends Common {
                     $item['news_type'] = db('news')->where('id', $item['nid'])->value('type');
                 }
                 $item['avatar'] = $member['avatar'];
+                $item['name'] = $member['name'];
             }
             unset($item);
         }
