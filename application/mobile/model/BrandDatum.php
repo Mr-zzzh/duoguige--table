@@ -27,7 +27,7 @@ class BrandDatum extends Common {
         } else {
             $item = $item->toArray();
             if ($member) {
-                if (db('download')->where(array('uid' => $member['id'], 'bdid' => $item['id']))->value('id')) {
+                if (db('download')->where(array('uid' => $member['id'], 'bdid' => $id))->value('id')) {
                     $item['is_collect'] = 1;
                 } else {
                     $item['is_collect'] = 0;
