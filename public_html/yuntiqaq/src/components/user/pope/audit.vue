@@ -136,14 +136,6 @@ export default {
   },
   mounted() {},
   created() {
-    // var user = JSON.parse(localStorage.getItem("user") || "[]");
-    // console.log(user); // ----------是数组,这些操作知识为了获取当前的id，发请求，通过id获取更多的当前这行的数据
-    // user.forEach(element => {
-    //   (this.id = element.id), (this.status = element.status);
-    //   if (this.status == 1) {
-    //     this.btn();
-    //   }
-    // });
     this.get();
     this.btn();
   }

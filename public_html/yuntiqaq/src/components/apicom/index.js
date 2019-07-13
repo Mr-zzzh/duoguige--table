@@ -9,6 +9,12 @@ export const getUserTab = (params) => {
     return request.get("admin/user", { params, isLoading: true});
 }
 
+// 用户分类页面/启用，禁用
+export const getForbidden  = (params) => {
+    // console.log('test')
+    return request.get("/admin/user/forbidden", { params, isLoading: true});
+}
+
 //  获得用户分类/获得删除用户
 export const delUser = (params) => {
     return request.delete(`admin/user/${params}`, { isSuccessTip: true });
@@ -21,16 +27,10 @@ export const getUserInfo = (params) => {
     return request.get(`admin/user/${params}`, { params, isLoading: true});
 }
 
-// 用户分类页面/读取用户的的详细信息的接口-----去到用户审核的页面，必须有改用户的id
+// 用户分类页面/审核的接口
 export const getAudit = (params) => {
     // console.log('test')
     return request.get("/admin/user/editstatus", { params, isLoading: true });
-}
-
-// 用户分类页面/启用，禁用
-export const getForbidden  = (params) => {
-    // console.log('test')
-    return request.get("/admin/user/forbidden", { params, isLoading: true});
 }
 
 // 用户分类页面/大师管理的接口
@@ -70,13 +70,15 @@ export const delGoods = (params) => {
     return request.delete(`/admin/goodsorder/${params}`, { params, isLoading: true, isSuccessTip: true });
 }
 
+// 不需要订单详情的页面，所以没写这个接口
 
 
 
 
 
 
-// 找聘模块-------------求职信息的接口
+
+// 招聘模块-------------求职信息的接口
 //  获得招聘管理/
 export const getJobs = (params) => {
         // console.log('test')
