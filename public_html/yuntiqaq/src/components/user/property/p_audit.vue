@@ -27,8 +27,8 @@
         </div>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
-        <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
+        <el-radio v-model="sizeForm.status" label="1" @change="btn">通过</el-radio>
+        <el-radio v-model="sizeForm.status" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
@@ -55,7 +55,7 @@ export default {
         phone: 0,
         avatar: "",
         intro: "",
-        status: 0,
+        status: "",
         createtime: "",
         check: {
           company_name: "",
@@ -78,6 +78,7 @@ export default {
         console.log(res);
         //后台返回的数据
         this.sizeForm = res;
+          this.sizeForm.status = res.status.toString();
         console.log(this.sizeForm);
       });
     },

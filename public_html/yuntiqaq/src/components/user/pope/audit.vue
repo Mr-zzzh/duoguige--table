@@ -34,8 +34,8 @@
       </el-form-item>
 
       <el-form-item label="审核状态">
-        <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
-        <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
+        <el-radio v-model="sizeForm.status" label="1" @change="btn">通过</el-radio>
+        <el-radio v-model="sizeForm.status" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
@@ -54,7 +54,7 @@ import { getUserInfo, getAudit } from "@/components/apicom/index";
 export default {
   data() {
     return {
-      radio: 2,
+      // radio: 2,
       //备选按钮的选中状态
       id: this.$route.params.id,
       list: [],
@@ -69,7 +69,7 @@ export default {
         phone: "",
         avatar: "",
         intro: null,
-        // status: "",
+        status: "",
         type: 2,
         createtime: "",
         normal: 1,
@@ -99,6 +99,7 @@ export default {
         console.log(res);
         //后台返回的数据
         this.sizeForm = res;
+        this.sizeForm.status = res.status.toString();
         console.log(this.sizeForm);
         // 在此回到这个页面的时候，审核过后，应该改变审核后改项的状态值
       });
