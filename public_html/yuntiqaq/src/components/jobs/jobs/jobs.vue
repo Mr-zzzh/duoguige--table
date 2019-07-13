@@ -125,7 +125,6 @@ export default {
     search_2() {
       // console.log(1111);
       this.page = 1;
-      this.limit = 15;
       this.getJobs();
     },
 
@@ -146,7 +145,6 @@ export default {
     },
     // 分页
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getJobs();
       console.log(`当前页: ${val}`);

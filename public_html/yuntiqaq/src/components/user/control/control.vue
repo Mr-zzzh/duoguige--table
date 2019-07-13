@@ -90,13 +90,11 @@ export default {
 
     // 获取分类
     categry() {
-      this.limit = 15;
       this.page = 1;
       this.getdashi();
     },
     // 搜索
     search_2() {
-      this.limit = 15;
       this.page = 1;
       this.getdashi();
     },
@@ -109,7 +107,6 @@ export default {
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getdashi();
       console.log(`当前页: ${val}`);
