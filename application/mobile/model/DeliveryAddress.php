@@ -6,7 +6,7 @@ class DeliveryAddress extends Common {
 
     public function GetAll() {
         global $member;
-        $list = $this->where('uid', $member['id'])->order('default desc')->select()->toArray();
+        $list = $this->where('uid', $member['id'])->order('`default` desc')->select()->toArray();
         if (!empty($list)) {
             foreach ($list as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
