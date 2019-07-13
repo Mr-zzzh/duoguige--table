@@ -49,6 +49,7 @@ class Brand extends Common {
      * @url /brand/:id
      * @method get
      * @return datum:资料链接地址
+     * @return is_collect:是否收藏_0未收藏_1已收藏
      * @author 开发者
      */
     public function read($id) {
