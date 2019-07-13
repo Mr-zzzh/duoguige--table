@@ -131,7 +131,6 @@
             },
             // 分页
             handleCurrentChange(val) {
-                this.limit = 15
                 this.page = val
                 this.getlist()
                 console.log(`当前页: ${val}`);
@@ -186,7 +185,6 @@
             // 搜索
             ss(){
                 this.page = 1
-                this.limit = 15
                 this.getlist()
             },
 
