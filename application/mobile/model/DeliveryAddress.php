@@ -15,7 +15,7 @@ class DeliveryAddress extends Common {
             }
             unset($item);
         }
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     public function AddOne($params) {
