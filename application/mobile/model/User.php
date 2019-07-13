@@ -194,7 +194,7 @@ class User extends Common {
         $map['a.uid'] = $member['id'];
         $list         = db('download')->alias('a')
             ->join('brand_datum b', 'a.bdid=b.id')
-            ->field('b.id,b.name,b.size,b.view,b.download')
+            ->field('a.id,b.id brand_id,b.name,b.size,b.view,b.download')
             ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         show_json(1, $list);
     }

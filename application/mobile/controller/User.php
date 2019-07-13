@@ -178,7 +178,7 @@ class User extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id name:资料标题 size:大小 view:浏览量 download:下载量
+     * @data id:数据id brand_id:资料id name:资料标题 size:大小 view:浏览量 download:下载量
      * @author 开发者
      */
     public function my_collect() {

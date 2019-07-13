@@ -31,10 +31,10 @@ class Invite extends Common {
             $map['a.area'] = intval($params['area']);
         }
         $list = $this->alias('a')
-            ->join('user u', 'a.uid=u.id', 'left')
+            ->join('company u', 'a.uid=u.uid', 'left')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->join('experience e', 'a.experience=e.id', 'left')
-            ->field('a.*,u.name uname,s.name sname,e.name ename')
+            ->field('a.*,u.company_name uname,s.name sname,e.name ename')
             ->where($map)->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '招聘结束');
@@ -46,6 +46,9 @@ class Invite extends Common {
                 $item['createtime']    = date('Y-m-d H:i:s', $item['createtime']);
                 if (!empty($item['checktime'])) {
                     $item['checktime'] = date('Y-m-d H:i:s', $item['checktime']);
+                }
+                if (empty($item['uname'])) {
+                    $item['uname'] = db('technician')->where('uid', $item['uid'])->value('company_name');
                 }
             }
             unset($item);

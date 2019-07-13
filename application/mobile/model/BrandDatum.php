@@ -19,12 +19,22 @@ class BrandDatum extends Common {
     }
 
     public function GetOne($id) {
+        global $member;
         $this->where('id', $id)->setInc('view');
         $item = $this->where('id', $id)->field('datum')->find();
         if (empty($item)) {
             show_json(1);
         } else {
             $item = $item->toArray();
+            if ($member) {
+                if (db('download')->where(array('uid' => $member['id'], 'bdid' => $id))->value('id')) {
+                    $item['is_collect'] = 1;
+                } else {
+                    $item['is_collect'] = 0;
+                }
+            } else {
+                $item['is_collect'] = 0;
+            }
         }
         show_json(1, $item);
     }
@@ -37,7 +47,7 @@ class BrandDatum extends Common {
         $data['uid']  = $member['id'];
         $data['bdid'] = $id;
         if (db('download')->where($data)->value('id')) {
-            show_json(0, '您已下载过该文件');
+            show_json(0, '您已收藏过该文件');
         }
         $this->where('id', $id)->setInc('download');
         $data['createtime'] = time();

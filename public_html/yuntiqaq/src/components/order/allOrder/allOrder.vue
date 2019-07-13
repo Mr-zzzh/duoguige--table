@@ -93,6 +93,15 @@
             @click="fh(scope.row.id,scope.row)"
             v-model="status"
           >发货</el-button>
+
+
+            <!-- 测试用的 -->
+           <!-- <el-button
+            size="small"
+            type="primary"
+            v-model="status"
+            @click="fh(scope.row.id,scope.row)"
+          >发货</el-button> -->
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -206,7 +215,7 @@ export default {
           this.id = id;
           this.status = row.status;
           console.log(id);
-          thisgitfh(id);
+          this.gitfh(id);
           this.page = 1;
           this.getGoodsOrder();
         })
