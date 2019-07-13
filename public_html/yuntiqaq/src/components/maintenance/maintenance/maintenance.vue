@@ -165,7 +165,6 @@ export default {
     // 点击状态的时候去到那里
     categry() {
       this.page = 1;
-      this.limit = 15;
       console.log(1111);
       this.getMaintenance();
     },
@@ -173,7 +172,6 @@ export default {
     search() {
       // console.log(1111);
       this.page = 1;
-      this.limit = 15;
       this.getMaintenance();
     },
     info(id) {
@@ -192,7 +190,6 @@ export default {
     },
     // 分页
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getMaintenance();
       console.log(`当前页: ${val}`);

@@ -104,7 +104,6 @@ export default {
     },
     // 分页
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getFeedback();
       console.log(`当前页: ${val}`);

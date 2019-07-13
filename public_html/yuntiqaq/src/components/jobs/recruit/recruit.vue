@@ -116,12 +116,10 @@ export default {
 
     down() {
       this.page = 1;
-      this.limit = 15;
       this.getRecruit();
     },
     search() {
       this.page = 1;
-      this.limit = 15;
       this.getRecruit();
     },
 
@@ -142,7 +140,6 @@ export default {
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getRecruit();
       console.log(`当前页: ${val}`);

@@ -181,13 +181,19 @@ export default {
     },
     // 获取分类
     categry() {
+<<<<<<< HEAD
       this.limit = 15;
+=======
+>>>>>>> 5230c58ca6a7f6e964c8c3997e6b02f56c8a1e7d
       this.page = 1;
       this.getUserTab();
     },
     // 搜索
     search_2() {
+<<<<<<< HEAD
       this.limit = 15;
+=======
+>>>>>>> 5230c58ca6a7f6e964c8c3997e6b02f56c8a1e7d
       this.page = 1;
       this.getUserTab();
     },
@@ -199,7 +205,6 @@ export default {
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
-      this.limit = 15;
       this.page = val;
       this.getUserTab();
       console.log(`当前页: ${val}`);
