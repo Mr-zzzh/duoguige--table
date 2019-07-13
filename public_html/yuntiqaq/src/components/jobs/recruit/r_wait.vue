@@ -32,7 +32,7 @@
       <el-form-item label="岗位职责">
         <el-input v-model="info.duty"></el-input>
       </el-form-item>
-      <el-form-item label="详细地址">
+      <el-form-item label="审核结果">
         <el-radio v-model="radio" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="radio" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
@@ -79,6 +79,7 @@ export default {
       getRecruitInfo(this.$route.params.id).then(res => {
         console.log(res);
         this.info = res;
+        this.status=res.status
         if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "通过";
         } else if (res.status == 0) {

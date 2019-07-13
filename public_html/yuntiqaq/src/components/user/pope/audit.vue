@@ -19,8 +19,8 @@
         <el-input v-model="sizeForm.check.license_number"></el-input>
       </el-form-item>
       <el-form-item label="证件照" class="box">
-        <div>
-          <p class="aa">在职证明</p>
+        <div  class="aa">
+          <p>在职证明</p>
           <img :src="sizeForm.check.prove_image" alt />
         </div>
         <div class="aa">
@@ -57,9 +57,9 @@ export default {
       radio: 2,
       //备选按钮的选中状态
       id: this.$route.params.id,
-      status: 0,
       list: [],
       state: "",
+      status:"",
       numberValidateForm: {},
       textarea: "",
       remark: "",
@@ -69,7 +69,7 @@ export default {
         phone: "",
         avatar: "",
         intro: null,
-        status: 1,
+        // status: "",
         type: 2,
         createtime: "",
         normal: 1,
@@ -168,7 +168,7 @@ export default {
 }
 .aa{
   img{
-     display: inline-block;
+    display: block;
     width: 200px;
     height: 200px;
   }

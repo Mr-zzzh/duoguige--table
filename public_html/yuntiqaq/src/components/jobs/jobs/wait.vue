@@ -1,9 +1,8 @@
 <template>
   <div class="form">
-    <el-form ref="form" :model="info" label-width="100px" size="mini" >
+    <el-form ref="form" :model="info" label-width="100px" size="mini">
       <el-form-item label="求职者信息">
-         <el-button type="primary"  v-model="info.status_text" disabled >{{info.status_text}}</el-button>
-        <!-- <el-input v-model="info.status_text" disabled ></el-input> -->
+        <el-button type="primary" v-model="info.status_text" disabled>{{info.status_text}}</el-button>
       </el-form-item>
       <el-form-item label="姓名">
         <el-input v-model="info.name"></el-input>
@@ -14,21 +13,20 @@
       <el-form-item label="期望薪资">
         <el-input v-model="info.sname"></el-input>
       </el-form-item>
-       <el-form-item label="最高学历">
+      <el-form-item label="最高学历">
         <el-input v-model="info.education"></el-input>
       </el-form-item>
       <el-form-item label="工作地址">
         <el-input v-model="info.address"></el-input>
       </el-form-item>
-     
-     
-       <el-form-item label="详细地址">
+
+      <el-form-item label="详细地址">
         <el-input v-model="info.address"></el-input>
       </el-form-item>
       <el-form-item label="到岗时间">
         <el-input v-model="info.arrival"></el-input>
       </el-form-item>
-       <el-form-item label="自我描述">
+      <el-form-item label="自我描述">
         <el-input v-model="info.intro"></el-input>
       </el-form-item>
       <el-form-item label="审核结果">
@@ -67,7 +65,7 @@ export default {
         desc: ""
       },
       id: this.$route.params.id,
-      status: this.status,
+      status:"",
       info: {},
       remark: ""
     };
@@ -78,6 +76,7 @@ export default {
       getJobsinfo(this.$route.params.id).then(res => {
         console.log(res);
         this.info = res;
+        this.status=res.status
         if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "通过";
         } else if (res.status == 0) {
@@ -131,5 +130,4 @@ export default {
 .el-form {
   background-color: #fff;
 }
-
 </style>

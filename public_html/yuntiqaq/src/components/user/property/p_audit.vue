@@ -68,7 +68,7 @@ export default {
         }
       },
       id: this.$route.params.id,
-      status: 1
+      status: ""
     };
   },
   methods: {
@@ -131,7 +131,7 @@ export default {
 }
 .bb {
   img {
-    display: inline-block;
+    display:block;
     width: 200px;
     height: 200px;
   }

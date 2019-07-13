@@ -85,7 +85,7 @@ export default {
       getinfo(this.$route.params.id).then(res => {
         console.log(res);
         this.info = res;
-
+        this.status=res.status
         if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "审核通过";
         } else if (res.status == 0) {
