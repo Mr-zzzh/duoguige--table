@@ -161,7 +161,6 @@
             // 搜索
             ss(){
                 this.page = 1
-                this.limit = 15
                 this.getlist()
             },
             // 时间
@@ -169,7 +168,6 @@
                 this.starttime = e[0]
                 this.endtime = e[1]
               this.page = 1
-              this.limit = 15
               this.getlist()  
             },
             // 新增

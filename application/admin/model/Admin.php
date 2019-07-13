@@ -138,7 +138,7 @@ class Admin extends Common {
         $data = array(
             'name'       => trim($params['name']),
             'phone'      => trim($params['phone']),
-            'password'   => trim($params['password'] . $rand),
+            'password'   => md5(trim($params['password'] . $rand)),
             'salt'       => $rand,
             'status'     => intval($params['status']),
             'createtime' => time(),
