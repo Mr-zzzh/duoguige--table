@@ -213,17 +213,20 @@ class User extends Common {
 
     public function MyLike($params) {
         global $member;
-        $map          = array();
-        $map['a.uid'] = $member['id'];
-        $map['b.id']  = array('>=', 1);
-        $list         = db('leave_message')->alias('a')
-            ->join('like b', 'b.nid=a.id', 'left')
-            ->field('a.id,a.nid,a.content,a.like_number,a.createtime')
-            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
+        $map                = array();
+        $map['uid']         = $member['id'];
+        $map['like_number'] = array('>=', 1);
+        $list               = db('leave_message')
+            ->field('id,nid,content,type,like_number,createtime')
+            ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as &$item) {
                 $item['day']  = date('Y-m-d', $item['createtime']);
                 $item['time'] = date('H:i', $item['createtime']);
+                if ($item['type'] == 1) {
+                    $item['news_type'] = db('news')->where('id', $item['nid'])->value('type');
+                }
+                $item['avatar'] = $member['avatar'];
             }
             unset($item);
         }
