@@ -47,7 +47,7 @@ class BrandDatum extends Common {
         $data['uid']  = $member['id'];
         $data['bdid'] = $id;
         if (db('download')->where($data)->value('id')) {
-            show_json(0, '您已下载过该文件');
+            show_json(0, '您已收藏过该文件');
         }
         $this->where('id', $id)->setInc('download');
         $data['createtime'] = time();
