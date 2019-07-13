@@ -54,7 +54,6 @@
             <span>金额:{{ scope.row.money || 0 }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" prop="status_text"></el-table-column>
         <el-table-column label="黑名单" v-model="normal">
           <template slot-scope="scope">
             <el-button

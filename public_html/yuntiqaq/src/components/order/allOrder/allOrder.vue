@@ -93,6 +93,15 @@
             @click="fh(scope.row.id,scope.row)"
             v-model="status"
           >发货</el-button>
+
+
+            <!-- 测试用的 -->
+           <!-- <el-button
+            size="small"
+            type="primary"
+            v-model="status"
+            @click="fh(scope.row.id,scope.row)"
+          >发货</el-button> -->
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -184,21 +193,30 @@ export default {
   mounted() {},
   methods: {
     // 这是发货的请求getGoodsdeliver
-    async getGoodsdeliver() {
-      let data = await getGoodsdeliver({
-        id: this.id
+    gitfh(id) {
+      getGoodsdeliver({
+        id: this.id,
+        status: this.status
+      }).then(res => {
+        console.log(res);
       });
-      console.log(data);
     },
     fh(id, row) {
+      console.log(id,row.status);
+        this.id = id;
+          this.status = row.status;
+          
       this.$confirm("是否确定发货?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          getGoodsdeliver(id);
-          // this.page = 1;
+          this.id = id;
+          this.status = row.status;
+          console.log(id);
+          this.gitfh(id);
+          this.page = 1;
           this.getGoodsOrder();
         })
         .catch(() => {
@@ -229,6 +247,7 @@ export default {
       data.data.forEach(element => {
         this.status_text = element.status_text;
         this.status = element.status;
+        console.log(this.status);
       });
     },
     down(e) {
