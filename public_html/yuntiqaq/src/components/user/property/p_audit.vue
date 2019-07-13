@@ -78,7 +78,8 @@ export default {
         console.log(res);
         //后台返回的数据
         this.sizeForm = res;
-          this.sizeForm.status = res.status.toString();
+        this.sizeForm.status = res.status.toString();
+        this.status = res.status;
         console.log(this.sizeForm);
       });
     },
@@ -132,7 +133,7 @@ export default {
 }
 .bb {
   img {
-    display:block;
+    display: block;
     width: 200px;
     height: 200px;
   }

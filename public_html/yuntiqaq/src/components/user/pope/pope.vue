@@ -101,7 +101,7 @@ export default {
       // 存贮当前的一条的所有的信息
       userInfo: {},
       normal: "",
-      remark:""
+      remark: ""
     };
   },
 
@@ -139,7 +139,7 @@ export default {
         status: this.status,
         id: this.id,
         normal: this.normal,
-        remark:this.remark
+        remark: this.remark
       });
       console.log(data);
       this.tableData = data.data;
@@ -149,7 +149,7 @@ export default {
       this.userInfo = data.data.filter(i => {
         if (i.id == this.id) {
           this.userInfo = i;
-          i.remark=this.remark
+          i.remark = this.remark;
           return true;
         }
       });
@@ -181,11 +181,19 @@ export default {
     },
     // 获取分类
     categry() {
+<<<<<<< HEAD
+      this.limit = 15;
+=======
+>>>>>>> 5230c58ca6a7f6e964c8c3997e6b02f56c8a1e7d
       this.page = 1;
       this.getUserTab();
     },
     // 搜索
     search_2() {
+<<<<<<< HEAD
+      this.limit = 15;
+=======
+>>>>>>> 5230c58ca6a7f6e964c8c3997e6b02f56c8a1e7d
       this.page = 1;
       this.getUserTab();
     },
@@ -193,7 +201,11 @@ export default {
     handleSizeChange(val) {
       this.limit = val; //让其相等
       this.getUserTab();
+<<<<<<< HEAD
       console.log(`每页 ${val} 条`);
+=======
+      (this.page = 1), console.log(`每页 ${val} 条`);
+>>>>>>> 57372474d2acca3c50bef75f5469df36dea88ffa
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
@@ -203,7 +215,7 @@ export default {
     }
   },
   mounted() {
-     this.getUserTab();
+    this.getUserTab();
   },
   created() {
     this.getUserTab();
