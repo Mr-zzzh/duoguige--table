@@ -213,7 +213,7 @@ class Index extends Common {
         $map['uid'] = $member['id'];
         $list       = db('search_history')->where($map)
             ->field('id,content')->order('createtime desc')->select();
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     /**
