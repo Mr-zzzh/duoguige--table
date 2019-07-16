@@ -241,6 +241,19 @@ class Index extends Common {
     }
 
     /**
+     * @title 分享
+     * @url /share
+     * @method get
+     * @return data:列表@
+     * @data id:id title:分享标题 icon:分享图标 intro:分享描述 share_link:分享链接
+     * @author 开发者
+     */
+    public function share() {
+        $list = db('share')->order('createtime desc')->limit(1)->find();
+        show_json(1, array('data' => $list));
+    }
+
+    /**
      * @title 翻译
      * @url /translate
      * @method post

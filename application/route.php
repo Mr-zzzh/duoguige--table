@@ -81,6 +81,7 @@ Route::rule('search', 'mobile/Index/search', 'GET|POST');
 Route::rule('history', 'mobile/Index/history', 'GET');
 Route::rule('history_del', 'mobile/Index/history_del', 'POST');
 Route::rule('translate', 'mobile/Index/translate', 'POST');
+Route::rule('share', 'mobile/Index/share', 'GET');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');
