@@ -21,25 +21,6 @@
       <el-form-item label="证件照" class="box">
         <div class="aa">
           <p>在职证明</p>
-<<<<<<< HEAD
-
-          <viewer :images="images">
-	                <img v-for="src in images" :src="src" :key="src" width="300">
-	          </viewer>
-        </div>
-        <div class="aa">
-          <p>营业执照</p>
-             <viewer :images="images2">
-	                <img v-for="src in images2" :src="src" :key="src" width="300">
-	          </viewer>
-        </div>
-        <div class="aa">
-          <p>技师证件</p>
-
-          <viewer :images="images3">
-	                <img v-for="src in images3" :src="src" :key="src" width="300">
-	          </viewer>
-=======
           <img
             :src="sizeForm.check.prove_image"
             alt
@@ -64,7 +45,6 @@
             @click.prevent="fangda3"
             :class="{'active3':isChoose3}"
           />
->>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
         </div>
       </el-form-item>
 
@@ -98,15 +78,9 @@ export default {
       name: "images3",
   data() {
     return {
-<<<<<<< HEAD
-      images : [],
-      images2 : [],
-      images3 : [],
-=======
       isChoose3: false,
       isChoose1: false,
       isChoose2: false,
->>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
       // radio: 2,
       //备选按钮的选中状态
       id: this.$route.params.id,
@@ -237,9 +211,6 @@ export default {
     display: block;
     width: 200px;
     height: 200px;
-<<<<<<< HEAD
-
-=======
     transform: scale(1); /*图片原始大小1倍*/
     transition: all ease 0.5s; /*图片放大所用时间*/
     margin: 10px 100px;
@@ -258,7 +229,6 @@ export default {
     transform: scale(2); /*图片需要放大3倍*/
     // position: absolute; /*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
     z-index: 100;
->>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
   }
  
 }
