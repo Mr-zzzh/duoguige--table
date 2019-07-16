@@ -255,6 +255,9 @@ export default {
 .user {
   padding: 8px;
   background-color: #fff;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 .serch {
   height: 60px;
@@ -268,6 +271,11 @@ export default {
 }
 .el-table__row .el-table td {
   padding: 8px;
+}
+.fenye{
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
 }
 </style>
 

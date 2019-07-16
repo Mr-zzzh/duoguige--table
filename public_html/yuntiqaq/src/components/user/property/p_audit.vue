@@ -23,12 +23,24 @@
       </el-form-item>
       <el-form-item label="营业执照">
         <div class="bb">
-          <img :src="sizeForm.check.image" alt />
+
+            <viewer :images="images">
+	                <img v-for="src in images" :src="src" :key="src" width="300">
+	          </viewer>
+
+<!--             
+          <img :src="sizeForm.check.image" alt    @click.prevent="fangda1"
+            :class="{'active1':isChoose1}"/> -->
         </div>
       </el-form-item>
-      <el-form-item label="审核状态">
+      <el-form-item label="审核状态" v-if="sizeForm.status==0">
         <el-radio v-model="sizeForm.status" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="sizeForm.status" label="2" @change="btn">驳回</el-radio>
+      </el-form-item>
+
+      <el-form-item label="审核状态" v-else>
+        <el-radio v-model="sizeForm.status" label="1" @change="btn" disabled>通过</el-radio>
+        <el-radio v-model="sizeForm.status" label="2" @change="btn" disabled>驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
@@ -44,8 +56,10 @@
 <script>
 import { getUserInfo, getAudit } from "@/components/apicom/index";
 export default {
+    name: "images",
   data() {
     return {
+       images : [],
       radio: 2,
       remark: "",
       //备选按钮的选中状态
@@ -81,6 +95,7 @@ export default {
         this.sizeForm.status = res.status.toString();
         this.status = res.status;
         console.log(this.sizeForm);
+          this.images.push(this.sizeForm.check.image)
       });
     },
     // 获得当前点击提交按钮的时候吧数据写入
@@ -129,6 +144,7 @@ export default {
     padding-top: 30px;
     background-color: rgba(255, 255, 255, 1);
     padding: 40px;
+    height: 94%;
   }
 }
 .bb {

@@ -6,9 +6,15 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+import Viewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
 
-
-
+//Vue.use(Viewer) 默认配置写法
+Vue.use(Viewer, {
+  defaultOptions: {
+    zIndex: 9999
+  }
+})
 
 Vue.prototype.$axios = axios;
 import global from './components/apicom/apicom'
@@ -25,43 +31,47 @@ Vue.prototype.$echarts = echarts
 
 
 
-axios.interceptors.request.use(function(config) {
-    let token = ''
-    if (localStorage.getItem('admin_info') == null) {
-        return config
-    } else {
-        token = JSON.parse(localStorage.getItem('admin_info')).token
-    }
-    config.headers['token'] = token;
+
+
+axios.interceptors.request.use(function (config) {
+  let token = ''
+  if (localStorage.getItem('admin_info') == null) {
     return config
-    console.log(token);
+  } else {
+    token = JSON.parse(localStorage.getItem('admin_info')).token
+  }
+  config.headers['token'] = token;
+  return config
+  console.log(token);
 
-}, function(error) {
+}, function (error) {
 
-    return Promise.reject(error)
+  return Promise.reject(error)
 })
 
 
 axios.interceptors.response.use(function (response) {
-    if (response.data.status == -3) {
-        router.replace({
-            path: '/',
-        })
-    } 
-    return response;
-  }, function (error) {
-    // 对响应错误做点什么
-    return Promise.reject(error);
-  });
+  if (response.data.status == -3) {
+    router.replace({
+      path: '/',
+    })
+  }
+  return response;
+}, function (error) {
+  // 对响应错误做点什么
+  return Promise.reject(error);
+});
 
 
 
 
 /* eslint-disable no-new */
 new Vue({
-    el: '#app',
-    router,
-    // store,
-    components: { App },
-    template: '<App/>'
+  el: '#app',
+  router,
+  // store,
+  components: {
+    App
+  },
+  template: '<App/>'
 })

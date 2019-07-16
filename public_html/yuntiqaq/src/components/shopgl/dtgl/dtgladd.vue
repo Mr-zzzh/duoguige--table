@@ -80,6 +80,7 @@
 
             <el-tab-pane label="商品参数" name="third">
                 <el-form ref="form" :model="form" label-width="120px" style="margin-top:40px">
+                    
                     <el-form-item label="品牌">
                         <el-select v-model="form.bid" placeholder="请选择">
                             <el-option
@@ -280,8 +281,8 @@ import UE from '../../common/ue.vue';
                     });
                 }
             },
-
-
+            
+            
             //点击移除时的事件
             handleRemove(file, fileList) {
                 console.log(file, fileList);

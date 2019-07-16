@@ -1,10 +1,10 @@
 <template>
   <!-- 技术大师审核页面 -->
-  <div class="audit">
+  <div     class="audit" >
     <!-- 用element-ui表单写 -->
     <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
       <el-form-item label="姓名">
-        <el-input v-model="sizeForm.check.name"></el-input>
+        <el-input v-model="sizeForm.check.name" style="background-color:none"></el-input>
       </el-form-item>
       <el-form-item label="性别">
         <el-input v-model="sizeForm.check.sex==1?'男':'女'"></el-input>
@@ -19,23 +19,36 @@
         <el-input v-model="sizeForm.check.license_number"></el-input>
       </el-form-item>
       <el-form-item label="证件照" class="box">
-        <div  class="aa">
+        <div class="aa">
           <p>在职证明</p>
-          <img :src="sizeForm.check.prove_image" alt />
+
+          <viewer :images="images">
+	                <img v-for="src in images" :src="src" :key="src" width="300">
+	          </viewer>
         </div>
         <div class="aa">
           <p>营业执照</p>
-          <img :src="sizeForm.check.company_image" alt />
+             <viewer :images="images2">
+	                <img v-for="src in images2" :src="src" :key="src" width="300">
+	          </viewer>
         </div>
         <div class="aa">
           <p>技师证件</p>
-          <img :src="sizeForm.check.technician_image" alt />
+
+          <viewer :images="images3">
+	                <img v-for="src in images3" :src="src" :key="src" width="300">
+	          </viewer>
         </div>
       </el-form-item>
 
-      <el-form-item label="审核状态">
+      <el-form-item label="审核状态" v-if="sizeForm.status==0">
         <el-radio v-model="sizeForm.status" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="sizeForm.status" label="2" @change="btn">驳回</el-radio>
+      </el-form-item>
+
+      <el-form-item label="审核状态" v-else>
+        <el-radio v-model="sizeForm.status" label="1" @change="btn" disabled>通过</el-radio>
+        <el-radio v-model="sizeForm.status" label="2" @change="btn" disabled>驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
@@ -46,20 +59,27 @@
       </el-form-item>
     </el-form>
   </div>
+
 </template>
 
 <script>
 import { getUserInfo, getAudit } from "@/components/apicom/index";
 
 export default {
+      name: "images",
+      name: "images2",
+      name: "images3",
   data() {
     return {
+      images : [],
+      images2 : [],
+      images3 : [],
       // radio: 2,
       //备选按钮的选中状态
       id: this.$route.params.id,
       list: [],
       state: "",
-      status:"",
+      status: "",
       numberValidateForm: {},
       textarea: "",
       remark: "",
@@ -101,6 +121,9 @@ export default {
         this.sizeForm = res;
         this.sizeForm.status = res.status.toString();
         console.log(this.sizeForm);
+        this.images.push(this.sizeForm.check.prove_image)
+        this.images2.push(this.sizeForm.check.company_image)
+        this.images3.push(this.sizeForm.check.technician_image)
         // 在此回到这个页面的时候，审核过后，应该改变审核后改项的状态值
       });
     },
@@ -144,11 +167,13 @@ export default {
 
 
 <style lang="less" scoped>
+
 .audit {
   color: #000;
   padding: 20px;
   background-color: #fff;
   font-size: 20px;
+  height: 100%;
   .box {
     div {
       margin: 0 20px;
@@ -159,12 +184,20 @@ export default {
 .el-form-item__label {
   width: 120px;
 }
-.aa{
-  img{
+.zhezhao1 {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+.aa {
+  img {
     display: block;
     width: 200px;
     height: 200px;
+
   }
+ 
 }
 </style>
 

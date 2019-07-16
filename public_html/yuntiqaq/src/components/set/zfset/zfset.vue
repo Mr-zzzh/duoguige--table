@@ -209,6 +209,7 @@ export default {
             q:''
         }
     },
+    //haolenhaolenhaolenhaolenhaolenhaolenhaolen
     methods:{
         handleClose(done) {
             this.dialogVisible = false
@@ -338,15 +339,15 @@ export default {
                         this.getlist()
                         this.paytype = ''
                         this.wxpay_APPID='',
-                    this.wxpay_MCHID="",
-                    this.wxpay_KEY="",
-                    this.wxpay_APPSECRET="",
-                    this.wxpay_apiclient_cert="",
-                    this.wxpay_apiclient_key="",
-                    this.alipay_appId="",
-                    this.alipay_gatewayUrl="",
-                    this.alipay_rsaPrivateKey="",
-                    this.alipay_alipayrsaPublicKey=""
+                        this.wxpay_MCHID="",
+                        this.wxpay_KEY="",
+                        this.wxpay_APPSECRET="",
+                        this.wxpay_apiclient_cert="",
+                        this.wxpay_apiclient_key="",
+                        this.alipay_appId="",
+                        this.alipay_gatewayUrl="",
+                        this.alipay_rsaPrivateKey="",
+                        this.alipay_alipayrsaPublicKey=""
                     }else{
                         this.$message.error(res.data.message);
                     }
@@ -380,15 +381,15 @@ export default {
                         this.getlist()
                         this.paytype = ''
                         this.wxpay_APPID='',
-                    this.wxpay_MCHID="",
-                    this.wxpay_KEY="",
-                    this.wxpay_APPSECRET="",
-                    this.wxpay_apiclient_cert="",
-                    this.wxpay_apiclient_key="",
-                    this.alipay_appId="",
-                    this.alipay_gatewayUrl="",
-                    this.alipay_rsaPrivateKey="",
-                    this.alipay_alipayrsaPublicKey=""
+                        this.wxpay_MCHID="",
+                        this.wxpay_KEY="",
+                        this.wxpay_APPSECRET="",
+                        this.wxpay_apiclient_cert="",
+                        this.wxpay_apiclient_key="",
+                        this.alipay_appId="",
+                        this.alipay_gatewayUrl="",
+                        this.alipay_rsaPrivateKey="",
+                        this.alipay_alipayrsaPublicKey=""
                     }else{
                         this.$message.error(res.data.message);
                     }
@@ -422,15 +423,15 @@ export default {
                         this.getlist()
                         this.paytype = ''
                         this.wxpay_APPID='',
-                    this.wxpay_MCHID="",
-                    this.wxpay_KEY="",
-                    this.wxpay_APPSECRET="",
-                    this.wxpay_apiclient_cert="",
-                    this.wxpay_apiclient_key="",
-                    this.alipay_appId="",
-                    this.alipay_gatewayUrl="",
-                    this.alipay_rsaPrivateKey="",
-                    this.alipay_alipayrsaPublicKey=""
+                        this.wxpay_MCHID="",
+                        this.wxpay_KEY="",
+                        this.wxpay_APPSECRET="",
+                        this.wxpay_apiclient_cert="",
+                        this.wxpay_apiclient_key="",
+                        this.alipay_appId="",
+                        this.alipay_gatewayUrl="",
+                        this.alipay_rsaPrivateKey="",
+                        this.alipay_alipayrsaPublicKey=""
                     }else{
                         this.$message.error(res.data.message);
                     }
@@ -464,15 +465,15 @@ export default {
                         this.getlist()
                         this.paytype = ''
                         this.wxpay_APPID='',
-                    this.wxpay_MCHID="",
-                    this.wxpay_KEY="",
-                    this.wxpay_APPSECRET="",
-                    this.wxpay_apiclient_cert="",
-                    this.wxpay_apiclient_key="",
-                    this.alipay_appId="",
-                    this.alipay_gatewayUrl="",
-                    this.alipay_rsaPrivateKey="",
-                    this.alipay_alipayrsaPublicKey=""
+                        this.wxpay_MCHID="",
+                        this.wxpay_KEY="",
+                        this.wxpay_APPSECRET="",
+                        this.wxpay_apiclient_cert="",
+                        this.wxpay_apiclient_key="",
+                        this.alipay_appId="",
+                        this.alipay_gatewayUrl="",
+                        this.alipay_rsaPrivateKey="",
+                        this.alipay_alipayrsaPublicKey=""
                     }else{
                         this.$message.error(res.data.message);
                     }
