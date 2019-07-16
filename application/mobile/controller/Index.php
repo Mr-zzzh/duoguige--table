@@ -135,7 +135,7 @@ class Index extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id title:标题
+     * @data id:id title:标题 type:新闻类型(1图文2视频)
      * @author 开发者
      */
     public function search() {
@@ -165,7 +165,7 @@ class Index extends Common {
                 $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
                 $map['status']        = 1;
                 $list                 = db('news')->where($map)
-                    ->field('id,title')
+                    ->field('id,title,type')
                     ->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
                 show_json(1, $list);
             } elseif ($type == 3) {
