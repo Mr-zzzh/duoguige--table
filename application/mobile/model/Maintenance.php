@@ -322,8 +322,8 @@ class Maintenance extends Common {
 
     public function TaskHall($params) {
         global $member;
-        if ($member['type'] != 2) {
-            show_json(0, '无查看权限');
+        if ($member['type'] != 2 || $member['status'] != 1) {
+            show_json(0, '此账号无查看权限');
         }
         $map = array();
         if (!empty($params['city'])) {
@@ -350,6 +350,9 @@ class Maintenance extends Common {
 
     public function Inquire($params) {
         global $member;
+        if ($member['type'] != 2 || $member['status'] != 1) {
+            show_json(0, '此账号无查看权限');
+        }
         $map          = array();
         $map['d.uid'] = $member['id'];
         $list         = db('draw')->alias('d')
@@ -372,6 +375,9 @@ class Maintenance extends Common {
 
     public function Draw($params) {
         global $member;
+        if ($member['type'] != 2 || $member['status'] != 1) {
+            show_json(0, '非技术大师不能领取任务');
+        }
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
@@ -396,6 +402,9 @@ class Maintenance extends Common {
 
     public function ReceiveTask($params) {
         global $member;
+        if ($member['type'] != 2 || $member['status'] != 1) {
+            show_json(0, '此账号无操作权限');
+        }
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
