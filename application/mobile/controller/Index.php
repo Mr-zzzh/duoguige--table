@@ -160,6 +160,12 @@ class Index extends Common {
                 $list                                                                                        = db('goods')
                     ->field('id,name as title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
             } elseif ($type == 2) {
                 $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
@@ -173,6 +179,12 @@ class Index extends Common {
                 $map['type']  = 1;
                 $list         = db('question')->field('id,title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
             } elseif ($type == 4) {
                 $map['post|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
@@ -180,12 +192,24 @@ class Index extends Common {
                 $list                                    = db('invite')
                     ->field('id,post as title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
-            } elseif ($type == 4) {
+            } elseif ($type == 5) {
                 $map['post|intro|address|name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
                 $list                           = db('job_wanted')
                     ->field('id,post as title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
             }
         }
