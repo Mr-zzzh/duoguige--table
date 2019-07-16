@@ -23,8 +23,11 @@
       </el-form-item>
       <el-form-item label="营业执照">
         <div class="bb">
-          <img :src="sizeForm.check.image" alt    @click.prevent="fangda1"
-            :class="{'active1':isChoose1}"/>
+
+            <viewer :images="images">
+	                <img v-for="src in images" :src="src" :key="src" width="300">
+	          </viewer>
+
         </div>
       </el-form-item>
       <el-form-item label="审核状态" v-if="sizeForm.status==0">
@@ -53,7 +56,7 @@ export default {
     name: "images",
   data() {
     return {
-       isChoose1: false,
+       images : [],
       radio: 2,
       remark: "",
       //备选按钮的选中状态
