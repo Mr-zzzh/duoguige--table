@@ -272,7 +272,6 @@ class Index extends Common {
         }
         $result = curl($url, 'POST', $payload, $headers);
         show_json(1, $result);
-
     }
 
 }
