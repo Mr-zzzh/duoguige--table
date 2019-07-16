@@ -311,4 +311,12 @@ class Index extends Common {
         show_json(1, $result);
     }
 
+    public function about() {
+        return $this->fetch('Index/about');
+    }
+
+    public function agree() {
+        return $this->fetch('Index/agree');
+    }
+
 }
