@@ -23,6 +23,7 @@ Route::rule('admin/login', 'admin/Admin/login', 'POST|GET');
 Route::rule('admin/index', 'admin/Admin/admin', 'GET');
 Route::rule('admin/summarize', 'admin/Admin/summarize', 'GET');
 Route::rule('admin/market', 'admin/Admin/market', 'GET');
+Route::rule('admin/task', 'admin/Task/order', 'GET');
 
 Route::resource('admin/brand', 'admin/Brand');
 Route::resource('admin/banner', 'admin/Banner');
@@ -80,6 +81,7 @@ Route::rule('search', 'mobile/Index/search', 'GET|POST');
 Route::rule('history', 'mobile/Index/history', 'GET');
 Route::rule('history_del', 'mobile/Index/history_del', 'POST');
 Route::rule('translate', 'mobile/Index/translate', 'POST');
+Route::rule('share', 'mobile/Index/share', 'GET');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');

@@ -213,7 +213,7 @@ class Index extends Common {
         $map['uid'] = $member['id'];
         $list       = db('search_history')->where($map)
             ->field('id,content')->order('createtime desc')->select();
-        show_json(1, $list);
+        show_json(1, array('data' => $list));
     }
 
     /**
@@ -238,6 +238,19 @@ class Index extends Common {
         } else {
             show_json(0, '删除失败');
         }
+    }
+
+    /**
+     * @title 分享
+     * @url /share
+     * @method get
+     * @return data:列表@
+     * @data id:id title:分享标题 icon:分享图标 intro:分享描述 share_link:分享链接
+     * @author 开发者
+     */
+    public function share() {
+        $list = db('share')->order('createtime desc')->limit(1)->find();
+        show_json(1, array('data' => $list));
     }
 
     /**
@@ -272,7 +285,6 @@ class Index extends Common {
         }
         $result = curl($url, 'POST', $payload, $headers);
         show_json(1, $result);
-
     }
 
 }

@@ -23,6 +23,7 @@
       </el-form-item>
       <el-form-item label="营业执照">
         <div class="bb">
+<<<<<<< HEAD
 
             <viewer :images="images">
 	                <img v-for="src in images" :src="src" :key="src" width="300">
@@ -31,6 +32,10 @@
 <!--             
           <img :src="sizeForm.check.image" alt    @click.prevent="fangda1"
             :class="{'active1':isChoose1}"/> -->
+=======
+          <img :src="sizeForm.check.image" alt    @click.prevent="fangda1"
+            :class="{'active1':isChoose1}"/>
+>>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
         </div>
       </el-form-item>
       <el-form-item label="审核状态" v-if="sizeForm.status==0">
@@ -59,7 +64,11 @@ export default {
     name: "images",
   data() {
     return {
+<<<<<<< HEAD
        images : [],
+=======
+       isChoose1: false,
+>>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
       radio: 2,
       remark: "",
       //备选按钮的选中状态
@@ -86,6 +95,9 @@ export default {
     };
   },
   methods: {
+     fangda1() {
+      this.isChoose1 = !this.isChoose1;
+    },
     // 这是获取用户列表的请求
     get() {
       getUserInfo(this.id).then(res => {
@@ -152,6 +164,14 @@ export default {
     display: block;
     width: 200px;
     height: 200px;
+     transform: scale(1); /*图片原始大小1倍*/
+    transition: all ease 0.5s; /*图片放大所用时间*/
+    margin: 10px 100px;
+  }
+   .active1 {
+    transform: scale(2); /*图片需要放大3倍*/
+    // position: absolute; /*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
+    z-index: 100;
   }
 }
 </style>

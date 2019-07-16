@@ -28,13 +28,13 @@ class User extends Common {
             show_json(0, '请勿频繁发送验证码');
         }
         $code = intval(random(6, true));
-        //$m     = sendCode(13774024983, 12345, '455644');
-        //if ($m['status']==1) {
-        Cache::set($key, $code, 60);
-        //}else{
-
-        //}
-        show_json(1, $code);
+        /*$m    = aliSMS($phone, $code);
+        if ($m['status'] == 1) {
+            Cache::set($key, $code, 60);
+            show_json(1, '发送成功');
+        } else {
+            show_json(0, '发送失败');
+        }*/
     }
 
     /**
