@@ -50,6 +50,7 @@ class Answer extends Common {
         global $member;
         $map             = array();
         $map['a.status'] = 1;
+        $map['q.type']   = 1;
         $map['a.uid']    = $member['id'];
         $list            = $this->alias('a')
             ->join('question q', 'a.qid=q.id', 'left')

@@ -533,45 +533,49 @@ if (!function_exists('check_often')) {
     }
 }
 
-if (!function_exists('sendCode')) {
-    function sendCode($mobile, $code, $tempId) {
-        AlibabaCloud::accessKeyClient(config('app.aliyunsms.access_key_id'), config('app.aliyunsms.access_key_secret'))
-            ->regionId('cn-hangzhou')//replace regionId as you need（这个地方是发短信的节点，默认即可，或者换成你想要的）
-            ->asGlobalClient();
-        $data = [];
-        try {
-            $result = AlibabaCloud::rpcRequest()
-                ->product('Dysmsapi')
-                //->scheme('https') //https | http（如果域名是https，这里记得开启）
-                ->version('2017-05-25')
-                ->action('SendSms')
-                ->method('POST')
-                ->options([
-                    'query' => [
-                        'PhoneNumbers'  => $mobile,
-                        'SignName'      => config('app.aliyunsms.sign_name'),
-                        'TemplateCode'  => $tempId,
-                        'TemplateParam' => json_encode(['code' => $code]),
-                    ],
-                ])->request();
-            $res    = $result->toArray();
-            if ($res['Code'] == 'OK') {
-                $data['status'] = 1;
-                $data['info']   = $res['Message'];
-            } else {
-                $data['status'] = 0;
-                $data['info']   = $res['Message'];
-            }
-            return $data;
-        } catch (ClientException $e) {
-            $data['status'] = 0;
-            $data['info']   = $e->getErrorMessage();
-            return $data;
-        } catch (ServerException $e) {
-            $data['status'] = 0;
-            $data['info']   = $e->getErrorMessage();
-            return $data;
+if (!function_exists('aliSMS')) {
+    function aliSMS($PhoneNumbers, $check_id = 'mobile', $time_out = 120) {
+        if (!is_mobilenumber($PhoneNumbers)) {
+            return arr_res(0, '手机号错误!');
         }
+        $cache_code = \think\Cache::get($check_id . '_' . $PhoneNumbers . '_yzm');
+        if (check_often('get_' . $check_id . '_' . $PhoneNumbers . '_yzm') || $cache_code) {
+            return arr_res(0, '请勿频繁获取!');
+        }
+        $accessKeyId   = 'LTAIa7iTyXMWjnf9';
+        $accessSecret  = 'kyjvAsJAiXOwZShrZW37jr34DxhGbr';
+        $SignName      = '吾人资';
+        $TemplateCode  = 'SMS_170040213';
+        $code          = random(5, true);
+        $TemplateParam = array('code' => $code);
+        $senddata      = array(
+            'PhoneNumbers'  => $PhoneNumbers,
+            'SignName'      => $SignName,
+            'TemplateCode'  => $TemplateCode,
+            'TemplateParam' => json_encode($TemplateParam)
+        );
+        \AlibabaCloud\Client\AlibabaCloud::accessKeyClient($accessKeyId, $accessSecret)->regionId('cn-hangzhou')->asDefaultClient();
+        try {
+            $result = \AlibabaCloud\Client\AlibabaCloud::rpc()->product('Dysmsapi')->version('2017-05-25')->action('SendSms')->method('POST')->options(array('query' => $senddata))->request();
+            $result = $result->toArray();
+            if ($result['Code'] == 'OK') {
+                \think\Cache::set($check_id . '_' . $senddata['PhoneNumbers'] . '_yzm', $senddata['code'], $time_out);
+                return arr_res(1, '短信发送成功!');
+            } else {
+                return arr_res(0, $result['Message']);
+            }
+        } catch (ClientException $e) {
+            return arr_res(0, $e->getErrorMessage());
+        } catch (ServerException $e) {
+            return arr_res(0, $e->getErrorMessage());
+        }
+    }
+}
+
+//返回数组型结果数据
+if (!function_exists('arr_res')) {
+    function arr_res($status = 0, $message = '') {
+        return array('status' => $status, 'message' => $message);
     }
 }
 
