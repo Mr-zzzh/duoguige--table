@@ -23,8 +23,19 @@
       </el-form-item>
       <el-form-item label="营业执照">
         <div class="bb">
+<<<<<<< HEAD
+
+            <viewer :images="images">
+	                <img v-for="src in images" :src="src" :key="src" width="300">
+	          </viewer>
+
+<!--             
+          <img :src="sizeForm.check.image" alt    @click.prevent="fangda1"
+            :class="{'active1':isChoose1}"/> -->
+=======
           <img :src="sizeForm.check.image" alt    @click.prevent="fangda1"
             :class="{'active1':isChoose1}"/>
+>>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
         </div>
       </el-form-item>
       <el-form-item label="审核状态" v-if="sizeForm.status==0">
@@ -50,9 +61,14 @@
 <script>
 import { getUserInfo, getAudit } from "@/components/apicom/index";
 export default {
+    name: "images",
   data() {
     return {
+<<<<<<< HEAD
+       images : [],
+=======
        isChoose1: false,
+>>>>>>> ec53c72f6eabc32317c98997534c603fae95556e
       radio: 2,
       remark: "",
       //备选按钮的选中状态
@@ -91,6 +107,7 @@ export default {
         this.sizeForm.status = res.status.toString();
         this.status = res.status;
         console.log(this.sizeForm);
+          this.images.push(this.sizeForm.check.image)
       });
     },
     // 获得当前点击提交按钮的时候吧数据写入
