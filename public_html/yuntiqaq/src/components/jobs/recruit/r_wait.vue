@@ -32,10 +32,19 @@
       <el-form-item label="岗位职责">
         <el-input v-model="info.duty"></el-input>
       </el-form-item>
-      <el-form-item label="审核结果">
+
+
+      <el-form-item label="审核结果"  v-if="info.status==0">
         <el-radio v-model="info.status" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="info.status" label="2" @change="btn">驳回</el-radio>
       </el-form-item>
+
+      <el-form-item label="审核结果">
+        <el-radio v-model="info.status" label="1" @change="btn" disabled>通过</el-radio>
+        <el-radio v-model="info.status" label="2" @change="btn" disabled>驳回</el-radio>
+      </el-form-item>
+
+
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
       </el-form-item>
@@ -134,6 +143,7 @@ export default {
 .form {
   padding: 8px;
   background-color: #fff;
+  height: 100%;
 }
 .el-form {
   background-color: #fff;

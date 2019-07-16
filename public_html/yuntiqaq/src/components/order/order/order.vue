@@ -156,7 +156,9 @@ export default {
   flex-wrap: wrap;
   align-items: space-around;
   padding-top: 10px;
+  padding-bottom: 16px;
   background-color: none !important;
+  height: 110%;
 }
 .one {
   width: 700px;

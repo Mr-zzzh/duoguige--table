@@ -63,14 +63,14 @@ export const getGoodsdeliver = (params) => {
 export const Goodssummarize = (params) => {
         // console.log('test')
         return request.get("/admin/goodsorder/summarize", { params, isLoading: true, isSuccessTip: true });
-    }
+}
     //删除
 export const delGoods = (params) => {
     // console.log('test')
     return request.delete(`/admin/goodsorder/${params}`, { params, isLoading: true, isSuccessTip: true });
 }
 
-// 不需要订单详情的页面，所以没写这个接口
+// 不需要订单详情的页面，所以没写这个接口;
 
 
 
@@ -83,12 +83,12 @@ export const delGoods = (params) => {
 export const getJobs = (params) => {
         // console.log('test')
         return request.get("/admin/jobwanted", { params, isLoading: true, isSuccessTip: true });
-    }
+}
     //详情
 export const getJobsinfo = (params) => {
         // console.log('test')
         return request.get(`/admin/jobwanted/${params}`, { isLoading: true, isSuccessTip: true });
-    }
+}
     //审核
 export const jobeditstatus = (params) => {
     // console.log('test')
@@ -100,12 +100,12 @@ export const jobeditstatus = (params) => {
 export const getRecruit = (params) => {
         // console.log('test')
         return request.get("/admin/invite", { params, isLoading: true, isSuccessTip: true });
-    }
+}
     // 详情
 export const getRecruitInfo = (params) => {
         // console.log('test')
         return request.get(`/admin/invite/${params}`, { isLoading: true, isSuccessTip: true });
-    }
+}
     //审核
 export const RecruitEditstatus = (params) => {
     // console.log('test')
@@ -139,17 +139,17 @@ export const delFeedback = (params) => {
 export const getMaintenance = (params) => {
         // console.log('test')
         return request.get("/admin/maintenance", { params, isLoading: true, isSuccessTip: true });
-    }
+}
     // 删除
 export const delM = (params) => {
         // console.log('test')
         return request.delete(`/admin/maintenance/${params}`, { isSuccessTip: true });
-    }
+}
     // 详情
 export const getinfo = (params) => {
         // console.log('test')
         return request.get(`/admin/maintenance/${params}`, { isSuccessTip: true });
-    }
+}
     // 审核
 export const editstatus = (params) => {
     // console.log('test')

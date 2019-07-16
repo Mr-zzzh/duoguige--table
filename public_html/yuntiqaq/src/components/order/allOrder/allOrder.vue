@@ -335,6 +335,10 @@ export default {
   height: 100%;
   background-color: #fff;
   padding: 8px;
+   width: 100%;
+  height: 100%;
+  position: relative;
+  
 }
 .serch {
   height: 50px;
@@ -346,6 +350,11 @@ export default {
   span {
     color: red;
   }
+}
+.fenye{
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
 }
 </style>
 
