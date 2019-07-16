@@ -33,16 +33,15 @@ Vue.prototype.$echarts = echarts
 
 
 
-axios.interceptors.request.use(function (config) {
-  let token = ''
-  if (localStorage.getItem('admin_info') == null) {
+axios.interceptors.request.use(function(config) {
+    let token = ''
+    if (localStorage.getItem('admin_info') == null) {
+        return config
+    } else {
+        token = JSON.parse(localStorage.getItem('admin_info')).token
+    }
+    config.headers['token'] = token;
     return config
-  } else {
-    token = JSON.parse(localStorage.getItem('admin_info')).token
-  }
-  config.headers['token'] = token;
-  return config
-  console.log(token);
 
 }, function (error) {
 

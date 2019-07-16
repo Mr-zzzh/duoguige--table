@@ -135,7 +135,7 @@ class Index extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id title:标题
+     * @data id:id title:标题 type:新闻类型(1图文2视频)
      * @author 开发者
      */
     public function search() {
@@ -160,12 +160,18 @@ class Index extends Common {
                 $list                                                                                        = db('goods')
                     ->field('id,name as title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
             } elseif ($type == 2) {
                 $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
                 $map['status']        = 1;
                 $list                 = db('news')->where($map)
-                    ->field('id,title')
+                    ->field('id,title,type')
                     ->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
                 show_json(1, $list);
             } elseif ($type == 3) {
@@ -173,6 +179,12 @@ class Index extends Common {
                 $map['type']  = 1;
                 $list         = db('question')->field('id,title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
             } elseif ($type == 4) {
                 $map['post|description|duty|name|phone'] = array('LIKE', '%' . trim($params['keyword']) . '%');
@@ -180,12 +192,24 @@ class Index extends Common {
                 $list                                    = db('invite')
                     ->field('id,post as title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
-            } elseif ($type == 4) {
+            } elseif ($type == 5) {
                 $map['post|intro|address|name'] = array('LIKE', '%' . trim($params['keyword']) . '%');
                 $list                           = db('job_wanted')
                     ->field('id,post as title')
                     ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
+                if (!empty($list['data'])) {
+                    foreach ($list['data'] as &$v) {
+                        $v['type'] = '';
+                    }
+                    unset($v);
+                }
                 show_json(1, $list);
             }
         }
