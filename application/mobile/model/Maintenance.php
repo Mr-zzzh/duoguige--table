@@ -6,6 +6,9 @@ class Maintenance extends Common {
 
     public function GetAll($params) {
         global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无查看权限');
+        }
         $map = array();
         if (!empty($params['type'])) {
             if (intval($params['type']) == 1) {
@@ -46,6 +49,9 @@ class Maintenance extends Common {
 
     public function AddOne($params) {
         global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无添加权限');
+        }
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
@@ -139,6 +145,9 @@ class Maintenance extends Common {
 
     public function StatusEdit($params) {
         global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无修改权限');
+        }
         $id = intval($params['id']);
         if (empty($id)) {
             show_json(0, '请传维保单id');
@@ -168,6 +177,10 @@ class Maintenance extends Common {
     }
 
     public function GetOne($id) {
+        global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无查看权限');
+        }
         $item = $this->alias('a')
             ->join('user u1', 'a.uid=u1.id', 'left')
             ->join('company c', 'a.uid=c.uid', 'left')
@@ -203,6 +216,9 @@ class Maintenance extends Common {
 
     public function Evaluate($params) {
         global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无操作权限');
+        }
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
@@ -237,6 +253,9 @@ class Maintenance extends Common {
 
     public function Complaint($params) {
         global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无操作权限');
+        }
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
@@ -272,6 +291,9 @@ class Maintenance extends Common {
 
     public function AllEvaluate($params) {
         global $member;
+        if ($member['type'] != 3 || $member['status'] != 1) {
+            show_json(0, '此账号无查看权限');
+        }
         $id = intval($params['id']);
         if (empty($id)) {
             $id = $member['id'];
