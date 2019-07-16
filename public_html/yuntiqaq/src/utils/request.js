@@ -7,7 +7,7 @@ var isLoading, isSuccessTip, loading
 const request = axios.create({
     baseURL: `http://yunti.hongbao19.net/`,
     timeout: 20000,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
     withCredentials: true,
     qs: false,
     isLoading: true,

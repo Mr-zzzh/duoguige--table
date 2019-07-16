@@ -25,6 +25,8 @@ Vue.prototype.$echarts = echarts
 
 
 
+
+
 axios.interceptors.request.use(function(config) {
     let token = ''
     if (localStorage.getItem('admin_info') == null) {

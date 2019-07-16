@@ -1,10 +1,10 @@
 <template>
   <!-- 技术大师审核页面 -->
-  <div class="audit">
+  <div     class="audit" >
     <!-- 用element-ui表单写 -->
     <el-form ref="form" :model="sizeForm" label-width="80px" size="mini">
       <el-form-item label="姓名">
-        <el-input v-model="sizeForm.check.name"></el-input>
+        <el-input v-model="sizeForm.check.name" style="background-color:none"></el-input>
       </el-form-item>
       <el-form-item label="性别">
         <el-input v-model="sizeForm.check.sex==1?'男':'女'"></el-input>
@@ -19,23 +19,43 @@
         <el-input v-model="sizeForm.check.license_number"></el-input>
       </el-form-item>
       <el-form-item label="证件照" class="box">
-        <div  class="aa">
+        <div class="aa">
           <p>在职证明</p>
-          <img :src="sizeForm.check.prove_image" alt />
+          <img
+            :src="sizeForm.check.prove_image"
+            alt
+            @click.prevent="fangda1"
+            :class="{'active1':isChoose1}"
+          />
         </div>
         <div class="aa">
           <p>营业执照</p>
-          <img :src="sizeForm.check.company_image" alt />
+          <img
+            :src="sizeForm.check.company_image"
+            alt
+            @click.prevent="fangda2"
+            :class="{'active2':isChoose2}"
+          />
         </div>
         <div class="aa">
           <p>技师证件</p>
-          <img :src="sizeForm.check.technician_image" alt />
+          <img
+            :src="sizeForm.check.technician_image"
+            alt
+            @click.prevent="fangda3"
+            :class="{'active3':isChoose3}"
+          />
         </div>
       </el-form-item>
 
-      <el-form-item label="审核状态">
+      <el-form-item label="审核状态" v-if="sizeForm.status==0">
         <el-radio v-model="sizeForm.status" label="1" @change="btn">通过</el-radio>
         <el-radio v-model="sizeForm.status" label="2" @change="btn">驳回</el-radio>
+      </el-form-item>
+
+      <el-form-item label="审核状态" v-else>
+        <el-radio v-model="sizeForm.status" label="1" @change="btn" disabled>通过</el-radio>
+        <el-radio v-model="sizeForm.status" label="2" @change="btn" disabled>驳回</el-radio>
       </el-form-item>
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
@@ -54,12 +74,15 @@ import { getUserInfo, getAudit } from "@/components/apicom/index";
 export default {
   data() {
     return {
+      isChoose3: false,
+      isChoose1: false,
+      isChoose2: false,
       // radio: 2,
       //备选按钮的选中状态
       id: this.$route.params.id,
       list: [],
       state: "",
-      status:"",
+      status: "",
       numberValidateForm: {},
       textarea: "",
       remark: "",
@@ -94,6 +117,15 @@ export default {
     };
   },
   methods: {
+    fangda1() {
+      this.isChoose1 = !this.isChoose1;
+    },
+    fangda2() {
+      this.isChoose2 = !this.isChoose2;
+    },
+    fangda3() {
+      this.isChoose3 = !this.isChoose3;
+    },
     get() {
       getUserInfo(this.id).then(res => {
         console.log(res);
@@ -149,6 +181,7 @@ export default {
   padding: 20px;
   background-color: #fff;
   font-size: 20px;
+  height: 100%;
   .box {
     div {
       margin: 0 20px;
@@ -159,11 +192,35 @@ export default {
 .el-form-item__label {
   width: 120px;
 }
-.aa{
-  img{
+.zhezhao1 {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+.aa {
+  img {
     display: block;
     width: 200px;
     height: 200px;
+    transform: scale(1); /*图片原始大小1倍*/
+    transition: all ease 0.5s; /*图片放大所用时间*/
+    margin: 10px 100px;
+  }
+  .active1 {
+    transform: scale(2); /*图片需要放大3倍*/
+    // position: absolute; /*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
+    z-index: 100;
+  }
+  .active2 {
+    transform: scale(2); /*图片需要放大3倍*/
+    // position: absolute; /*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
+    z-index: 100;
+  }
+  .active3 {
+    transform: scale(2); /*图片需要放大3倍*/
+    // position: absolute; /*是相对于前面的容器定位的，此处要放大的图片，不能使用position：relative；以及float，否则会导致z-index无效*/
+    z-index: 100;
   }
 }
 </style>
