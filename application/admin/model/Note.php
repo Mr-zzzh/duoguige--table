@@ -60,8 +60,8 @@ class Note extends Common {
         if (empty($data['agreement'])) {
             show_json(0, '请传协议');
         }
-        if ($this->select()) {
-            if ($this->data($data, true)->isUpdate(false)->save()) {
+        if (!$this->order('createtime desc')->limit(1)->value('id')) {
+            if ($this->insert($data)) {
                 //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
                 show_json(1, '添加成功');
             } else {
