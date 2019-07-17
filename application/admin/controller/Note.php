@@ -15,8 +15,9 @@ class Note extends Common {
      * @url /admin/note/:id
      * @method put
      * @param name:appkey type:string require:1 default:- other:- desc:短信appkey
-     * @param name:tid type:string require:1 default:- other:- desc:模板id
-     * @param name:code type:string require:1 default:- other:- desc:短信验证码变量
+     * @param name:appsecret type:string require:1 default:- other:- desc:短信appsecret
+     * @param name:sign type:string require:1 default:- other:- desc:签名
+     * @param name:code type:string require:1 default:- other:- desc:模板编号
      * @param name:service type:string require:1 default:- other:- desc:客服电话
      * @param name:agreement type:string require:1 default:- other:- desc:协议
      * @author 开发者
@@ -35,7 +36,8 @@ class Note extends Common {
      * @method get
      * @return id:id
      * @return appkey:短信appkey
-     * @return tid:模板id
+     * @return sign:签名
+     * @return appsecret:短信appsecret
      * @return code:短信验证码变量
      * @return service:客服电话
      * @return agreement:协议

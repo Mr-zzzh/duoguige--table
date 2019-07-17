@@ -526,13 +526,14 @@ DROP TABLE IF EXISTS `yunti_note`;
 CREATE TABLE `yunti_note` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `appkey` varchar(255) DEFAULT NULL COMMENT '短信appkey',
-  `tid` varchar(50) NOT NULL COMMENT '模板id',
   `code` varchar(255) DEFAULT NULL COMMENT '短信验证码变量',
   `service` varchar(30) DEFAULT NULL COMMENT '客服电话',
   `agreement` text COMMENT '协议',
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_note` add  `appsecret` varchar(50) NOT NULL COMMENT '短信appsecret';
+ALTER TABLE `yunti_note` add  `sign` varchar(255) DEFAULT NULL COMMENT '签名';
 
 -- 技师等级表
 DROP TABLE IF EXISTS `yunti_grade`;
