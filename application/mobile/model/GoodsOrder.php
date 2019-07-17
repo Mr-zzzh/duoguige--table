@@ -140,6 +140,7 @@ class GoodsOrder extends Common {
             'money'   => $money,
             'money'   => '10m',
             'paytype' => $paytype,
+            'client'  => 'app',
         ];
         $res     = $pay->pay($payinfo);
         if ($res['status'] == 1) {
