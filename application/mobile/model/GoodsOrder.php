@@ -8,7 +8,10 @@ class GoodsOrder extends Common {
 
     public function GetAll($params) {
         global $member;
-        $map          = array();
+        $map = array();
+        if (!empty($params['status'])) {
+            $map['a.status'] = intval($params['status']);
+        }
         $map['a.uid'] = $member['id'];
         $list         = $this->alias('a')
             ->join('goods b', 'a.gid=b.id', 'left')
