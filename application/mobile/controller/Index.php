@@ -79,13 +79,13 @@ class Index extends Common {
      * @return banner:轮播图@
      * @inflist id:id url:图片地址 jumpurl:图片跳转地址
      * @return news:新闻@
-     * @cllist id:id title:新闻标题
+     * @cllist id:id title:新闻标题 type:1图文2视频
      * @author 开发者
      */
     public function home() {
         $banner = db('banner')->field('id,url,jumpurl')
             ->where(array('type' => 1, 'status' => 1))->order('sort asc,createtime desc')->select();
-        $new    = db('news')->field('id,title')
+        $new    = db('news')->field('id,title,type')
             ->where('status', 1)->order('view_number desc')->limit(1)->find();
         show_json(1, array('banner' => $banner, 'news' => $new));
     }
