@@ -133,6 +133,7 @@ class GoodsOrder extends Common {
             show_json(0, '支付失败');
         }
         $pay     = new Pay();
+        $notify  = request()->domain() . '/goodsorder/notify';
         $payinfo = [
             'body'    => '云梯商品',
             'title'   => '云梯商品',
@@ -141,6 +142,7 @@ class GoodsOrder extends Common {
             'money'   => '10m',
             'paytype' => $paytype,
             'client'  => 'app',
+            'notify'  => $notify,
         ];
         $res     = $pay->pay($payinfo);
         if ($res['status'] == 1) {
@@ -161,7 +163,7 @@ class GoodsOrder extends Common {
         }
         $id = $this->where(array('ordersn' => $ordersn))->value('gid');
         db('goods')->where('id', $id)->setInc('sale_number');
-        if ($this->save($data, array('ordersn' => $ordersn)) !== false) {
+        if ($this->save($order, array('ordersn' => $ordersn)) !== false) {
             return true;
         } else {
             trace($data, 'payerror');
