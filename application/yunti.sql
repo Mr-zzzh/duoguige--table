@@ -532,8 +532,8 @@ CREATE TABLE `yunti_note` (
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-ALTER TABLE `yunti_note` add  `appsecret` varchar(50) NOT NULL COMMENT '短信appsecret',
-ALTER TABLE `yunti_note` add  `sign` varchar(255) DEFAULT NULL COMMENT '签名',
+ALTER TABLE `yunti_note` add  `appsecret` varchar(50) NOT NULL COMMENT '短信appsecret';
+ALTER TABLE `yunti_note` add  `sign` varchar(255) DEFAULT NULL COMMENT '签名';
 
 -- 技师等级表
 DROP TABLE IF EXISTS `yunti_grade`;
