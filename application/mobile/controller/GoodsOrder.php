@@ -22,7 +22,7 @@ class GoodsOrder extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id ordersn:订单号 number:商品数量 money:订单金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货 status_text:状态文本 paytime:支付时间 name:商品名 thumbnail:商品图 price:商品价格 label:商品标签
+     * @data id:id gid:商品id ordersn:订单号 number:商品数量 money:订单金额 status:-1取消订单_0待支付_1支付_2已发货_3已收货 status_text:状态文本 paytime:支付时间 name:商品名 thumbnail:商品图 price:商品价格 label:商品标签
      * @author 开发者
      */
     public function index() {
