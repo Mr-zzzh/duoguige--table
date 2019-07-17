@@ -87,7 +87,7 @@ class User extends Common {
 
     /**
      * @title 读取
-     * @url /admin/user/:id
+     * @url /user/:id
      * @method get
      * @return id:id
      * @return name:姓名
