@@ -278,6 +278,18 @@ class Index extends Common {
     }
 
     /**
+     * @title 客服电话
+     * @url /service
+     * @method get
+     * @return data:客服电话
+     * @author 开发者
+     */
+    public function service() {
+        $list = db('note')->order('createtime desc')->limit(1)->value('service');
+        show_json(1, array('data' => $list));
+    }
+
+    /**
      * @title 翻译
      * @url /translate
      * @method post
