@@ -328,6 +328,8 @@ class Index extends Common {
     }
 
     public function agree() {
+        $content = db('note')->order('createtime desc')->limit(1)->value('service');
+        $this->assign('content', $content);
         return $this->fetch('Index/agree');
     }
 
