@@ -3,43 +3,11 @@
 namespace app\admin\model;
 
 class Note extends Common {
-
-    public function AddOne($params) {
-        $data = array(
-            'appkey'     => trim($params['appkey']),
-            'tid'        => trim($params['tid']),
-            'code'       => trim($params['code']),
-            'service'    => trim($params['service']),
-            'agreement'  => trim($params['agreement']),
-            'createtime' => time(),
-        );
-        if (empty($data['appkey'])) {
-            show_json(0, '请传短信appkey');
-        }
-        if (empty($data['tid'])) {
-            show_json(0, '请传模板id');
-        }
-        if (empty($data['code'])) {
-            show_json(0, '请传短信验证码变量');
-        }
-        if (empty($data['service'])) {
-            show_json(0, '请传客服电话');
-        }
-        if (empty($data['agreement'])) {
-            show_json(0, '请传协议');
-        }
-        if ($this->data($data, true)->isUpdate(false)->save()) {
-            //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
-            show_json(1, '添加成功');
-        } else {
-            show_json(0, '添加失败');
-        }
-    }
-
     public function EditOne($params, $id) {
         $data = array(
             'appkey'    => trim($params['appkey']),
-            'tid'       => trim($params['tid']),
+            'appsecret' => trim($params['appsecret']),
+            'sign'      => trim($params['sign']),
             'code'      => trim($params['code']),
             'service'   => trim($params['service']),
             'agreement' => trim($params['agreement']),
@@ -47,8 +15,11 @@ class Note extends Common {
         if (empty($data['appkey'])) {
             show_json(0, '请传短信appkey');
         }
-        if (empty($data['tid'])) {
-            show_json(0, '请传模板id');
+        if (empty($data['appsecret'])) {
+            show_json(0, '请传短信appsecret');
+        }
+        if (empty($data['sign'])) {
+            show_json(0, '请传签名');
         }
         if (empty($data['code'])) {
             show_json(0, '请传短信验证码变量');
