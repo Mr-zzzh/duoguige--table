@@ -542,10 +542,12 @@ if (!function_exists('aliSMS')) {
         if (check_often('get_' . $check_id . '_' . $PhoneNumbers . '_yzm') || $cache_code) {
             return arr_res(0, '请勿频繁获取!');
         }
-        $accessKeyId   = 'LTAIa7iTyXMWjnf9';
-        $accessSecret  = 'kyjvAsJAiXOwZShrZW37jr34DxhGbr';
-        $SignName      = '吾人资';
-        $TemplateCode  = 'SMS_170040213';
+        $note          = new \app\admin\controller\Note();
+        $note1         = $note->read();
+        $accessKeyId   = $note1['appkey'];
+        $accessSecret  = $note1['appsecret'];
+        $SignName      = $note1['sign'];
+        $TemplateCode  = $note1['code'];
         $code          = random(5, true);
         $TemplateParam = array('code' => $code);
         $senddata      = array(
