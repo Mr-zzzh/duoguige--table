@@ -4,8 +4,11 @@
       <el-form-item label="短信appkey">
         <el-input v-model="form.appkey"></el-input>
       </el-form-item>
-      <el-form-item label="模板id">
-        <el-input v-model="form.tid"></el-input>
+      <el-form-item label="短信appsecret">
+        <el-input v-model="form.appsecret"></el-input>
+      </el-form-item>
+      <el-form-item label="签名">
+        <el-input v-model="form.sign"></el-input>
       </el-form-item>
       <el-form-item label="短信验证码变量">
         <el-input v-model="form.code"></el-input>
@@ -69,7 +72,7 @@ export default {
             this.form = res.data.data;
             setTimeout(() => {
               this.$refs.xx.setUEContent(this.form.agreement);
-            }, 2000);
+            }, 500);
           }
           console.log(res.data.data);
         }
