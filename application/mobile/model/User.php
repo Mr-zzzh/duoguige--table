@@ -86,16 +86,23 @@ class User extends Common {
         if (empty($item)) {
             show_json(1);
         } else {
-            $status              = array('0' => '待审', '1' => '通过', '2' => '不通过');
-            $type                = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');
-            $item                = $item->toArray();
-            $item['status_text'] = $status[$item['status']];
-            $item['type_text']   = $type[$item['type']];
-            $item['normal_text'] = $item['type'] == 1 ? '启用' : '禁用';
-            $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
+            $item = $item->toArray();
+            if ($item['type'] == 1) {
+                $item['identity'] = '普通用户';
+                $item['company']  = '无';
+            } elseif ($item['type'] == 2) {
+                $item['identity'] = '技术大师';
+                $item['company']  = db('technician')->where('uid', $item['id'])->value('company_name');
+            } elseif ($item['type'] == 3) {
+                $item['identity'] = '物业公司';
+                $item['company']  = db('company')->where('uid', $item['id'])->value('company_name');
+            }
+            if (empty($item['intro'])) {
+                $item['intro'] = '';
+            }
+            $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
             unset($item['password']);
             unset($item['salt']);
-            unset($item['token']);
         }
         show_json(1, $item);
     }
@@ -227,7 +234,7 @@ class User extends Common {
                     $item['news_type'] = db('news')->where('id', $item['nid'])->value('type');
                 }
                 $item['avatar'] = $member['avatar'];
-                $item['name'] = $member['name'];
+                $item['name']   = $member['name'];
             }
             unset($item);
         }
