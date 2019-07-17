@@ -38,12 +38,11 @@ class Note extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'appkey'     => trim($params['appkey']),
-            'tid'        => trim($params['tid']),
-            'code'       => trim($params['code']),
-            'service'    => trim($params['service']),
-            'agreement'  => trim($params['agreement']),
-            'createtime' => time(),
+            'appkey'    => trim($params['appkey']),
+            'tid'       => trim($params['tid']),
+            'code'      => trim($params['code']),
+            'service'   => trim($params['service']),
+            'agreement' => trim($params['agreement']),
         );
         if (empty($data['appkey'])) {
             show_json(0, '请传短信appkey');
@@ -60,7 +59,9 @@ class Note extends Common {
         if (empty($data['agreement'])) {
             show_json(0, '请传协议');
         }
-        if (!$this->order('createtime desc')->limit(1)->value('id')) {
+        $id = $this->order('createtime desc')->limit(1)->value('id');
+        if (empty($id)) {
+            $data['createtime'] = time();
             if ($this->insert($data)) {
                 //logs('创建新的??,ID:' . $this->getLastInsID(), 1);
                 show_json(1, '添加成功');
