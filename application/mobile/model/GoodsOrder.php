@@ -133,21 +133,31 @@ class GoodsOrder extends Common {
             show_json(0, '支付失败');
         }
         $pay     = new Pay();
-        $notify  = request()->domain() . '/goodsorder/notify';
         $payinfo = [
-            'body'    => '云梯商品',
-            'title'   => '云梯商品',
-            'ordersn' => $ordersn,
-            'money'   => $money,
-            'paytype' => $paytype,
-            'client'  => 'app',
-            'notify'  => $notify,
+            'body'            => '云梯商品',
+            'title'           => '云梯商品',
+            'ordersn'         => $ordersn,
+            'money'           => $money,
+            'timeout_express' => '10m',
+            'paytype'         => $paytype,
+            'client'          => 'app',
         ];
         $res     = $pay->pay($payinfo);
         if ($res['status'] == 1) {
             show_json(1, $res['result']);
         } else {
             show_json(0, '支付失败');
+        }
+    }
+
+    public function Refund($params) {
+        $ordersn = trim($params['ordersn']);
+        $pay     = new Pay();
+        $res     = $pay->refund($ordersn);
+        if ($res['status'] == 1) {
+            show_json(1, '退款成功');
+        } else {
+            show_json(0, '退款失败');
         }
     }
 

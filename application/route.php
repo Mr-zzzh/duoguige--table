@@ -104,7 +104,11 @@ Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::rule('goodsorder/affirm', 'mobile/GoodsOrder/affirm', 'GET|POST');
 Route::rule('goodsorder/pay', 'mobile/GoodsOrder/pay', 'POST');
+Route::rule('goodsorder/refund', 'mobile/GoodsOrder/refund', 'POST');
 Route::rule('goodsorder/notify', 'mobile/GoodsOrder/notify', 'POST|GET');
+Route::rule('ali_notify', 'mobile/Notify/ali_notify', 'POST|GET');
+Route::rule('wx_notify', 'mobile/Notify/wx_notify', 'POST|GET');
+
 Route::resource('inform', 'mobile/Inform');
 Route::rule('inform/unreadnum', 'mobile/Inform/unreadnum', 'GET');
 Route::rule('inform/clear', 'mobile/Inform/clear', 'POST');
