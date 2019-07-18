@@ -303,9 +303,9 @@ class Index extends Common {
         $version = \request()->param('version', '');
         $sysset  = db('yunti_version')->order('createtime desc')->limit(1)->find();
         if (checkapp() == 'ios') {
-            $result['newVersion'] = isset($sysset['ios_new_version']) ? $sysset['ios_new_version'] : '1.0';
-            $result['minVersion'] = isset($sysset['ios_min_version']) ? $sysset['ios_min_version'] : '1.0';
-            $version              = $version ?: '1.0';
+            $result['newVersion'] = isset($sysset['ios_new_version']) ? $sysset['ios_new_version'] : '1.0.0';
+            $result['minVersion'] = isset($sysset['ios_min_version']) ? $sysset['ios_min_version'] : '1.0.0';
+            $version              = $version ?: '1.0.0';
             $result['apkUrl']     = $sysset['ios_url'] ?: '';
         } else {
             $result['newVersion'] = isset($sysset['android_new_version']) ? $sysset['android_new_version'] : '1.0.0';
