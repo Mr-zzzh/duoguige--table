@@ -35,6 +35,7 @@ return [
         'app\admin\controller\Set',
         'app\admin\controller\Share',
         'app\admin\controller\User',
+        'app\admin\controller\Version',
 
         //mobile
         'app\mobile\controller\Area',
@@ -54,7 +55,6 @@ return [
         'app\mobile\controller\Question',
         'app\mobile\controller\Technician',
         'app\mobile\controller\User',
-        'app\mobile\controller\Version',
     ],
     'filter_method' => [
         //过滤 不解析的方法名称
