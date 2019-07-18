@@ -51,7 +51,6 @@ Route::resource('admin/news', 'admin/News');
 Route::rule('admin/news/comment', 'admin/News/comment', 'GET');
 Route::rule('admin/news/comment_del', 'admin/News/comment_del', 'GET|POST');
 Route::resource('admin/note', 'admin/Note');
-Route::resource('admin/version', 'admin/Version', 'GET|POST');
 //问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
@@ -86,7 +85,7 @@ Route::rule('share', 'mobile/Index/share', 'GET');
 Route::rule('service', 'mobile/Index/service', 'GET');
 Route::rule('about', 'mobile/Index/about', 'GET');
 Route::rule('agree', 'mobile/Index/agree', 'GET');
-Route::rule('appversion', 'mobile/Index/appversion', 'GET');
+Route::rule('appversion', 'mobile/Index/appversion', 'GET|POST');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');
