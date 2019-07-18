@@ -54,6 +54,7 @@ return [
         'app\mobile\controller\Question',
         'app\mobile\controller\Technician',
         'app\mobile\controller\User',
+        'app\mobile\controller\Version',
     ],
     'filter_method' => [
         //过滤 不解析的方法名称
