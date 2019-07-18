@@ -121,7 +121,7 @@ class User extends Common {
         }
         $info = $this->where($map)->find();
         if (empty($info)) {
-            show_json(0, '未找到该用户!');
+            show_json(-3, '您尚未登录!');
         }
         $info = $info->toArray();
         if (empty($token)) {
