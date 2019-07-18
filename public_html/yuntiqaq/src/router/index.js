@@ -251,6 +251,14 @@ export default new Router({
           },
         },
         {
+          path: '/admin_versions',
+          name: 'admin_versions',
+          component: resolve => require(['../components/set/versions.vue'], resolve),
+          meta: {
+            title: '版本号设置',
+          },
+        },
+        {
           path: '/admin_noteset',
           name: 'admin_noteset',
           component: resolve => require(['../components/set/noteset/noteset.vue'], resolve),
