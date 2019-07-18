@@ -11,6 +11,8 @@ class GoodsOrder extends Common {
         $map = array();
         if (!empty($params['status'])) {
             $map['a.status'] = intval($params['status']);
+        } else {
+            $map['a.status'] = array('>', 0);
         }
         $map['a.uid'] = $member['id'];
         $list         = $this->alias('a')
