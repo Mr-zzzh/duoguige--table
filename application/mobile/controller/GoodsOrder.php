@@ -89,10 +89,19 @@ class GoodsOrder extends Common {
         $m->Pay(request()->param());
     }
 
-    public function notify($data = []) {
-        $m = new \app\mobile\model\GoodsOrder();
-        $m->Notify($data);
-    }
+    /**
+     * @title 订单退款
+     * @url /goodsorder/refund
+     * @method post
+     * @param name:ordersn type:string require:1 default:- other:- desc:订单号
+     * @return data:支付信息@
+     * @data
+     * @author 开发者
+     */
+    /* public function refund() {
+         $m = new \app\mobile\model\GoodsOrder();
+         $m->Refund(request()->param());
+     }*/
 
     /**
      * @title 读取

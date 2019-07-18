@@ -134,10 +134,24 @@ if (!function_exists('list_to_tree')) {
 //公共方法(无需登录判断)
 if (!function_exists('login_comc')) {
     function login_comc() {
-        $comc = array('admin/admin/login', 'admin/admin/ue_upload', 'admin/admin/register', 'mobile/index/login', 'mobile/index/login_code', 'mobile/index/insurance', 'mobile/index/home', 'mobile/index/search', 'mobile/index/upload', 'mobile/area/index', 'mobile/index/city', 'mobile/index/translate', 'mobile/index/share', 'mobile/index/service', 'mobile/index/about', 'mobile/index/agree', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/maintenance/city', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum', 'mobile/brand/read', 'mobile/invite/salary', 'mobile/invite/experience', 'mobile/invite/index', 'mobile/invite/read', 'mobile/jobwanted/index', 'mobile/jobwanted/read', 'mobile/fault/transition', 'mobile/fault/index', 'mobile/fault/read', 'mobile/question/index', 'mobile/question/read', 'mobile/question/answer', 'mobile/news/index', 'mobile/technician/index', 'mobile/technician/read', 'mobile/technician/question');
+        $comc = array('admin/admin/login', 'admin/admin/ue_upload', 'admin/admin/register', 'mobile/index/login', 'mobile/index/login_code', 'mobile/index/insurance', 'mobile/index/home', 'mobile/index/search', 'mobile/index/upload', 'mobile/area/index', 'mobile/index/city', 'mobile/index/translate', 'mobile/index/share', 'mobile/index/service', 'mobile/index/about', 'mobile/index/agree', 'mobile/index/appversion', 'mobile/user/code', 'mobile/user/register', 'mobile/goods/goodscate', 'mobile/goods/index', 'mobile/maintenance/city', 'mobile/goods/read', 'mobile/brand/index', 'mobile/brand/branddatum', 'mobile/brand/read', 'mobile/invite/salary', 'mobile/invite/experience', 'mobile/invite/index', 'mobile/invite/read', 'mobile/jobwanted/index', 'mobile/jobwanted/read', 'mobile/fault/transition', 'mobile/fault/index', 'mobile/fault/read', 'mobile/question/index', 'mobile/question/read', 'mobile/question/answer', 'mobile/news/index', 'mobile/technician/index', 'mobile/technician/read', 'mobile/technician/question');
         return $comc;
     }
 }
+
+//android与ios判断
+if (!function_exists('checkapp')) {
+    function checkapp() {
+        if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad')) {
+            return 'ios';
+        } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Android')) {
+            return 'android';
+        } else {
+            return 'other';
+        }
+    }
+}
+
 //公共方法(无需权限限制)
 if (!function_exists('comc')) {
     function comc() {
@@ -542,10 +556,12 @@ if (!function_exists('aliSMS')) {
         if (check_often('get_' . $check_id . '_' . $PhoneNumbers . '_yzm') || $cache_code) {
             return arr_res(0, '请勿频繁获取!');
         }
-        $accessKeyId   = 'LTAIa7iTyXMWjnf9';
-        $accessSecret  = 'kyjvAsJAiXOwZShrZW37jr34DxhGbr';
-        $SignName      = '吾人资';
-        $TemplateCode  = 'SMS_170040213';
+        $note          = new \app\admin\controller\Note();
+        $note1         = $note->read();
+        $accessKeyId   = $note1['appkey'];
+        $accessSecret  = $note1['appsecret'];
+        $SignName      = $note1['sign'];
+        $TemplateCode  = $note1['code'];
         $code          = random(5, true);
         $TemplateParam = array('code' => $code);
         $senddata      = array(

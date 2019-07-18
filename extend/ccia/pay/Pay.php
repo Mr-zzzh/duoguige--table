@@ -259,13 +259,13 @@ class Pay extends Common {
         );
         if ($data['paystatus'] == 1) {
             //支付成功
-            $ordernotify = new GoodsOrder();
-            $ordernotify->notify($orderdata);
+            $ordernotify = new \app\mobile\model\GoodsOrder();
+            $ordernotify->Notify($orderdata);
             $message = '订单支付成功';
         } elseif ($data['paystatus'] == -1) {
             //支付失败
-            $ordernotify = new GoodsOrder();
-            $ordernotify->notify($orderdata);
+            $ordernotify = new \app\mobile\model\GoodsOrder();
+            $ordernotify->Notify($orderdata);
             $message = '订单支付失败';
         } else {
             //异常

@@ -11,6 +11,8 @@ class GoodsOrder extends Common {
         $map = array();
         if (!empty($params['status'])) {
             $map['a.status'] = intval($params['status']);
+        } else {
+            $map['a.status'] = array('>', 0);
         }
         $map['a.uid'] = $member['id'];
         $list         = $this->alias('a')
@@ -134,18 +136,30 @@ class GoodsOrder extends Common {
         }
         $pay     = new Pay();
         $payinfo = [
-            'body'    => '云梯商品',
-            'title'   => '云梯商品',
-            'ordersn' => $ordersn,
-            'money'   => $money,
-            'money'   => '10m',
-            'paytype' => $paytype,
+            'body'            => '云梯商品',
+            'title'           => '云梯商品',
+            'ordersn'         => $ordersn,
+            'money'           => $money,
+            'timeout_express' => '10m',
+            'paytype'         => $paytype,
+            'client'          => 'app',
         ];
         $res     = $pay->pay($payinfo);
         if ($res['status'] == 1) {
             show_json(1, $res['result']);
         } else {
             show_json(0, '支付失败');
+        }
+    }
+
+    public function Refund($params) {
+        $ordersn = trim($params['ordersn']);
+        $pay     = new Pay();
+        $res     = $pay->refund($ordersn);
+        if ($res['status'] == 1) {
+            show_json(1, '退款成功');
+        } else {
+            show_json(0, '退款失败');
         }
     }
 
@@ -160,7 +174,7 @@ class GoodsOrder extends Common {
         }
         $id = $this->where(array('ordersn' => $ordersn))->value('gid');
         db('goods')->where('id', $id)->setInc('sale_number');
-        if ($this->save($data, array('ordersn' => $ordersn)) !== false) {
+        if ($this->save($order, array('ordersn' => $ordersn)) !== false) {
             return true;
         } else {
             trace($data, 'payerror');

@@ -574,6 +574,20 @@ CREATE TABLE `yunti_inform` (
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- 版本设置表
+DROP TABLE IF EXISTS `yunti_version`;
+CREATE TABLE `yunti_version` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ios_new_version` varchar(255) DEFAULT NULL COMMENT 'ios最新版本',
+  `ios_min_version` varchar(255) DEFAULT NULL COMMENT 'ios最小兼容版本',
+  `android_new_version` varchar(255) DEFAULT NULL COMMENT 'android最新版本',
+  `android_min_version` varchar(255) DEFAULT NULL COMMENT 'android最小兼容版本',
+  `ios_url` varchar(255) DEFAULT NULL COMMENT 'ios下载地址',
+  `android_url` varchar(255) DEFAULT NULL COMMENT 'android地址',
+  `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 
 

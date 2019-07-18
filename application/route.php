@@ -51,6 +51,7 @@ Route::resource('admin/news', 'admin/News');
 Route::rule('admin/news/comment', 'admin/News/comment', 'GET');
 Route::rule('admin/news/comment_del', 'admin/News/comment_del', 'GET|POST');
 Route::resource('admin/note', 'admin/Note');
+Route::resource('admin/version', 'admin/Version');
 //问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
@@ -85,6 +86,7 @@ Route::rule('share', 'mobile/Index/share', 'GET');
 Route::rule('service', 'mobile/Index/service', 'GET');
 Route::rule('about', 'mobile/Index/about', 'GET');
 Route::rule('agree', 'mobile/Index/agree', 'GET');
+Route::rule('appversion', 'mobile/Index/appversion', 'GET');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');
@@ -104,6 +106,11 @@ Route::rule('goodscate', 'mobile/Goods/goodscate');
 Route::resource('goodsorder', 'mobile/GoodsOrder');
 Route::rule('goodsorder/affirm', 'mobile/GoodsOrder/affirm', 'GET|POST');
 Route::rule('goodsorder/pay', 'mobile/GoodsOrder/pay', 'POST');
+Route::rule('goodsorder/refund', 'mobile/GoodsOrder/refund', 'POST');
+Route::rule('goodsorder/notify', 'mobile/GoodsOrder/notify', 'POST|GET');
+Route::rule('ali_notify', 'mobile/Notify/ali_notify', 'POST|GET');
+Route::rule('wx_notify', 'mobile/Notify/wx_notify', 'POST|GET');
+
 Route::resource('inform', 'mobile/Inform');
 Route::rule('inform/unreadnum', 'mobile/Inform/unreadnum', 'GET');
 Route::rule('inform/clear', 'mobile/Inform/clear', 'POST');

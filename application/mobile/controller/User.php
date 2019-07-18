@@ -89,18 +89,8 @@ class User extends Common {
      * @title 读取
      * @url /user/:id
      * @method get
-     * @return id:id
-     * @return name:姓名
-     * @return phone:电话
-     * @return avatar:头像
-     * @return intro:简介
-     * @return status:审核状态_0待审_1通过_2不通过
-     * @return status_text:状态文本
-     * @return type:用户类型_1普通用户_2技术大师_3物业公司
-     * @return type_text:类型文本
-     * @return normal:是否启用_1启用_2禁用
-     * @return normal_text:是否启用
-     * @return createtime:创建时间
+     * @return data:用户信息@!
+     * @data id:id name:用户姓名 phone:用户手机号 avatar:用户头像 intro:用户简介 status:审核状态_0待审_1通过_2不通过(type为2和3时判断) type:用户类型_1普通用户_2技术大师_3物业公司 identity:身份 company:公司名(技术大师和物业身份有) token:token createtime:创建时间 normal:是否启用_1启用_2禁用
      * @author 开发者
      */
     public function read($id) {

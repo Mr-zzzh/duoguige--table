@@ -35,6 +35,7 @@ return [
         'app\admin\controller\Set',
         'app\admin\controller\Share',
         'app\admin\controller\User',
+        'app\admin\controller\Version',
 
         //mobile
         'app\mobile\controller\Area',
