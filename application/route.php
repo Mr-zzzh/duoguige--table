@@ -51,7 +51,7 @@ Route::resource('admin/news', 'admin/News');
 Route::rule('admin/news/comment', 'admin/News/comment', 'GET');
 Route::rule('admin/news/comment_del', 'admin/News/comment_del', 'GET|POST');
 Route::resource('admin/note', 'admin/Note');
-Route::resource('admin/version', 'admin/Version');
+Route::resource('admin/version', 'admin/Version', 'GET|POST');
 //问答
 Route::resource('admin/question', 'admin/Question');
 Route::rule('admin/question/answer', 'admin/Question/answer', 'GET');
