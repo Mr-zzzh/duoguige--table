@@ -139,7 +139,6 @@ class GoodsOrder extends Common {
             'title'   => '云梯商品',
             'ordersn' => $ordersn,
             'money'   => $money,
-            'money'   => '10m',
             'paytype' => $paytype,
             'client'  => 'app',
             'notify'  => $notify,
