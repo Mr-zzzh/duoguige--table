@@ -5,30 +5,30 @@ namespace app\admin\model;
 class Version extends Common {
     public function EditOne($params, $id) {
         $data = array(
-            'ios_new_version'     => trim($params['appkey']),
-            'ios_min_version'     => trim($params['appsecret']),
-            'android_new_version' => trim($params['sign']),
-            'android_min_version' => trim($params['code']),
-            'ios_url'             => trim($params['service']),
-            'android_url'         => trim($params['agreement']),
+            'ios_new_version'     => trim($params['ios_new_version']),
+            'ios_min_version'     => trim($params['ios_min_version']),
+            'android_new_version' => trim($params['android_new_version']),
+            'android_min_version' => trim($params['android_min_version']),
+            'ios_url'             => trim($params['ios_url']),
+            'android_url'         => trim($params['android_url']),
         );
         if (empty($data['ios_new_version'])) {
-            show_json(0, 'ios最新版本');
+            show_json(0, '请传ios最新版本');
         }
         if (empty($data['ios_min_version'])) {
-            show_json(0, 'ios最小兼容版本');
+            show_json(0, '请传ios最小兼容版本');
         }
         if (empty($data['android_new_version'])) {
-            show_json(0, 'android最新版本');
+            show_json(0, '请传android最新版本');
         }
         if (empty($data['android_min_version'])) {
-            show_json(0, 'android最小兼容版本');
+            show_json(0, '请传android最小兼容版本');
         }
         if (empty($data['ios_url'])) {
-            show_json(0, 'ios下载地址');
+            show_json(0, '请传ios下载地址');
         }
         if (empty($data['android_url'])) {
-            show_json(0, 'android地址');
+            show_json(0, '请传android地址');
         }
         $id = $this->order('createtime desc')->limit(1)->value('id');
         if (empty($id)) {

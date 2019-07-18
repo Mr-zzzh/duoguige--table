@@ -32,7 +32,7 @@ class Version extends Common {
 
     /**
      * @title 读取
-     * @url /admin/note/:id
+     * @url /admin/version/:id
      * @method get
      * @return id:id
      * @return ios_new_version:ios最新版本
