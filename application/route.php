@@ -85,6 +85,7 @@ Route::rule('share', 'mobile/Index/share', 'GET');
 Route::rule('service', 'mobile/Index/service', 'GET');
 Route::rule('about', 'mobile/Index/about', 'GET');
 Route::rule('agree', 'mobile/Index/agree', 'GET');
+Route::rule('appversion', 'mobile/Index/appversion', 'GET');
 //文件上传
 Route::rule('mobile/upload', 'mobile/Index/upload', 'POST');
 Route::resource('area', 'mobile/Area');

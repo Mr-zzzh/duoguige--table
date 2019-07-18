@@ -290,6 +290,35 @@ class Index extends Common {
     }
 
     /**
+     * @title 版本号检测(app)
+     * @description 版本号检测
+     * @url /appversion
+     * @method  get|post
+     * @param name:version type:string  require:0 default:1.0.0 desc:版本号
+     * @return info:更新信息@!
+     * @info newVersion:最新版本号 minVersion:最小支持版本号,低于这个版本号会强制更新 isUpdate:是否需要更新0-不需要1-需要 forceUpdate:是否强制更新0-不需要1-需要 apkUrl:下载链接(安卓)
+     */
+    public function appversion() {
+        $result  = array();
+        $version = \request()->param('version', '');
+        $sysset  = db('yunti_version')->order('createtime desc')->limit(1)->find();
+        if (checkapp() == 'ios') {
+            $result['newVersion'] = isset($sysset['ios_new_version']) ? $sysset['ios_new_version'] : '1.0';
+            $result['minVersion'] = isset($sysset['ios_min_version']) ? $sysset['ios_min_version'] : '1.0';
+            $version              = $version ?: '1.0';
+            $result['apkUrl']     = $sysset['ios_url'] ?: '';
+        } else {
+            $result['newVersion'] = isset($sysset['android_new_version']) ? $sysset['android_new_version'] : '1.0.0';
+            $result['minVersion'] = isset($sysset['android_min_version']) ? $sysset['android_min_version'] : '1.0.0';
+            $version              = $version ?: '1.0.0';
+            $result['apkUrl']     = $sysset['android_url'] ?: '';
+        }
+        $result['isUpdate']    = $result['newVersion'] > $version ? 1 : 0;
+        $result['forceUpdate'] = $result['minVersion'] > $version ? 1 : 0;
+        show_json(1, $result);
+    }
+
+    /**
      * @title 翻译
      * @url /translate
      * @method post
