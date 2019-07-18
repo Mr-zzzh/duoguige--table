@@ -301,7 +301,7 @@ class Index extends Common {
     public function appversion() {
         $result  = array();
         $version = \request()->param('version', '');
-        $sysset  = db('yunti_version')->order('createtime desc')->limit(1)->find();
+        $sysset  = db('version')->order('createtime desc')->limit(1)->find();
         if (checkapp() == 'ios') {
             $result['newVersion'] = isset($sysset['ios_new_version']) ? $sysset['ios_new_version'] : '1.0.0';
             $result['minVersion'] = isset($sysset['ios_min_version']) ? $sysset['ios_min_version'] : '1.0.0';
