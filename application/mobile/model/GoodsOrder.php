@@ -146,7 +146,7 @@ class GoodsOrder extends Common {
         ];
         $res     = $pay->pay($payinfo);
         if ($res['status'] == 1) {
-            show_json(1, $res['result']);
+            show_json(1, $res);
         } else {
             show_json(0, '支付失败');
         }
