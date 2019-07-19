@@ -217,7 +217,7 @@ class Maintenance extends Common {
         if (empty($city)) {
             show_json(0, '请传城市名');
         }
-        $id   = db('area')->where('name', $city)->value('id');
+        $id   = db('area')->where(array('name' => $city, 'level' => 2))->value('id');
         $list = db('area')->where('pid', $id)->field('id,name,code')->select();
         show_json(1, array('data' => $list));
     }
