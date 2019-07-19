@@ -98,10 +98,10 @@ class GoodsOrder extends Common {
      * @data
      * @author 开发者
      */
-    /* public function refund() {
-         $m = new \app\mobile\model\GoodsOrder();
-         $m->Refund(request()->param());
-     }*/
+    /*public function refund() {
+        $m = new \app\mobile\model\GoodsOrder();
+        $m->Refund(request()->param());
+    }*/
 
     /**
      * @title 读取
