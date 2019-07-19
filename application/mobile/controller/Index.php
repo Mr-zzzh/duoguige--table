@@ -109,7 +109,7 @@ class Index extends Common {
      * @url /city
      * @method GET|POST
      * @return data:城市列表@
-     * @inflist id:id name:城市名 code:城市编码
+     * @data id:id name:城市名 code:城市编码
      * @author 开发者
      */
     public function city() {
@@ -119,6 +119,25 @@ class Index extends Common {
                 ->where(array('level' => 2))->select();
             Cache::set('city_list', $list);
         }
+        show_json(1, array('data' => $list));
+    }
+
+    /**
+     * @title 根据城市查省
+     * @url /province
+     * @method GET|POST
+     * @param name:code type:string require:0 default:- other:- desc:城市编码
+     * @return data:省@
+     * @data id:id name:城市名 code:城市编码
+     * @author 开发者
+     */
+    public function province() {
+        $code = intval(request()->param('code'));
+        if (empty($code)) {
+            $code = 110100;
+        }
+        $pid  = db('area')->where('code', $code)->value('pid');
+        $list = db('area')->where('id', $pid)->field('id,name,code')->find();
         show_json(1, array('data' => $list));
     }
 
