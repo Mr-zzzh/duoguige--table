@@ -69,6 +69,7 @@ Route::rule('admin/payset/index', 'admin/Payset/index', 'POST|GET');
 Route::rule('admin/payset/add', 'admin/Payset/add', 'POST|GET');
 Route::rule('admin/payset/payget', 'admin/Payset/payget', 'POST|GET');
 Route::rule('admin/payset/delete', 'admin/Payset/delete', 'POST|GET');
+Route::resource('admin/version', 'admin/Version');
 
 //手机端
 Route::rule('login', 'mobile/Index/login', 'POST');
