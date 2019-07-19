@@ -127,7 +127,7 @@ class Question extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id title:问题 answer:回答 createtime:回答时间
+     * @data id:id qid title:问题 answer:回答 createtime:回答时间
      * @author 开发者
      */
     public function my_answer() {

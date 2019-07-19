@@ -54,7 +54,7 @@ class Answer extends Common {
         $map['a.uid']    = $member['id'];
         $list            = $this->alias('a')
             ->join('question q', 'a.qid=q.id', 'left')
-            ->field('a.id,a.answer,a.createtime,q.title')
+            ->field('a.id,q.id qid,a.answer,a.createtime,q.title')
             ->where($map)->group('a.id')->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
