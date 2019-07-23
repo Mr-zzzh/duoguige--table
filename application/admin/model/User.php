@@ -47,10 +47,10 @@ class User extends Common {
     }
 
     public function Technician($params) {
-        $map             = array();
-        $map['u.status'] = 1;
-        $map['u.type']   = 2;
-        $map['u.normal'] = 1;
+        $map                      = array();
+        $map['u.status']          = 1;
+        $map['u.presuppose_type'] = 2;
+        $map['u.normal']          = 1;
         if (!empty($params['keyword'])) {
             $map['u.name|u.phone|u.intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
@@ -165,9 +165,9 @@ class User extends Common {
             unset($item['password']);
             unset($item['salt']);
             unset($item['token']);
-            if ($item['type'] == 2) {
+            if ($item['presuppose_type'] == 2) {
                 $check = db('technician')->where('uid', $item['id'])->find();
-            } elseif ($item['type'] == 3) {
+            } elseif ($item['presuppose_type'] == 3) {
                 $check = db('company')->where('uid', $item['id'])->find();
             } else {
                 $check = array();
@@ -192,7 +192,7 @@ class User extends Common {
         $data['remark']    = trim($params['remark']);
         $data['checktime'] = time();
         if ($this->save($data, array('id' => $id)) !== false) {
-            $type1 = $this->where('id', $id)->value('type');
+            $type1 = $this->where('id', $id)->value('presuppose_type');
             if ($type1 == 2) {
                 $type    = 2;
                 $checkid = db('technician')->where('uid', $id)->value('id');
