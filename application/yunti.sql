@@ -18,6 +18,7 @@ CREATE TABLE `yunti_user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ALTER TABLE `yunti_user` add  `remark` varchar(255) DEFAULT NULL COMMENT '审核备注';
 ALTER TABLE `yunti_user` add  `checktime` int(11) DEFAULT NULL COMMENT '审核时间';
+ALTER TABLE `yunti_user` add  `presuppose_type` int(2) NOT NULL DEFAULT '1' COMMENT '暂存用户类型 1,普通用户,2技术大师,3物业公司';
 
 -- 技术大师认证表
 DROP TABLE IF EXISTS `yunti_technician`;
