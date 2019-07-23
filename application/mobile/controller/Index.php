@@ -293,7 +293,8 @@ class Index extends Common {
      * @author 开发者
      */
     public function share() {
-        $list = db('share')->order('createtime desc')->limit(1)->find();
+        $list               = db('share')->order('createtime desc')->limit(1)->find();
+        $list['share_link'] = request()->domain() . '/mobile/share';
         show_json(1, array('data' => $list));
     }
 
