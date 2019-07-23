@@ -188,7 +188,11 @@ class User extends Common {
         if (empty($params['status'])) {
             show_json('请传审核状态');
         }
-        $type1          = $this->where('id', $id)->value('presuppose_type');
+        $aa = $this->where('id', $id)->field('status,presuppose_type')->find();
+        if ($aa['status'] != 0) {
+            show_json(1, '审核成功');
+        }
+        $type1          = $aa['presuppose_type'];
         $data['status'] = intval($params['status']);
         if ($data['status'] == 1) {
             $data['type'] = $type1;
