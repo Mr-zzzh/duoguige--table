@@ -216,7 +216,7 @@ class Maintenance extends Common {
             show_json(1);
         } else {
             $item             = $item->toArray();
-            $item['location'] = city_name($item['province']) . city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['location'] = city_name($item['province']) . city_name($item['city']) . city_name($item['area']);
             $item['detail']   = $item['address'];
             $item['address']  = city_name($item['city']) . city_name($item['area']) . $item['address'];
             $item['image']    = request()->domain() . '/uploads/maintenance.jpg';
