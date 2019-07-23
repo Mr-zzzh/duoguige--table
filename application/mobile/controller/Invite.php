@@ -134,7 +134,9 @@ class Invite extends Common {
      * @return id:id
      * @return post:招聘岗位
      * @return education:学历
+     * @return salary:薪资范围id
      * @return salary_text:薪资范围文本
+     * @return experience:工作经验id
      * @return experience_text:工作经验文本
      * @return province:省编号
      * @return province_text:省
