@@ -209,16 +209,18 @@ class Maintenance extends Common {
             ->join('company c', 'a.uid=c.uid', 'left')
             ->join('user u2', 'a.receive_id=u2.id', 'left')
             ->join('technician t', 'a.receive_id=t.uid', 'left')
-            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.province,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
             ->where('a.id', $id)
             ->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item            = $item->toArray();
-            $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
-            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
-            $plan            = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
+            $item             = $item->toArray();
+            $item['location'] = city_name($item['province']) . city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['detail']   = $item['address'];
+            $item['address']  = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['image']    = request()->domain() . '/uploads/maintenance.jpg';
+            $plan             = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
             if (!empty($item['receive_time'])) {
                 array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
                 foreach ($plan as &$v) {
