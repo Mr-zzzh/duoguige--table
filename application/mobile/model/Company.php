@@ -48,7 +48,8 @@ class Company extends Common {
         if (empty($data['image'])) {
             show_json(0, '营业执照不能为空');
         }
-        $user['status'] = 0;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 3;
         db('user')->where('id', $member['id'])->update($user);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
@@ -96,6 +97,7 @@ class Company extends Common {
             show_json(0, '营业执照不能为空');
         }
         $user['status'] = 0;
+        $user['presuppose_type'] = 3;
         db('user')->where('id', $member['id'])->update($user);
         if ($this->save($data, array('id' => $id)) !== false) {
             show_json(1, '编辑成功');

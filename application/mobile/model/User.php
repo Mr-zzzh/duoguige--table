@@ -288,7 +288,8 @@ class User extends Common {
         if (empty($data['technician_image'])) {
             show_json(0, '技师证件不能为空');
         }
-        $user['status'] = 0;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->insert($data)) {
             show_json(1, '添加成功');
@@ -344,7 +345,8 @@ class User extends Common {
                 show_json(0, '离职证明不能为空');
             }
         }
-        $user['status'] = 0;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->where('id', $id)->update($data)) {
             show_json(1, '添加成功');
