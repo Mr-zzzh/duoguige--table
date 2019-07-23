@@ -84,6 +84,7 @@ Route::rule('history', 'mobile/Index/history', 'GET');
 Route::rule('history_del', 'mobile/Index/history_del', 'POST');
 Route::rule('translate', 'mobile/Index/translate', 'POST');
 Route::rule('share', 'mobile/Index/share', 'GET');
+Route::rule('mobile/share', 'mobile/Index/mobile_share', 'GET');
 Route::rule('service', 'mobile/Index/service', 'GET');
 Route::rule('about', 'mobile/Index/about', 'GET');
 Route::rule('agree', 'mobile/Index/agree', 'GET');
