@@ -13,7 +13,7 @@ class User extends Common {
             $map['status'] = intval($params['status']);
         }
         if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
+            $map['presuppose_type'] = intval($params['type']);
         }
         if (!empty($params['keyword'])) {
             $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
