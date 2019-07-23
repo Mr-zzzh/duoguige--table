@@ -349,6 +349,10 @@ class User extends Common {
         $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->where('id', $id)->update($data)) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 2))->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');

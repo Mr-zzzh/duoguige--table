@@ -156,6 +156,10 @@ class Maintenance extends Common {
             show_json(0, '详细地址不能为空');
         }
         if ($this->save($data, array('id' => $id)) !== false) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 3))->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
