@@ -270,9 +270,9 @@ class User extends Common {
         if (empty($data['idcardno'])) {
             show_json(0, '身份证号码不能为空');
         }
-        /* if (!checkIdCard($data['idcardno'])) {
-             show_json(0, '请传正确身份证号码');
-         }*/
+        if (!checkIdCard($data['idcardno'])) {
+            show_json(0, '请传正确身份证号码');
+        }
         if (empty($data['company_name'])) {
             show_json(0, '公司名称不能为空');
         }
@@ -289,7 +289,6 @@ class User extends Common {
             show_json(0, '技师证件不能为空');
         }
         $user['status'] = 0;
-        $user['type']   = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->insert($data)) {
             show_json(1, '添加成功');
@@ -346,7 +345,6 @@ class User extends Common {
             }
         }
         $user['status'] = 0;
-        $user['type']   = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->where('id', $id)->update($data)) {
             show_json(1, '添加成功');
