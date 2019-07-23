@@ -188,10 +188,12 @@ class User extends Common {
         if (empty($params['status'])) {
             show_json('请传审核状态');
         }
-        $type1             = $this->where('id', $id)->value('presuppose_type');
-        $data['status']    = intval($params['status']);
+        $type1          = $this->where('id', $id)->value('presuppose_type');
+        $data['status'] = intval($params['status']);
+        if ($data['status'] == 1) {
+            $data['type'] = $type1;
+        }
         $data['remark']    = trim($params['remark']);
-        $data['type']      = $type1;
         $data['checktime'] = time();
         if ($this->save($data, array('id' => $id)) !== false) {
             if ($type1 == 2) {
