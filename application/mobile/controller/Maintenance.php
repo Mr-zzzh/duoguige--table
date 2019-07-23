@@ -70,33 +70,21 @@ class Maintenance extends Common {
      * @title 编辑
      * @url /maintenance/:id
      * @method put
-     * @param name:uid type:int require:1 default:- other:- desc:用户id
      * @param name:brand type:string require:1 default:- other:- desc:电梯品牌
      * @param name:model type:string require:1 default:- other:- desc:型号
      * @param name:floor_number type:int require:1 default:- other:- desc:楼层数
      * @param name:type type:string require:1 default:- other:- desc:维修类型
      * @param name:company type:string require:1 default:- other:- desc:单位名称
      * @param name:address type:string require:1 default:- other:- desc:地址
-     * @param name:status type:int require:1 default:- other:- desc:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
-     * @param name:star type:int require:1 default:- other:- desc:打星
-     * @param name:evaluate type:string require:1 default:- other:- desc:评价
-     * @param name:complain type:string require:1 default:- other:- desc:投诉
-     * @param name:complain_image type:string require:1 default:- other:- desc:投诉照片
-     * @param name:checktime type:int require:1 default:- other:- desc:审核时间
-     * @param name:canceltime type:int require:1 default:- other:- desc:取消时间
-     * @param name:finishtime type:int require:1 default:- other:- desc:完成时间
-     * @param name:evaluate_time type:int require:1 default:- other:- desc:评价时间
-     * @param name:complain_time type:int require:1 default:- other:- desc:投诉时间
-     * @param name:complain_finish_time type:int require:1 default:- other:- desc:投诉完成时间
      * @author 开发者
      */
-    /*public function update(Request $request, $id) {
+    public function update(Request $request, $id) {
         if ($id < 1) {
             show_json(0, '参数ID错误');
         }
         $m = new \app\mobile\model\Maintenance();
         $m->EditOne($request->put(), $id);
-    }*/
+    }
 
     /**
      * @title 修改维保单状态(取消/完成)-物业
