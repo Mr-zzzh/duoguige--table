@@ -349,7 +349,7 @@ class User extends Common {
         $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->where('id', $id)->update($data)) {
-            $iid = db('inform')->where(array('checkid' => $id, 'type' => 2))->value('id');
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 2, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
             if ($iid > 0) {
                 db('inform')->where('id', $iid)->update(array('is_click' => 2));
             }

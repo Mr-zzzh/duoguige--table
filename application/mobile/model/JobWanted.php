@@ -163,7 +163,7 @@ class JobWanted extends Common {
             show_json(0, '详细地址不能为空');
         }
         if ($this->save($data, array('id' => $id)) !== false) {
-            $iid = db('inform')->where(array('checkid' => $id, 'type' => 5))->value('id');
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 5, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
             if ($iid > 0) {
                 db('inform')->where('id', $iid)->update(array('is_click' => 2));
             }
