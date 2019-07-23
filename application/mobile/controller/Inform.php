@@ -82,6 +82,7 @@ class Inform extends Common {
      * @return type:类型_1公司认证_2技师认证_3维保单审核_4招聘审核_5求职审核
      * @return checkid:审核id
      * @return read:0未阅_1已阅
+     * @return is_click:是否可以点击_1点击_2不能
      * @return createtime:创建时间
      * @author 开发者
      */
