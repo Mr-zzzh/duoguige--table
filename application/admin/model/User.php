@@ -32,7 +32,7 @@ class User extends Common {
                 }
                 $item['number'] = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->count('id');
                 $item['money']  = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->sum('money');
-                if ($map['type'] == 3) {
+                if ($map['presuppose_type'] == 3) {
                     $company = db('company')->where('uid', $item['id'])->field('company_name,name,phone')->find();
                     if (!empty($company)) {
                         $item['phone']        = $company['phone'];
