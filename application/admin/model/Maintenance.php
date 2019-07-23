@@ -104,6 +104,10 @@ class Maintenance extends Common {
         if (empty($params['status'])) {
             show_json('请传审核状态');
         }
+        $status = $this->where('id', intval($params['id']))->value('status');
+        if ($status != 0) {
+            show_json(1, '审核成功');
+        }
         $data['status']    = intval($params['status']);
         $data['remark']    = trim($params['remark']);
         $data['checktime'] = time();
