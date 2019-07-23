@@ -574,6 +574,7 @@ CREATE TABLE `yunti_inform` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_inform` add  `checktime` int(11) DEFAULT NULL COMMENT '审核时间';
 
 -- 版本设置表
 DROP TABLE IF EXISTS `yunti_version`;

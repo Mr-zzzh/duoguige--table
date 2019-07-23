@@ -173,7 +173,7 @@ class JobWanted extends Common {
         $item = $this->alias('a')
             ->join('user u', 'a.uid=u.id', 'left')
             ->join('salary s', 'a.salary=s.id', 'left')
-            ->field('a.id,a.post,a.arrival,a.province,a.city,a.area,a.intro,a.education,a.name,a.address,a.createtime,s.name salary_text,u.phone,u.avatar')->where('a.id', $id)->find();
+            ->field('a.id,a.post,a.arrival,a.province,a.city,a.area,a.intro,a.education,a.name,a.address,a.salary,a.createtime,s.name salary_text,u.phone,u.avatar')->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {

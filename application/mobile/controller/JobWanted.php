@@ -102,6 +102,7 @@ class JobWanted extends Common {
      * @return post:求职岗位
      * @return education:最高学历
      * @return name:求职者姓名
+     * @return salary:期望薪资id
      * @return salary_text:期望薪资
      * @return arrival:到岗时间
      * @return province:省编号
