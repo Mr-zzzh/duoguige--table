@@ -112,10 +112,10 @@ class Invite extends Common {
 
     public function EditStatus($params) {
         if (empty($params['id']) || $params['id'] < 1) {
-            show_json('id传输错误');
+            show_json(0, 'id传输错误');
         }
         if (empty($params['status'])) {
-            show_json('请传审核状态');
+            show_json(0, '请传审核状态');
         }
         $status = $this->where('id', intval($params['id']))->value('status');
         if ($status != 0) {
