@@ -28,17 +28,17 @@
       <el-form-item label="自我描述">
         <el-input v-model="info.intro"></el-input>
       </el-form-item>
+   
 
- <el-form-item label="审核状态" v-if="info.status==0">
-        <el-radio v-model="info.status" label="1" @change="btn">通过</el-radio>
-        <el-radio v-model="info.status" label="2" @change="btn">驳回</el-radio>
+      <el-form-item label="审核状态" v-if="info.ststus==0">
+        <el-radio v-model="status"  :label="1" @change="btn">通过</el-radio>
+        <el-radio v-model="status" :label="2" @change="btn">驳回</el-radio>
       </el-form-item>
 
-      <el-form-item label="审核结果"  v-else>
-        <el-radio v-model="info.status" label="1" @change="btn" disabled>通过</el-radio>
-        <el-radio v-model="info.status" label="2" @change="btn" disabled>驳回</el-radio>
+      <el-form-item label="审核结果" v-else>
+        <el-radio v-model="info.status" :label="1" disabled>通过</el-radio>
+        <el-radio v-model="info.status" :label="2" disabled>驳回</el-radio>
       </el-form-item>
-
 
       <el-form-item label="备注">
         <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="remark"></el-input>
@@ -70,7 +70,7 @@ export default {
         type: [],
         resource: "",
         desc: "",
-        status:""
+        status: ""
       },
       id: this.$route.params.id,
       status: "",
@@ -79,12 +79,19 @@ export default {
     };
   },
   methods: {
+    resetForm() {-
+      this.$router.push({
+        name: "admin_jobs"
+      });
+    },
     // 获取详情的请求
     get() {
       getJobsinfo(this.$route.params.id).then(res => {
         console.log(res);
         this.info = res;
-          this.info.status = res.status.toString();
+        console.log(res.status);
+        // this.info.status = res.status.toString();
+        console.log(this.info.status);
         this.status = res.status;
         if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "通过";
@@ -111,10 +118,10 @@ export default {
     // 当选中的时候的,通过的值是1，驳回的值是2
     btn(val) {
       console.log(val);
-      if (val == "1") {
-        this.status = val = 1;
+      if (val == 1) {
+      this.status = val = 1;
       } else {
-        this.status = 2;
+     this.status = 2;
       }
     },
     // 点击提交按钮时触发-----调用审核的请求，并跳转到物业公司列表页

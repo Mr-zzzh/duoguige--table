@@ -25,16 +25,14 @@
         <el-input v-model="info.address"></el-input>
       </el-form-item>
 
-
-      <el-form-item label="审核状态"  v-if="info.status==0">
-        <el-radio v-model="info.status" label="1" @change="btn">通过</el-radio>
-        <el-radio v-model="info.status" label="2" @change="btn">驳回</el-radio>
+      <el-form-item label="审核状态" v-if="info.status==0">
+        <el-radio v-model="status" :label="1" @change="btn">通过</el-radio>
+        <el-radio v-model="status" :label="2" @change="btn">驳回</el-radio>
       </el-form-item>
 
-
-  <el-form-item label="审核状态" v-else>
-        <el-radio v-model="info.status" label="1" @change="btn" disabled>通过</el-radio>
-        <el-radio v-model="info.status" label="2" @change="btn" disabled>驳回</el-radio>
+      <el-form-item label="审核状态" v-else>
+        <el-radio v-model="info.status" :label="1" disabled>通过</el-radio>
+        <el-radio v-model="info.status" :label="2" disabled>驳回</el-radio>
       </el-form-item>
 
       <el-form-item label="备注">
@@ -79,6 +77,11 @@ export default {
     };
   },
   methods: {
+    resetForm() {
+      this.$router.push({
+        name: "admin_maintenance"
+      });
+    },
     // 审核的接口
     async editstatus() {
       let data = await editstatus({
@@ -94,8 +97,7 @@ export default {
       getinfo(this.$route.params.id).then(res => {
         console.log(res);
         this.info = res;
-         this.info.status = res.status.toString();
-        this.status=res.status
+        this.status = res.status;
         if (res.status == 1) {
           this.info.status == 1 && this.info.status_text == "审核通过";
         } else if (res.status == 0) {
@@ -117,11 +119,10 @@ export default {
     },
     // 当选中的时候的,通过的值是1，驳回的值是2
     btn(val) {
-      console.log(val);
-      if (val == "1") {
+      if (val == 1) {
         this.status = val = 1;
       } else {
-        this.status = 2;
+        this.status  = 2;
       }
     },
     // 点击提交按钮时触发-----调用审核的请求，并跳转到物业公司列表页
