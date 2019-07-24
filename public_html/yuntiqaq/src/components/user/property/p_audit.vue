@@ -86,6 +86,7 @@ export default {
      fangda1() {
       this.isChoose1 = !this.isChoose1;
     },
+    resetForm() {},
     // 这是获取用户列表的请求
     get() {
       getUserInfo(this.id).then(res => {
