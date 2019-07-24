@@ -314,7 +314,6 @@ class User extends Common {
             'company_image'    => trim($params['company_image']),
             'prove_image'      => trim($params['prove_image']),
             'technician_image' => trim($params['technician_image']),
-            'dimission'        => trim($params['dimission']),
         );
         if (empty($data['name'])) {
             show_json(0, '姓名不能为空');
@@ -339,11 +338,6 @@ class User extends Common {
         }
         if (empty($data['technician_image'])) {
             show_json(0, '技师证件不能为空');
-        }
-        if ($data['company_name'] != $company_name) {
-            if (empty($data['dimission'])) {
-                show_json(0, '离职证明不能为空');
-            }
         }
         $user['status']          = 0;
         $user['presuppose_type'] = 2;

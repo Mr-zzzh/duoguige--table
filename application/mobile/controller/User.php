@@ -133,7 +133,6 @@ class User extends Common {
      * @param name:company_image type:string require:1 default:- other:- desc:公司营业执照照片
      * @param name:prove_image type:string require:1 default:- other:- desc:在职证明图片
      * @param name:technician_image type:string require:1 default:- other:- desc:技师证件
-     * @param name:dimission type:string require:1 default:- other:- desc:离职证明图
      * @author 开发者
      */
     public function technician_edit() {
@@ -146,7 +145,7 @@ class User extends Common {
      * @url /user/approve_detail
      * @method get
      * @return check:认证信息数组@
-     * @check id:id uid:用户id name:真实姓名 sex:性别1男2女 idcardno:身份证号码 company_name:公司名称 license_number:公司营业执照号码 company_image:公司营业执照照片 prove_image:在职证明图片 technician_image:技师证件 dimission:离职证明图 createtime:创建时间
+     * @check id:id uid:用户id name:真实姓名 sex:性别1男2女 idcardno:身份证号码 company_name:公司名称 license_number:公司营业执照号码 company_image:公司营业执照照片 prove_image:在职证明图片 technician_image:技师证件 createtime:创建时间
      * @author 开发者
      */
     public function approve_detail() {
