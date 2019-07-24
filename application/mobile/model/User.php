@@ -303,9 +303,8 @@ class User extends Common {
         if ($params['id'] < 1) {
             show_json(0, '参数ID错误');
         }
-        $id           = intval($params['id']);
-        $company_name = db('technician')->where('id', $id)->value('company_name');
-        $data         = array(
+        $id   = intval($params['id']);
+        $data = array(
             'name'             => trim($params['name']),
             'sex'              => intval($params['sex']),
             'idcardno'         => trim($params['idcardno']),
