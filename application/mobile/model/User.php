@@ -361,13 +361,7 @@ class User extends Common {
 
     public function ApproveDetail() {
         global $member;
-        if ($member['type'] == 2) {
-            $item = db('technician')->where('uid', $member['id'])->find();
-        } elseif ($member['type'] == 3) {
-            $item = db('company')->where('uid', $member['id'])->find();
-        } else {
-            show_json(0, '无查看认证信息权限');
-        }
+        $item = db('technician')->where('uid', $member['id'])->find();
         if (empty($item)) {
             show_json(1);
         } else {
