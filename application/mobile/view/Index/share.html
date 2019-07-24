@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>云梯</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="__ROOT__/assets/js/jquery.min.js"></script>
+    <style>
+        body, html {
+            font-size: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            outline: none;
+            color: #999;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+            -webkit-user-select: none;
+            -moz-user-focus: none;
+            -moz-user-select: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .all {
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+            position: relative;
+        }
+
+        .all-two > img {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .go1 {
+            position: absolute;
+            /* top: 28rem;
+             left: 2rem;*/
+            top: 33%;
+            left: 10%;
+            border-radius: 2rem;
+            text-align: center;
+            line-height: 2rem;
+            /*width: 7rem;*/
+            width: 36%;
+            height: 2rem;
+            background: linear-gradient(90deg, rgba(55, 210, 255, 1), rgba(42, 139, 252, 1));
+            box-shadow: -1px 12px 13px 0px rgba(42, 139, 252, 0.34);
+        }
+
+        .go1 a {
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .go2 {
+            position: absolute;
+            /*top: 28rem;
+            right: 2rem;*/
+            top: 33%;
+            right: 10%;
+            border-radius: 2rem;
+            text-align: center;
+            line-height: 2rem;
+            /*width: 7rem;*/
+            width: 36%;
+            height: 2rem;
+            background: linear-gradient(90deg, rgba(55, 210, 255, 1), rgba(42, 139, 252, 1));
+            box-shadow: -1px 12px 13px 0px rgba(42, 139, 252, 0.34);
+        }
+
+        .go2 a {
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .go3 {
+            position: absolute;
+            /*bottom: 3rem;
+            left: 2rem;*/
+            bottom: 3%;
+            left: 10%;
+            border-radius: 2rem;
+            text-align: center;
+            line-height: 2rem;
+            /*width: 7rem;*/
+            width: 36%;
+            height: 2rem;
+            background: linear-gradient(90deg, rgba(184, 220, 252, 1), rgba(255, 255, 255, 1));
+            box-shadow: -1px 13px 20px 1px rgba(4, 98, 219, 0.34);
+            border-radius: 40px;
+        }
+
+        .go3 a {
+            width: 100%;
+            height: 100%;
+            color: #3C8AF7;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .go4 {
+            position: absolute;
+            /*bottom: 3rem;
+            right: 2rem;*/
+            bottom: 3%;
+            right: 10%;
+            border-radius: 2rem;
+            text-align: center;
+            line-height: 2rem;
+            /*width: 7rem;*/
+            width: 36%;
+            height: 2rem;
+            background: linear-gradient(90deg, rgba(184, 220, 252, 1), rgba(255, 255, 255, 1));
+            box-shadow: -1px 13px 20px 1px rgba(4, 98, 219, 0.34);
+        }
+
+        .go4 a {
+            width: 100%;
+            height: 100%;
+            color: #3C8AF7;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body class="all">
+<div class="all-two">
+    <img src="__ROOT__/assets/img/qaq.jpg" alt="">
+
+    <span class="go1">
+			<a href="{$list['ios_url']}">
+				ios下载
+			</a>
+		</span>
+
+
+    <span class="go2">
+			<a href="{$list['android_url']}">
+				Andriod下载
+			</a>
+		</span>
+
+    <span class="go3">
+			<a href="{$list['ios_url']}">
+				ios下载
+			</a>
+		</span>
+
+    <span class="go4">
+			<a href="{$list['android_url']}">
+				Andriod下载
+			</a>
+		</span>
+
+</div>
+</body>
+</html>

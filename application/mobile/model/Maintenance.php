@@ -117,26 +117,49 @@ class Maintenance extends Common {
 
     public function EditOne($params, $id) {
         $data = array(
-            'uid'                  => intval($params['uid']),
-            'brand'                => trim($params['brand']),
-            'model'                => trim($params['model']),
-            'floor_number'         => intval($params['floor_number']),
-            'type'                 => trim($params['type']),
-            'company'              => trim($params['company']),
-            'address'              => trim($params['address']),
-            'status'               => intval($params['status']),
-            'star'                 => intval($params['star']),
-            'evaluate'             => trim($params['evaluate']),
-            'complain'             => trim($params['complain']),
-            'complain_image'       => trim($params['complain_image']),
-            'checktime'            => intval($params['checktime']),
-            'canceltime'           => intval($params['canceltime']),
-            'finishtime'           => intval($params['finishtime']),
-            'evaluate_time'        => intval($params['evaluate_time']),
-            'complain_time'        => intval($params['complain_time']),
-            'complain_finish_time' => intval($params['complain_finish_time']),
+            'brand'        => trim($params['brand']),
+            'model'        => trim($params['model']),
+            'floor_number' => intval($params['floor_number']),
+            'type'         => trim($params['type']),
+            'company'      => trim($params['company']),
+            'province'     => intval($params['province']),
+            'city'         => intval($params['city']),
+            'area'         => intval($params['area']),
+            'address'      => trim($params['address']),
+            'status'       => 0,
         );
+        if (empty($data['brand'])) {
+            show_json(0, '电梯品牌不能为空');
+        }
+        if (empty($data['model'])) {
+            show_json(0, '电梯型号不能为空');
+        }
+        if (empty($data['floor_number'])) {
+            show_json(0, '楼层数不能为空');
+        }
+        if (empty($data['type'])) {
+            show_json(0, '维修类型不能为空');
+        }
+        if (empty($data['company'])) {
+            show_json(0, '单位名称不能为空');
+        }
+        if (empty($data['province'])) {
+            show_json(0, '省不能为空');
+        }
+        if (empty($data['city'])) {
+            show_json(0, '市不能为空');
+        }
+        if (empty($data['area'])) {
+            show_json(0, '区不能为空');
+        }
+        if (empty($data['address'])) {
+            show_json(0, '详细地址不能为空');
+        }
         if ($this->save($data, array('id' => $id)) !== false) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 3, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -186,16 +209,18 @@ class Maintenance extends Common {
             ->join('company c', 'a.uid=c.uid', 'left')
             ->join('user u2', 'a.receive_id=u2.id', 'left')
             ->join('technician t', 'a.receive_id=t.uid', 'left')
-            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
+            ->field('a.id,a.brand,a.model,a.floor_number,a.type,a.company,a.province,a.city,a.area,a.address,a.status,a.receive_id,a.receive_time,u1.name,u1.avatar,c.company_name,u2.phone receive_phone,u2.avatar receive_avatar,t.name receive_name,t.company_name receive_company')
             ->where('a.id', $id)
             ->find();
         if (empty($item)) {
             show_json(1);
         } else {
-            $item            = $item->toArray();
-            $item['address'] = city_name($item['city']) . city_name($item['area']) . $item['address'];
-            $item['image']   = request()->domain() . '/uploads/maintenance.jpg';
-            $plan            = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
+            $item             = $item->toArray();
+            $item['location'] = city_name($item['province']) . city_name($item['city']) . city_name($item['area']);
+            $item['detail']   = $item['address'];
+            $item['address']  = city_name($item['city']) . city_name($item['area']) . $item['address'];
+            $item['image']    = request()->domain() . '/uploads/maintenance.jpg';
+            $plan             = db('plan')->where('mid', $id)->field('plan,createtime')->order('createtime desc')->select();
             if (!empty($item['receive_time'])) {
                 array_push($plan, array('plan' => '已接单', 'createtime' => $item['receive_time']));
                 foreach ($plan as &$v) {

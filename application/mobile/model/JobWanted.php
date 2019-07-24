@@ -163,6 +163,10 @@ class JobWanted extends Common {
             show_json(0, '详细地址不能为空');
         }
         if ($this->save($data, array('id' => $id)) !== false) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 5, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -173,7 +177,7 @@ class JobWanted extends Common {
         $item = $this->alias('a')
             ->join('user u', 'a.uid=u.id', 'left')
             ->join('salary s', 'a.salary=s.id', 'left')
-            ->field('a.id,a.post,a.arrival,a.province,a.city,a.area,a.intro,a.education,a.name,a.address,a.createtime,s.name salary_text,u.phone,u.avatar')->where('a.id', $id)->find();
+            ->field('a.id,a.post,a.arrival,a.province,a.city,a.area,a.intro,a.education,a.name,a.address,a.salary,a.createtime,s.name salary_text,u.phone,u.avatar')->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);
         } else {

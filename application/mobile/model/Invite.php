@@ -207,6 +207,10 @@ class Invite extends Common {
             show_json(0, '招聘人数不能为空');
         }
         if ($this->save($data, array('id' => $id)) !== false) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 4, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');
@@ -217,7 +221,7 @@ class Invite extends Common {
         $item = $this->alias('a')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->join('experience e', 'a.experience=e.id', 'left')
-            ->field('a.id,a.post,a.education,a.province,a.city,a.area,description,a.duty,a.name,a.phone,a.address,a.number,a.createtime,s.name salary_text,e.name experience_text')
+            ->field('a.id,a.post,a.education,a.province,a.salary,a.experience,a.city,a.area,description,a.duty,a.name,a.phone,a.address,a.number,a.createtime,s.name salary_text,e.name experience_text')
             ->where('a.id', $id)->find();
         if (empty($item)) {
             show_json(1);

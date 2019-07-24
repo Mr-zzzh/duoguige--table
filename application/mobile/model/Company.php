@@ -48,8 +48,8 @@ class Company extends Common {
         if (empty($data['image'])) {
             show_json(0, '营业执照不能为空');
         }
-        $user['status'] = 0;
-        $user['type']   = 3;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 3;
         db('user')->where('id', $member['id'])->update($user);
         if ($this->data($data, true)->isUpdate(false)->save()) {
             show_json(1, '添加成功');
@@ -96,10 +96,14 @@ class Company extends Common {
         if (empty($data['image'])) {
             show_json(0, '营业执照不能为空');
         }
-        $user['status'] = 0;
-        $user['type']   = 3;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 3;
         db('user')->where('id', $member['id'])->update($user);
         if ($this->save($data, array('id' => $id)) !== false) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 1, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '编辑成功');
         } else {
             show_json(0, '编辑失败');

@@ -13,7 +13,7 @@ class User extends Common {
             $map['status'] = intval($params['status']);
         }
         if (isset($params['type']) && $params['type'] !== '') {
-            $map['type'] = intval($params['type']);
+            $map['presuppose_type'] = intval($params['type']);
         }
         if (!empty($params['keyword'])) {
             $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
@@ -32,7 +32,7 @@ class User extends Common {
                 }
                 $item['number'] = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->count('id');
                 $item['money']  = db('goods_order')->where(array('uid' => $item['id'], 'status' => array('>=', 1)))->sum('money');
-                if ($map['type'] == 3) {
+                if ($map['presuppose_type'] == 3) {
                     $company = db('company')->where('uid', $item['id'])->field('company_name,name,phone')->find();
                     if (!empty($company)) {
                         $item['phone']        = $company['phone'];
@@ -47,10 +47,10 @@ class User extends Common {
     }
 
     public function Technician($params) {
-        $map             = array();
-        $map['u.status'] = 1;
-        $map['u.type']   = 2;
-        $map['u.normal'] = 1;
+        $map                      = array();
+        $map['u.status']          = 1;
+        $map['u.presuppose_type'] = 2;
+        $map['u.normal']          = 1;
         if (!empty($params['keyword'])) {
             $map['u.name|u.phone|u.intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
@@ -165,9 +165,9 @@ class User extends Common {
             unset($item['password']);
             unset($item['salt']);
             unset($item['token']);
-            if ($item['type'] == 2) {
+            if ($item['presuppose_type'] == 2) {
                 $check = db('technician')->where('uid', $item['id'])->find();
-            } elseif ($item['type'] == 3) {
+            } elseif ($item['presuppose_type'] == 3) {
                 $check = db('company')->where('uid', $item['id'])->find();
             } else {
                 $check = array();
@@ -188,11 +188,18 @@ class User extends Common {
         if (empty($params['status'])) {
             show_json('请传审核状态');
         }
-        $data['status']    = intval($params['status']);
+        $aa = $this->where('id', $id)->field('status,presuppose_type')->find();
+        if ($aa['status'] != 0) {
+            show_json(1, '审核成功');
+        }
+        $type1          = $aa['presuppose_type'];
+        $data['status'] = intval($params['status']);
+        if ($data['status'] == 1) {
+            $data['type'] = $type1;
+        }
         $data['remark']    = trim($params['remark']);
         $data['checktime'] = time();
         if ($this->save($data, array('id' => $id)) !== false) {
-            $type1 = $this->where('id', $id)->value('type');
             if ($type1 == 2) {
                 $type    = 2;
                 $checkid = db('technician')->where('uid', $id)->value('id');

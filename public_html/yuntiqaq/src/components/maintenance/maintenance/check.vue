@@ -32,7 +32,7 @@
       </el-form-item>
 
 
-  <el-form-item label="审核状态">
+  <el-form-item label="审核状态" v-else>
         <el-radio v-model="info.status" label="1" @change="btn" disabled>通过</el-radio>
         <el-radio v-model="info.status" label="2" @change="btn" disabled>驳回</el-radio>
       </el-form-item>

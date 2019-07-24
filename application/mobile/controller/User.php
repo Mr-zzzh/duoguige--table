@@ -133,7 +133,6 @@ class User extends Common {
      * @param name:company_image type:string require:1 default:- other:- desc:公司营业执照照片
      * @param name:prove_image type:string require:1 default:- other:- desc:在职证明图片
      * @param name:technician_image type:string require:1 default:- other:- desc:技师证件
-     * @param name:dimission type:string require:1 default:- other:- desc:离职证明图
      * @author 开发者
      */
     public function technician_edit() {
@@ -142,14 +141,11 @@ class User extends Common {
     }
 
     /**
-     * @title 认证信息读取
+     * @title 技术大师认证信息读取
      * @url /user/approve_detail
      * @method get
-     * @return check:认证信息数组(check1或者check2)
-     * @return check1:认证信息@(技术大师)
-     * @return check2:认证信息@(物业公司)
-     * @check1 id:id uid:用户id name:真实姓名 sex:性别1男2女 idcardno:身份证号码 company_name:公司名称 license_number:公司营业执照号码 company_image:公司营业执照照片 prove_image:在职证明图片 technician_image:技师证件 dimission:离职证明图 createtime:创建时间
-     * @check2 id:id uid:用户id company_name:公司名称 phone:联系电话 name:法人姓名 area:公司地址省市区 address:公司详细地址 number:电梯数量 brand:电梯品牌 image:营业执照 createtime:创建时间
+     * @return check:认证信息数组@
+     * @check id:id uid:用户id name:真实姓名 sex:性别1男2女 idcardno:身份证号码 company_name:公司名称 license_number:公司营业执照号码 company_image:公司营业执照照片 prove_image:在职证明图片 technician_image:技师证件 createtime:创建时间
      * @author 开发者
      */
     public function approve_detail() {

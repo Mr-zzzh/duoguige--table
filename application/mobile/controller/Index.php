@@ -4,6 +4,7 @@ namespace app\mobile\controller;
 
 use http\Client;
 use think\Cache;
+use think\cache\driver\Redis;
 
 /**
  * @title 首页及登录
@@ -292,8 +293,15 @@ class Index extends Common {
      * @author 开发者
      */
     public function share() {
-        $list = db('share')->order('createtime desc')->limit(1)->find();
+        $list               = db('share')->order('createtime desc')->limit(1)->find();
+        $list['share_link'] = request()->domain() . '/mobile/share';
         show_json(1, array('data' => $list));
+    }
+
+    public function mobile_share() {
+        $list = db('version')->order('createtime desc')->limit(1)->find();
+        $this->assign('list', $list);
+        return $this->fetch('Index/share');
     }
 
     /**

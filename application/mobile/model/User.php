@@ -270,9 +270,9 @@ class User extends Common {
         if (empty($data['idcardno'])) {
             show_json(0, '身份证号码不能为空');
         }
-        /* if (!checkIdCard($data['idcardno'])) {
-             show_json(0, '请传正确身份证号码');
-         }*/
+        if (!checkIdCard($data['idcardno'])) {
+            show_json(0, '请传正确身份证号码');
+        }
         if (empty($data['company_name'])) {
             show_json(0, '公司名称不能为空');
         }
@@ -288,8 +288,8 @@ class User extends Common {
         if (empty($data['technician_image'])) {
             show_json(0, '技师证件不能为空');
         }
-        $user['status'] = 0;
-        $user['type']   = 2;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->insert($data)) {
             show_json(1, '添加成功');
@@ -314,7 +314,6 @@ class User extends Common {
             'company_image'    => trim($params['company_image']),
             'prove_image'      => trim($params['prove_image']),
             'technician_image' => trim($params['technician_image']),
-            'dimission'        => trim($params['dimission']),
         );
         if (empty($data['name'])) {
             show_json(0, '姓名不能为空');
@@ -340,15 +339,14 @@ class User extends Common {
         if (empty($data['technician_image'])) {
             show_json(0, '技师证件不能为空');
         }
-        if ($data['company_name'] != $company_name) {
-            if (empty($data['dimission'])) {
-                show_json(0, '离职证明不能为空');
-            }
-        }
-        $user['status'] = 0;
-        $user['type']   = 2;
+        $user['status']          = 0;
+        $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
         if (db('technician')->where('id', $id)->update($data)) {
+            $iid = db('inform')->where(array('checkid' => $id, 'type' => 2, 'is_click' => 1))->order('createtime desc')->limit(1)->value('id');
+            if ($iid > 0) {
+                db('inform')->where('id', $iid)->update(array('is_click' => 2));
+            }
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
@@ -357,13 +355,7 @@ class User extends Common {
 
     public function ApproveDetail() {
         global $member;
-        if ($member['type'] == 2) {
-            $item = db('technician')->where('uid', $member['id'])->find();
-        } elseif ($member['type'] == 3) {
-            $item = db('company')->where('uid', $member['id'])->find();
-        } else {
-            show_json(0, '无查看认证信息权限');
-        }
+        $item = db('technician')->where('uid', $member['id'])->find();
         if (empty($item)) {
             show_json(1);
         } else {
