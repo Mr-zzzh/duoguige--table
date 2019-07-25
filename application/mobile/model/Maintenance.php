@@ -538,7 +538,7 @@ class Maintenance extends Common {
             show_json(0, '请勿频繁操作');
         }
         $data = array(
-            'mid'  => trim($params['id']),
+            'mid'  => intval($params['id']),
             'plan' => trim($params['plan']),
         );
         if (empty($data['mid'])) {
@@ -548,7 +548,7 @@ class Maintenance extends Common {
             show_json(0, '请传维保单进度');
         }
         if (strpos($data['plan'], '完成') !== false) {
-            $data['complete_time'] = time();
+            $this->where('id', $data['mid'])->update(array('complete_time' => time()));
         }
         if (db('plan')->where($data)->value('id')) {
             show_json(1, '操作成功');
