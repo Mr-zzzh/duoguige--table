@@ -9,9 +9,9 @@ class Company extends Common {
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
-        if ($this->where('uid', $member['id'])->value('id')) {
-            show_json(0, '资料已提交,请不要重复提交');
-        }
+        /* if ($this->where('uid', $member['id'])->value('id')) {
+             show_json(0, '资料已提交,请不要重复提交');
+         }*/
         $data = array(
             'uid'          => $member['id'],
             'company_name' => trim($params['company_name']),
@@ -51,7 +51,13 @@ class Company extends Common {
         $user['status']          = 0;
         $user['presuppose_type'] = 3;
         db('user')->where('id', $member['id'])->update($user);
+        if ($this->where('uid', $member['id'])->select()) {
+            $this->where('uid', $member['id'])->delete();
+        }
         if ($this->data($data, true)->isUpdate(false)->save()) {
+            if (db('inform')->where(array('uid' => $member['id'], 'type' => 1))->select()) {
+                db('inform')->where(array('uid' => $member['id'], 'type' => 1))->delete();
+            }
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');

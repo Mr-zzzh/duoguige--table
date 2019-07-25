@@ -246,9 +246,9 @@ class User extends Common {
         if (check_often(request()->controller() . '_' . request()->action() . '_' . $member['id'])) {
             show_json(0, '请勿频繁操作');
         }
-        if (db('technician')->where('uid', $member['id'])->value('id')) {
+        /*if (db('technician')->where('uid', $member['id'])->value('id')) {
             show_json(0, '资料已提交,请不要重复提交');
-        }
+        }*/
         $data = array(
             'uid'              => $member['id'],
             'name'             => trim($params['name']),
@@ -291,7 +291,13 @@ class User extends Common {
         $user['status']          = 0;
         $user['presuppose_type'] = 2;
         $this->where('id', $member['id'])->update($user);
+        if (db('technician')->where('uid', $member['id'])->select()) {
+            db('technician')->where('uid', $member['id'])->delete();
+        }
         if (db('technician')->insert($data)) {
+            if (db('inform')->where(array('uid' => $member['id'], 'type' => 2))->select()) {
+                db('inform')->where(array('uid' => $member['id'], 'type' => 2))->delete();
+            }
             show_json(1, '添加成功');
         } else {
             show_json(0, '添加失败');
