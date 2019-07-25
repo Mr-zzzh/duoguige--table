@@ -47,10 +47,10 @@ class User extends Common {
     }
 
     public function Technician($params) {
-        $map                      = array();
-        $map['u.status']          = 1;
-        $map['u.presuppose_type'] = 2;
-        $map['u.normal']          = 1;
+        $map             = array();
+        $map['u.status'] = 1;
+        $map['u.type']   = 2;
+        $map['u.normal'] = 1;
         if (!empty($params['keyword'])) {
             $map['u.name|u.phone|u.intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
