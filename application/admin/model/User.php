@@ -87,8 +87,6 @@ class User extends Common {
                     }
                 }
                 unset($v2);
-                $v1['a'] = $a;
-                $v1['b'] = $b;
                 if ($a >= $b) {
                     $v1['grade'] = $grade['content'][$a]['name'];
                 } else {
