@@ -80,19 +80,19 @@ class User extends Common {
                 $b = 0;
                 foreach ($grade['content'] as $key2 => &$v2) {
                     if ($v1['score'] >= $v2['min_score'] && $v1['score'] < $v2['max_score']) {
-                        $a1 = $v2['name'];
-                        $a  = $key2;
+                        $a = $key2;
                     }
                     if ($v1['number'] >= $v2['min_number'] && $v1['number'] < $v2['max_number']) {
-                        $b1 = $v2['name'];
-                        $b  = $key2;
+                        $b = $key2;
                     }
                 }
                 unset($v2);
-                if ($a > $b) {
-                    $v1['grade'] = $a1;
+                $v1['a'] = $a;
+                $v1['b'] = $b;
+                if ($a >= $b) {
+                    $v1['grade'] = $grade['content'][$a]['name'];
                 } else {
-                    $v1['grade'] = $b1;
+                    $v1['grade'] = $grade['content'][$b]['name'];
                 }
             }
             unset($v1);
