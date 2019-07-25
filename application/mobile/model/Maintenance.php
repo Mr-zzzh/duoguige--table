@@ -316,9 +316,6 @@ class Maintenance extends Common {
 
     public function AllEvaluate($params) {
         global $member;
-        if ($member['type'] != 3 || $member['status'] != 1) {
-            show_json(0, '此账号无查看权限');
-        }
         $id = intval($params['id']);
         if (empty($id)) {
             $id = $member['id'];
