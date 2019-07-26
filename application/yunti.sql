@@ -415,7 +415,7 @@ CREATE TABLE `yunti_goods_order` (
   `money` decimal(10,2) DEFAULT NULL COMMENT '商品金额',
   `status` int(2) DEFAULT NULL COMMENT '-1取消订单 0待支付 1支付 2已发货 3已收货',
   `paytype` int(2) DEFAULT NULL COMMENT '1支付宝 2微信',
-  `tradeno` int(11) DEFAULT NULL COMMENT '交易单号',
+  `tradeno` varchar(50) DEFAULT NULL COMMENT '交易单号',
   `addressid` int(11) DEFAULT NULL COMMENT '地址id',
   `paytime` int(11) DEFAULT NULL COMMENT '支付时间',
   `finishtime` int(11) DEFAULT NULL COMMENT '完成时间',
