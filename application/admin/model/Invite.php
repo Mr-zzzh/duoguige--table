@@ -35,7 +35,7 @@ class Invite extends Common {
             ->join('salary s', 'a.salary=s.id', 'left')
             ->join('experience e', 'a.experience=e.id', 'left')
             ->field('a.*,u.company_name uname,s.name sname,e.name ename')
-            ->where($map)->paginate($params['limit'])->toArray();
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '招聘结束');
             foreach ($list['data'] as $k => &$item) {
