@@ -11,6 +11,8 @@ class GoodsOrder extends Common {
         }
         if (isset($params['status']) && $params['status'] !== '') {
             $map['a.status'] = intval($params['status']);
+        } else {
+            $map['a.status'] = array('>=', 1);
         }
         if (!empty($params['paytype'])) {
             $map['a.paytype'] = intval($params['paytype']);
@@ -18,8 +20,7 @@ class GoodsOrder extends Common {
         if (!empty($params['keyword'])) {
             $map['a.ordersn'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $map['a.status'] = array('>=', 1);
-        $list            = $this->alias('a')
+        $list = $this->alias('a')
             ->join('user u', 'a.uid = u.id', 'left')
             ->join('goods g', 'a.gid = g.id', 'left')
             ->join('delivery_address d', 'a.addressid = d.id', 'left')
