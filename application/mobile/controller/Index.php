@@ -89,7 +89,7 @@ class Index extends Common {
         if (!empty($banner)) {
             foreach ($banner as &$v) {
                 if (!empty($v['jumpurl'])) {
-                    if (strpos($v['jumpurl'], 'http') == false) {
+                    if (strpos($v['jumpurl'], 'http:') === false) {
                         $v['jumpurl'] = 'http://' . $v['jumpurl'];
                     }
                 }
@@ -115,7 +115,7 @@ class Index extends Common {
         if (!empty($banner)) {
             foreach ($banner as &$v) {
                 if (!empty($v['jumpurl'])) {
-                    if (strpos($v['jumpurl'], 'http') == false) {
+                    if (strpos($v['jumpurl'], 'http') === false) {
                         $v['jumpurl'] = 'http://' . $v['jumpurl'];
                     }
                 }
