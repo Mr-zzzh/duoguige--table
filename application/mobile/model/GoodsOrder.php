@@ -41,6 +41,12 @@ class GoodsOrder extends Common {
             $data['oid']        = $id;
             $data['status']     = 0;
             $data['createtime'] = time();
+            $lasttime           = db('remind')->where('oid', $id)->order('createtime desc')->limit(1)->value('createtime');
+            if (!empty($lasttime)) {
+                if ($lasttime + 3600 > time()) {
+                    show_json(0, '已提醒过,请稍后在提醒');
+                }
+            }
             if (db('remind')->insert($data)) {
                 show_json(1, '操作成功');
             } else {
