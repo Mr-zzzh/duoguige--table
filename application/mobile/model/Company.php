@@ -30,6 +30,9 @@ class Company extends Common {
         if (empty($data['phone'])) {
             show_json(0, '联系电话不能为空');
         }
+        if (!is_mobilenumber($data['phone'])) {
+            show_json(0, '请填写正确手机号');
+        }
         if (empty($data['name'])) {
             show_json(0, '公司法人姓名不能为空');
         }
