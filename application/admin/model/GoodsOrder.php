@@ -56,8 +56,9 @@ class GoodsOrder extends Common {
         if (empty($params['id']) || $params['id'] < 1) {
             show_json('id传输错误');
         }
-        $data['status']      = 2;
+        $data['status']      = 3;
         $data['delivertime'] = time();
+        $data['finishtime']  = time();
         if ($this->save($data, array('id' => intval($params['id']))) != false) {
             //logs('编辑 ??,ID:' . $id, 3);
             show_json(1, '发货成功');
