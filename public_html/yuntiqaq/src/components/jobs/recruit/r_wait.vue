@@ -33,7 +33,7 @@
         <el-input v-model="info.duty"></el-input>
       </el-form-item>
 
-      <el-form-item label="审核状态" v-if="info.ststus==0">
+      <el-form-item label="审核状态" v-if="info.status==0">
         <el-radio v-model="status" :label="1" @change="btn">通过</el-radio>
         <el-radio v-model="status" :label="2" @change="btn">驳回</el-radio>
       </el-form-item>
