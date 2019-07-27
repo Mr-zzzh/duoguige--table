@@ -210,14 +210,7 @@ export default {
 .user {
   background-color: #fff;
   padding: 8px;
-   width: 100%;
-  height: 100%;
-  position: relative;
 }
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
-}
+
 </style>
 

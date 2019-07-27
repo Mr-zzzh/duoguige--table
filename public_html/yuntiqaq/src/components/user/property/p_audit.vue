@@ -145,7 +145,6 @@ export default {
     padding-top: 30px;
     background-color: rgba(255, 255, 255, 1);
     padding: 40px;
-    height: 94%;
   }
 }
 .bb {

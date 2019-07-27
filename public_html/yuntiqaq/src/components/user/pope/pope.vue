@@ -216,19 +216,12 @@ export default {
 .user {
   padding: 8px;
   background-color: #fff;
-   width: 100%;
-  height: 100%;
-  position: relative;
 }
 
 .el-button--primary.is-plain {
   background-color: #409eff;
   color: #fff;
 }
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
-}
+
 </style>
 

@@ -14,7 +14,7 @@
                          </div>
                          <div>
                            <!--<el-input v-model="username" placeholder="请输入账号"></el-input>-->
-                           <input @keyup.enter="dl()" @input="iction()" type="text" v-model="username" placeholder="请输入账号">
+                           <input @keyup.enter="dl()" @input="iction()" type="text" v-model="username" placeholder="请输入用户名">
                          </div>
                          <div class="yanjin">
 

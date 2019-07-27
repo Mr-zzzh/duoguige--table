@@ -144,7 +144,6 @@ export default {
 .form {
   padding: 8px;
   background-color: #fff;
-  height: 100%;
 }
 .el-form {
   background-color: #fff;

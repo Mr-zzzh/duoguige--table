@@ -45,7 +45,7 @@
         <el-table-column label="姓名" width="180" prop="name"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>
         <el-table-column label="类型" prop="type_text"></el-table-column>
-        <el-table-column label="注册时间" prop="createtime"></el-table-column>
+        <el-table-column label="注册时间" prop="createtime" show-overflow-tooltip></el-table-column>
         <el-table-column label="成交" prop="createtime">
           <template slot-scope="scope">
             <span>订单:{{ scope.row.number}}</span>
@@ -255,9 +255,6 @@ export default {
 .user {
   padding: 8px;
   background-color: #fff;
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
 .serch {
   height: 60px;
@@ -271,11 +268,6 @@ export default {
 }
 .el-table__row .el-table td {
   padding: 8px;
-}
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
 }
 </style>
 

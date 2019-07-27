@@ -72,7 +72,7 @@
     <!-- 分页 -->
     <div class="fenye">
       <el-pagination
-        style="margin-top:20px"
+        style="margin-top:10px"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -115,12 +115,36 @@ export default {
       genre_text: "",
       options1: [
         {
+          status: -1,
+          status_text: "取消"
+        },
+        {
+          status: 0,
+          status_text: "待审"
+        },
+         {
           status: 1,
           status_text: "审核通过"
         },
-        {
+         {
           status: 2,
           status_text: "审核不通过"
+        },
+        {
+          status: 3,
+          status_text: "已接单"
+        },
+         {
+          status: 4,
+          status_text: "已完成"
+        },
+         {
+          status: 5,
+          status_text: "投诉"
+        },
+         {
+          status: 6,
+          status_text: "投诉已处理"
         }
       ]
     };
@@ -208,14 +232,7 @@ export default {
 .user {
   background-color: #fff;
   padding: 15px;
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
 
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
-}
+
 </style>
