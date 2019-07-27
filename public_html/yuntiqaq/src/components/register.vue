@@ -10,7 +10,7 @@
                      <div class="welcome_forme">
                        <div class="usernamess" style="margin-top: 50px" :class="names==0?'usernamess':'actives'">
                          <div>
-                           账号
+                           用户名
                          </div>
                          <div>
                            <!--<el-input v-model="username" placeholder="请输入账号"></el-input>-->
