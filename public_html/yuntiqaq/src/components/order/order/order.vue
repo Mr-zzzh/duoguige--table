@@ -158,7 +158,7 @@ export default {
   padding-top: 10px;
   padding-bottom: 16px;
   background-color: none !important;
-  height: 110%;
+  // height: 110%;
 }
 .one {
   width: 700px;

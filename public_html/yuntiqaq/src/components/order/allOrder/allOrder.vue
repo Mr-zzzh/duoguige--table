@@ -69,11 +69,11 @@
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="ID" width="120" type="index"></el-table-column>
 
-      <el-table-column label="订单编号" width="180" prop="ordersn"></el-table-column>
-      <el-table-column label="购买商品" prop="gname"></el-table-column>
+      <el-table-column label="订单编号" width="180" prop="ordersn" show-overflow-tooltip></el-table-column>
+      <el-table-column label="购买商品" prop="gname" show-overflow-tooltip></el-table-column>
       <el-table-column label="价格" prop="money"></el-table-column>
       <el-table-column label="买家" prop="uname"></el-table-column>
-      <el-table-column label="下单时间" prop="createtime"></el-table-column>
+      <el-table-column label="下单时间" prop="createtime" show-overflow-tooltip></el-table-column>
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
       <el-table-column label="点击发货">
@@ -332,12 +332,8 @@ export default {
 
 <style lang="less" scoped>
 .user {
-  height: 100%;
   background-color: #fff;
   padding: 8px;
-   width: 100%;
-  height: 100%;
-  position: relative;
   
 }
 .serch {
@@ -351,10 +347,6 @@ export default {
     color: red;
   }
 }
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
-}
+
 </style>
 

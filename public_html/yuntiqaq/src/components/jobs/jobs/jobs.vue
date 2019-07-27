@@ -35,8 +35,8 @@
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="ID" width="180" type="index"></el-table-column>
 
-        <el-table-column label="求职者信息" width="180" prop="name"></el-table-column>
-        <el-table-column label="求职岗位" width="180" prop="post"></el-table-column>
+        <el-table-column label="求职者信息" width="180" prop="name" show-overflow-tooltip></el-table-column>
+        <el-table-column label="求职岗位" width="180" prop="post" show-overflow-tooltip></el-table-column>
 
         <el-table-column label="工作地点" prop="address"></el-table-column>
 
@@ -163,14 +163,6 @@ export default {
 .user {
   padding: 15px;
   background-color: #fff;
-   width: 100%;
-  height: 100%;
-  position: relative;
-}
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
 }
 </style>
 

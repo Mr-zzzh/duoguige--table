@@ -146,6 +146,5 @@ export default {
 .user {
   background-color: #fff;
   padding: 8px;
-  height: 100%;
 }
 </style>

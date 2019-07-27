@@ -12,7 +12,7 @@
       ></el-table-column>
       <el-table-column label="反馈人信息" prop="uname"></el-table-column>
 
-      <el-table-column label="反馈时间" prop="createtime"></el-table-column>
+      <el-table-column label="反馈时间" prop="createtime" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="del(scope.row.id)" type="text" size="small">删除</el-button>
@@ -158,14 +158,6 @@ export default {
 .user {
   background-color: #fff;
   padding: 8px;
-   width: 100%;
-  height: 100%;
-  position: relative;
 }
 
-.fenye{
-  position: absolute;
-  left: 15px;
-  bottom: 15px;
-}
 </style>

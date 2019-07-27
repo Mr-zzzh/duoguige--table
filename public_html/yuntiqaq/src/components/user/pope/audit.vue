@@ -182,7 +182,6 @@ export default {
   padding: 20px;
   background-color: #fff;
   font-size: 20px;
-  height: 100%;
   .box {
     div {
       margin: 0 20px;
