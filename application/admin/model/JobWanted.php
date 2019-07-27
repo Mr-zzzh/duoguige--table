@@ -31,7 +31,7 @@ class JobWanted extends Common {
             ->join('user u', 'a.uid=u.id', 'left')
             ->join('salary s', 'a.salary=s.id', 'left')
             ->field('a.*,u.name uname,s.name sname')
-            ->where($map)->paginate($params['limit'])->toArray();
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(0 => '待审', 1 => '通过', 2 => '不通过', 3 => '已找到工作');
             foreach ($list['data'] as $k => &$item) {

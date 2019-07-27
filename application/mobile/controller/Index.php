@@ -86,7 +86,17 @@ class Index extends Common {
     public function home() {
         $banner = db('banner')->field('id,url,jumpurl')
             ->where(array('type' => 1, 'status' => 1))->order('sort asc,createtime desc')->select();
-        $new    = db('news')->field('id,title,type')
+        if (!empty($banner)) {
+            foreach ($banner as &$v) {
+                if (!empty($v['jumpurl'])) {
+                    if (strpos($v['jumpurl'], 'http:') === false) {
+                        $v['jumpurl'] = 'http://' . $v['jumpurl'];
+                    }
+                }
+            }
+            unset($v);
+        }
+        $new = db('news')->field('id,title,type')
             ->where('status', 1)->order('view_number desc')->limit(1)->find();
         show_json(1, array('banner' => $banner, 'news' => $new));
     }
@@ -102,6 +112,16 @@ class Index extends Common {
     public function insurance() {
         $banner = db('banner')->field('id,url,jumpurl')
             ->where(array('type' => 2, 'status' => 1))->order('sort asc,createtime desc')->select();
+        if (!empty($banner)) {
+            foreach ($banner as &$v) {
+                if (!empty($v['jumpurl'])) {
+                    if (strpos($v['jumpurl'], 'http') === false) {
+                        $v['jumpurl'] = 'http://' . $v['jumpurl'];
+                    }
+                }
+            }
+            unset($v);
+        }
         show_json(1, array('data' => $banner));
     }
 

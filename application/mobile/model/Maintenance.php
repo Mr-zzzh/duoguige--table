@@ -179,8 +179,11 @@ class Maintenance extends Common {
             'status' => trim($params['status']),
         );
         if ($data['status'] == -1) {
-            $createtime = $this->where('id', $id)->value('createtime');
-            if (time() - $createtime > 300) {
+            $dan = $this->where('id', $id)->field('status,createtime')->find();
+            if ($dan['status'] >= 3) {
+                show_json(0, '已有人接单不能取消');
+            }
+            if (time() - $dan['createtime'] > 300) {
                 show_json(0, '此单现在不能取消');
             }
             $data['canceltime'] = time();
@@ -226,7 +229,7 @@ class Maintenance extends Common {
                 foreach ($plan as &$v) {
                     $v['createtime'] = date('Y-n-d H:i', $v['createtime']);
                     if (strpos($v['plan'], '完成') !== false) {
-                        $v['plan'] = $v['plan'] . "<br/>若未确认则订单将在3天后自动确认";
+                        $v['plan'] = $v['plan'] . "\n若未确认则订单将在3天后自动确认";
                     }
                 }
                 unset($v);
@@ -316,9 +319,6 @@ class Maintenance extends Common {
 
     public function AllEvaluate($params) {
         global $member;
-        if ($member['type'] != 3 || $member['status'] != 1) {
-            show_json(0, '此账号无查看权限');
-        }
         $id = intval($params['id']);
         if (empty($id)) {
             $id = $member['id'];
@@ -340,7 +340,7 @@ class Maintenance extends Common {
         $user         = db('user')->alias('a')
             ->join('technician t', 'a.id=t.uid', 'left')
             ->join('user u', 'u.id=t.uid', 'left')
-            ->field('u.name,a.avatar,t.company_name')->where('a.id', $id)->find();
+            ->field('u.phone,u.name,a.avatar,t.company_name')->where('a.id', $id)->find();
         $list['user'] = $user;
         show_json(1, $list);
     }
@@ -383,7 +383,7 @@ class Maintenance extends Common {
         $list         = db('draw')->alias('d')
             ->join('maintenance m', 'm.id=d.mid', 'left')
             ->join('company c', 'c.uid=d.uid', 'left')
-            ->join('user u', 'u.id=d.uid', 'left')
+            ->join('user u', 'u.id=m.uid', 'left')
             ->field('m.id,m.brand,m.model,m.floor_number,m.status,m.type,m.company,m.city,m.area,m.address,d.createtime,c.company_name,u.name,u.avatar')
             ->where($map)->group('m.id')->order('d.createtime desc')
             ->paginate($params['limit'])->toArray();
@@ -538,7 +538,7 @@ class Maintenance extends Common {
             show_json(0, '请勿频繁操作');
         }
         $data = array(
-            'mid'  => trim($params['id']),
+            'mid'  => intval($params['id']),
             'plan' => trim($params['plan']),
         );
         if (empty($data['mid'])) {
@@ -548,7 +548,7 @@ class Maintenance extends Common {
             show_json(0, '请传维保单进度');
         }
         if (strpos($data['plan'], '完成') !== false) {
-            $data['complete_time'] = time();
+            $this->where('id', $data['mid'])->update(array('complete_time' => time()));
         }
         if (db('plan')->where($data)->value('id')) {
             show_json(1, '操作成功');

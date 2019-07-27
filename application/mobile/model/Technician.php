@@ -29,7 +29,8 @@ class Technician extends Common {
         $item = db('user')->alias('u')
             ->join('technician t', 't.uid=u.id', 'left')
             ->join('question q', 'q.master_id=u.id and q.type=2', 'left')
-            ->field('u.id,t.name,u.avatar,u.phone,u.intro,count(q.id) number')
+            ->join('answer a', 'a.qid=q.id and a.status=1', 'left')
+            ->field('u.id,t.name,u.avatar,u.phone,u.intro,count(a.id) number')
             ->where('u.id', $id)
             ->find();;
         if (empty($item)) {
