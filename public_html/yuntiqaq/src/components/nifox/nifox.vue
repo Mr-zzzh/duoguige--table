@@ -86,6 +86,9 @@
                 </el-form-item>
                 <el-form-item label="创建时间">
                     <el-input v-model="form.createtime" disabled></el-input>
+                    <div>
+                        催单提醒：买家已催单，请尽快发货！
+                    </div>
                 </el-form-item>
             </el-form>
         </span>

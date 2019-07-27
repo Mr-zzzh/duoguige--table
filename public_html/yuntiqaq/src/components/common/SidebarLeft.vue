@@ -285,6 +285,10 @@ export default {
               title: "轮播图设置"
             },
             {
+              index: "/admin_versions",
+              title: "版本号设置"
+            },
+            {
               index: "/admin_admingl",
               title: "操作员"
             },

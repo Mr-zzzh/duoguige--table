@@ -32,7 +32,8 @@
             </span>
            </el-menu>
         </div>
-        <div style="position: absolute;left: 85%;top: 30px" @click.stop="dianji_a()">
+        <div style="position: absolute;left: 80%;top: 30px" @click.stop="dianji_a()">
+            <span style="color:#fff;margin-right:5px">发货提醒</span>
             <i class="el-icon-bell" style="color: #fff;font-size: 25px"></i>
             <span class="dddcccc">{{total_x}}</span>
         </div>
