@@ -182,7 +182,7 @@ export default {
         this.unreadnum()
         setTimeout(()=>{
             this.unreadnum()
-        },60000)
+        },6000)
 
         this.getsj()
                 let a = new Date()
