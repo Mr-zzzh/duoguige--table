@@ -179,8 +179,11 @@ class Maintenance extends Common {
             'status' => trim($params['status']),
         );
         if ($data['status'] == -1) {
-            $createtime = $this->where('id', $id)->value('createtime');
-            if (time() - $createtime > 300) {
+            $dan = $this->where('id', $id)->field('status,createtime')->find();
+            if ($dan['status'] >= 3) {
+                show_json(0, '已有人接单不能取消');
+            }
+            if (time() - $dan['createtime'] > 300) {
                 show_json(0, '此单现在不能取消');
             }
             $data['canceltime'] = time();
