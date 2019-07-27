@@ -16,7 +16,7 @@ class Maintenance extends Common {
      * @method get
      * @param name:starttime type:string require:0 default:- other:- desc:开始时间(年-月-日_时:分:秒)
      * @param name:endtime type:string require:0 default:- other:- desc:结束时间(年-月-日_时:分:秒)
-     * @param name:status type:int require:0 default:- other:- desc:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
+     * @param name:status type:int require:0 default:- other:- desc:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理
      * @param name:genre type:int require:0 default:- other:- desc:维保单类型_1维修单_2保养单
      * @param name:keyword type:string require:0 default:- other:- desc:关键字检索
      * @param name:limit type:int require:0 default:15 desc:每页记录数

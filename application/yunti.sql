@@ -391,7 +391,7 @@ CREATE TABLE `yunti_goods` (
   `phone` varchar(20) NOT NULL COMMENT '销售电话',
   `price` decimal(10,2) NOT NULL COMMENT '价格',
   `label` varchar(255) NOT NULL COMMENT '标签',
-  `intro` varchar(255) DEFAULT NULL COMMENT '详情',
+  `intro` text COMMENT '详情',
   `area` varchar(255) DEFAULT NULL COMMENT '产地',
   `province` varchar(255) DEFAULT NULL COMMENT '省份',
   `address` varchar(255) DEFAULT NULL COMMENT '地址',

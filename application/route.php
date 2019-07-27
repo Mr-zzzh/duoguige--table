@@ -157,5 +157,6 @@ Route::rule('collect_del', 'mobile/User/collect_del', 'POST');
 Route::rule('my_like', 'mobile/User/my_like', 'GET');
 Route::rule('user/technician_add', 'mobile/User/technician_add', 'POST');
 Route::rule('user/technician_edit', 'mobile/User/technician_edit', 'POST');
+Route::rule('code_verify', 'mobile/User/code_verify', 'POST');
 Route::rule('user/approve_detail', 'mobile/User/approve_detail', 'GET');
 Route::rule('password_edit', 'mobile/User/password_edit', 'POST');

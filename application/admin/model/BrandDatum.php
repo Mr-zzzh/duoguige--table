@@ -48,6 +48,9 @@ class BrandDatum extends Common {
         if (empty($data['datum'])) {
             show_json(0, '请传资料链接');
         }
+        if ($this->where('bid', $data['bid'])->value('id')) {
+            show_json(0, '每个品牌只能上传一个文档');
+        }
         $size = Cache::get($data['datum']);
         if ($size / 1024 < 1024) {
             $data['size'] = ceil($size / 1024) . 'kb';
