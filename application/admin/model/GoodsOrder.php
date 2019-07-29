@@ -56,7 +56,7 @@ class GoodsOrder extends Common {
         if (empty($params['id']) || $params['id'] < 1) {
             show_json('id传输错误');
         }
-        $status = $this->where('id', intval($params['id']))->value('id');
+        $status = $this->where('id', intval($params['id']))->value('status');
         if ($status != 1) {
             show_json(0, '该订单不能发货');
         }
