@@ -185,7 +185,7 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:创建时间 image:图片
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:创建时间 image:图片 is_draw:是否领取_1领取过_2未领取
      * @author 开发者
      */
     public function task_hall() {

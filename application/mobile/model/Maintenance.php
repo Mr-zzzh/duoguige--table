@@ -367,6 +367,11 @@ class Maintenance extends Common {
                 $item['address']    = city_name($item['city']) . city_name($item['area']) . $item['address'];
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
                 $item['image']      = request()->domain() . '/uploads/maintenance.jpg';
+                if (db('draw')->where(array('uid' => $member['id'], 'mid' => $item['id']))->value('id')) {
+                    $item['is_draw'] = 1;
+                } else {
+                    $item['is_draw'] = 2;
+                }
             }
             unset($item);
         }
