@@ -39,9 +39,8 @@ class Admin extends Common {
         $legend = array('交易量', '成交量', '交易额', '成交额');
         $series = array();
         foreach ($legend as $k1 => &$v1) {
-            $series[$k1]['name']  = $v1;
-            $series[$k1]['type']  = 'line';
-            $series[$k1]['stack'] = '总量';
+            $series[$k1]['name'] = $v1;
+            $series[$k1]['type'] = 'line';
             if ($k1 == 0) {
                 $series[$k1]['data'] = $number1;
             } elseif ($k1 == 1) {
