@@ -159,6 +159,9 @@ class User extends Common {
     public function LoginCode($phone) {
         $info = $this->where('phone', $phone)->find();
         if (empty($info)) {     //注册
+            if (!is_mobilenumber($phone)) {
+                show_json('请传正确手机号');
+            }
             $data = array(
                 'phone'      => trim($phone),
                 'name'       => trim($phone),
