@@ -404,6 +404,15 @@ CREATE TABLE `yunti_goods` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ALTER TABLE `yunti_goods` add  `view_number` int(10) DEFAULT NULL COMMENT '浏览量';
 
+-- 浏览记录表
+CREATE TABLE `yunti_browse_history` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL COMMENT '用户id',
+  `lable` varchar(50) DEFAULT NULL COMMENT '标签',
+  `number` int(11) DEFAULT NULL COMMENT '浏览次数',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
 -- 订单表
 DROP TABLE IF EXISTS `yunti_goods_order`;
 CREATE TABLE `yunti_goods_order` (
