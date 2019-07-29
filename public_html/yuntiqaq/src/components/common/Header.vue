@@ -180,9 +180,9 @@ export default {
         console.log(this.boxx)
 
         this.unreadnum()
-        setTimeout(()=>{
+        setInterval(()=>{
             this.unreadnum()
-        },6000)
+        },60000)
 
         this.getsj()
                 let a = new Date()
