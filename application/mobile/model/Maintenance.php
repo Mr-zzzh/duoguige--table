@@ -383,9 +383,10 @@ class Maintenance extends Common {
         if ($member['type'] != 2 || $member['status'] != 1) {
             show_json(0, '此账号无查看权限');
         }
-        $map          = array();
-        $map['d.uid'] = $member['id'];
-        $list         = db('draw')->alias('d')
+        $map             = array();
+        $map['d.uid']    = $member['id'];
+        $map['m.status'] = array('<>', -1);
+        $list            = db('draw')->alias('d')
             ->join('maintenance m', 'm.id=d.mid', 'left')
             ->join('company c', 'c.uid=d.uid', 'left')
             ->join('user u', 'u.id=m.uid', 'left')

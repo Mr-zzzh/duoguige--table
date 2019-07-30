@@ -109,7 +109,7 @@ class Maintenance extends Common {
      * @return data:列表@
      * @return plan:进度列表@
      * @return complaint:投诉列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 province:省 city:市编号 area:区编号 location:电梯所在地 detail:详情地址(编辑) address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 receive_id:接单人id receive_time:接单时间 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 receive_phone:接取人电话 receive_avatar:接取人头像 receive_name:接取人姓名 receive_company:接取人公司名称 image:图片
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 province:省 city:市编号 area:区编号 location:电梯所在地 detail:详情地址(编辑) address:地址 status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 receive_id:接单人id receive_time:接单时间 name:发布人姓名 avatar:发布人头像 company_name:发布人公司名称 receive_phone:接取人电话 receive_avatar:接取人头像 receive_name:接取人姓名 receive_company:接取人公司名称 image:图片
      * @plan plan:进度 createtime:时间(倒序)
      * @complaint id:id uid:用户id mid:维保单id content:投诉内容 thumb:投诉图片 createtime:投诉时间
      * @author 开发者
@@ -224,7 +224,7 @@ class Maintenance extends Common {
      * @return current_page:当前的页码
      * @return last_page:最后的页码
      * @return data:列表@
-     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:领取时间 name:发布人姓名 avatar:发布人头像 company_name:发布人认证公司 image:图片
+     * @data id:id brand:电梯品牌 model:型号 floor_number:楼层数 status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 createtime:领取时间 name:发布人姓名 avatar:发布人头像 company_name:发布人认证公司 image:图片
      * @author 开发者
      */
     public function inquire() {
@@ -272,7 +272,7 @@ class Maintenance extends Common {
      * @return last_page:最后的页码
      * @return data:列表@
      * @return evaluate:评价数据数组@
-     * @data id:id name:发单人姓名(投诉处理) avatar:发单人头像(投诉处理) company_name:发单人公司(投诉处理) brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 createtime:创建时间 receive_time:接单时间(我的任务) complaint_time:投诉时间(投诉处理) evaluate:评价数据数组 image:图片
+     * @data id:id name:发单人姓名(投诉处理) avatar:发单人头像(投诉处理) company_name:发单人公司(投诉处理) brand:电梯品牌 model:型号 floor_number:楼层数 type:维修类型 company:单位名称 city:市编号 area:区编号 address:地址 status:-1取消0待审_1审核通过_2不通过_3已接单_4已完成_5投诉_6投诉已处理 createtime:创建时间 receive_time:接单时间(我的任务) complaint_time:投诉时间(投诉处理) evaluate:评价数据数组 image:图片
      * @evaluate name:评价人姓名 avatar:评价人头像 start:星星数 content:评价内容 createtime:评价时间
      * @author 开发者
      */
