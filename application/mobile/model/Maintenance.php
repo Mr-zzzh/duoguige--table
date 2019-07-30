@@ -179,12 +179,14 @@ class Maintenance extends Common {
             'status' => trim($params['status']),
         );
         if ($data['status'] == -1) {
-            $dan = $this->where('id', $id)->field('status,createtime')->find();
+            $dan = $this->where('id', $id)->field('status,receive_time')->find();
             if ($dan['status'] >= 3) {
-                show_json(0, '已有人接单不能取消');
-            }
-            if (time() - $dan['createtime'] > 300) {
-                show_json(0, '此单现在不能取消');
+                if (db('plan')->where('mid', $id)->select()) {
+                    show_json(0, '维修师傅已出发,不能取消订单');
+                }
+                if (time() - $dan['receive_time'] > 300) {
+                    show_json(0, '此单现在不能取消');
+                }
             }
             $data['canceltime'] = time();
         } elseif ($data['status'] == 4) {
