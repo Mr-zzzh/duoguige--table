@@ -352,7 +352,7 @@ class Maintenance extends Common {
         }
         $map = array();
         if (!empty($params['city'])) {
-            $map['m.city'] = db('area')->where('name', trim($params['city']))->value('code');
+            $map['m.city'] = db('area')->where(array('name' => trim($params['city']), 'level' => 2))->value('code');
         }
         if (!empty($params['area'])) {
             $map['m.area'] = intval($params['area']);
