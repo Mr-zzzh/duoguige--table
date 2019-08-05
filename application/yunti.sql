@@ -446,6 +446,7 @@ CREATE TABLE `yunti_remind` (
   `createtime` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ALTER TABLE `yunti_remind` add  `read` int(2) DEFAULT '0' COMMENT '0未阅_1已阅';
 
 -- 意见反馈表
 DROP TABLE IF EXISTS `yunti_feedback`;
