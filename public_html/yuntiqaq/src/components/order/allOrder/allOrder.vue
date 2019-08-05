@@ -76,7 +76,8 @@
       <el-table-column label="下单时间" prop="createtime" show-overflow-tooltip></el-table-column>
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
-      <el-table-column label="点击发货">
+      <!-- status=1时才有发货这一栏 -->
+      <el-table-column label="点击发货" v-if="tableData.status==1" v-show="isshow">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.status==2 || scope.row.status==3 || scope.row.status==0"
@@ -136,12 +137,18 @@ import {
 export default {
   data() {
     return {
+      isshow: true,
       radio: "1",
       options: [
+        {
+          status: "",
+          status_text: "全部"
+        },
         {
           status: -1,
           status_text: "取消订单"
         },
+
         {
           status: 0,
           status_text: "待支付"
@@ -150,10 +157,10 @@ export default {
           status: 1,
           status_text: "支付"
         },
-        {
-          status: 2,
-          status_text: "已发货"
-        },
+        // {
+        //   status: 2,
+        //   status_text: "已发货"
+        // },
         {
           status: 3,
           status_text: "已收货"
@@ -346,5 +353,6 @@ export default {
     color: red;
   }
 }
+// 加一个全部，不要已发货
 </style>
 
