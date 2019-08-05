@@ -25,7 +25,7 @@ class GoodsOrder extends Common {
             ->join('goods g', 'a.gid = g.id', 'left')
             ->join('delivery_address d', 'a.addressid = d.id', 'left')
             ->field('a .*,u.name uname,g.name gname,g .thumbnail,d.name dname,d.phone,d.area,d.address')
-            ->where($map)->paginate($params['limit'])->toArray();
+            ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array(' - 1' => '取消订单', '0' => '待支付', '1' => '已支付', '2' => '已发货', '3' => '已收货');
             foreach ($list['data'] as $k => &$item) {
