@@ -18,7 +18,7 @@ class Fault extends Common {
         $list = $this->alias('a')
             ->join('brand b', 'a.bid=b.id', 'left')
             ->field('a.*,b.name bname')->where($map)
-            ->order('a.bid asc,a.createtime desc')->paginate($params['limit'])->toArray();
+            ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
