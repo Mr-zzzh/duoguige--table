@@ -121,7 +121,7 @@ class Admin extends Common {
         }
         $list = $this->alias('a')
             ->field('a.id,a.name,a.status,a.phone,a.avatar,a.createtime')
-            ->where($map)->paginate($params['limit'])->toArray();
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime']  = date('Y-m-d H:i:s', $item['createtime']);
