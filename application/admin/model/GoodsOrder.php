@@ -11,8 +11,6 @@ class GoodsOrder extends Common {
         }
         if (isset($params['status']) && $params['status'] !== '') {
             $map['a.status'] = intval($params['status']);
-        } else {
-            $map['a.status'] = array('>=', 1);
         }
         if (!empty($params['paytype'])) {
             $map['a.paytype'] = intval($params['paytype']);
