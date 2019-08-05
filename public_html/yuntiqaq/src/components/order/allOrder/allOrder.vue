@@ -45,7 +45,7 @@
       <el-select
         @change="down"
         v-model="status"
-        placeholder="状态"
+         placeholder="支付方式"
         style="width:250px;background: white;float: right;"
       >
         <el-option
@@ -79,10 +79,10 @@
       <el-table-column label="点击发货">
         <template slot-scope="scope">
           <el-button
-            v-if="scope.row.status==2||status==3"
+            v-if="scope.row.status==2 || scope.row.status==3"
             size="small"
             type="info"
-            v-model="status"
+            v-model="tableData.status"
             disabled
             @click="fh(scope.row.id,scope.row)"
           >发货</el-button>
@@ -91,7 +91,7 @@
             size="small"
             type="primary"
             @click="fh(scope.row.id,scope.row)"
-            v-model="status"
+            v-model="tableData.status"
           >发货</el-button>
 
 
@@ -244,11 +244,7 @@ export default {
       this.total = data.total;
       this.money = data.money;
       this.number = data.number;
-      data.data.forEach(element => {
-        this.status_text = element.status_text;
-        this.status = element.status;
-        console.log(this.status);
-      });
+    // 只有一开始居获得所有的状态，才可以一开始判断
     },
     down(e) {
       this.page = 1;
@@ -325,6 +321,7 @@ export default {
   },
   created() {
     this.getGoodsOrder();
+    // 随便写，想要发生改变是吧，就可以了，嗯嗯随便写的随便写的
   }
 };
 </script>
