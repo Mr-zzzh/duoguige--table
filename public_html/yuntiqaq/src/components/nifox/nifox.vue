@@ -41,12 +41,20 @@
             label="创建时间">
             </el-table-column>
             <el-table-column
+            prop="status" align="center"
+            label="状态">
+            <template slot-scope="scope">
+                <div v-if='scope.row.status == 1'>已阅</div>
+                <div v-if='scope.row.status == 0'>未阅</div>
+            </template>
+            </el-table-column>
+            <el-table-column
             align="center"
             label="操作"
             >
             <template slot-scope="scope">
                 <el-button @click="sc(scope.row)" type="text" size="small">删除</el-button>
-                <el-button @click="bj(scope.row.id)" type="text" size="small">详情</el-button>
+                <el-button @click="bj(scope.row.id)" type="text" size="small"  v-if='scope.row.status == 0'>详情</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -206,6 +214,7 @@
                         console.log(res.data.data)
                         this.tableData = res.data.data.data
                         this.total = res.data.data.total
+                        console.log(this.tableData)
                     }else{
                         this.$message.error(res.data.message)
                     }

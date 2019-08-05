@@ -99,7 +99,7 @@
               <!-- <span>新消息提醒 ({{total_x}}) 条</span> -->
               <span>消息提醒</span>
               <div style="margin-top: 20px;height: 250px;overflow:auto;">
-                <div class="gogngao_list" v-for="(item,index) in list_xin" :key="index" @click="gonggao1(item.id)">
+                <div class="gogngao_list" v-for="(item,index) in list_xin" :key="index" @click="gonggao1(item.id)" v-show="item.status == 0">
                   <div>{{item.name}}</div>
                   <div>{{item.createtime}}</div>
                 </div>

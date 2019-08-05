@@ -10,11 +10,16 @@ class Remind extends Common {
     }
 
     public function GetAll($params) {
+        $map = array();
+        if (isset($params['status']) && $params['status'] == 0) {
+            $map['status'] = 0;
+        }
         $list = $this->alias('a')
             ->join('goods_order b', 'a.oid=b.id', 'left')
             ->join('goods c', 'b.gid=c.id', 'left')
             ->join('user u', 'b.uid=u.id', 'left')
             ->field('a.id,a.status,a.createtime,c.name,u.name uname,u.phone uphone,b.ordersn')
+            ->where($map)
             ->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
