@@ -32,6 +32,7 @@ class Remind extends Common {
      * @method get
      * @param name:limit type:int require:0 default:15 desc:每页记录数
      * @param name:page type:int require:0 default:1 desc:获取的页码
+     * @param name:status type:int require:0 default:1 desc:状态0_未阅_已阅
      * @return total:总记录数
      * @return per_page:每页记录数
      * @return current_page:当前的页码
