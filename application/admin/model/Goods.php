@@ -21,7 +21,7 @@ class Goods extends Common {
         $list = $this->alias('a')
             ->join('brand b', 'a.bid=b.id', 'left')
             ->field('a.id,a.thumbnail,a.name,a.subhead,a.sort,a.bid,a.manufacturers,a.phone,a.price,a.label,a.sale_number,a.createtime,b.name bnam')
-            ->where($map)->order('a.sort asc,a.createtime desc')->paginate($params['limit'])->toArray();
+            ->where($map)->order('a.createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['createtime'] = date('Y-m-d H:i:s', $item['createtime']);
