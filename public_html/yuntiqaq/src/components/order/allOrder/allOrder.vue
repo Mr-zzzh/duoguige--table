@@ -45,7 +45,7 @@
       <el-select
         @change="down"
         v-model="status"
-         placeholder="支付方式"
+        placeholder="状态"
         style="width:250px;background: white;float: right;"
       >
         <el-option
@@ -79,7 +79,7 @@
       <el-table-column label="点击发货">
         <template slot-scope="scope">
           <el-button
-            v-if="scope.row.status==2 || scope.row.status==3"
+            v-if="scope.row.status==2 || scope.row.status==3 || scope.row.status==0"
             size="small"
             type="info"
             v-model="tableData.status"
@@ -94,14 +94,13 @@
             v-model="tableData.status"
           >发货</el-button>
 
-
-            <!-- 测试用的 -->
-           <!-- <el-button
+          <!-- 测试用的 -->
+          <!-- <el-button
             size="small"
             type="primary"
             v-model="status"
             @click="fh(scope.row.id,scope.row)"
-          >发货</el-button> -->
+          >发货</el-button>-->
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -202,10 +201,9 @@ export default {
       });
     },
     fh(id, row) {
-      console.log(id,row.status);
-        this.id = id;
-          this.status = row.status;
-          
+      console.log(id, row.status);
+      this.id = id;
+      this.status = row.status;
       this.$confirm("是否确定发货?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -214,6 +212,11 @@ export default {
         .then(() => {
           this.id = id;
           this.status = row.status;
+          // 点击发货之后，就去到已发货的页面，已发货的状态是status=2，让placehold里面显示已发货的字样，显示已发货的表格
+          this.options.forEach(element => {
+            (element.status = 2), (element.status_text = "已发货");
+          });
+          // 把整个options都改变了，不知道有没有影响
           console.log(id);
           this.gitfh(id);
           this.page = 1;
@@ -244,7 +247,7 @@ export default {
       this.total = data.total;
       this.money = data.money;
       this.number = data.number;
-    // 只有一开始居获得所有的状态，才可以一开始判断
+      // 只有一开始居获得所有的状态，才可以一开始判断
     },
     down(e) {
       this.page = 1;
@@ -331,7 +334,6 @@ export default {
 .user {
   background-color: #fff;
   padding: 8px;
-  
 }
 .serch {
   height: 50px;
@@ -344,6 +346,5 @@ export default {
     color: red;
   }
 }
-
 </style>
 
