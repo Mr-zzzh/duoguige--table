@@ -77,7 +77,7 @@
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
       <!-- status=1时才有发货这一栏 -->
-      <el-table-column label="点击发货" v-if="tableData.status==1" v-show="isshow">
+      <el-table-column label="点击发货">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.status==2 || scope.row.status==3 || scope.row.status==0"
