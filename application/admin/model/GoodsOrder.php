@@ -58,7 +58,7 @@ class GoodsOrder extends Common {
         if ($status != 1) {
             show_json(0, '该订单不能发货');
         }
-        $data['status']      = 3;
+        $data['status']      = 2;
         $data['delivertime'] = time();
         $data['finishtime']  = time();
         if ($this->save($data, array('id' => intval($params['id']))) != false) {
