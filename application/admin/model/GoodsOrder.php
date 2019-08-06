@@ -10,7 +10,12 @@ class GoodsOrder extends Common {
             $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
         if (isset($params['status']) && $params['status'] !== '') {
-            $map['a.status'] = intval($params['status']);
+            $status = intval($params['status']);
+            if ($status == 1) {
+                $map['a.status'] = array('in', '1,2');
+            } else {
+                $map['a.status'] = $status;
+            }
         }
         if (!empty($params['paytype'])) {
             $map['a.paytype'] = intval($params['paytype']);
