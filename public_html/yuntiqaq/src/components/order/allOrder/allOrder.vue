@@ -156,17 +156,13 @@ export default {
         {
           status: 1,
           status_text: "支付"
+          // 要在支付页面看到以支付和待发货的已发货的数据
         },
-        // {
-        //   status: 2,
-        //   status_text: "已发货"
-        // },
         {
           status: 3,
           status_text: "已收货"
         }
       ],
-
       options_2: [
         {
           paytype: 1,
@@ -210,7 +206,7 @@ export default {
     fh(id, row) {
       console.log(id, row.status);
       this.id = id;
-      this.status = row.status;
+      // this.status = row.status;
       this.$confirm("是否确定发货?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -218,12 +214,9 @@ export default {
       })
         .then(() => {
           this.id = id;
-          this.status = row.status;
-          // 点击发货之后，就去到已发货的页面，已发货的状态是status=2，让placehold里面显示已发货的字样，显示已发货的表格
-          this.options.forEach(element => {
-            (element.status = 2), (element.status_text = "已发货");
-          });
-          // 把整个options都改变了，不知道有没有影响
+          // 为了去到支付的表格
+          this.status = 1;
+          // this.status_text = "支付";
           console.log(id);
           this.gitfh(id);
           this.page = 1;
