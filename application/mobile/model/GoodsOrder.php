@@ -18,7 +18,7 @@ class GoodsOrder extends Common {
         $list         = $this->alias('a')
             ->join('goods b', 'a.gid=b.id', 'left')
             ->field('a.id,a.gid,a.ordersn,a.number,a.money,a.status,a.paytime,b.name,b.thumbnail,b.price,b.label')
-            ->where($map)->paginate($params['limit'])->toArray();
+            ->where($map)->order('paytime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array('-1' => '取消订单', '0' => '待支付', '1' => '待发货', '2' => '已发货', '3' => '已完成');
             foreach ($list['data'] as $k => &$item) {

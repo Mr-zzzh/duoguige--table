@@ -18,7 +18,8 @@ class User extends Common {
         if (!empty($params['keyword'])) {
             $map['name|phone|intro'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->field('id,name,phone,avatar,intro,status,type,normal,createtime,checktime')->where($map)->paginate($params['limit'])->toArray();
+        $list = $this->field('id,name,phone,avatar,intro,status,type,normal,createtime,checktime')
+            ->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             $status = array('0' => '待审', '1' => '通过', '2' => '不通过');
             $type   = array('1' => '普通用户', '2' => '技术大师', '3' => '物业公司');

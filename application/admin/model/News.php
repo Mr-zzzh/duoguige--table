@@ -12,7 +12,7 @@ class News extends Common {
         if (!empty($params['keyword'])) {
             $map['title|content'] = array('LIKE', '%' . trim($params['keyword']) . '%');
         }
-        $list = $this->where($map)->order('sort asc,createtime desc')->paginate($params['limit'])->toArray();
+        $list = $this->where($map)->order('createtime desc')->paginate($params['limit'])->toArray();
         if (!empty($list['data'])) {
             foreach ($list['data'] as $k => &$item) {
                 $item['type_text']   = $item['type'] == 1 ? '图文' : '视频';
