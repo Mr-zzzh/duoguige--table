@@ -10,7 +10,12 @@ class GoodsOrder extends Common {
             $map['a.createtime'] = array('between', strtotime($params['starttime']) . ',' . strtotime($params['endtime']));
         }
         if (isset($params['status']) && $params['status'] !== '') {
-            $map['a.status'] = intval($params['status']);
+            $status = intval($params['status']);
+            if ($status == 1) {
+                $map['a.status'] = array('in', '1,2');
+            } else {
+                $map['a.status'] = $status;
+            }
         }
         if (!empty($params['paytype'])) {
             $map['a.paytype'] = intval($params['paytype']);
@@ -58,7 +63,7 @@ class GoodsOrder extends Common {
         if ($status != 1) {
             show_json(0, '该订单不能发货');
         }
-        $data['status']      = 3;
+        $data['status']      = 2;
         $data['delivertime'] = time();
         $data['finishtime']  = time();
         if ($this->save($data, array('id' => intval($params['id']))) != false) {
