@@ -77,7 +77,7 @@
       <el-table-column label="付款方式" prop="paytype_text"></el-table-column>
       <el-table-column label="状态" prop="status_text"></el-table-column>
       <!-- status=1时才有发货这一栏 -->
-      <el-table-column label="点击发货">
+      <el-table-column label="点击发货" width="200">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.status==2 || scope.row.status==3 || scope.row.status==0"
@@ -94,6 +94,8 @@
             @click="fh(scope.row.id,scope.row)"
             v-model="tableData.status"
           >发货</el-button>
+ <!-- v-if="scope.row.status==2" -->
+          <span v-if="scope.row.status==2" style="font-size: 12px;">{{timers[scope.$index]}}</span>
 
           <!-- 测试用的 -->
           <!-- <el-button
@@ -189,7 +191,11 @@ export default {
       money: "",
       number: "",
       id: "",
-      status_text: ""
+      status_text: "",
+
+
+      timer:null,
+      timers:[]
     };
   },
   mounted() {},
@@ -231,7 +237,7 @@ export default {
     },
 
     // 这是获取全部订单的请求
-    async getGoodsOrder() {
+    async getGoodsOrder1() {
       let data = await getGoodsOrder({
         keyword: this.keyword,
         limit: this.limit,
@@ -243,21 +249,41 @@ export default {
         status_text: this.status_text
       });
       console.log(data);
-      this.tableData = data.data;
-      this.total = data.total;
-      this.money = data.money;
-      this.number = data.number;
+      let that = this
+
+      that.tableData = data.data;
+      that.total = data.total;
+      that.money = data.money;
+      that.number = data.number;
+that.timer = setInterval(function(){
+  that.timers = []
+      that.tableData.forEach(res => {
+        // if(res.status == 2){
+          // console.log(res)
+          // console.log(res.delivertime)
+          
+            that.timers.push(that.countdowm(res.delivertime))
+            // res.abc = that.countdowm(res.delivertime)
+            console.log(that.timers)
+          
+        // }else{
+        //   return
+        // }
+      });
+      },1000)
+      
+      console.log(that.tableData)
       // 只有一开始居获得所有的状态，才可以一开始判断
     },
     down(e) {
       this.page = 1;
-      this.getGoodsOrder();
+      this.getGoodsOrder1();
       // console.log(e);
       console.log(this.status);
     },
     down2(e) {
       this.page = 1;
-      this.getGoodsOrder();
+      this.getGoodsOrder1();
       console.log(this.paytype);
     },
 
@@ -274,13 +300,13 @@ export default {
         console.log(this.endtime);
       }
       this.page = 1;
-      this.getGoodsOrder();
+      this.getGoodsOrder1();
     },
     // 搜索
     search() {
       // console.log(1111);
       this.page = 1;
-      this.getGoodsOrder();
+      this.getGoodsOrder1();
     },
 
     // 删除
@@ -293,7 +319,7 @@ export default {
         .then(() => {
           delGoods(id);
           this.page = 1;
-          this.getGoodsOrder();
+          this.getGoodsOrder1();
         })
         .catch(() => {
           this.$message({
@@ -312,19 +338,54 @@ export default {
     // 分页----这是选择每页多少条的时候触发
     handleSizeChange(val) {
       this.limit = val; //让其相等
-      this.getGoodsOrder();
+      this.getGoodsOrder1();
       console.log(`每页 ${val} 条`);
     },
     // 分页------当前页码切换的时候触发
     handleCurrentChange(val) {
       this.page = val;
-      this.getGoodsOrder();
+      this.getGoodsOrder1();
       console.log(`当前页: ${val}`);
-    }
+    },
+
+
+    countdowm(timestamp){
+        let self = this;
+        let nowTime = new Date();
+        let endTime = new Date(timestamp);
+        let b = nowTime.getTime() - endTime.getTime();
+        let a = 24*60*60*1000*7
+        let t = a -b
+        if(t>0){
+          let day = Math.floor(t/86400000);
+          let hour=Math.floor((t/3600000)%24);
+          let min=Math.floor((t/60000)%60);
+          let sec=Math.floor((t/1000)%60);
+          hour = hour < 10 ? "0" + hour : hour;
+          min = min < 10 ? "0" + min : min;
+          sec = sec < 10 ? "0" + sec : sec;
+          let format = '';
+          if(day > 0){
+              format =  `${day}天${hour}小时${min}分${sec}秒`;
+          }
+          if(day <= 0 && hour > 0 ){
+              format = `${hour}小时${min}分${sec}秒`;
+          }
+          if(day <= 0 && hour <= 0){
+              format =`${min}分${sec}秒`;
+          }
+          // self.content = format;
+          // console.log(format)
+          // qq = format
+          return format
+        }
+    },
   },
   created() {
-    this.getGoodsOrder();
+    this.getGoodsOrder1();
     // 随便写，想要发生改变是吧，就可以了，嗯嗯随便写的随便写的
+    // let nowTime = new Date();
+    // console.log(nowTime.getTime())
   }
 };
 </script>
