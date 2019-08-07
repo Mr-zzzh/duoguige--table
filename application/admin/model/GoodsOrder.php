@@ -44,7 +44,7 @@ class GoodsOrder extends Common {
                     $item['canceltime'] = date('Y - m - d H:i:s', $item['canceltime']);
                 }
                 if (empty($item['delivertime'])) {
-                    $item['delivertime'] = date('Y - m - d H:i:s', $item['delivertime']);
+                    $item['delivertime'] = $item['delivertime'] * 1000;
                 }
                 $item['createtime'] = date('Y - m - d H:i:s', $item['createtime']);
             }
