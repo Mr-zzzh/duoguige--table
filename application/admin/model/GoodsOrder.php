@@ -34,16 +34,16 @@ class GoodsOrder extends Common {
             foreach ($list['data'] as $k => &$item) {
                 $item['status_text']  = $status[$item['status']];
                 $item['paytype_text'] = $item['paytype'] == 1 ? '支付宝' : '微信';
-                if (empty($item['paytime'])) {
+                if (!empty($item['paytime'])) {
                     $item['paytime'] = date('Y - m - d H:i:s', $item['paytime']);
                 }
-                if (empty($item['finishtime'])) {
+                if (!empty($item['finishtime'])) {
                     $item['finishtime'] = date('Y - m - d H:i:s', $item['finishtime']);
                 }
-                if (empty($item['canceltime'])) {
+                if (!empty($item['canceltime'])) {
                     $item['canceltime'] = date('Y - m - d H:i:s', $item['canceltime']);
                 }
-                if (empty($item['delivertime'])) {
+                if (!empty($item['delivertime'])) {
                     $item['delivertime'] = $item['delivertime'] * 1000;
                 }
                 $item['createtime'] = date('Y - m - d H:i:s', $item['createtime']);
